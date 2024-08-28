@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chrip.CLI/Chrip.CLI.csproj": {}
+    "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj": {}
   },
   "projects": {
-    "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chrip.CLI/Chrip.CLI.csproj": {
+    "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chrip.CLI/Chrip.CLI.csproj",
+        "projectUniqueName": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj",
         "projectName": "Chrip.CLI",
-        "projectPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chrip.CLI/Chrip.CLI.csproj",
+        "projectPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj",
         "packagesPath": "/home/allp/.nuget/packages/",
-        "outputPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chrip.CLI/obj/",
+        "outputPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/allp/.nuget/NuGet/NuGet.Config"
