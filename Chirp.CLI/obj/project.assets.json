@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "/home/allp/.nuget/packages/": {}
+    "/home/mikcla/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/Chirp/Chirp.CLI/Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-      "packagesPath": "/home/allp/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/obj/",
+      "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "packagesPath": "/home/mikcla/.nuget/packages/",
+      "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/allp/.nuget/NuGet/NuGet.Config"
+        "/home/mikcla/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"

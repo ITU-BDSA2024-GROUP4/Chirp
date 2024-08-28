@@ -1,7 +1,6 @@
 ﻿if(args[0] == "read"){
     try
     {
-        // Open the text file using a stream reader.
         using StreamReader reader = new("chirp_cli_db.csv");
         reader.ReadLine();
         String line;
@@ -20,5 +19,12 @@
         Console.WriteLine("The file could not be read:");
         Console.WriteLine(e.Message);
     }
+} else if (args[0] == "cheep")
+{
+    using (StreamWriter db = new StreamWriter("chirp_cli_db.csv", true))
+    {
+        string name = Environment.UserName;
+        DateTimeOffset timestamp = DateTime.UtcNow;
+        db.WriteLine("\n" + name + ",\"" + args[1] + "\"," + timestamp.ToUnixTimeSeconds());
+    }
 }
-

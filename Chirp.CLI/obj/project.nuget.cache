@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L05tjFej8Uqafdd4dAyHUKiCPAit5/8Eb1ku7M9qPCR4xU/Y7wD8dv9GhZiybjdIQ5NvXhgKq+9ZBpa5PGy5KA==",
+  "dgSpecHash": "E8nDPWfk4tQtnLocSkyE6hRbWtKlU7vEJdUrvGk5FcP57xCnvKkYMwwQcRn4Oh2VL7T0KXsuX2Aw32qkAdWZMA==",
   "success": true,
-  "projectFilePath": "/mnt/c/Users/Trold/Documents/GitHub/ITU-BDSA2024-GROUP4/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+  "projectFilePath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp/Chirp.CLI/Chrip.CLI.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
