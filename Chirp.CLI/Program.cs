@@ -1,4 +1,6 @@
-﻿if(args[0] == "read"){
+﻿using System.Text.RegularExpressions;
+
+if(args[0] == "read"){
     try
     {
         using StreamReader reader = new("chirp_cli_db.csv");
@@ -7,11 +9,13 @@
         
         while ((line = reader.ReadLine()) != null)
         {
-            string[] values = line.Split('"');
-            string name = values[0].Remove(values[0].Length - 1);
-            DateTimeOffset timestamp = DateTimeOffset.FromUnixTimeSeconds(long.Parse(values[2].Remove(0, 1))).ToLocalTime();
-            string msg = values[1];
-            Console.WriteLine(name + " @ " + timestamp.DateTime + ": " + msg);
+            var match = Parse(line);
+            
+            var user = match.Groups["user"].Value;
+            var message = match.Groups["message"].Value;
+            var timestamp = DateTimeOffset.FromUnixTimeSeconds(long.Parse(match.Groups["timestamp"].Value)).ToLocalTime();
+            Console.WriteLine($"{user} @ {timestamp.DateTime.ToString("MM\\/dd\\/yy HH:mm:ss")} - {message}");
+
         }
     }
     catch (IOException e)
@@ -25,6 +29,20 @@
     {
         string name = Environment.UserName;
         DateTimeOffset timestamp = DateTime.UtcNow;
-        db.WriteLine("\n" + name + ",\"" + args[1] + "\"," + timestamp.ToUnixTimeSeconds());
+        db.WriteLine(name + ",\"" + args[1] + "\"," + timestamp.ToUnixTimeSeconds());
     }
+    Console.WriteLine("Cheeped!");
+}
+else
+{
+    Console.WriteLine("Command not recognized!");
+}
+
+
+Match Parse(string value)
+{
+    var pattern = @"^(?<user>[A-Za-z\-_0-9]+),[""](?<message>[\w\s\S]+)[""],(?<timestamp>[\d]+)$";
+    var rg = new Regex(pattern);
+    var match = rg.Match(value);
+    return match;
 }
