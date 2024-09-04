@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vBwLKHNKhNkUngJSgtgkLDDOPUbuqjzEEIZii0KRtp+1wjgmjxnVAaYzx3YgLM9YBrslFTADoQ88xlI0n7LizQ==",
+  "dgSpecHash": "hlDewkqcsTs=",
   "success": true,
-  "projectFilePath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\micla\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

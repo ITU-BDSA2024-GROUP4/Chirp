@@ -1,32 +1,76 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "CsvHelper/33.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CsvHelper/33.0.1": {
+      "sha512": "fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
+      "type": "package",
+      "path": "csvhelper/33.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.33.0.1.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net462/CsvHelper.dll",
+        "lib/net462/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net48/CsvHelper.dll",
+        "lib/net48/CsvHelper.xml",
+        "lib/net6.0/CsvHelper.dll",
+        "lib/net6.0/CsvHelper.xml",
+        "lib/net7.0/CsvHelper.dll",
+        "lib/net7.0/CsvHelper.xml",
+        "lib/net8.0/CsvHelper.dll",
+        "lib/net8.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "CsvHelper >= 33.0.1"
+    ]
   },
   "packageFolders": {
-    "/Users/bergurdavidsen/.nuget/packages/": {}
+    "C:\\Users\\micla\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "projectUniqueName": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-      "packagesPath": "/Users/bergurdavidsen/.nuget/packages/",
-      "outputPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/obj/",
+      "projectPath": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+      "packagesPath": "C:\\Users\\micla\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/bergurdavidsen/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\micla\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -44,6 +88,12 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
+        "dependencies": {
+          "CsvHelper": {
+            "target": "Package",
+            "version": "[33.0.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -60,7 +110,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\micla\\.dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
       }
     }
   }

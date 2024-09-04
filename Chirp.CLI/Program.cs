@@ -1,21 +1,18 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using CsvHelper;
 
 if(args[0] == "read"){
     try
     {
-        using StreamReader reader = new("chirp_cli_db.csv");
-        reader.ReadLine();
-        String line;
-        
-        while ((line = reader.ReadLine()) != null)
+        using StreamReader reader = new StreamReader("chirp_cli_db.csv");
+        using CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
         {
-            var match = Parse(line);
-            
-            var user = match.Groups["user"].Value;
-            var message = match.Groups["message"].Value;
-            var timestamp = DateTimeOffset.FromUnixTimeSeconds(long.Parse(match.Groups["timestamp"].Value)).ToLocalTime();
-            Console.WriteLine($"{user} @ {timestamp.DateTime.ToString("MM\\/dd\\/yy HH:mm:ss")} - {message}");
-
+            DateTimeOffset timestamp;
+            foreach (Cheep cheep in csvReader.GetRecords<Cheep>())
+            {
+                timestamp = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp).ToLocalTime();
+                Console.WriteLine(cheep.Author + " @ " + timestamp.DateTime + ": " + cheep.Message);
+            }
         }
     }
     catch (IOException e)
@@ -25,11 +22,14 @@ if(args[0] == "read"){
     }
 } else if (args[0] == "cheep")
 {
-    using (StreamWriter db = new StreamWriter("chirp_cli_db.csv", true))
+    using StreamWriter db = new StreamWriter("chirp_cli_db.csv", true);
+    using CsvWriter csvWriter = new CsvWriter(db, CultureInfo.InvariantCulture);
     {
-        string name = Environment.UserName;
+        string author = Environment.UserName;
         DateTimeOffset timestamp = DateTime.UtcNow;
-        db.WriteLine(name + ",\"" + args[1] + "\"," + timestamp.ToUnixTimeSeconds());
+        
+        csvWriter.NextRecord();
+        csvWriter.WriteRecord(new Cheep(author, args[1], timestamp.ToUnixTimeSeconds()));
     }
     Console.WriteLine("Cheeped!");
 }
@@ -38,11 +38,4 @@ else
     Console.WriteLine("Command not recognized!");
 }
 
-
-Match Parse(string value)
-{
-    var pattern = @"^(?<user>[A-Za-z\-_0-9]+),[""](?<message>[\w\s\S]+)[""],(?<timestamp>[\d]+)$";
-    var rg = new Regex(pattern);
-    var match = rg.Match(value);
-    return match;
-}
+public record Cheep(string Author, string Message, long Timestamp);
