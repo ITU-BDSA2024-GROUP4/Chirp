@@ -1,7 +1,11 @@
 ﻿using System.Globalization;
 using CsvHelper;
+using SimpleDB;
+
 
 if(args[0] == "read"){
+    IDatabaseRepository<Cheep> database;
+
     try
     {
         using StreamReader reader = new StreamReader("chirp_cli_db.csv");

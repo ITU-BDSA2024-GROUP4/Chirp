@@ -14,6 +14,16 @@
             "related": ".xml"
           }
         }
+      },
+      "SimpleDB/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/SimpleDB.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SimpleDB.dll": {}
+        }
       }
     }
   },
@@ -45,38 +55,49 @@
         "lib/netstandard2.1/CsvHelper.dll",
         "lib/netstandard2.1/CsvHelper.xml"
       ]
+    },
+    "SimpleDB/1.0.0": {
+      "type": "project",
+      "path": "../SimpleDB/SimpleDB.csproj",
+      "msbuildProject": "../SimpleDB/SimpleDB.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "CsvHelper >= 33.0.1"
+      "CsvHelper >= 33.0.1",
+      "SimpleDB >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\micla\\.nuget\\packages\\": {}
+    "/Users/bergurdavidsen/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+      "projectUniqueName": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
-      "packagesPath": "C:\\Users\\micla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\micla\\bdsa\\Chirp\\Chirp.CLI\\obj\\",
+      "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "packagesPath": "/Users/bergurdavidsen/.nuget/packages/",
+      "outputPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\micla\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/bergurdavidsen/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -110,7 +131,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\micla\\.dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
       }
     }
   }

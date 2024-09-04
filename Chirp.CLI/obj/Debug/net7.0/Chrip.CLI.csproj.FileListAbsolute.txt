@@ -75,3 +75,7 @@
 /mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/obj/Debug/net7.0/Chrip.CLI.csproj.CopyComplete
 /mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/obj/Debug/net7.0/Chrip.CLI.genruntimeconfig.cache
 /mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/obj/Debug/net7.0/ref/Chrip.CLI.dll
+/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/bin/Debug/net7.0/CsvHelper.dll
+/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/bin/Debug/net7.0/SimpleDB.dll
+/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/bin/Debug/net7.0/SimpleDB.pdb
+/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/obj/Debug/net7.0/Chrip.CLI.csproj.CopyComplete

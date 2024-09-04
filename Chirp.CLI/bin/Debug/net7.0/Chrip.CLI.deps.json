@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v7.0": {
       "Chrip.CLI/1.0.0": {
         "dependencies": {
-          "CsvHelper": "33.0.1"
+          "CsvHelper": "33.0.1",
+          "SimpleDB": "1.0.0"
         },
         "runtime": {
           "Chrip.CLI.dll": {}
@@ -20,6 +21,11 @@
             "assemblyVersion": "33.0.0.0",
             "fileVersion": "33.0.1.24"
           }
+        }
+      },
+      "SimpleDB/1.0.0": {
+        "runtime": {
+          "SimpleDB.dll": {}
         }
       }
     }
@@ -36,6 +42,11 @@
       "sha512": "sha512-fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
       "path": "csvhelper/33.0.1",
       "hashPath": "csvhelper.33.0.1.nupkg.sha512"
+    },
+    "SimpleDB/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
