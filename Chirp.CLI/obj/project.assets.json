@@ -18,6 +18,9 @@
       "SimpleDB/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1"
+        },
         "compile": {
           "bin/placeholder/SimpleDB.dll": {}
         },
@@ -69,33 +72,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/bergurdavidsen/.nuget/packages/": {}
+    "/home/victor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "projectUniqueName": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-      "packagesPath": "/Users/bergurdavidsen/.nuget/packages/",
-      "outputPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/obj/",
+      "projectPath": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "packagesPath": "/home/victor/.nuget/packages/",
+      "outputPath": "/home/victor/Chirp/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/bergurdavidsen/.nuget/NuGet/NuGet.Config"
+        "/home/victor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj": {
-              "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj"
+            "/home/victor/Chirp/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/home/victor/Chirp/SimpleDB/SimpleDB.csproj"
             }
           }
         }
@@ -131,7 +133,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
       }
     }
   }

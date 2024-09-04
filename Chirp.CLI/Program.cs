@@ -4,18 +4,20 @@ using SimpleDB;
 
 
 if(args[0] == "read"){
+    var csvDatabase = new CSVDatabase<Cheep>();
     IDatabaseRepository<Cheep> database;
 
     try
     {
-        using StreamReader reader = new StreamReader("chirp_cli_db.csv");
-        using CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+        IEnumerable<Cheep> cheeps = csvDatabase.Read("../chirp_cli_db.csv");
+        
         {
             DateTimeOffset timestamp;
-            foreach (Cheep cheep in csvReader.GetRecords<Cheep>())
+            foreach (Cheep cheep in cheeps)
             {
                 timestamp = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp).ToLocalTime();
                 Console.WriteLine(cheep.Author + " @ " + timestamp.DateTime + ": " + cheep.Message);
+                Console.WriteLine($"{cheep.Author} @ {timestamp}: {cheep.Message}");
             }
         }
     }
@@ -26,7 +28,7 @@ if(args[0] == "read"){
     }
 } else if (args[0] == "cheep")
 {
-    using StreamWriter db = new StreamWriter("chirp_cli_db.csv", true);
+    using StreamWriter db = new StreamWriter("../chirp_cli_db.csv", true);
     using CsvWriter csvWriter = new CsvWriter(db, CultureInfo.InvariantCulture);
     {
         string author = Environment.UserName;
