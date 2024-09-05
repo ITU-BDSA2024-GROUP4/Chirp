@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Chrip.CLI;
 using CsvHelper;
 using SimpleDB;
 
@@ -13,16 +14,7 @@ if(args[0] == "read"){
         } else {
             cheeps = csvDatabase.Read();
         }
-        
-        {
-            DateTimeOffset timestamp;
-            foreach (Cheep cheep in cheeps)
-            {
-                timestamp = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp).ToLocalTime();
-                //Console.WriteLine(cheep.Author + " @ " + timestamp.DateTime + ": " + cheep.Message);
-                Console.WriteLine($"{cheep.Author} @ {timestamp.DateTime}: {cheep.Message}");
-            }
-        }
+        UserInterface.cheepPrinter(cheeps);
     }
     catch (IOException e)
     {
@@ -35,10 +27,10 @@ if(args[0] == "read"){
     DateTimeOffset timestamp = DateTime.UtcNow;
     csvDatabase.Store(new Cheep(author, args[1], timestamp.ToUnixTimeSeconds()));
     
-    Console.WriteLine("Cheeped!");
+    UserInterface.cheep(false);
 }
 else
 {
-    Console.WriteLine("Command not recognized!");
+    UserInterface.cheep(true);
 }
 public record Cheep(string Author, string Message, long Timestamp);

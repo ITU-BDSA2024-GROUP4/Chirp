@@ -72,19 +72,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Victor\\.nuget\\packages\\": {}
+    "/home/victor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+      "projectUniqueName": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
-      "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\obj\\",
+      "projectPath": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "packagesPath": "/home/victor/.nuget/packages/",
+      "outputPath": "/home/victor/Chirp/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/victor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -96,8 +96,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
-              "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj"
+            "/home/victor/Chirp/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/home/victor/Chirp/SimpleDB/SimpleDB.csproj"
             }
           }
         }
@@ -106,11 +106,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -138,7 +133,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
       }
     }
   }

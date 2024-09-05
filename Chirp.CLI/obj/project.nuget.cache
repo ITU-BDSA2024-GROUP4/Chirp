@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1cEeBNKX7Us=",
+  "dgSpecHash": "CWxttKCLTXYGWbv2B0KTbKUAktotQGdtGNsv+zctaNNyyliOTHop1r7QD/glOrPapUcgUEi8cEVQzXqkPZzuqA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+  "projectFilePath": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Victor\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+    "/home/victor/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
   ],
   "logs": []
 }
