@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Chrip.CLI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab7db7f47c4e7e2ddfa9571078062ca80e59d16d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Chrip.CLI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Chrip.CLI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

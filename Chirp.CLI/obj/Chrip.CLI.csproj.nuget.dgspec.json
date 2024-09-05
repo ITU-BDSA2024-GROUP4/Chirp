@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj": {}
+    "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj": {}
   },
   "projects": {
-    "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj": {
+    "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+        "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
         "projectName": "Chrip.CLI",
-        "projectPath": "/home/victor/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-        "packagesPath": "/home/victor/.nuget/packages/",
-        "outputPath": "/home/victor/Chirp/Chirp.CLI/obj/",
+        "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/victor/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/victor/Chirp/SimpleDB/SimpleDB.csproj": {
-                "projectPath": "/home/victor/Chirp/SimpleDB/SimpleDB.csproj"
+              "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
+                "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj"
               }
             }
           }
@@ -36,6 +36,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -63,21 +68,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/victor/Chirp/SimpleDB/SimpleDB.csproj": {
+    "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/victor/Chirp/SimpleDB/SimpleDB.csproj",
+        "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "/home/victor/Chirp/SimpleDB/SimpleDB.csproj",
-        "packagesPath": "/home/victor/.nuget/packages/",
-        "outputPath": "/home/victor/Chirp/SimpleDB/obj/",
+        "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj",
+        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/victor/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -95,6 +100,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -122,7 +132,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
