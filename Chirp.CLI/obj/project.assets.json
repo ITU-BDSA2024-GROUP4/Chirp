@@ -18,6 +18,9 @@
       "SimpleDB/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1"
+        },
         "compile": {
           "bin/placeholder/SimpleDB.dll": {}
         },
@@ -69,33 +72,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/bergurdavidsen/.nuget/packages/": {}
+    "C:\\Users\\Victor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+      "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/Chrip.CLI.csproj",
-      "packagesPath": "/Users/bergurdavidsen/.nuget/packages/",
-      "outputPath": "/Users/bergurdavidsen/Downloads/Chirp/Chirp.CLI/obj/",
+      "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+      "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/bergurdavidsen/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj": {
-              "projectPath": "/Users/bergurdavidsen/Downloads/Chirp/SimpleDB/SimpleDB.csproj"
+            "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
+              "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj"
             }
           }
         }
@@ -104,6 +106,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -131,7 +138,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
