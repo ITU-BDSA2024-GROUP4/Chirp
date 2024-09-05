@@ -1,6 +1,6 @@
 namespace Chrip.CLI;
 
-public class UserInterface 
+public static class UserInterface 
 {
     public static void cheepPrinter(IEnumerable<Cheep> cheeps)
     {
