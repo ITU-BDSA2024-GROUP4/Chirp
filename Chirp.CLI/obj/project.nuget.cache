@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "meBQQuB7FIE2gNjA8fJuoK5wQ8tFdc6w9ZX2ZApm28Ho7YmLCMIl0FYOJxzyDE2W/8iK/Nr+eaunh5gyVo2LoA==",
+  "dgSpecHash": "SKzkowNge6O5VSSIGbC7XRHmvMqZG+qXGcJpx46U20zIA84INSolTzql7LwRBRSS6IoMuQZUgoG+h9UDbUDwLQ==",
   "success": true,
   "projectFilePath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj",
   "expectedPackageFiles": [
-    "/home/mikcla/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
+    "/home/mikcla/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512",
+    "/home/mikcla/.nuget/packages/docopt.net/0.8.1/docopt.net.0.8.1.nupkg.sha512",
+    "/home/mikcla/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }

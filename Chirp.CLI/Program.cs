@@ -1,27 +1,41 @@
 ﻿using System.Globalization;
 using CsvHelper;
 using SimpleDB;
+using DocoptNet;
 
+const string usage = @"Chirp CLI version.
+
+Usage:
+  chirp read [<limit>]
+  chirp cheep <message>
+  chirp (-h | --help)
+  chirp --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+";
+
+var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 var csvDatabase = new CSVDatabase<Cheep>();
 
-if (args[0] == "read")
+if (arguments["read"].IsTrue)
 {
     try
     {
         IEnumerable<Cheep> cheeps;
+		int limit = arguments["<limit>"].AsInt;
 
-        if (args.Length > 1)
+        if (limit > 1)
         {
-            cheeps = csvDatabase.Read(int.Parse(args[1]));
+            cheeps = csvDatabase.Read(limit);
         }
         else
         {
             cheeps = csvDatabase.Read();
         }
 
-        {
-            UserInterface.PrintCheeps(cheeps);
-        }
+		UserInterface.PrintCheeps(cheeps);
     }
     catch (IOException e)
     {
@@ -29,11 +43,13 @@ if (args[0] == "read")
         Console.WriteLine(e.Message);
     }
 }
-else if (args[0] == "cheep")
+else if (arguments["cheep"].IsTrue)
 {
     string author = Environment.UserName;
     DateTimeOffset timestamp = DateTime.UtcNow;
-    csvDatabase.Store(new Cheep(author, args[1], timestamp.ToUnixTimeSeconds()));
+	string message = arguments["<message>"].ToString();
+
+    csvDatabase.Store(new Cheep(author, message, timestamp.ToUnixTimeSeconds()));
 
     Console.WriteLine("Cheeped!");
 }

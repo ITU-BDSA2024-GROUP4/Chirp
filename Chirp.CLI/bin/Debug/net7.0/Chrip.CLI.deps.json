@@ -9,7 +9,8 @@
       "Chrip.CLI/1.0.0": {
         "dependencies": {
           "CsvHelper": "33.0.1",
-          "SimpleDB": "1.0.0"
+          "SimpleDB": "1.0.0",
+          "docopt.net": "0.8.1"
         },
         "runtime": {
           "Chrip.CLI.dll": {}
@@ -23,6 +24,18 @@
           }
         }
       },
+      "docopt.net/0.8.1": {
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/DocoptNet.dll": {
+            "assemblyVersion": "0.8.1.0",
+            "fileVersion": "0.8.1.0"
+          }
+        }
+      },
+      "System.ValueTuple/4.5.0": {},
       "SimpleDB/1.0.0": {
         "dependencies": {
           "CsvHelper": "33.0.1"
@@ -45,6 +58,20 @@
       "sha512": "sha512-fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
       "path": "csvhelper/33.0.1",
       "hashPath": "csvhelper.33.0.1.nupkg.sha512"
+    },
+    "docopt.net/0.8.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gCamJ95tJsmQVWYTPnOwZu43vTAIko0S6sW8sjC/LcIpfhxfcg9bwc/DvUQn6HHJizViV6NJj7sgDcmcud4cfA==",
+      "path": "docopt.net/0.8.1",
+      "hashPath": "docopt.net.0.8.1.nupkg.sha512"
+    },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "SimpleDB/1.0.0": {
       "type": "project",
