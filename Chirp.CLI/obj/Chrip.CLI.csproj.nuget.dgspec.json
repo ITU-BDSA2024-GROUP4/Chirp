@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj": {}
+    "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj": {
+    "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
+        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj",
         "projectName": "Chrip.CLI",
-        "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\Chrip.CLI.csproj",
-        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\Chirp.CLI\\obj\\",
+        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+        "packagesPath": "/home/mikcla/.nuget/packages/",
+        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/mikcla/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
-                "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj"
+              "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj": {
+                "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj"
               }
             }
           }
@@ -36,11 +36,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -68,21 +63,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj": {
+    "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj",
+        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\SimpleDB.csproj",
-        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Victor\\Music\\Chirp\\SimpleDB\\obj\\",
+        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj",
+        "packagesPath": "/home/mikcla/.nuget/packages/",
+        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/mikcla/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -100,11 +95,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -132,7 +122,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
         }
       }
     }
