@@ -45,6 +45,10 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[33.0.1, )"
+            },
+            "docopt.net": {
+              "target": "Package",
+              "version": "[0.8.1, )"
             }
           },
           "imports": [

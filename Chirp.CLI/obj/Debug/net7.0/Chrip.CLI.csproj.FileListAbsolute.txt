@@ -120,3 +120,4 @@ C:/Users/Victor/Music/Chirp/Chirp.CLI/obj/Debug/net7.0/Chrip.CLI.genruntimeconfi
 C:/Users/Victor/Music/Chirp/Chirp.CLI/obj/Debug/net7.0/ref/Chrip.CLI.dll
 /mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/bin/Debug/net7.0/SimpleDB.dll
 /mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/bin/Debug/net7.0/SimpleDB.pdb
+/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/bin/Debug/net7.0/DocoptNet.dll
