@@ -1,0 +1,72 @@
+﻿name: publish.yml
+
+on:
+  push: 
+    branches: [ "main" ]
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+        
+  release:
+    
+    name: Release
+    
+    strategy:
+      matrix:
+        kind: ['linux', 'windows', 'macOS', 'macOSArm']
+        include:
+          - kind: linux
+            os: ubuntu-latest
+            target: linux-x64
+          - kind: windows
+            os: windows-latest
+            target: win-x64
+          - kind: macOS
+            os: macos-latest
+            target: osx-x64
+          - kind: macOSArm
+            os: macos-latest
+            target: osx-arm64
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build for ${{ matrix.kind }}
+        run: |
+          dotnet publish -c Release -r ${{ matrix.target }} --self-contained --output ./publish-${{ matrix.target }}
+
+      - name: Create zip for ${{ matrix.kind }}
+        run: |
+          zip -r build-${{ matrix.target }}.zip ./publish-${{ matrix.target }}
+
+      - name: Upload build artifact for ${{ matrix.kind }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.target }}
+          path: build-${{ matrix.target }}.zip
