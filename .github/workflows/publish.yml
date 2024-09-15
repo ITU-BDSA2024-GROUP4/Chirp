@@ -44,10 +44,10 @@ jobs:
           - kind: macOSArm
             os: macos-latest
             target: osx-arm64
+            
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
       - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
