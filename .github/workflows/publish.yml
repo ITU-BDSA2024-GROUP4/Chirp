@@ -37,21 +37,27 @@ jobs:
         run: dotnet restore  
       - name: Publish
         run: |
+          mkdir src/Chirp.CLI/tmpRelease
+          
           dotnet publish -c Release -r win-x64
-          zip -j src/Chirp.CLI/bin/Release/net7.0/release/win-x64/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/Chrip.CLI.exe
+          zip -j src/Chirp.CLI/tmpRelease/win-x64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/Chrip.CLI.exe
           
           dotnet publish -c Release -r linux-x64
-          tar -czf src/Chirp.CLI/bin/Release/net7.0/release/linux-x64/Chrip.CLI.tar.gz -C src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish Chrip.CLI
+          tar -czf src/Chirp.CLI/tmpRelease/linux-x64-Chrip.CLI.tar.gz -C src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish Chrip.CLI
 
           dotnet publish -c Release -r osx-x64
-          zip -j src/Chirp.CLI/bin/Release/net7.0/release/osx-x64/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/Chrip.CLI
+          zip -j src/Chirp.CLI/tmpRelease/osx-x64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/Chrip.CLI
 
           dotnet publish -c Release -r osx-arm64
-          zip -j src/Chirp.CLI/bin/Release/net7.0/release/osx-arm64/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/Chrip.CLI
+          zip -j src/Chirp.CLI/tmpRelease/osx-arm64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/Chrip.CLI
           
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "src/Chirp.CLI/bin/Release/net7.0/release/*"
+          files: "src/Chirp.CLI/tmpRelease/*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Remove tmp folder
+        run:
+          rm -rf src/Chirp.CLI/tmpRelease/
