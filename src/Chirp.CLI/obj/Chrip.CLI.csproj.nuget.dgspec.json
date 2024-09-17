@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj": {}
+    "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {}
   },
   "projects": {
-    "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj": {
+    "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
         "projectName": "Chrip.CLI",
-        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/Chrip.CLI.csproj",
+        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
         "packagesPath": "/home/mikcla/.nuget/packages/",
-        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/Chirp.CLI/obj/",
+        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mikcla/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj": {
-                "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj"
+              "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
+                "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj"
               }
             }
           }
@@ -62,6 +62,68 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.osx-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.linux-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.osx-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.osx-x64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-arm64",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[7.0.19, 7.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -69,16 +131,33 @@
           },
           "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
         }
+      },
+      "runtimes": {
+        "linux-x64": {
+          "#import": []
+        },
+        "osx-arm64": {
+          "#import": []
+        },
+        "osx-x64": {
+          "#import": []
+        },
+        "win-arm64": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        }
       }
     },
-    "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj": {
+    "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj",
+        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/SimpleDB.csproj",
+        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
         "packagesPath": "/home/mikcla/.nuget/packages/",
-        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/SimpleDB/obj/",
+        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mikcla/.nuget/NuGet/NuGet.Config"
@@ -127,6 +206,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "osx-arm64": {
+          "#import": []
         }
       }
     }
