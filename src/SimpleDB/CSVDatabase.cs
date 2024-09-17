@@ -14,7 +14,7 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
         FilePath = Directory.GetCurrentDirectory();
         string pattern = @"[^/]+$";
         Regex regex = new Regex(pattern);
-        match = regex.Match(FilePath);
+        Match match = regex.Match(FilePath);
         while (match.Value != "Chirp") {
             FilePath = System.IO.Directory.GetParent(FilePath).FullName;
             match = regex.Match(FilePath);
