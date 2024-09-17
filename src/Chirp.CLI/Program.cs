@@ -25,7 +25,7 @@ Options:
     public static void Main(string[] args)
     {
         var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
-        var csvDatabase = new CSVDatabase<Cheep>("../../data/chirp_cli_db.csv");
+        var csvDatabase = new CSVDatabase<Cheep>();
 
         if (arguments["read"].IsTrue)
         {

@@ -19,7 +19,7 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
             FilePath = System.IO.Directory.GetParent(FilePath).FullName;
             match = regex.Match(FilePath);
         }
-        FilePath += "/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
+        FilePath += "/data/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
     }
     
     public IEnumerable<T> Read(int? limit = null) 
