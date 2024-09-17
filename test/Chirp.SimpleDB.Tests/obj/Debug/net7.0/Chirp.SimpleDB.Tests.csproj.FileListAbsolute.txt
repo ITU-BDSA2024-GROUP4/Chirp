@@ -198,3 +198,7 @@
 /mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/obj/Debug/net7.0/Chirp.SimpleDB.Tests.csproj.CopyComplete
 /mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/obj/Debug/net7.0/Chirp.SimpleDB.Tests.genruntimeconfig.cache
 /mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/obj/Debug/net7.0/ref/Chirp.SimpleDB.Tests.dll
+/home/victor/Chirp/test/Chirp.SimpleDB.Tests/bin/Debug/net7.0/CoverletSourceRootsMapping
+/home/victor/Chirp/test/Chirp.SimpleDB.Tests/bin/Debug/net7.0/CsvHelper.dll
+/home/victor/Chirp/test/Chirp.SimpleDB.Tests/bin/Debug/net7.0/SimpleDB.dll
+/home/victor/Chirp/test/Chirp.SimpleDB.Tests/bin/Debug/net7.0/SimpleDB.pdb

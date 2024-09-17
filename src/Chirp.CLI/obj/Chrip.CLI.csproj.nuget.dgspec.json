@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {}
+    "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {}
   },
   "projects": {
-    "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {
+    "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
+        "projectUniqueName": "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
         "projectName": "Chrip.CLI",
-        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
-        "packagesPath": "/home/mikcla/.nuget/packages/",
-        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/obj/",
+        "projectPath": "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
+        "packagesPath": "/home/victor/.nuget/packages/",
+        "outputPath": "/home/victor/Chirp/src/Chirp.CLI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mikcla/.nuget/NuGet/NuGet.Config"
+          "/home/victor/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
-                "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj"
+              "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj": {
+                "projectPath": "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj"
               }
             }
           }
@@ -90,17 +90,17 @@
         }
       }
     },
-    "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
+    "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
+        "projectUniqueName": "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
-        "packagesPath": "/home/mikcla/.nuget/packages/",
-        "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/obj/",
+        "projectPath": "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj",
+        "packagesPath": "/home/victor/.nuget/packages/",
+        "outputPath": "/home/victor/Chirp/src/SimpleDB/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mikcla/.nuget/NuGet/NuGet.Config"
+          "/home/victor/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"

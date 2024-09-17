@@ -9,20 +9,38 @@ using System.Text.RegularExpressions;
 public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 {
     string FilePath;
-    public CSVDatabase() {
+    private static CSVDatabase<T> instance = null;
+    private static readonly object padlock = new object();
+
+    public CSVDatabase() {    
+        
         FilePath = Directory.GetCurrentDirectory();
         string pattern = @"[^/]+$";
         Regex regex = new Regex(pattern);
         Match match = regex.Match(FilePath);
         
-        while (match.Value != "Chirp") {
+        while (match.Value != "Chirp") 
+        {
             FilePath = System.IO.Directory.GetParent(FilePath).FullName;
             match = regex.Match(FilePath);
         }
         
         FilePath += "/data/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
     }
-    
+    public static CSVDatabase<T> Instance 
+    {
+        get 
+        {
+            lock(padlock) 
+            {
+                if (instance == null) 
+                {
+                    instance = new CSVDatabase<T>();
+                }
+                return instance;
+            }
+        }
+    }
     public IEnumerable<T> Read(int? limit = null) 
     {
         try

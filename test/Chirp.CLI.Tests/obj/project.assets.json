@@ -6279,19 +6279,19 @@
     ]
   },
   "packageFolders": {
-    "/home/mikcla/.nuget/packages/": {}
+    "/home/victor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj",
+      "projectUniqueName": "/home/victor/Chirp/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj",
       "projectName": "Chirp.CLI.Tests",
-      "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj",
-      "packagesPath": "/home/mikcla/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.CLI.Tests/obj/",
+      "projectPath": "/home/victor/Chirp/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj",
+      "packagesPath": "/home/victor/.nuget/packages/",
+      "outputPath": "/home/victor/Chirp/test/Chirp.CLI.Tests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mikcla/.nuget/NuGet/NuGet.Config"
+        "/home/victor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -6303,8 +6303,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {
-              "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj"
+            "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj": {
+              "projectPath": "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj"
             }
           }
         }
