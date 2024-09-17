@@ -68,59 +68,11 @@
               "version": "[7.0.19, 7.0.19]"
             },
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.osx-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
               "name": "Microsoft.NETCore.App.Host.linux-x64",
               "version": "[7.0.19, 7.0.19]"
             },
             {
-              "name": "Microsoft.NETCore.App.Host.osx-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.osx-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
               "name": "Microsoft.NETCore.App.Runtime.linux-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.osx-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.osx-x64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-arm64",
-              "version": "[7.0.19, 7.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
               "version": "[7.0.19, 7.0.19]"
             }
           ],
@@ -134,18 +86,6 @@
       },
       "runtimes": {
         "linux-x64": {
-          "#import": []
-        },
-        "osx-arm64": {
-          "#import": []
-        },
-        "osx-x64": {
-          "#import": []
-        },
-        "win-arm64": {
-          "#import": []
-        },
-        "win-x64": {
           "#import": []
         }
       }
@@ -206,11 +146,6 @@
             }
           },
           "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "osx-arm64": {
-          "#import": []
         }
       }
     }

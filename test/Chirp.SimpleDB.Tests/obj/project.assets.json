@@ -8,6 +8,19 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
+      "CsvHelper/33.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.CodeCoverage/17.3.2": {
         "type": "package",
         "compile": {
@@ -1808,6 +1821,19 @@
         "build": {
           "build/netcoreapp3.1/xunit.runner.visualstudio.props": {}
         }
+      },
+      "SimpleDB/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1"
+        },
+        "compile": {
+          "bin/placeholder/SimpleDB.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SimpleDB.dll": {}
+        }
       }
     }
   },
@@ -1861,6 +1887,34 @@
         "coverlet-icon.png",
         "coverlet.collector.3.1.2.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "CsvHelper/33.0.1": {
+      "sha512": "fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
+      "type": "package",
+      "path": "csvhelper/33.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.33.0.1.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net462/CsvHelper.dll",
+        "lib/net462/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net48/CsvHelper.dll",
+        "lib/net48/CsvHelper.xml",
+        "lib/net6.0/CsvHelper.dll",
+        "lib/net6.0/CsvHelper.xml",
+        "lib/net7.0/CsvHelper.dll",
+        "lib/net7.0/CsvHelper.xml",
+        "lib/net8.0/CsvHelper.dll",
+        "lib/net8.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
     "Microsoft.CodeCoverage/17.3.2": {
@@ -6103,30 +6157,36 @@
         "xunit.runner.visualstudio.2.4.5.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "SimpleDB/1.0.0": {
+      "type": "project",
+      "path": "../../src/SimpleDB/SimpleDB.csproj",
+      "msbuildProject": "../../src/SimpleDB/SimpleDB.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Microsoft.NET.Test.Sdk >= 17.3.2",
+      "SimpleDB >= 1.0.0",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.2",
       "xunit.runner.visualstudio >= 2.4.5"
     ]
   },
   "packageFolders": {
-    "/home/victor/.nuget/packages/": {}
+    "/home/mikcla/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/victor/Chirp/test/Chirp.SimpleDB.Tests/Chirp.SimpleDB.Tests.csproj",
+      "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/Chirp.SimpleDB.Tests.csproj",
       "projectName": "Chirp.SimpleDB.Tests",
-      "projectPath": "/home/victor/Chirp/test/Chirp.SimpleDB.Tests/Chirp.SimpleDB.Tests.csproj",
-      "packagesPath": "/home/victor/.nuget/packages/",
-      "outputPath": "/home/victor/Chirp/test/Chirp.SimpleDB.Tests/obj/",
+      "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/Chirp.SimpleDB.Tests.csproj",
+      "packagesPath": "/home/mikcla/.nuget/packages/",
+      "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/test/Chirp.SimpleDB.Tests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/victor/.nuget/NuGet/NuGet.Config"
+        "/home/mikcla/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -6137,7 +6197,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
