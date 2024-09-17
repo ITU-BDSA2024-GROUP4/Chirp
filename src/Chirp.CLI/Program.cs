@@ -34,7 +34,7 @@ Options:
                 IEnumerable<Cheep> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
-                if (limit > 1)
+                if (limit >= 1)
                 {
                     cheeps = csvDatabase.Read(limit);
                 }
