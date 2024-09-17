@@ -104,214 +104,6 @@
           "bin/placeholder/SimpleDB.dll": {}
         }
       }
-    },
-    "net7.0/osx-arm64": {
-      "CsvHelper/33.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "docopt.net/0.8.1": {
-        "type": "package",
-        "dependencies": {
-          "System.ValueTuple": "4.5.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "build": {
-          "build/netstandard2.0/docopt.net.targets": {}
-        }
-      },
-      "System.ValueTuple/4.5.0": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "SimpleDB/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "CsvHelper": "33.0.1"
-        },
-        "compile": {
-          "bin/placeholder/SimpleDB.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SimpleDB.dll": {}
-        }
-      }
-    },
-    "net7.0/osx-x64": {
-      "CsvHelper/33.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "docopt.net/0.8.1": {
-        "type": "package",
-        "dependencies": {
-          "System.ValueTuple": "4.5.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "build": {
-          "build/netstandard2.0/docopt.net.targets": {}
-        }
-      },
-      "System.ValueTuple/4.5.0": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "SimpleDB/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "CsvHelper": "33.0.1"
-        },
-        "compile": {
-          "bin/placeholder/SimpleDB.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SimpleDB.dll": {}
-        }
-      }
-    },
-    "net7.0/win-arm64": {
-      "CsvHelper/33.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "docopt.net/0.8.1": {
-        "type": "package",
-        "dependencies": {
-          "System.ValueTuple": "4.5.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "build": {
-          "build/netstandard2.0/docopt.net.targets": {}
-        }
-      },
-      "System.ValueTuple/4.5.0": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "SimpleDB/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "CsvHelper": "33.0.1"
-        },
-        "compile": {
-          "bin/placeholder/SimpleDB.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SimpleDB.dll": {}
-        }
-      }
-    },
-    "net7.0/win-x64": {
-      "CsvHelper/33.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/CsvHelper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "docopt.net/0.8.1": {
-        "type": "package",
-        "dependencies": {
-          "System.ValueTuple": "4.5.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/DocoptNet.dll": {}
-        },
-        "build": {
-          "build/netstandard2.0/docopt.net.targets": {}
-        }
-      },
-      "System.ValueTuple/4.5.0": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "SimpleDB/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "CsvHelper": "33.0.1"
-        },
-        "compile": {
-          "bin/placeholder/SimpleDB.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SimpleDB.dll": {}
-        }
-      }
     }
   },
   "libraries": {
@@ -418,19 +210,19 @@
     ]
   },
   "packageFolders": {
-    "/home/mikcla/.nuget/packages/": {}
+    "/home/victor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
+      "projectUniqueName": "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
       "projectName": "Chrip.CLI",
-      "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
-      "packagesPath": "/home/mikcla/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/micla/bdsa/Chirp/src/Chirp.CLI/obj/",
+      "projectPath": "/home/victor/Chirp/src/Chirp.CLI/Chrip.CLI.csproj",
+      "packagesPath": "/home/victor/.nuget/packages/",
+      "outputPath": "/home/victor/Chirp/src/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mikcla/.nuget/NuGet/NuGet.Config"
+        "/home/victor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -442,8 +234,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj": {
-              "projectPath": "/mnt/c/Users/micla/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj"
+            "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/home/victor/Chirp/src/SimpleDB/SimpleDB.csproj"
             }
           }
         }
@@ -484,59 +276,11 @@
             "version": "[7.0.19, 7.0.19]"
           },
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.osx-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
             "name": "Microsoft.NETCore.App.Host.linux-x64",
             "version": "[7.0.19, 7.0.19]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.osx-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.osx-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
             "name": "Microsoft.NETCore.App.Runtime.linux-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.osx-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.osx-x64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.win-arm64",
-            "version": "[7.0.19, 7.0.19]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.win-x64",
             "version": "[7.0.19, 7.0.19]"
           }
         ],
@@ -550,18 +294,6 @@
     },
     "runtimes": {
       "linux-x64": {
-        "#import": []
-      },
-      "osx-arm64": {
-        "#import": []
-      },
-      "osx-x64": {
-        "#import": []
-      },
-      "win-arm64": {
-        "#import": []
-      },
-      "win-x64": {
         "#import": []
       }
     }

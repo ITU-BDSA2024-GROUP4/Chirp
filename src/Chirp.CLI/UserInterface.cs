@@ -1,15 +1,22 @@
-﻿namespace SimpleDB;
+﻿using SimpleDB;
 
-public static class UserInterface
+namespace Chirp.CLI;
+
+public class UserInterface
 {
-    public static void PrintCheeps(IEnumerable<Cheep> cheeps)
+    public void PrintCheeps(IEnumerable<Cheep> cheeps)
     {
         DateTimeOffset timestamp;
 
         foreach (Cheep cheep in cheeps)
         {
-            timestamp = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp).ToLocalTime();
+            timestamp = ConvertTime(cheep.Timestamp);
             Console.WriteLine($"{cheep.Author} @ {timestamp.DateTime}: {cheep.Message}");
         }
+    }
+    
+    public DateTimeOffset ConvertTime(long unixTime)
+    {
+        return DateTimeOffset.FromUnixTimeSeconds(unixTime).ToLocalTime();
     }
 }
