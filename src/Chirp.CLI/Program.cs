@@ -25,7 +25,7 @@ Options:
     public static void Main(string[] args)
     {
         var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
-        var csvDatabase = new CSVDatabase<Cheep>();
+        var csvDatabase = new CSVDatabase<Cheep>("../../data/chirp_cli_db.csv");
 
         if (arguments["read"].IsTrue)
         {
@@ -34,7 +34,7 @@ Options:
                 IEnumerable<Cheep> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
-                if (limit > 1)
+                if (limit >= 1)
                 {
                     cheeps = csvDatabase.Read(limit);
                 }

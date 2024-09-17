@@ -5,7 +5,12 @@ using System.Globalization;
 using CsvHelper;
 public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 {
-    const string FILE = "../../chirp_cli_db.csv";
+    string FILE;
+    public CSVDatabase(string filePath)
+    {
+        this.FILE = filePath;
+    }
+    
     public IEnumerable<T> Read(int? limit = null) 
     {
         try
@@ -14,7 +19,7 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
             using CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             {
                 List<T> csvList = csvReader.GetRecords<T>().ToList();
-                
+
                 if (limit == null) 
                 {
                     return csvList;
