@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using CsvHelper;
+﻿using CsvHelper;
 using SimpleDB;
 using DocoptNet;
 

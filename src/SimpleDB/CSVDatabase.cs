@@ -1,6 +1,5 @@
 namespace SimpleDB;
 
-using System.ComponentModel.Design;
 using System.Globalization;
 using CsvHelper;
 using System;
@@ -15,10 +14,12 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
         string pattern = @"[^/]+$";
         Regex regex = new Regex(pattern);
         Match match = regex.Match(FilePath);
+        
         while (match.Value != "Chirp") {
             FilePath = System.IO.Directory.GetParent(FilePath).FullName;
             match = regex.Match(FilePath);
         }
+        
         FilePath += "/data/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
     }
     
