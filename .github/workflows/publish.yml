@@ -38,17 +38,21 @@ jobs:
       - name: Publish
         run: |
           dotnet publish -c Release -r win-x64
-          zip -j bin/Release/net7.0/win-x64/Chirp.CLI.zip bin/Release/net7.0/win-x64/publish/Chirp.CLI.exe
-          rm bin/Release/net7.0/win-x64/publish/Chirp.CLI.exe
+          zip -j src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/Chrip.CLI.exe
+          rm src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/Chrip.CLI.exe
+          rm src/Chirp.CLI/bin/Release/net7.0/win-x64/publish/SimpleDB.pdb
           
           dotnet publish -c Release -r linux-x64
-          tar -czf bin/Release/net7.0/linux-x64/Chirp.CLI.tar.gz -C bin/Release/net7.0/linux-x64/publish/Chirp.CLI
-          rm bin/Release/net7.0/linux-x64/publish/Chirp.CLI
+          tar -czf src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish/Chrip.CLI.tar.gz -C src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/linux-x64/publish/SimpleDB.pdb
 
           dotnet publish -c Release -r osx-x64
-          zip bin/Release/net7.0/osx-x64/Chirp.CLI.zip bin/Release/net7.0/osx-x64/publish/Chirp.CLI
-          rm bin/Release/net7.0/osx-x64/publish/Chirp.CLI
+          zip -j src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/osx-x64/publish/SimpleDB.pdb
 
           dotnet publish -c Release -r osx-arm64
-          zip bin/Release/net7.0/osx-arm64/Chirp.CLI.zip bin/Release/net7.0/osx-arm64/publish/Chirp.CLI
-          rm bin/Release/net7.0/osx-arm64/publish/Chirp.CLI
+          zip -j src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/Chrip.CLI.zip src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/Chrip.CLI
+          rm src/Chirp.CLI/bin/Release/net7.0/osx-arm64/publish/SimpleDB.pdb
