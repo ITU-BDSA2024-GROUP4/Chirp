@@ -3,14 +3,30 @@ namespace SimpleDB;
 using System.ComponentModel.Design;
 using System.Globalization;
 using CsvHelper;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
+
 public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 {
-    const string FILE = "../../chirp_cli_db.csv";
+    string FilePath;
+    public CSVDatabase() {
+        FilePath = Directory.GetCurrentDirectory();
+        string pattern = @"[^/]+$";
+        Regex regex = new Regex(pattern);
+        match = regex.Match(FilePath);
+        while (match.Value != "Chirp") {
+            FilePath = System.IO.Directory.GetParent(FilePath).FullName;
+            match = regex.Match(FilePath);
+        }
+        FilePath += "/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
+    }
+
     public IEnumerable<T> Read(int? limit = null) 
     {
         try
         {
-            using StreamReader reader = new StreamReader(FILE);
+            using StreamReader reader = new StreamReader(FilePath);
             using CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             {
                 List<T> csvList = csvReader.GetRecords<T>().ToList();
@@ -38,12 +54,11 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
             return Enumerable.Empty<T>();
         }
     }
-    
     public record Cheep(string Author, string Message, long Timestamp);
     
     public void Store(T record)
     {
-        using StreamWriter db = new StreamWriter(FILE, true);
+        using StreamWriter db = new StreamWriter(FilePath, true);
         using CsvWriter csvWriter = new CsvWriter(db, CultureInfo.InvariantCulture);
         {
             string author = Environment.UserName;
@@ -54,4 +69,3 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
         }
     }
 }
-
