@@ -5,7 +5,7 @@ using System.Globalization;
 using CsvHelper;
 public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 {
-    const string FILE = "../chirp_cli_db.csv";
+    const string FILE = "../../chirp_cli_db.csv";
     public IEnumerable<T> Read(int? limit = null) 
     {
         try
