@@ -11,7 +11,6 @@
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
     <AssemblyName>Chrip.CLI</AssemblyName>
-    <RuntimeIdentifiers>$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
