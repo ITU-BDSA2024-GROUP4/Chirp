@@ -52,9 +52,8 @@ public class UnitTest1
 		    
 		    process.WaitForExit();
 	    }
-	    
-	    var db = new CSVDatabase<Cheep>();
-	    var read = db.Read(1);
+        
+	    var read = CSVDatabase<Cheep>.Instance.Read(1);
 
 	    foreach (Cheep cheep in read)
 	    {
