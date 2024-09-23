@@ -24,7 +24,6 @@ Options:
     public static void Main(string[] args)
     {
         var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
-        var csvDatabase = new CSVDatabase<Cheep>();
 
         if (arguments["read"].IsTrue)
         {
@@ -35,11 +34,11 @@ Options:
 
                 if (limit >= 1)
                 {
-                    cheeps = csvDatabase.Read(limit);
+                    cheeps = CSVDatabase<Cheep>.Instance.Read(limit);
                 }
                 else
                 {
-                    cheeps = csvDatabase.Read();
+                    cheeps = CSVDatabase<Cheep>.Instance.Read();
                 }
                 var UI = new UserInterface();
                 UI.PrintCheeps(cheeps);
@@ -56,7 +55,7 @@ Options:
             DateTimeOffset timestamp = DateTime.UtcNow;
             string message = arguments["<message>"].ToString();
 
-            csvDatabase.Store(new Cheep(author, message, timestamp.ToUnixTimeSeconds()));
+            CSVDatabase<Cheep>.Instance.Store(new Cheep(author, message, timestamp.ToUnixTimeSeconds()));
 
             Console.WriteLine("Cheeped!");
         }

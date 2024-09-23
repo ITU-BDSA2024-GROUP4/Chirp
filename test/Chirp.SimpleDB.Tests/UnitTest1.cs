@@ -7,13 +7,12 @@ public class UnitTest1
     [Fact]
     public void TestWriteAndRead()
     {
-        var db = new CSVDatabase<Cheep>();
         var message = "big boy";
         var user = "joe";
         DateTimeOffset timestamp = DateTime.UtcNow;
         var cheep = new Cheep(user, message, timestamp.ToUnixTimeSeconds());
-        db.Store(cheep);
-        var read = db.Read(1);
+        CSVDatabase<Cheep>.Instance.Store(cheep);
+        var read = CSVDatabase<Cheep>.Instance.Read(1);
         
         foreach (var joe in read)
         {
