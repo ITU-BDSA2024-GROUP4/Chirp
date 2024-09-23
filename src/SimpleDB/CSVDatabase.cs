@@ -1,84 +1,68 @@
-namespace SimpleDB;
-
 using System.Globalization;
-using CsvHelper;
-using System;
-using System.IO;
 using System.Text.RegularExpressions;
+using CsvHelper;
+
+namespace SimpleDB;
 
 public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 {
-    string FilePath;
-    private static CSVDatabase<T> instance = null;
-    private static readonly object padlock = new object();
+    private readonly string FilePath;
 
-    public CSVDatabase() {    
-        
+    private CSVDatabase()
+    {
         FilePath = Directory.GetCurrentDirectory();
         string pattern = @"[^/]+$";
-        Regex regex = new Regex(pattern);
+        Regex regex = new(pattern);
         Match match = regex.Match(FilePath);
-        
-        while (match.Value != "Chirp") 
+
+        while (match.Value != "Chirp")
         {
-            FilePath = System.IO.Directory.GetParent(FilePath).FullName;
+            FilePath = Directory.GetParent(FilePath).FullName;
             match = regex.Match(FilePath);
         }
-        
+
         FilePath += "/data/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
     }
-    public static CSVDatabase<T> Instance 
-    {
-        get 
-        {
-            lock(padlock) 
-            {
-                if (instance == null) 
-                {
-                    instance = new CSVDatabase<T>();
-                }
-                return instance;
-            }
-        }
-    }
-    public IEnumerable<T> Read(int? limit = null) 
+
+    public static CSVDatabase<T> Instance { get; } = new();
+
+    public IEnumerable<T> Read(int? limit = null)
     {
         try
         {
-            using StreamReader reader = new StreamReader(FilePath);
-            using CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+            using StreamReader reader = new(FilePath);
+            using CsvReader csvReader = new(reader, CultureInfo.InvariantCulture);
             {
                 List<T> csvList = csvReader.GetRecords<T>().ToList();
 
-                if (limit == null) 
+                if (limit == null)
                 {
                     return csvList;
-                } else {
-                    List<T> limitedCsvList = new List<T>();
-                    
-                    for (int i = csvList.Count - 1; i >= csvList.Count - limit; i--) 
-                    {
-                        limitedCsvList.Add(csvList[i]);
-                    }
-                    
-                    return limitedCsvList;
                 }
+
+                List<T> limitedCsvList = new();
+
+                for (int i = csvList.Count - 1; i >= csvList.Count - limit; i--)
+                {
+                    limitedCsvList.Add(csvList[i]);
+                }
+
+                return limitedCsvList;
             }
         }
         catch (IOException e)
         {
             Console.WriteLine("The file could not be read:");
             Console.WriteLine(e.Message);
-            
+
             return Enumerable.Empty<T>();
         }
     }
-    public record Cheep(string Author, string Message, long Timestamp);
-    
+
     public void Store(T record)
     {
-        using StreamWriter db = new StreamWriter(FilePath, true);
-        using CsvWriter csvWriter = new CsvWriter(db, CultureInfo.InvariantCulture);
+        using StreamWriter db = new(FilePath, true);
+        using CsvWriter csvWriter = new(db, CultureInfo.InvariantCulture);
         {
             string author = Environment.UserName;
             DateTimeOffset timestamp = DateTime.UtcNow;
@@ -87,4 +71,6 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
             csvWriter.WriteRecord(record);
         }
     }
+
+    public record Cheep(string Author, string Message, long Timestamp);
 }
