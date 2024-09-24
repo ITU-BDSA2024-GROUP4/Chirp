@@ -13,8 +13,7 @@
     <list default="true" id="6ec67b42-be46-4a26-9633-67a90a5a8ee9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/chirp_cli_db.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/chirp_cli_db.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Chirp.CSVDBService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Chirp.CLI.Tests/UnitTest1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/test/Chirp.CLI.Tests/UnitTest1.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +133,7 @@
       <workItem from="1727168477730" duration="1491000" />
       <workItem from="1727170005128" duration="4252000" />
       <workItem from="1727181886050" duration="651000" />
-      <workItem from="1727182557540" duration="4658000" />
+      <workItem from="1727182557540" duration="6041000" />
     </task>
     <servers />
   </component>
