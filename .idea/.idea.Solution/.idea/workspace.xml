@@ -11,15 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ec67b42-be46-4a26-9633-67a90a5a8ee9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/Chirp.CSVDBService.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/Properties/launchSettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solution.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/chirp_cli_db.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/chirp_cli_db.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimpleDB/CSVDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimpleDB/CSVDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/UserInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/UserInterface.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +39,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;36-refactor-the-csv-database-to-a-web-service&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;39-refactor-chirp-cli-client-to-use-the-csv-database-web-service&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -135,6 +129,9 @@
       <workItem from="1726612296074" duration="324000" />
       <workItem from="1726612782695" duration="1598000" />
       <workItem from="1727100389066" duration="1864000" />
+      <workItem from="1727168312340" duration="134000" />
+      <workItem from="1727168477730" duration="1491000" />
+      <workItem from="1727170005128" duration="1877000" />
     </task>
     <servers />
   </component>

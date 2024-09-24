@@ -1,14 +1,17 @@
-﻿using CsvHelper;
-using SimpleDB;
+﻿using System.Net.Http.Headers;
+using System.Text.Json.Nodes;
 using DocoptNet;
+
+
+using SimpleDB;
 
 namespace Chirp.CLI;
 
-public class Program {
-    
-    
+public class Program
+{
+    public const string BASEURL = "http://localhost:5141";
 
-    const string usage = @"Chirp CLI version.
+    private const string usage = @"Chirp CLI version.
 
 Usage:
   chirp read [<limit>]
@@ -21,27 +24,37 @@ Options:
   --version     Show version.
 ";
 
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
+        using HttpClient client = new();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        client.BaseAddress = new Uri(BASEURL);
+
+        IDictionary<string, ValueObject>? arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 
         if (arguments["read"].IsTrue)
         {
             try
             {
-                IEnumerable<Cheep> cheeps;
+                Task<IEnumerable<Cheep>> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
                 if (limit >= 1)
                 {
-                    cheeps = CSVDatabase<Cheep>.Instance.Read(limit);
+                    //cheeps = CSVDatabase<Cheep>.Instance.Read(limit);
                 }
                 else
                 {
-                    cheeps = CSVDatabase<Cheep>.Instance.Read();
+                    //cheeps = CSVDatabase<Cheep>.Instance.Read();
+                    await Task.Run(async () =>
+                    {
+                        await ReadCheeps(client, limit);
+                    });
                 }
-                var UI = new UserInterface();
-                UI.PrintCheeps(cheeps);
+
+                UserInterface UI = new();
+                //UI.PrintCheeps(cheeps);
             }
             catch (IOException e)
             {
@@ -64,5 +77,22 @@ Options:
             Console.WriteLine("Command not recognized!");
         }
     }
+
+    public static async Task ReadCheeps(HttpClient client, int? limit = null)
+    {
+        try
+        {
+            using HttpResponseMessage response = await client.GetAsync(BASEURL + "/cheeps");
+            string responseString = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonObject.Parse(responseString);
+            Console.WriteLine(jsonResponse[2]);
+            
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }
+
 public record Cheep(string Author, string Message, long Timestamp);
