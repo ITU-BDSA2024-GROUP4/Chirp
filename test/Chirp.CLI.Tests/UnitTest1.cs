@@ -1,10 +1,7 @@
 using System.Diagnostics;
-
-using SimpleDB;
+using Chirp.CLI;
 
 namespace Chirp.CLI.Tests;
-
-
 
 public class UnitTest1
 {

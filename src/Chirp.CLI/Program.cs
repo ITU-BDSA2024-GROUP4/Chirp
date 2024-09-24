@@ -73,14 +73,13 @@ Options:
         {
             using HttpResponseMessage response = await client.GetAsync(BASEURL + "/cheeps");
             string responseString = await response.Content.ReadAsStringAsync();
-            JsonNode jsonResponse = JsonNode.Parse(responseString);
             
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
 
-            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(jsonResponse, options);
+            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(responseString, options);
 
             if (limit > 0)
             {
