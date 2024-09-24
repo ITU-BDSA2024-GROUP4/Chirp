@@ -40,15 +40,7 @@ Options:
                 List<Cheep> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
-                if (limit >= 1)
-                {
-                    cheeps = null; //Creating an empty list
-
-                }
-                else
-                {
-                    cheeps = await ReadCheeps(client, limit);
-                }
+                cheeps = await ReadCheeps(client, limit);
 
                 UserInterface UI = new();
                 UI.PrintCheeps(cheeps);
@@ -88,8 +80,14 @@ Options:
                 PropertyNameCaseInsensitive = true
             };
 
-            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(jsonResponse,options);
+            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(jsonResponse, options);
 
+            if (limit > 0)
+            {
+                return cheeps.TakeLast(limit.Value).ToList();
+                
+            }
+            
             return cheeps;
         }
         catch (HttpRequestException e)
