@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using DocoptNet;
@@ -54,10 +55,9 @@ Options:
         else if (arguments["cheep"].IsTrue)
         {
             string author = Environment.UserName;
-            DateTimeOffset timestamp = DateTime.UtcNow;
             string message = arguments["<message>"].ToString();
-
-            CSVDatabase<Cheep>.Instance.Store(new Cheep(author, message, timestamp.ToUnixTimeSeconds()));
+            
+            await WriteCheep(client, author, message, DateTime.Now);
 
             Console.WriteLine("Cheeped!");
         }
@@ -94,6 +94,23 @@ Options:
         {
             Console.WriteLine(e.Message);
             return null;
+        }
+    }
+    
+    public static async Task WriteCheep(HttpClient client, string author, string message, DateTimeOffset timestamp)
+    {
+        try
+        {
+            Cheep cheep = new Cheep(author, message, timestamp.ToUnixTimeSeconds());
+
+            JsonContent jsonCheep = JsonContent.Create(cheep);
+            
+            await client.PostAsync(BASEURL + "/cheep", jsonCheep);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }
