@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using DocoptNet;
-
 
 using SimpleDB;
 
@@ -37,24 +37,21 @@ Options:
         {
             try
             {
-                Task<IEnumerable<Cheep>> cheeps;
+                List<Cheep> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
                 if (limit >= 1)
                 {
-                    //cheeps = CSVDatabase<Cheep>.Instance.Read(limit);
+                    cheeps = null; //Creating an empty list
+
                 }
                 else
                 {
-                    //cheeps = CSVDatabase<Cheep>.Instance.Read();
-                    await Task.Run(async () =>
-                    {
-                        await ReadCheeps(client, limit);
-                    });
+                    cheeps = await ReadCheeps(client, limit);
                 }
 
                 UserInterface UI = new();
-                //UI.PrintCheeps(cheeps);
+                UI.PrintCheeps(cheeps);
             }
             catch (IOException e)
             {
@@ -78,19 +75,27 @@ Options:
         }
     }
 
-    public static async Task ReadCheeps(HttpClient client, int? limit = null)
+    public static async Task<List<Cheep>> ReadCheeps(HttpClient client, int? limit = null)
     {
         try
         {
             using HttpResponseMessage response = await client.GetAsync(BASEURL + "/cheeps");
             string responseString = await response.Content.ReadAsStringAsync();
-            var jsonResponse = JsonObject.Parse(responseString);
-            Console.WriteLine(jsonResponse[2]);
+            JsonNode jsonResponse = JsonNode.Parse(responseString);
             
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(jsonResponse,options);
+
+            return cheeps;
         }
         catch (HttpRequestException e)
         {
             Console.WriteLine(e.Message);
+            return null;
         }
     }
 }

@@ -13,7 +13,6 @@
     <list default="true" id="6ec67b42-be46-4a26-9633-67a90a5a8ee9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/UserInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/UserInterface.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +130,7 @@
       <workItem from="1727100389066" duration="1864000" />
       <workItem from="1727168312340" duration="134000" />
       <workItem from="1727168477730" duration="1491000" />
-      <workItem from="1727170005128" duration="1877000" />
+      <workItem from="1727170005128" duration="4252000" />
     </task>
     <servers />
   </component>
