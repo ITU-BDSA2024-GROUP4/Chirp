@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <PublishRelease>true</PublishRelease>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
     <AssemblyName>Chirp.CSVDBService</AssemblyName>
