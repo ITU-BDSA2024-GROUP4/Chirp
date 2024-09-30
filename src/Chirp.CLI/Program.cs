@@ -9,8 +9,8 @@ namespace Chirp.CLI;
 
 public class Program
 {
-    public const string BASEURL = "https://bdsagroup4chirpremotedb.azurewebsites.net/";
-    
+    //public const string BASEURL = "https://bdsagroup4chirpremotedb.azurewebsites.net/";
+    public const string BASEURL = "http://localhost:5141";
     private const string usage = @"Chirp CLI version.
 
 Usage:
@@ -72,21 +72,24 @@ Options:
         {
             using HttpResponseMessage response = await client.GetAsync(BASEURL + "/cheeps");
             string responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
             
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
-
-            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(responseString, options);
-
+           
+                List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(responseString, options);
+            
             if (limit > 0)
             {
                 return cheeps.TakeLast(limit.Value).ToList();
                 
             }
             
+            
             return cheeps;
+        
         }
         catch (HttpRequestException e)
         {
