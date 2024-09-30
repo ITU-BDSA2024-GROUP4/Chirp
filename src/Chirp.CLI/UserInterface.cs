@@ -1,6 +1,4 @@
-﻿using SimpleDB;
-
-namespace Chirp.CLI;
+﻿namespace Chirp.CLI;
 
 public class UserInterface
 {
@@ -14,7 +12,7 @@ public class UserInterface
             Console.WriteLine($"{cheep.Author} @ {timestamp.DateTime}: {cheep.Message}");
         }
     }
-    
+
     public DateTimeOffset ConvertTime(long unixTime)
     {
         return DateTimeOffset.FromUnixTimeSeconds(unixTime).ToLocalTime();

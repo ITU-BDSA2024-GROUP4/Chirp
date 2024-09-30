@@ -1,14 +1,17 @@
-﻿using CsvHelper;
-using SimpleDB;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text.Json;
 using DocoptNet;
+
+using SimpleDB;
 
 namespace Chirp.CLI;
 
-public class Program {
+public class Program
+{
+    public const string BASEURL = "https://bdsagroup4chirpremotedb.azurewebsites.net/";
     
-    
-
-    const string usage = @"Chirp CLI version.
+    private const string usage = @"Chirp CLI version.
 
 Usage:
   chirp read [<limit>]
@@ -21,26 +24,25 @@ Options:
   --version     Show version.
 ";
 
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
+        using HttpClient client = new();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        client.BaseAddress = new Uri(BASEURL);
+
+        IDictionary<string, ValueObject>? arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 
         if (arguments["read"].IsTrue)
         {
             try
             {
-                IEnumerable<Cheep> cheeps;
+                List<Cheep> cheeps;
                 int limit = arguments["<limit>"].AsInt;
 
-                if (limit >= 1)
-                {
-                    cheeps = CSVDatabase<Cheep>.Instance.Read(limit);
-                }
-                else
-                {
-                    cheeps = CSVDatabase<Cheep>.Instance.Read();
-                }
-                var UI = new UserInterface();
+                cheeps = await ReadCheeps(client, limit);
+
+                UserInterface UI = new();
                 UI.PrintCheeps(cheeps);
             }
             catch (IOException e)
@@ -52,10 +54,9 @@ Options:
         else if (arguments["cheep"].IsTrue)
         {
             string author = Environment.UserName;
-            DateTimeOffset timestamp = DateTime.UtcNow;
             string message = arguments["<message>"].ToString();
-
-            CSVDatabase<Cheep>.Instance.Store(new Cheep(author, message, timestamp.ToUnixTimeSeconds()));
+            
+            await WriteCheep(client, author, message, DateTime.Now);
 
             Console.WriteLine("Cheeped!");
         }
@@ -64,5 +65,52 @@ Options:
             Console.WriteLine("Command not recognized!");
         }
     }
+
+    public static async Task<List<Cheep>> ReadCheeps(HttpClient client, int? limit = null)
+    {
+        try
+        {
+            using HttpResponseMessage response = await client.GetAsync(BASEURL + "/cheeps");
+            string responseString = await response.Content.ReadAsStringAsync();
+            
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            List<Cheep> cheeps = JsonSerializer.Deserialize<List<Cheep>>(responseString, options);
+
+            if (limit > 0)
+            {
+                return cheeps.TakeLast(limit.Value).ToList();
+                
+            }
+            
+            return cheeps;
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e.Message);
+            return null;
+        }
+    }
+    
+    public static async Task WriteCheep(HttpClient client, string author, string message, DateTimeOffset timestamp)
+    {
+        try
+        {
+            Cheep cheep = new Cheep(author, message, timestamp.ToUnixTimeSeconds());
+
+            JsonContent jsonCheep = JsonContent.Create(cheep);
+            
+            await client.PostAsync(BASEURL + "/cheep", jsonCheep);
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
+
 public record Cheep(string Author, string Message, long Timestamp);

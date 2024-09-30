@@ -3,10 +3,7 @@ using SimpleDB;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 WebApplication app = builder.Build();
 
-
-app.MapPost("/cheep",
-    () => CSVDatabase<Cheep>.Instance.Store(new Cheep("The Rizzler", "SUP GIRL",
-        DateTimeOffset.UtcNow.ToUnixTimeSeconds())));
+app.MapPost("/cheep", (Cheep cheep) => CSVDatabase<Cheep>.Instance.Store(cheep));
 
 app.MapGet("/cheeps", () => CSVDatabase<Cheep>.Instance.Read());
 

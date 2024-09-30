@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Chirp.CLI\Chrip.CLI.csproj" />
+    <ProjectReference Include="..\..\src\Chirp.CLI\Chirp.CLI.csproj" />
   </ItemGroup>
 
 </Project>

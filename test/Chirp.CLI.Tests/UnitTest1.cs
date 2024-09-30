@@ -1,9 +1,7 @@
 using System.Diagnostics;
-using SimpleDB;
+using Chirp.CLI;
 
 namespace Chirp.CLI.Tests;
-
-
 
 public class UnitTest1
 {
@@ -43,6 +41,8 @@ public class UnitTest1
     [Fact]
     public void End2End2()
     {
+        string output;
+        
 	    using (var process = new Process())
 	    {
 		    process.StartInfo.FileName = "../../../../../src/Chirp.CLI/bin/Debug/net7.0/linux-x64/Chrip.CLI";
@@ -51,13 +51,18 @@ public class UnitTest1
 		    process.Start();
 		    
 		    process.WaitForExit();
+            
+            process.StartInfo.Arguments = "read 1";
+            process.StartInfo.RedirectStandardOutput = true;
+            process.Start();
+            
+            output = process.StandardOutput.ReadToEnd();
+            
+            process.WaitForExit();
 	    }
-        
-	    var read = CSVDatabase<Cheep>.Instance.Read(1);
 
-	    foreach (Cheep cheep in read)
-	    {
-		    Assert.Equal("Hello!!!", cheep.Message);
-	    }
+        output = output.Split(' ').Last().Trim();
+        
+        Assert.Equal("Hello!!!", output);
     }
 }
