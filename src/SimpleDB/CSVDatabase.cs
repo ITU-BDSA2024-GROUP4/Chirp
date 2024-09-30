@@ -10,18 +10,7 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 
     private CSVDatabase()
     {
-        FilePath = Directory.GetCurrentDirectory();
-        string pattern = @"[^/]+$";
-        Regex regex = new(pattern);
-        Match match = regex.Match(FilePath);
-
-        while (match.Value != "Chirp")
-        {
-            FilePath = Directory.GetParent(FilePath).FullName;
-            match = regex.Match(FilePath);
-        }
-
-        FilePath += "/data/chirp_cli_db.csv"; //Here: the path from the root of the project to the data file
+        FilePath = "chirp_cli_db.csv";
     }
 
     public static CSVDatabase<T> Instance { get; } = new();
