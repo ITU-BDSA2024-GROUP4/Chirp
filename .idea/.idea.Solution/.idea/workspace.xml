@@ -12,14 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ec67b42-be46-4a26-9633-67a90a5a8ee9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/Chirp.CLI.Tests/HttpTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solution/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solution.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Solution.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/chirp_cli_db.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/chirp_cli_db.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/Chrip.CLI.csproj" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CLI/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/test/Chirp.CLI.Tests/Chirp.CLI.Tests.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Chirp.CLI.Tests/UnitTest1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/test/Chirp.CLI.Tests/UnitTest1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chirp.CSVDBService/Chirp.CSVDBService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chirp.CSVDBService/Chirp.CSVDBService.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,20 +36,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "39-refactor-chirp-cli-client-to-use-the-csv-database-web-service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;39-refactor-chirp-cli-client-to-use-the-csv-database-web-service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys_rider&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Project.Chrip.CLI">
     <configuration name="Chirp.CLI" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -156,7 +151,8 @@
       <workItem from="1727168477730" duration="1491000" />
       <workItem from="1727170005128" duration="4252000" />
       <workItem from="1727181886050" duration="651000" />
-      <workItem from="1727182557540" duration="10209000" />
+      <workItem from="1727182557540" duration="12820000" />
+      <workItem from="1727718756988" duration="42000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using DocoptNet;
 
 using SimpleDB;
@@ -10,8 +9,8 @@ namespace Chirp.CLI;
 
 public class Program
 {
-    public const string BASEURL = "http://localhost:5141";
-
+    public const string BASEURL = "https://bdsagroup4chirpremotedb.azurewebsites.net/";
+    
     private const string usage = @"Chirp CLI version.
 
 Usage:

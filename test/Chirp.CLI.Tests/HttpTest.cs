@@ -8,7 +8,7 @@ namespace Chirp.CLI.Tests;
 
 public static class HttpTest
 {
-    public const string BASEURL = "http://localhost:5141";
+    public const string BASEURL = "https://bdsagroup4chirpremotedb.azurewebsites.net/";
     
     [Fact]
     public static async void ReadCheepsTest()
