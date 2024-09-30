@@ -40,16 +40,16 @@ jobs:
           mkdir src/Chirp.CLI/tmpRelease
           
           dotnet publish -c Release -r win-x64
-          zip -j src/Chirp.CLI/tmpRelease/win-x64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net8.0/win-x64/publish/Chrip.CLI.exe
+          zip -j src/Chirp.CLI/tmpRelease/win-x64-Chirp.CLI.zip src/Chirp.CLI/bin/Release/net8.0/win-x64/publish/Chirp.CLI.exe
           
           dotnet publish -c Release -r linux-x64
-          tar -czf src/Chirp.CLI/tmpRelease/linux-x64-Chrip.CLI.tar.gz -C src/Chirp.CLI/bin/Release/net8.0/linux-x64/publish Chrip.CLI
+          tar -czf src/Chirp.CLI/tmpRelease/linux-x64-Chirp.CLI.tar.gz -C src/Chirp.CLI/bin/Release/net8.0/linux-x64/publish Chirp.CLI
 
           dotnet publish -c Release -r osx-x64
-          zip -j src/Chirp.CLI/tmpRelease/osx-x64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net8.0/osx-x64/publish/Chrip.CLI
+          zip -j src/Chirp.CLI/tmpRelease/osx-x64-Chirp.CLI.zip src/Chirp.CLI/bin/Release/net8.0/osx-x64/publish/Chirp.CLI
 
           dotnet publish -c Release -r osx-arm64
-          zip -j src/Chirp.CLI/tmpRelease/osx-arm64-Chrip.CLI.zip src/Chirp.CLI/bin/Release/net8.0/osx-arm64/publish/Chrip.CLI
+          zip -j src/Chirp.CLI/tmpRelease/osx-arm64-Chirp.CLI.zip src/Chirp.CLI/bin/Release/net8.0/osx-arm64/publish/Chirp.CLI
           
       - name: Release
         uses: softprops/action-gh-release@v1

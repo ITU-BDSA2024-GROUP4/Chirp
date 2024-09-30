@@ -10,7 +10,7 @@
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
-    <AssemblyName>Chrip.CLI</AssemblyName>
+    <AssemblyName>Chirp.CLI</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

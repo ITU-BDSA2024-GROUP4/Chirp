@@ -20,7 +20,7 @@ public class UnitTest1
 	    
 	    using (var process = new Process())
 	    {
-		    process.StartInfo.FileName = "../../../../../src/Chirp.CLI/bin/Debug/net8.0/linux-x64/Chrip.CLI";
+		    process.StartInfo.FileName = "../../../../../src/Chirp.CLI/bin/Debug/net8.0/linux-x64/Chirp.CLI";
 		    process.StartInfo.WorkingDirectory = "../../../../";
 		    process.StartInfo.Arguments = "read 10";
 		    process.StartInfo.RedirectStandardOutput = true;
@@ -45,7 +45,7 @@ public class UnitTest1
         
 	    using (var process = new Process())
 	    {
-		    process.StartInfo.FileName = "../../../../../src/Chirp.CLI/bin/Debug/net8.0/linux-x64/Chrip.CLI";
+		    process.StartInfo.FileName = "../../../../../src/Chirp.CLI/bin/Debug/net8.0/linux-x64/Chirp.CLI";
 		    process.StartInfo.WorkingDirectory = "../../../../";
 		    process.StartInfo.Arguments = "cheep \"Hello!!!\"";
 		    process.Start();
