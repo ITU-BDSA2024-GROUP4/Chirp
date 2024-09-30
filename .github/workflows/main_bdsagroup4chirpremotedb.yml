@@ -22,10 +22,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build src/Chirp.CSVDBService --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish src/Chirp.CSVDBService -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DDD559A510194B04B5EBD323126BAFF0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BAA2867A518242228818C03DCF199594 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_95DDB04C1913483794E8DA34C544F5F0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8B3953AAF24E4BA7A10A25DF6F28B445 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_14834908887D462C9E53F8518B89DEDC }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A883A6E7B3404EA4B5174F6C66815380 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
