@@ -1,21 +1,22 @@
 using System.Data;
 using System.Diagnostics;
-
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
+using System.Reflection;
 
 namespace Chirp.SQLite;
 
 public class DBFacade : ICheepService
 {
-    private readonly string sqlDBFilePath;
+    private readonly string _sqlDBFilePath;
 
     public DBFacade()
     {
-        sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
+        _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
-        if (sqlDBFilePath == null)
+        if (_sqlDBFilePath == null)
         {
-            sqlDBFilePath = Path.Combine(Path.GetTempPath(), "chirp.db");
+            _sqlDBFilePath =  "/tmp/chirp.db";
             InitDB();
         }
     }
@@ -23,7 +24,7 @@ public class DBFacade : ICheepService
     public List<CheepViewModel> ParseCheeps(SqliteDataReader reader)
     {
         List<CheepViewModel> cheeps = new();
-        
+
         while (reader.Read())
         {
             IDataRecord dataRecord = reader;
@@ -33,13 +34,13 @@ public class DBFacade : ICheepService
             cheeps.Add(new CheepViewModel(username, text,
                 CheepService.UnixTimeStampToDateTimeString(pub_date)));
         }
-        
+
         return cheeps;
     }
-    
+
     public List<CheepViewModel> SQLGetCheeps(SqliteCommand command)
     {
-        using (SqliteConnection connection = new($"Data Source={sqlDBFilePath}"))
+        using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
 
@@ -51,16 +52,16 @@ public class DBFacade : ICheepService
 
     public List<CheepViewModel> GetCheeps()
     {
-        using (SqliteConnection connection = new($"Data Source={sqlDBFilePath}"))
+        using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
-            
+
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = @"SELECT username, text, pub_date 
                                     FROM message m JOIN user u ON 
                                     m.author_id = u.user_id
                                     ORDER BY m.pub_date DESC;";
-            
+
             using SqliteDataReader reader = command.ExecuteReader();
 
             return ParseCheeps(reader);
@@ -69,10 +70,10 @@ public class DBFacade : ICheepService
 
     public List<CheepViewModel> GetCheepsFromAuthor(string author)
     {
-        using (SqliteConnection connection = new($"Data Source={sqlDBFilePath}"))
+        using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
-            
+
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = @"SELECT username, text, pub_date 
                                     FROM message m JOIN user u ON 
@@ -80,7 +81,7 @@ public class DBFacade : ICheepService
                                     WHERE username = @author
                                     ORDER BY m.pub_date DESC;";
             command.Parameters.AddWithValue("@author", author);
-            
+
             using SqliteDataReader reader = command.ExecuteReader();
 
             return ParseCheeps(reader);
@@ -90,12 +91,41 @@ public class DBFacade : ICheepService
     private void InitDB()
     {
         try
-        {
-            Process.Start("../../../../../scripts/initDB.sh");
+        {   
+            var embeddedProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
+
+            var schemaReader = embeddedProvider.GetFileInfo("schema.sql").CreateReadStream();
+            var dumpReader = embeddedProvider.GetFileInfo("dump.sql").CreateReadStream();
+
+            using var schemaStreamReader = new StreamReader(schemaReader);
+            using var dumpStreamReader = new StreamReader(dumpReader);
+
+           var schemaQuery = schemaStreamReader.ReadToEnd();
+            var dumpQuery = dumpStreamReader.ReadToEnd();
+
+            using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
+            {
+                connection.Open();
+
+                SqliteCommand createSchema = connection.CreateCommand();
+                SqliteCommand dumpSchema = connection.CreateCommand();
+
+                createSchema.CommandText = schemaQuery;
+                dumpSchema.CommandText = dumpQuery;
+
+                int rowsCreated = createSchema.ExecuteNonQuery();
+                int rowsInserted = dumpSchema.ExecuteNonQuery();
+
+                Console.WriteLine($"{rowsCreated} rows created");
+                Console.WriteLine($"{rowsInserted} rows inserted");
+
+            }
+
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+
+            Console.WriteLine($"There was an error: {e}\nStacktrace: {e.StackTrace}");
         }
     }
 }

@@ -4,9 +4,13 @@
     <TargetFramework>net$(NETCoreAppMaximumVersion)</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chirp.SQLite\Chirp.SQLite.csproj" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.11" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.8" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../data/**"/>
+  </ItemGroup>
+  
 </Project>
