@@ -1,3 +1,4 @@
+using Chirp.SQLite;
 public record CheepViewModel(string Author, string Message, string Timestamp);
 
 public interface ICheepService
@@ -17,6 +18,7 @@ public class CheepService : ICheepService
 
     public List<CheepViewModel> GetCheeps()
     {
+        DBFacade.Read();
         return _cheeps;
     }
 
