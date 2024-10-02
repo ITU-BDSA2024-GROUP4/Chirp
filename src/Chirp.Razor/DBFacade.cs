@@ -9,6 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.SQLite;
 
+public class CheepingContext : DbContext
+{
+    public DbSet<Author> Author { get; set; }
+    public DbSet<Cheep> Cheep { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite($"Data Source=/tmp/chirp.db");
+}
+
+public class Author
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+} 
+public class Cheep
+{
+    public string Text { get; set; }
+    public int TimeStamp { get; set; }
+}
+
+
+
 public class DBFacade : ICheepService
 {
     private readonly string _sqlDBFilePath;
