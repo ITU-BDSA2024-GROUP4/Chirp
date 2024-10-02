@@ -4,6 +4,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
 using System.Reflection;
 
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 namespace Chirp.SQLite;
 
 public class DBFacade : ICheepService
