@@ -15,7 +15,16 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
-        Cheeps = _service.GetCheeps();
+        
+        var pageQuery = Request.Query["page"].ToString();
+        if(pageQuery == null){
+            
+             Cheeps = _service.GetCheeps(1);
+        } else{
+            _ = int.TryParse(pageQuery, out int page);
+            Cheeps = _service.GetCheeps(page);
+        }
+       
         return Page();
     }
 }
