@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Razor.Pages;
@@ -15,7 +16,17 @@ public class UserTimelineModel : PageModel
 
     public ActionResult OnGet(string author)
     {
-        Cheeps = _service.GetCheepsFromAuthor(author);
+        var pageQuery = Request.Query["page"].ToString();
+        if (pageQuery == null)
+        {
+
+            Cheeps = _service.GetCheepsFromAuthor(author, 1);
+        }
+        else
+        {
+            _ = int.TryParse(pageQuery, out int page);
+            Cheeps = _service.GetCheepsFromAuthor(author, page);
+        }
         return Page();
     }
 }
