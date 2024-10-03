@@ -15,16 +15,20 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
-        
+
         var pageQuery = Request.Query["page"].ToString();
-        if(pageQuery == null){
-            
-             Cheeps = _service.GetCheeps(1);
-        } else{
-            _ = int.TryParse(pageQuery, out int page);
-            Cheeps = _service.GetCheeps(page);
+        if (pageQuery == null)
+        {
+            Cheeps = _service.GetCheeps(0); // default to first page
         }
-       
+        else
+        {
+            _ = int.TryParse(pageQuery, out int page);            
+
+            Cheeps = _service.GetCheeps(page-1); // minus 1 because pages are 0 indexed
+            
+        }
+
         return Page();
     }
 }
