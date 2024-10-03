@@ -20,12 +20,14 @@ public class UserTimelineModel : PageModel
         if (pageQuery == null)
         {
 
-            Cheeps = _service.GetCheepsFromAuthor(author, 1);
+            Cheeps = _service.GetCheepsFromAuthor(author, 0); // default to first page
         }
         else
         {
             _ = int.TryParse(pageQuery, out int page);
-            Cheeps = _service.GetCheepsFromAuthor(author, page);
+
+            
+            Cheeps = _service.GetCheepsFromAuthor(author, page-1);
         }
         return Page();
     }
