@@ -22,14 +22,15 @@ public class Author
 {
     public string Name { get; set; }
     public string Email { get; set; }
-} 
+    public ICollection<Cheep> Cheeps { get; set; }
+}
+
 public class Cheep
 {
     public string Text { get; set; }
     public int TimeStamp { get; set; }
+    public Author Author { get; set; }
 }
-
-
 
 public class DBFacade : ICheepService
 {
