@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
@@ -10,15 +11,22 @@ public class CheepDBContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlite("Data Source=/tmp/chirp.db");
     
-    public CheepDBContext(DbContextOptions<CheepDBContext> options) {
-        
+    private readonly DbContextOptions<CheepDBContext> _options;
+
+    public CheepDBContext(DbContextOptions<CheepDBContext> options)
+    {
+        _options = options;
     }
 }
 
 public class Author
 {
     public string Name { get; set; }
+    [Key]
     public string Email { get; set; }
     public ICollection<Cheep> Cheeps { get; set; }
 }
@@ -26,6 +34,7 @@ public class Author
 public class Cheep
 {
     public string Text { get; set; }
+    [Key]
     public int TimeStamp { get; set; }
     public Author Author { get; set; }
 }
@@ -77,6 +86,13 @@ public class DBFacade : ICheepService
 
     public List<CheepViewModel> GetCheeps(int page)
     {
+        CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
+        
+        
+        // Doesn't work!
+        var query = context.Cheeps
+            .Select(cheep => new {cheep.Author, cheep.Text, cheep.TimeStamp});
+        
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
