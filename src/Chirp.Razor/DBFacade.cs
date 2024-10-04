@@ -1,22 +1,19 @@
 using System.Data;
-using System.Diagnostics;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.SQLite;
 
-public class CheepingContext : DbContext
+public class CheepDBContext : DbContext
 {
-    public DbSet<Author> Author { get; set; }
-    public DbSet<Cheep> Cheep { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=/tmp/chirp.db");
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<Cheep> Cheeps { get; set; }
+    
+    public CheepDBContext(DbContextOptions<CheepDBContext> options) {
+        
+    }
 }
 
 public class Author
