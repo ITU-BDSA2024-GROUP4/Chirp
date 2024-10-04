@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ public class DBFacade : ICheepService
 {
     private readonly string _sqlDBFilePath;
 
+    private readonly int _pageSize = 32;
     public DBFacade()
     {
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
@@ -76,7 +78,7 @@ public class DBFacade : ICheepService
         }
     }
 
-    public List<CheepViewModel> GetCheeps()
+    public List<CheepViewModel> GetCheeps(int page)
     {
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
@@ -86,7 +88,11 @@ public class DBFacade : ICheepService
             command.CommandText = @"SELECT username, text, pub_date 
                                     FROM message m JOIN user u ON 
                                     m.author_id = u.user_id
-                                    ORDER BY m.pub_date DESC;";
+                                    ORDER BY m.pub_date DESC 
+                                    LIMIT @pageSize OFFSET @page;";
+
+            command.Parameters.AddWithValue("@page", _pageSize * page);
+            command.Parameters.AddWithValue("@pageSize", _pageSize);
 
             using SqliteDataReader reader = command.ExecuteReader();
 
@@ -94,7 +100,7 @@ public class DBFacade : ICheepService
         }
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author)
+    public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
     {
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
@@ -105,8 +111,12 @@ public class DBFacade : ICheepService
                                     FROM message m JOIN user u ON 
                                     m.author_id = u.user_id
                                     WHERE username = @author
-                                    ORDER BY m.pub_date DESC;";
+                                    ORDER BY m.pub_date DESC
+                                    LIMIT @pageSize OFFSET @page;";
             command.Parameters.AddWithValue("@author", author);
+            command.Parameters.AddWithValue("@page", _pageSize * page);
+            command.Parameters.AddWithValue("@pageSize", _pageSize);
+
 
             using SqliteDataReader reader = command.ExecuteReader();
 
