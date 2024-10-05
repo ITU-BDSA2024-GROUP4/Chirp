@@ -113,18 +113,29 @@ public class DBFacade : ICheepService
 
     public List<CheepViewModel> GetCheeps(int page)
     {
-        CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
+        // CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
         
-        // Does work!
-        var query = from UserId in context.Authors
-                    select UserId;
+        // // Does work!
+        // var query = from UserId in context.Authors
+        //             select UserId;
         
-        Console.WriteLine(query.Count());
+        // Console.WriteLine(query.Count());
 
-        foreach ( Author a in query ) {
-            Console.WriteLine(a.UserId);
+        // foreach ( Author a in query ) {
+        //     Console.WriteLine(a.UserId);
+        // }
+
+        using (CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>()))
+        {
+            var query = from Author in context.Authors
+                        join Cheeps in context.Cheeps on Author.UserId equals Cheeps.AuthorId
+                        select new { Author.UserId, Author.Email};
+
+            foreach (var thing in query) {
+                Console.WriteLine(thing);
+            }
+
         }
-
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
