@@ -19,9 +19,13 @@ public class CheepDBContext : DbContext
     
     private readonly DbContextOptions<CheepDBContext> _options;
 
-    public CheepDBContext(DbContextOptions<CheepDBContext> options)
+    public CheepDBContext(DbContextOptions<CheepDBContext> options) : base(options)
     {
         _options = options;
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().ToTable("user");
     }
 }
 
@@ -60,6 +64,8 @@ public class DBFacade : ICheepService
     public DBFacade()
     {
         var context = new CheepDBContext( new DbContextOptions<CheepDBContext>{});
+
+        Console.WriteLine(context.Authors);
 
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
@@ -103,11 +109,12 @@ public class DBFacade : ICheepService
     {
         CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
         
-        
         // Doesn't work!
-        var query = context.Cheeps
-            .Select(cheep => new {cheep.Author, cheep.Text, cheep.TimeStamp});
+        var query = from UserId in context.Authors
+                    select UserId;
         
+        Console.WriteLine(query.Count());
+
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
             connection.Open();
