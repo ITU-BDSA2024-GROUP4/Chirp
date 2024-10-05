@@ -109,7 +109,7 @@ public class DBFacade : ICheepService
     {
         CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
         
-        // Doesn't work!
+        // Does work!
         var query = from UserId in context.Authors
                     select UserId;
         
