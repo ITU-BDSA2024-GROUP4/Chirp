@@ -22,11 +22,19 @@ public class CheepDBContext : DbContext
     public CheepDBContext(DbContextOptions<CheepDBContext> options) : base(options)
     {
         _options = options;
+
+        Database.EnsureCreated();
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().ToTable("user");
         modelBuilder.Entity<Cheep>().ToTable("message");
+    }
+
+    public void RunSqlFile(string path) {
+        var sqlData = File.ReadAllText(path);
+
+        this.Database.ExecuteSqlRaw(sqlData);
     }
 }
 
@@ -47,6 +55,7 @@ public class Author
     [Required]
     [Column("pw_hash")]
     public string PasswordHash { get; set; }
+
     //public ICollection<Cheep> Cheeps { get; set; }
 }
 
@@ -78,7 +87,8 @@ public class DBFacade : ICheepService
         if (_sqlDBFilePath == null)
         {
             _sqlDBFilePath =  "/tmp/chirp.db";
-            InitDB();
+            CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>());
+            context.RunSqlFile("../../data/dump.sql");
         }
     }
 
@@ -119,47 +129,6 @@ public class DBFacade : ICheepService
                         .Take(_pageSize);       // Same as SQL "LIMIT"
             
             return query.ToList();
-        }
-    }
-
-    private void InitDB()
-    {
-        try
-        {   
-            var embeddedProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
-
-            var schemaReader = embeddedProvider.GetFileInfo("schema.sql").CreateReadStream();
-            var dumpReader = embeddedProvider.GetFileInfo("dump.sql").CreateReadStream();
-
-            using var schemaStreamReader = new StreamReader(schemaReader);
-            using var dumpStreamReader = new StreamReader(dumpReader);
-
-           var schemaQuery = schemaStreamReader.ReadToEnd();
-            var dumpQuery = dumpStreamReader.ReadToEnd();
-
-            using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
-            {
-                connection.Open();
-
-                SqliteCommand createSchema = connection.CreateCommand();
-                SqliteCommand dumpSchema = connection.CreateCommand();
-
-                createSchema.CommandText = schemaQuery;
-                dumpSchema.CommandText = dumpQuery;
-
-                int rowsCreated = createSchema.ExecuteNonQuery();
-                int rowsInserted = dumpSchema.ExecuteNonQuery();
-
-                Console.WriteLine($"{rowsCreated} rows created");
-                Console.WriteLine($"{rowsInserted} rows inserted");
-
-            }
-
-        }
-        catch (Exception e)
-        {
-
-            Console.WriteLine($"There was an error: {e}\nStacktrace: {e.StackTrace}");
         }
     }
 }
