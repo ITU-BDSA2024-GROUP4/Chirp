@@ -26,6 +26,7 @@ public class CheepDBContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().ToTable("user");
+        modelBuilder.Entity<Cheep>().ToTable("message");
     }
 }
 
@@ -51,10 +52,19 @@ public class Author
 
 public class Cheep
 {
-    public string Text { get; set; }
     [Key]
+    [Column("message_id")]
+    public int MessageId { get; set; }
+
+    [Column("author_id")]
+    public int AuthorId { get; set; }
+
+    [Column("text")]
+    public string Text { get; set; } 
+    
+    [Column("pub_date")]
     public int TimeStamp { get; set; }
-    public Author Author { get; set; }
+    //public Author Author { get; set; }
 }
 
 public class DBFacade : ICheepService
