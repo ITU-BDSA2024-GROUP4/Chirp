@@ -4,6 +4,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Data.Sqlite;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chirp.SQLite;
 
@@ -25,10 +27,22 @@ public class CheepDBContext : DbContext
 
 public class Author
 {
-    public string Name { get; set; }
     [Key]
+    [Column("user_id")]
+    public int UserId { get; set;}
+
+    [Required]
+    [Column("username")]
+    public string Name { get; set; }
+
+    [Required]
+    [Column("email")]
     public string Email { get; set; }
-    public ICollection<Cheep> Cheeps { get; set; }
+
+    [Required]
+    [Column("pw_hash")]
+    public string PasswordHash { get; set; }
+    //public ICollection<Cheep> Cheeps { get; set; }
 }
 
 public class Cheep
@@ -42,10 +56,11 @@ public class Cheep
 public class DBFacade : ICheepService
 {
     private readonly string _sqlDBFilePath;
-
     private readonly int _pageSize = 32;
     public DBFacade()
     {
+        var context = new CheepDBContext( new DbContextOptions<CheepDBContext>{});
+
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
         if (_sqlDBFilePath == null)
