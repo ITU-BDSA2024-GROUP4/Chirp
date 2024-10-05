@@ -127,9 +127,10 @@ public class DBFacade : ICheepService
 
         using (CheepDBContext context = new CheepDBContext(new DbContextOptions<CheepDBContext>()))
         {
-            var query = from Author in context.Authors
+            var query = (from Author in context.Authors
                         join Cheeps in context.Cheeps on Author.UserId equals Cheeps.AuthorId
-                        select new { Author.UserId, Author.Email};
+                        orderby Cheeps.TimeStamp descending
+                        select new { Author.Name, Cheeps.Text, Cheeps.TimeStamp}).Skip(_pageSize * page).Take(_pageSize);
 
             foreach (var thing in query) {
                 Console.WriteLine(thing);
