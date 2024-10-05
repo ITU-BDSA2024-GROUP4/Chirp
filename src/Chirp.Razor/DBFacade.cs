@@ -73,10 +73,6 @@ public class DBFacade : ICheepService
     private readonly int _pageSize = 32;
     public DBFacade()
     {
-        var context = new CheepDBContext( new DbContextOptions<CheepDBContext>{});
-
-        Console.WriteLine(context.Authors);
-
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
         if (_sqlDBFilePath == null)
@@ -124,6 +120,10 @@ public class DBFacade : ICheepService
                     select UserId;
         
         Console.WriteLine(query.Count());
+
+        foreach ( Author a in query ) {
+            Console.WriteLine(a.UserId);
+        }
 
         using (SqliteConnection connection = new($"Data Source={_sqlDBFilePath}"))
         {
