@@ -27,7 +27,7 @@ public class ChirpDBContext : DbContext
     }
 }
 // If any changes are made to the "schema" then you need to run following commands to update the migration
-// 1: dotnet ef migrations add RemovePasswordHashColumn - where "RemovePasswordHashColumn" is what has happend 
+// 1: dotnet ef migrations add RemovePasswordHashColumn - where "RemovePasswordHashColumn" is what has happend, can be any string
 // 2: dotnet ef database update
 public class Author
 {
