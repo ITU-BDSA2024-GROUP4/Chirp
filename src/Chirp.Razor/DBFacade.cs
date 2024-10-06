@@ -46,7 +46,7 @@ public class Author
     [Required]
     public List<Cheep> Cheeps { get; set; }
 }
-
+// Look above Author class before making any changes
 public class Cheep
 {
     [Key]
@@ -99,22 +99,18 @@ public class DBFacade : ICheepService
 
     public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
     {
-         using (ChirpDBContext context = new ChirpDBContext(new DbContextOptions<ChirpDBContext>()))
-        {
-            /* var query = (from Author in context.Authors
-                        join Cheeps in context.Cheeps on Author.UserId equals Cheeps.AuthorId 
-                        orderby Cheeps.TimeStamp descending
-                        where Author.Name == author //Copied from previous SQL but is bad SQL, since name is not unique. Should use UserId
-                        select new CheepViewModel (
-                            Author.Name, 
-                            Cheeps.Text, 
-                            CheepService.UnixTimeStampToDateTimeString(Cheeps.TimeStamp)
-                        ))
-                        .Skip(_pageSize * page) // Same as SQL "OFFSET
-                        .Take(_pageSize);       // Same as SQL "LIMIT"
-            
-            return query.ToList(); */
-            return new List<CheepViewModel>();
-        }
+        var query = (from Author in context.Authors
+                    join Cheeps in context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                    orderby Cheeps.TimeStamp descending
+                    where Author.Name == author //Copied from previous SQL but is bad SQL, since name is not unique. Should use UserId
+                    select new CheepViewModel (
+                        Author.Name, 
+                        Cheeps.Text, 
+                        ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds().ToString()
+                    ))
+                    .Skip(_pageSize * page) // Same as SQL "OFFSET
+                    .Take(_pageSize);       // Same as SQL "LIMIT"
+        
+        return query.ToList(); //Converts IQueryable<T> to List<T>
     }
 }
