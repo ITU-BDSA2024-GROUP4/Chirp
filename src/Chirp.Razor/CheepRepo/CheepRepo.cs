@@ -1,11 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Chirp.SQLite.CheepRepos;
 public class CheepRepo : ICheepRepo 
 {
-    private readonly ChirpDBContext _context;
+    public ChirpDBContext _context;
     private readonly int _pageSize = 32;
-    public CheepRepo (ChirpDBContext context) 
+    public ChirpDBContext context
+    { 
+        get => _context; 
+        set => _context = value;
+    }
+    public CheepRepo() 
     {
-        _context = context;
+        _context = new ChirpDBContext(new DbContextOptions<ChirpDBContext>());
     }
 
     public List<CheepViewModel> GetCheeps(int page) 
