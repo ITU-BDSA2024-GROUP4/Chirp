@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.SQLite.CheepRepos;
+//REPO is synonymous with Service, but that name is taken. Should be changed to service when the other is deleted
 public class CheepRepo : ICheepRepo 
 {
     public ChirpDBContext _context;

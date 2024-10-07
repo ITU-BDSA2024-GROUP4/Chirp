@@ -7,33 +7,35 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Chirp.SQLite.CheepRepos;
+using Chirp.SQLite.CheepClient;
 
 namespace Chirp.SQLite;
 public class DBFacade : ICheepService
 {
     private readonly string _sqlDBFilePath;
     private readonly int _pageSize = 32;
-    private ICheepRepo cheepRepo;
+    private CheepClient.CheepClient client;
     public DBFacade()
     {
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
-        cheepRepo = new CheepRepo();
+        CheepInjection injection = new CheepInjection();
+        client = injection.ResolveClient();
 
         if (_sqlDBFilePath == null)
         {
             _sqlDBFilePath =  "/tmp/chirp.db";
-            DbInitializer.SeedDatabase(cheepRepo.context);
+            DbInitializer.SeedDatabase(client.GetContext());
         }
     }
 
     public List<CheepViewModel> GetCheeps(int page)
     {
-        return cheepRepo.GetCheeps(page);
+        return client.GetCheeps(page);
     }
 
     public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
     {
-        return cheepRepo.GetCheepsFromAuthor(author, page);
+        return client.GetCheepsFromAuthor(author, page);
     }
 }
