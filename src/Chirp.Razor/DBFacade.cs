@@ -1,113 +1,52 @@
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Data.Sqlite;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using DataTransferClasses;
 
 namespace Chirp.SQLite;
-
-public class ChirpDBContext : DbContext
+public class DBFacade : ChirpDBContext
 {
-    public DbSet<Author> Authors { get; set; }
-    public DbSet<Cheep> Cheeps { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=/tmp/chirp.db");
-    
-    private readonly DbContextOptions<ChirpDBContext> _options;
-
-    public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
-    {
-        _options = options;
-
-        Database.Migrate();
-    }
-}
-// If any changes are made to the "schema" then you need to run following commands to update the migration
-// 1: dotnet ef migrations add RemovePasswordHashColumn - where "RemovePasswordHashColumn" is what has happend, can be any string
-// 2: dotnet ef database update
-public class Author
-{
-    [Key]
-    public int AuthorId { get; set;}
-
-    [Required]
-    public string Name { get; set; }
-
-    [Required]
-    public string Email { get; set; }
-
-    // [Required]
-    //public string PasswordHash { get; set; }
-
-    [Required]
-    public List<Cheep> Cheeps { get; set; }
-}
-// Look above Author class before making any changes
-public class Cheep
-{
-    [Key]
-    public int CheepId { get; set; }
-
-    [Required]
-    public int AuthorId { get; set; }
-
-    [Required]
-    public Author Author { get; set; }
-
-    [Required]
-    public string Text { get; set; } 
-
-    [Required]
-    public System.DateTime TimeStamp { get; set; }
-}
-
-public class DBFacade : ICheepService
-{
-    private readonly string _sqlDBFilePath;
+    private readonly ChirpDBContext _context;
     private readonly int _pageSize = 32;
-    private ChirpDBContext context = new ChirpDBContext(new DbContextOptions<ChirpDBContext>());
-    public DBFacade()
-    {
-        _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
+    
+    private readonly string _sqlDBFilePath;
+    public DBFacade(DbContextOptions<ChirpDBContext> options) : base(options)
+    {   
+        _context = new ChirpDBContext(options);
 
-        if (_sqlDBFilePath == null)
-        {
-            _sqlDBFilePath =  "/tmp/chirp.db";
-            DbInitializer.SeedDatabase(context);
-        }
+        Console.WriteLine($"Text file path not found, using default path: {_sqlDBFilePath}");
+
+        DbInitializer.SeedDatabase(this);
     }
 
-    public List<CheepViewModel> GetCheeps(int page)
+    public List<CheepDTO> GetCheeps(int page)
     {
-        var query = (from Author in context.Authors
-                    join Cheeps in context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+        Console.WriteLine($"{_context} authors in database");
+        
+        var query = (from Author in _context.Authors
+                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
-                    select new CheepViewModel (
-                        Author.Name, 
-                        Cheeps.Text, 
-                        ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds().ToString()
-                    ))
+                    select new CheepDTO {
+                        Author = Author.Name, 
+                        Message = Cheeps.Text, 
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    })
                     .Skip(_pageSize * page) // Same as SQL "OFFSET
                     .Take(_pageSize);       // Same as SQL "LIMIT"
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
     {
-        var query = (from Author in context.Authors
-                    join Cheeps in context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+        var query = (from Author in _context.Authors
+                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
                     where Author.Name == author //Copied from previous SQL but is bad SQL, since name is not unique. Should use UserId
-                    select new CheepViewModel (
-                        Author.Name, 
-                        Cheeps.Text, 
-                        ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds().ToString()
-                    ))
+                    select new CheepDTO {
+                        Author = Author.Name, 
+                        Message = Cheeps.Text, 
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    })
                     .Skip(_pageSize * page) // Same as SQL "OFFSET
                     .Take(_pageSize);       // Same as SQL "LIMIT"
         
