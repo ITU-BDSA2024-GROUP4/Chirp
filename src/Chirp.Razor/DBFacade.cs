@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Chirp.SQLite.CheepServices;
+using DataTransferClasses;
 
 namespace Chirp.SQLite;
 public class DBFacade : ChirpDBContext
@@ -22,17 +23,17 @@ public class DBFacade : ChirpDBContext
 
         if (_sqlDBFilePath == null)
         {
-            _sqlDBFilePath =  "/tmp/chirp.db";
+            _sqlDBFilePath =  "/tmp/chirp.db"; //Shoukd propably be imported from the json so it always is the same
             DbInitializer.SeedDatabase(service.context);
         }
     }
 
-    public List<CheepViewModel> GetCheeps(int page)
+    public List<CheepDTO> GetCheeps(int page)
     {
         return service.GetCheeps(page);
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
     {
         return service.GetCheepsFromAuthor(author, page);
     }
