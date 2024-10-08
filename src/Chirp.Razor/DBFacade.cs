@@ -5,34 +5,22 @@ using DataTransferClasses;
 namespace Chirp.SQLite;
 public class DBFacade : ChirpDBContext
 {
-    private ChirpDBContext _context;
+    private readonly ChirpDBContext _context;
     private readonly int _pageSize = 32;
-    public ChirpDBContext context
-    { 
-        get => _context; 
-        set => _context = value;
-    }
+    
     private readonly string _sqlDBFilePath;
-    //private ICheepService service;
     public DBFacade(DbContextOptions<ChirpDBContext> options) : base(options)
-    {
-        _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
+    {   
+        _context = new ChirpDBContext(options);
 
-        //service = new CheepService(this);
         Console.WriteLine($"Text file path not found, using default path: {_sqlDBFilePath}");
 
-        if (_sqlDBFilePath == null)
-        {
-
-            _sqlDBFilePath = "/tmp/chirp.db"; //Shoukd propably be imported from the json so it always is the same
-
-        }
-        
         DbInitializer.SeedDatabase(this);
     }
 
     public List<CheepDTO> GetCheeps(int page)
     {
+        Console.WriteLine($"{_context} authors in database");
         
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
