@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Chirp.SQLite.CheepRepos;
+namespace Chirp.SQLite.CheepServices;
 //REPO is synonymous with Service, but that name is taken. Should be changed to service when the other is deleted
-public class CheepRepo : ICheepRepo 
+public class CheepService : ICheepService 
 {
     public ChirpDBContext _context;
     private readonly int _pageSize = 32;
@@ -11,9 +11,9 @@ public class CheepRepo : ICheepRepo
         get => _context; 
         set => _context = value;
     }
-    public CheepRepo() 
+    public CheepService(DbContextOptions<ChirpDBContext> options) 
     {
-        _context = new ChirpDBContext(new DbContextOptions<ChirpDBContext>());
+        _context = new ChirpDBContext(options);
     }
 
     public List<CheepViewModel> GetCheeps(int page) 
