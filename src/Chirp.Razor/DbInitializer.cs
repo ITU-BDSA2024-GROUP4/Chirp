@@ -1,6 +1,6 @@
 using System;
 
-namespace Chirp.SQLite;
+namespace Chirp.Razor;
 
 public static class DbInitializer
 {

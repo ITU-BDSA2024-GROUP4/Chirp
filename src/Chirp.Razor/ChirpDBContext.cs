@@ -1,8 +1,8 @@
-
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
+namespace Chirp.Razor;
 
 public class ChirpDBContext : DbContext
 {
@@ -14,12 +14,13 @@ public class ChirpDBContext : DbContext
     {
         _options = options;
         Database.EnsureCreated();
-        //Database.Migrate();
     }
 }
+
 // If any changes are made to the "schema" then you need to run following commands to update the migration
 // 1: dotnet ef migrations add RemovePasswordHashColumn - where "RemovePasswordHashColumn" is what has happend, can be any string
 // 2: dotnet ef database update
+
 public class Author
 {
     [Key]
@@ -31,13 +32,12 @@ public class Author
     [Required]
     public string Email { get; set; }
 
-    // [Required]
-    //public string PasswordHash { get; set; }
-
     [Required]
     public List<Cheep> Cheeps { get; set; }
 }
+
 // Look above Author class before making any changes
+
 public class Cheep
 {
     [Key]

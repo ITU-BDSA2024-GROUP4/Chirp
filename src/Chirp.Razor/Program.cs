@@ -1,6 +1,5 @@
-using Chirp.SQLite;
-using Chirp.SQLite.CheepServices;
-
+using Chirp.Razor;
+using Chirp.Razor.CheepService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

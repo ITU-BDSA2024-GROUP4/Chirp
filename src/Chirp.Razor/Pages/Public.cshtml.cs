@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Chirp.SQLite.CheepServices;
-using DataTransferClasses;
+using Chirp.Razor.CheepService;
+using Chirp.Razor.DataTransferClasses;
 
 namespace Chirp.Razor.Pages;
 
@@ -19,6 +19,7 @@ public class PublicModel : PageModel
     {
 
         var pageQuery = Request.Query["page"].ToString();
+        
         if (pageQuery == null)
         {
             Cheeps = _service.GetCheeps(0); // default to first page

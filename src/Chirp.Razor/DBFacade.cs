@@ -1,27 +1,23 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore;
-using DataTransferClasses;
+using Chirp.Razor.DataTransferClasses;
 
-namespace Chirp.SQLite;
+namespace Chirp.Razor;
+
 public class DBFacade : ChirpDBContext
 {
     private readonly ChirpDBContext _context;
     private readonly int _pageSize = 32;
     
-    private readonly string _sqlDBFilePath;
     public DBFacade(DbContextOptions<ChirpDBContext> options) : base(options)
     {   
         _context = new ChirpDBContext(options);
-
-        Console.WriteLine($"Text file path not found, using default path: {_sqlDBFilePath}");
-
+        
         DbInitializer.SeedDatabase(this);
     }
 
     public List<CheepDTO> GetCheeps(int page)
     {
-        Console.WriteLine($"{_context} authors in database");
-        
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
