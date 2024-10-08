@@ -11,9 +11,9 @@ public class CheepService : ICheepService
         get => _context; 
         set => _context = value;
     }
-    public CheepService(DbContextOptions<ChirpDBContext> options) 
+    public CheepService(ChirpDBContext context)
     {
-        _context = new ChirpDBContext(options);
+        _context = context;
     }
 
     public List<CheepViewModel> GetCheeps(int page) 

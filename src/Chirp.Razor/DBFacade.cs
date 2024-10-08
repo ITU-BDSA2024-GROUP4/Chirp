@@ -13,27 +13,27 @@ public class DBFacade : ChirpDBContext
 {
     private readonly string _sqlDBFilePath;
     private readonly int _pageSize = 32;
-    private ICheepService context;
+    private ICheepService service;
     public DBFacade(DbContextOptions<ChirpDBContext> options) : base(options)
     {
         _sqlDBFilePath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
 
-        context = new CheepService(options);
+        service = new CheepService(this);
 
         if (_sqlDBFilePath == null)
         {
             _sqlDBFilePath =  "/tmp/chirp.db";
-            DbInitializer.SeedDatabase(context.context);
+            DbInitializer.SeedDatabase(service.context);
         }
     }
 
     public List<CheepViewModel> GetCheeps(int page)
     {
-        return context.GetCheeps(page);
+        return service.GetCheeps(page);
     }
 
     public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
     {
-        return context.GetCheepsFromAuthor(author, page);
+        return service.GetCheepsFromAuthor(author, page);
     }
 }

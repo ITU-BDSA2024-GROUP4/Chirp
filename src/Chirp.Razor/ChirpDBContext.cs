@@ -1,11 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Data.Sqlite;
-using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema; 
 
 namespace Chirp.SQLite;
 
@@ -13,10 +9,6 @@ public class ChirpDBContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=/tmp/chirp.db");
-    
     private readonly DbContextOptions<ChirpDBContext> _options;
 
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
