@@ -5,7 +5,7 @@ namespace Chirp.SQLite.CheepServices;
 //REPO is synonymous with Service, but that name is taken. Should be changed to service when the other is deleted
 public class CheepService : ICheepService 
 {
-    public ChirpDBContext _context;
+    private ChirpDBContext _context;
     private readonly int _pageSize = 32;
     public ChirpDBContext context
     { 
