@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
-namespace Chirp.SQLite;
 
 public class ChirpDBContext : DbContext
 {
@@ -14,7 +13,7 @@ public class ChirpDBContext : DbContext
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
     {
         _options = options;
-
+        Database.EnsureCreated();
         Database.Migrate();
     }
 }
