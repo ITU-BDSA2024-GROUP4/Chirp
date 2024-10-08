@@ -14,7 +14,7 @@ public class ChirpDBContext : DbContext
     {
         _options = options;
         Database.EnsureCreated();
-        Database.Migrate();
+        //Database.Migrate();
     }
 }
 // If any changes are made to the "schema" then you need to run following commands to update the migration
