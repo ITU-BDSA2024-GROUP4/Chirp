@@ -6,25 +6,25 @@ namespace Chirp.Razor.CheepService;
 
 public class CheepService : ICheepService 
 {
-    private ICheepRepository _context;
+    private ICheepRepository _repository;
 
-    public ICheepRepository context
+    public ICheepRepository repository
     { 
-        get => _context;
-        set => _context = value;
+        get => _repository;
+        set => _repository = value;
     }
 
     public CheepService(DbContextOptions<ChirpDBContext> options)
     {
-        _context = new Chirp.Razor.CheepRepository.CheepRepository(options);
+        _repository = new Chirp.Razor.CheepRepository.CheepRepository(options);
     }
 
     public List<CheepDTO> GetCheeps(int page) 
     {
-        return _context.GetCheeps(page);
+        return _repository.GetCheeps(page);
     }
     public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
     {
-        return _context.GetCheepsFromAuthor(author, page);
+        return _repository.GetCheepsFromAuthor(author, page);
     }
 }

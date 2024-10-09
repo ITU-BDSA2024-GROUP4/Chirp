@@ -5,7 +5,7 @@ namespace Chirp.Razor.CheepService;
 
 public interface ICheepService 
 {
-    ICheepRepository context { get; set; }
+    ICheepRepository repository { get; set; }
     
     public List<CheepDTO> GetCheeps(int page);
 
