@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
-namespace Chirp.Razor;
+namespace Chirp.Razor.CheepRepository;
 
 public class ChirpDBContext : DbContext
 {

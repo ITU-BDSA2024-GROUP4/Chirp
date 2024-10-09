@@ -2,18 +2,18 @@ using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Razor.DataTransferClasses;
 
-namespace Chirp.Razor;
+namespace Chirp.Razor.CheepRepository;
 
-public class DBFacade : ChirpDBContext
+public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
     private readonly int _pageSize = 32;
     
-    public DBFacade(DbContextOptions<ChirpDBContext> options) : base(options)
+    public CheepRepository(DbContextOptions<ChirpDBContext> options)
     {   
         _context = new ChirpDBContext(options);
         
-        DbInitializer.SeedDatabase(this);
+        DbInitializer.SeedDatabase(_context);
     }
 
     public List<CheepDTO> GetCheeps(int page)

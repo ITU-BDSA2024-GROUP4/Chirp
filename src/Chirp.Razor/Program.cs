@@ -1,4 +1,4 @@
-using Chirp.Razor;
+using Chirp.Razor.CheepRepository;
 using Chirp.Razor.CheepService;
 using Microsoft.EntityFrameworkCore;
 
