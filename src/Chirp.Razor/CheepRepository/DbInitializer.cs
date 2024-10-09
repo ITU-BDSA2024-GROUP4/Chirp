@@ -1,6 +1,6 @@
 using System;
 
-namespace Chirp.Razor;
+namespace Chirp.Razor.CheepRepository;
 
 public static class DbInitializer
 {
