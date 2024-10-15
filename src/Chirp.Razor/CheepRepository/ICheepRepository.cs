@@ -1,13 +1,10 @@
 using Chirp.Razor.DataTransferClasses;
-using Chirp.Razor.CheepRepository;
 
-namespace Chirp.Razor.CheepService;
+namespace Chirp.Razor.CheepRepository;
 
-public interface ICheepService 
-{
-    ICheepRepository repository { get; set; }
-    
+public interface ICheepRepository {
     public List<CheepDTO> GetCheeps(int page);
 
     public List<CheepDTO> GetCheepsFromAuthor(string author, int page);
-}
+} 
+

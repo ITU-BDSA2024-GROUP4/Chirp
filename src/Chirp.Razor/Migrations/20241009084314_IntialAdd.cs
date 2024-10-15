@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Chirp.Razor.Migrations
 {
     /// <inheritdoc />
-    public partial class initialAdd : Migration
+    public partial class IntialAdd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
