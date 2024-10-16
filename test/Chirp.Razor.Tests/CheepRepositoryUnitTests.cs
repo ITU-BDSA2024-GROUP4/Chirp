@@ -35,4 +35,26 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
     }
+
+    [Fact]
+    public void CreateAuthorTest()
+    {
+        Author result = repository.CreateAuthor("test", "test@gmail.com");
+        
+        Assert.Equal("test", result.Name);
+        Assert.Equal("test@gmail.com", result.Email);
+    }
+
+    [Fact]
+    public void CreateCheepTest()
+    {
+        Author author = new Author()
+        {
+            Name = "John Doe", Email = "john.doe@gmail.com", AuthorId = 0, Cheeps = new List<Cheep>()
+        };
+        
+        Cheep cheep = repository.CreateCheep(author, "test");
+        
+        Assert.Equal("test", cheep.Text);
+    }
 }
