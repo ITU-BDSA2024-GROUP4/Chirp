@@ -81,4 +81,19 @@ public class CheepRepository : ICheepRepository
         
         _context.SaveChanges();
     }
+
+    public void CreateCheep(Author author, string text)
+    {
+        _context.Cheeps.Add(new Cheep()
+            {
+                CheepId = _context.Cheeps.Count() + 1,
+                AuthorId = author.AuthorId,
+                Author = author,
+                Text = text,
+                TimeStamp = DateTime.Now
+            }
+        );
+        
+        _context.SaveChanges();
+    }
 }
