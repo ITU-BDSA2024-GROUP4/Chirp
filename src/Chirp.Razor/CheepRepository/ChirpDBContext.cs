@@ -21,19 +21,21 @@ public class ChirpDBContext : DbContext
 // 1: dotnet ef migrations add RemovePasswordHashColumn - where "RemovePasswordHashColumn" is what has happend, can be any string
 // 2: dotnet ef database update
 
+// " = null!;" dont gives warnings, since it says that the value is not null at runtime
+
 public class Author
 {
     [Key]
     public int AuthorId { get; set;}
 
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     [Required]
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [Required]
-    public List<Cheep> Cheeps { get; set; }
+    public List<Cheep> Cheeps { get; set; }  = null!;
 }
 
 // Look above Author class before making any changes
@@ -47,10 +49,10 @@ public class Cheep
     public int AuthorId { get; set; }
 
     [Required]
-    public Author Author { get; set; }
+    public Author Author { get; set; } = null!;
 
     [Required]
-    public string Text { get; set; } 
+    public string Text { get; set; } = null!;
 
     [Required]
     public System.DateTime TimeStamp { get; set; }
