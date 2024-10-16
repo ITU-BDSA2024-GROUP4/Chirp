@@ -9,9 +9,9 @@ public class CheepRepository : ICheepRepository
     private readonly ChirpDBContext _context;
     private readonly int _pageSize = 32;
     
-    public CheepRepository(DbContextOptions<ChirpDBContext> options)
+    public CheepRepository(ChirpDBContext context)
     {   
-        _context = new ChirpDBContext(options);
+        _context = context;
         
         DbInitializer.SeedDatabase(_context);
     }

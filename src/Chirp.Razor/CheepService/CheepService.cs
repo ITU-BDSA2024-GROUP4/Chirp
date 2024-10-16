@@ -16,7 +16,9 @@ public class CheepService : ICheepService
 
     public CheepService(DbContextOptions<ChirpDBContext> options)
     {
-        _repository = new Chirp.Razor.CheepRepository.CheepRepository(options);
+        var context = new ChirpDBContext(options);
+        
+        _repository = new Chirp.Razor.CheepRepository.CheepRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page) 
