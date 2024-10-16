@@ -21,7 +21,8 @@ public class CheepRepository : ICheepRepository
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
-                    select new CheepDTO {
+                    select new CheepDTO
+                    {
                         Author = Author.Name, 
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
@@ -38,7 +39,8 @@ public class CheepRepository : ICheepRepository
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
                     where Author.Name == author //Copied from previous SQL but is bad SQL, since name is not unique. Should use UserId
-                    select new CheepDTO {
+                    select new CheepDTO
+                    {
                         Author = Author.Name, 
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
@@ -47,5 +49,23 @@ public class CheepRepository : ICheepRepository
                     .Take(_pageSize);       // Same as SQL "LIMIT"
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
+    }
+
+    public List<CheepDTO> GetCheepsFromAuthorEmail(string email, int page)
+    {
+        var query = (from Author in _context.Authors
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where Author.Email == email
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Message = Cheeps.Text,
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                })
+                .Skip(_pageSize * page)
+                .Take(_pageSize);
+        
+        return query.ToList();
     }
 }
