@@ -1,5 +1,3 @@
-using System;
-
 namespace Chirp.Razor.CheepRepository;
 
 public static class DbInitializer

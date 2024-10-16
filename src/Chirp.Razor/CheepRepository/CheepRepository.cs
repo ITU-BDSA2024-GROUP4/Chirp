@@ -68,4 +68,17 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList();
     }
+
+    public void CreateAuthor(string name, string email)
+    {
+        _context.Authors.Add(new Author()
+        {
+            AuthorId = _context.Authors.Count() + 1,
+            Name = name,
+            Email = email,
+            Cheeps = new List<Cheep>()
+        });
+        
+        _context.SaveChanges();
+    }
 }
