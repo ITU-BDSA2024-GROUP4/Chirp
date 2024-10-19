@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations; 
 
 namespace Chirp.Razor.CheepRepository;
 
@@ -132,4 +133,19 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         Assert.Throws<DbUpdateException>(()=>_repository.CreateCheep(newAuthor, message));
     }
 
+    [Theory]
+    [InlineData("johnDoe", "john.doe@gmail.com", 0)]
+    public void MaxLengthCheep(string author, string email, int authorId)
+    {
+        Author newAuthor = new Author()
+        {
+            Name = author,
+            Email = email,
+            AuthorId = authorId,
+            Cheeps = new List<Cheep>()
+        };
+        string message = new string('a',161);
+        
+        Assert.Throws<ValidationException>( () => _repository.CreateCheep(newAuthor, message));
+    }
 }

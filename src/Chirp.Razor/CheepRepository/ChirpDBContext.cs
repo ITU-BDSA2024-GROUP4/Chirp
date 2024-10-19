@@ -50,6 +50,7 @@ public class Cheep
     public Author Author { get; set; }
 
     [Required]
+    [StringLength(160)] 
     public string Text { get; set; } 
 
     [Required]
