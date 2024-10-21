@@ -1,6 +1,7 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Razor.DataTransferClasses;
+using System.ComponentModel.DataAnnotations;
 
 namespace Chirp.Razor.CheepRepository;
 
@@ -96,7 +97,14 @@ public class CheepRepository : ICheepRepository
             Text = text,
             TimeStamp = DateTime.Now
         };
-        
+
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(cheep);
+        if (!Validator.TryValidateObject(cheep, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+
         _context.Cheeps.Add(cheep);
         author.Cheeps.Add(cheep);
         
