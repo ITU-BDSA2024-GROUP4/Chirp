@@ -6,9 +6,9 @@ namespace Chirp.Razor.CheepRepository;
 public class CheepRepositoryIntegrationTests : IAsyncLifetime
 
 {
-    private SqliteConnection _connection;
-    private ChirpDBContext _context;
-    private CheepRepository _repository;
+    private SqliteConnection _connection = null!;
+    private ChirpDBContext _context = null!;
+    private CheepRepository _repository = null!;
     
     public async Task InitializeAsync()
     {

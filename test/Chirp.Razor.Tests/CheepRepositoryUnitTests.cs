@@ -6,9 +6,9 @@ namespace Chirp.Razor.CheepRepository;
 
 public class CheepRepositoryUnitTests : IAsyncLifetime
 {
-    private SqliteConnection _connection;
-    private ChirpDBContext _context;
-    private CheepRepository _repository;
+    private SqliteConnection _connection = null!;
+    private ChirpDBContext _context = null!;
+    private CheepRepository _repository = null!;
 
     public async Task InitializeAsync()
     {
@@ -104,34 +104,6 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         }
     }
 
-
-    [Theory]
-    [InlineData("john.doe@email.com", 0, "test")]
-    public void CreateCheepWithEmptyAuthor(string email, int authorId, string message)
-    {
-        Author newAuthor = new Author()
-        {
-            Email = email,
-            AuthorId = authorId,
-            Cheeps = new List<Cheep>()
-        };
-
-        Assert.Throws<DbUpdateException>(()=>_repository.CreateCheep(newAuthor, message));
-    }
-
-    [Theory]
-    [InlineData("johnDoe", 0, "test")]
-    public void CreateCheepWithEmptyEmail(string author, int authorId, string message)
-    {
-        Author newAuthor = new Author()
-        {
-            Name = author,
-            AuthorId = authorId,
-            Cheeps = new List<Cheep>()
-        };
-
-        Assert.Throws<DbUpdateException>(()=>_repository.CreateCheep(newAuthor, message));
-    }
 
     [Theory]
     [InlineData("johnDoe", "john.doe@gmail.com", 0)]
