@@ -17,6 +17,7 @@ public class CheepRepository : ICheepRepository
         DbInitializer.SeedDatabase(_context);
     }
 
+    //Query
     public List<CheepDTO> GetCheeps(int page)
     {
         var query = (from Author in _context.Authors
@@ -34,12 +35,13 @@ public class CheepRepository : ICheepRepository
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
 
+    //Query
     public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
     {
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                     orderby Cheeps.TimeStamp descending
-                    where Author.Name == author //Copied from previous SQL but is bad SQL, since name is not unique. Should use UserId
+                    where Author.Name == author
                     select new CheepDTO
                     {
                         Author = Author.Name, 
@@ -52,6 +54,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
 
+    //Query
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
@@ -70,6 +73,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
+    //Command
     public Author CreateAuthor(string name, string email)
     {
         Author author = new Author()
@@ -87,6 +91,7 @@ public class CheepRepository : ICheepRepository
         return author;
     }
 
+    //Command
     public Cheep CreateCheep(Author author, string text)
     {
         Cheep cheep = new Cheep()
