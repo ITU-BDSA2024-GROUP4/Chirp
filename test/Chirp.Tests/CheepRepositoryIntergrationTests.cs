@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-
-namespace Chirp.Razor.CheepRepository;
+using Chirp.Infrastructure;
+using Chirp.Core;
 
 public class CheepRepositoryIntegrationTests : IAsyncLifetime
 
