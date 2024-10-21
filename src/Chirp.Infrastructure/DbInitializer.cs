@@ -1,6 +1,6 @@
 using Chirp.Core;
 
-namespace Chirp.Infrastucture;
+namespace Chirp.Infrastructure;
 
 public static class DbInitializer
 {

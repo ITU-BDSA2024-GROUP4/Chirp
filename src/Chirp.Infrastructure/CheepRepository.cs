@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Chirp.Core;
 using System.ComponentModel.DataAnnotations;
 
-namespace Chirp.Infrastucture;
+namespace Chirp.Infrastructure;
 
 public class CheepRepository : ICheepRepository
 {
