@@ -1,6 +1,4 @@
-using Chirp.Razor.DataTransferClasses;
-
-namespace Chirp.Razor.CheepRepository;
+namespace Chirp.Core;
 
 public interface ICheepRepository {
     public List<CheepDTO> GetCheeps(int page);
@@ -13,4 +11,3 @@ public interface ICheepRepository {
 
     public Cheep CreateCheep(Author author, string text);
 }
-

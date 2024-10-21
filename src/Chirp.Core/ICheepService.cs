@@ -1,7 +1,4 @@
-using Chirp.Razor.DataTransferClasses;
-using Chirp.Razor.CheepRepository;
-
-namespace Chirp.Razor.CheepService;
+namespace Chirp.Core;
 
 public interface ICheepService 
 {
