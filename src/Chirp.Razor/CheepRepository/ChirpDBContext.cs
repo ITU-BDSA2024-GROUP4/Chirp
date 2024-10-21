@@ -50,7 +50,8 @@ public class Cheep
     public Author Author { get; set; }
 
     [Required]
-    [StringLength(160)] 
+    [Column(TypeName = "VARCHAR(160)")]
+    [MaxLength(160)]
     public string Text { get; set; } 
 
     [Required]
