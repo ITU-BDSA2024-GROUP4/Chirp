@@ -1,4 +1,4 @@
-namespace Chirp.Razor.DataTransferClasses;
+namespace Chirp.Core;
 
 public class CheepDTO {
     public string Author { get; set; } = null!;

@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Chirp.Razor.DataTransferClasses;
-using Chirp.Razor.CheepRepository;
+using Chirp.Core;
 
-namespace Chirp.Razor.CheepService;
+namespace Chirp.Infrastructure;
 
 public class CheepService : ICheepService 
 {
@@ -18,7 +17,7 @@ public class CheepService : ICheepService
     {
         var context = new ChirpDBContext(options);
         
-        _repository = new Chirp.Razor.CheepRepository.CheepRepository(context);
+        _repository = new Chirp.Infrastructure.CheepRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page) 

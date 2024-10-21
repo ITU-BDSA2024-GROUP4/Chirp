@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Chirp.Razor.CheepService;
-using Chirp.Razor.DataTransferClasses;
+using Chirp.Core;
 
-namespace Chirp.Razor.Pages;
+namespace Chirp.Web.Pages;
 
 public class UserTimelineModel : PageModel
 {

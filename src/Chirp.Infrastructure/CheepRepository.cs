@@ -1,9 +1,9 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Razor.DataTransferClasses;
+using Chirp.Core;
 using System.ComponentModel.DataAnnotations;
 
-namespace Chirp.Razor.CheepRepository;
+namespace Chirp.Infrastructure;
 
 public class CheepRepository : ICheepRepository
 {

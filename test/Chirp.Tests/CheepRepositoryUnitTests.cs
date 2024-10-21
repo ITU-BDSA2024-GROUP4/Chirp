@@ -1,8 +1,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations; 
-
-namespace Chirp.Razor.CheepRepository;
+using Chirp.Infrastructure;
+using Chirp.Core;
 
 public class CheepRepositoryUnitTests : IAsyncLifetime
 {
