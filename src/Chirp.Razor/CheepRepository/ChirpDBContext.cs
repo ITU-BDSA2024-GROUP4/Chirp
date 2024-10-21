@@ -27,13 +27,13 @@ public class Author
     public int AuthorId { get; set;}
 
     [Required]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [Required]
-    public string Email { get; set; }
+    public required string Email { get; set; }
 
     [Required]
-    public List<Cheep> Cheeps { get; set; }
+    public required List<Cheep> Cheeps { get; set; }
 }
 
 // Look above Author class before making any changes
@@ -47,12 +47,12 @@ public class Cheep
     public int AuthorId { get; set; }
 
     [Required]
-    public Author Author { get; set; }
+    public required Author Author { get; set; }
 
     [Required]
     [Column(TypeName = "VARCHAR(160)")]
     [MaxLength(160)]
-    public string Text { get; set; } 
+    public required string Text { get; set; } 
 
     [Required]
     public System.DateTime TimeStamp { get; set; }
