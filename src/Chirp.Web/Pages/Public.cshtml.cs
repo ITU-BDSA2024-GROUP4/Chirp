@@ -36,6 +36,7 @@ public class PublicModel : PageModel
         return Page();
     }
 
+    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogin()
     {
         return Challenge(new AuthenticationProperties{
@@ -43,6 +44,7 @@ public class PublicModel : PageModel
         },"GitHub");
     }
 
+    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogout()
     {
         return SignOut(new AuthenticationProperties{
