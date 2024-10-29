@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Chirp.Web.Pages;
 
@@ -32,5 +34,19 @@ public class PublicModel : PageModel
         }
 
         return Page();
+    }
+
+    public IActionResult OnGetLogin()
+    {
+        return Challenge(new AuthenticationProperties{
+            RedirectUri = "/"
+        },"GitHub");
+    }
+
+    public IActionResult OnGetLogout()
+    {
+        return SignOut(new AuthenticationProperties{
+            RedirectUri = "/"
+        }, CookieAuthenticationDefaults.AuthenticationScheme);
     }
 }

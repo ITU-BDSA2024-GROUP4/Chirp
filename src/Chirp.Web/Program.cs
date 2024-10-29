@@ -23,7 +23,6 @@ builder.Services.AddAuthentication(options =>
         o.CallbackPath = "/signin-github";
     });
 
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepService, CheepService>();
@@ -40,13 +39,19 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseCookiePolicy(new CookiePolicyOptions()
+{
+    Secure = CookieSecurePolicy.Always,
+    MinimumSameSitePolicy = SameSiteMode.None
+});
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseSession();
+
 
 app.UseRouting();
 
