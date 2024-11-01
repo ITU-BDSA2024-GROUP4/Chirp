@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Chirp.Web.Pages;
 
@@ -10,7 +11,7 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
-
+    public SubmitMessageModel SubmitMessage { get; set; } = new SubmitMessageModel();
     public PublicModel(ICheepService service)
     {
         _service = service;
@@ -18,7 +19,6 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
-
         var pageQuery = Request.Query["page"].ToString();
         
         if (pageQuery == null)
@@ -50,5 +50,10 @@ public class PublicModel : PageModel
         return SignOut(new AuthenticationProperties{
             RedirectUri = "/"
         }, CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    public string getSubmitMessage()
+    {
+        return SubmitMessage.Message;
     }
 }
