@@ -4,7 +4,6 @@
 <div>
     <h2> Public Timeline </h2>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
-    <a>@Model.getSubmitMessage()</a>
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">

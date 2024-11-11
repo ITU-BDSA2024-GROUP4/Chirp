@@ -1,9 +1,12 @@
+#nullable disable
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
     
-public class SubmitMessageModel : PageModel
+public class SubmitMessageModel
 {
-    [BindProperty] public string Message { get; set; } = null!;
+    [BindProperty]
+    public string Message { get; set; }
+
 }

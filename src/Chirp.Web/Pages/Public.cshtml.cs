@@ -11,11 +11,13 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
-    public SubmitMessageModel SubmitMessage { get; set; } = new SubmitMessageModel();
+    
     public PublicModel(ICheepService service)
     {
         _service = service;
     }
+    [BindProperty]
+    public SubmitMessageModel SubmitMessage { get; set; }
 
     public ActionResult OnGet()
     {
@@ -52,8 +54,20 @@ public class PublicModel : PageModel
         }, CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    public string getSubmitMessage()
+    
+    public IActionResult OnPost()
     {
-        return SubmitMessage.Message;
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        Console.WriteLine(SubmitMessage.Message);
+
+        Author author = _service.repository.CreateAuthor(User.Identity.Name, "joe@gmail.com");
+        _service.repository.CreateCheep(author,SubmitMessage.Message);
+        Console.WriteLine($"created cheep: {SubmitMessage.Message}");
+        
+
+        return RedirectToPage();
     }
 }
