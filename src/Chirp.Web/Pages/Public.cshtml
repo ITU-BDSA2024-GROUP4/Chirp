@@ -1,13 +1,9 @@
 ﻿@page "/"
 @model Chirp.Web.Pages.PublicModel
-@{
-    ViewData["Title"] = "Chirp!";
-    Layout = "Shared/_Layout";
-}
 
 <div>
     <h2> Public Timeline </h2>
-
+    @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">
