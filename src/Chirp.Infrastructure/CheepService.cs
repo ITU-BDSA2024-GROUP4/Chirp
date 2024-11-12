@@ -29,6 +29,11 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author, page);
     }
 
+    public void CreateCheep(Author author, string message)
+    {
+        _repository.CreateCheep(author, message);
+    }
+    
     public Author GetOrCreateAuthor(string name, string email) {
         var author = _repository.GetAuthor(email);
 
