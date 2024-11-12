@@ -5,7 +5,7 @@
     <div class="cheepbox">
     <h3>What's on your mind @(User.Identity.Name)?</h3>
     <form method="post">
-        <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control">
+        <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control" maxlength="160">
         <span asp-validation-for="Message"></span>
         <input type="submit" value="Share">
         @Html.AntiForgeryToken()
