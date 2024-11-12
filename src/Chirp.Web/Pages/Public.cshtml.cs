@@ -4,6 +4,7 @@ using Chirp.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 
 namespace Chirp.Web.Pages;
 
@@ -62,7 +63,9 @@ public class PublicModel : PageModel
             return Page();
         }
 
-        Author author = _service.GetOrCreateAuthor(User.Identity.Name);
+        string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+        Author author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail);
         _service.repository.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();
