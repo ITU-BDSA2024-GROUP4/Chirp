@@ -117,4 +117,12 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
+
+    public List<Author> GetAuthor(string email) {
+        var query = (from Author in _context.Authors
+                    where Author.Email == email
+                    select Author);
+
+        return query.ToList();
+    }
 }

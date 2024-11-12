@@ -28,4 +28,14 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheepsFromAuthor(author, page);
     }
+
+    public Author GetOrCreateAuthor(string email) {
+        var author = _repository.GetAuthor(email);
+
+        if (!author.Any()) {
+            author.Add(_repository.CreateAuthor(email, email));
+        }
+
+        return author[0];
+    }
 }

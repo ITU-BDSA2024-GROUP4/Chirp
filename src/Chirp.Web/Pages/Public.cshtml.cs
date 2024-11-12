@@ -61,12 +61,9 @@ public class PublicModel : PageModel
         {
             return Page();
         }
-        Console.WriteLine(SubmitMessage.Message);
 
-        Author author = _service.repository.CreateAuthor(User.Identity.Name, "joe@gmail.com");
-        _service.repository.CreateCheep(author,SubmitMessage.Message);
-        Console.WriteLine($"created cheep: {SubmitMessage.Message}");
-        
+        Author author = _service.GetOrCreateAuthor(User.Identity.Name);
+        _service.repository.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();
     }

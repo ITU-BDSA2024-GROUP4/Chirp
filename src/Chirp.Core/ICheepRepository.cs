@@ -10,4 +10,6 @@ public interface ICheepRepository {
     public Author CreateAuthor(string name, string email);
 
     public Cheep CreateCheep(Author author, string text);
+
+    public List<Author> GetAuthor(string email);
 }
