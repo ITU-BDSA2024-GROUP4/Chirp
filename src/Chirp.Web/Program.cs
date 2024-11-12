@@ -20,7 +20,9 @@ builder.Services.AddAuthentication(options =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"];
         o.ClientSecret = builder.Configuration["authentication_github_clientSecrets"];
+        o.Scope.Add("user:email");
         o.CallbackPath = "/signin-github";
+        o.SaveTokens = true;
     });
 
 // Add services to the container.
