@@ -1,3 +1,4 @@
+using Chirp.Core;
 using Chirp.Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,13 @@ public class CheepSecurityTests : IAsyncLifetime
     [Fact]
     public void Cheep_SQL_InjectionTest()
     {
-        _service.Cheep();
+        Author author = _service.GetOrCreateAuthor("Hackerman", "hacker@hacker.hacker");
+        string injection = ";DROP TABLE IF EXISTS Cheeps;-- ";
+        _service.CreateCheep(author, injection);
+        
+        var cheeps = _service.GetCheeps(0);
+        
+        Assert.Equal(injection, cheeps[0].Message);
     }
+    
 }
