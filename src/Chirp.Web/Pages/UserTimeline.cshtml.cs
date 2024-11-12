@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http.Extensions;
+using System.Text.RegularExpressions;
 using Chirp.Core;
 
 namespace Chirp.Web.Pages;
@@ -8,6 +11,8 @@ public class UserTimelineModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
+    [BindProperty]
+    public SubmitMessageModel SubmitMessage { get; set; }
 
     public UserTimelineModel(ICheepService service)
     {
@@ -16,6 +21,10 @@ public class UserTimelineModel : PageModel
 
     public ActionResult OnGet(string author)
     {
+        SetCheeps(author);
+        return Page();
+    }
+    public void SetCheeps(string author) {
         var pageQuery = Request.Query["page"].ToString();
         
         if (pageQuery == null)
@@ -26,11 +35,30 @@ public class UserTimelineModel : PageModel
         else
         {
             _ = int.TryParse(pageQuery, out int page);
-
-            
             Cheeps = _service.GetCheepsFromAuthor(author, page-1);
         }
+    }
+    public IActionResult OnPost()
+    {
+        string url = HttpContext.Request.GetDisplayUrl();
+        var match = Regex.Match(url, @"[^/]+$");
+        if (match.Success)
+        {
+            SetCheeps(match.Value);
+        } else {
+            return RedirectToPage("/BigMistake");
+        }
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
         
-        return Page();
+        string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+        Author author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail);
+        _service.repository.CreateCheep(author, SubmitMessage.Message);
+
+        return RedirectToPage();
+        
     }
 }

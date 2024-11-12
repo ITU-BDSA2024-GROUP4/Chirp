@@ -2,13 +2,26 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class="cheepbox">
+<div class="cheepbox">
     <h3>What's on your mind @(User.Identity.Name)?</h3>
     <form method="post">
-        <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control">
+        @if (Model != null)
+        {
+            <input style="float: left" type="text" asp-for="Message" name="Message" value="@Model.Message" class="form-control" maxlength="160">
+        }
+        else 
+        {
+            <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control" maxlength="160">
+        }
         <span asp-validation-for="Message"></span>
         <input type="submit" value="Share">
         @Html.AntiForgeryToken()
     </form>
+</div>
+<div>
+    @if (Model != null)
+    {
+        <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>
+    }
 </div>
 }
