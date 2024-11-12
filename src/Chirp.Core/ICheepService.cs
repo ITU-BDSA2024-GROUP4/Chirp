@@ -9,4 +9,5 @@ public interface ICheepService
     public List<CheepDTO> GetCheepsFromAuthor(string author, int page);
 
     public Author GetOrCreateAuthor(string name, string email);
+    public void CreateCheep(Author author, string message);
 }
