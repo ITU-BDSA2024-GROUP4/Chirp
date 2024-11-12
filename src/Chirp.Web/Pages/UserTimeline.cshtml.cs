@@ -50,7 +50,6 @@ public class UserTimelineModel : PageModel
         }
         if (!ModelState.IsValid)
         {
-
             return Page();
         }
         
