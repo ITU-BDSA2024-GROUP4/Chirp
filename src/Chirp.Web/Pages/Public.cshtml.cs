@@ -22,6 +22,10 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
+        SetCheeps();
+        return Page();
+    }
+    public void SetCheeps() {
         var pageQuery = Request.Query["page"].ToString();
         
         if (pageQuery == null)
@@ -31,12 +35,8 @@ public class PublicModel : PageModel
         else
         {
             _ = int.TryParse(pageQuery, out int page);            
-
-            Cheeps = _service.GetCheeps(page-1); // minus 1 because pages are 0 indexed
-            
+            Cheeps = _service.GetCheeps(page-1); // minus 1 because pages are 0 indexed   
         }
-
-        return Page();
     }
 
     //code credit to Adrian <adrianjuul123@gmail.com>
@@ -58,6 +58,7 @@ public class PublicModel : PageModel
     
     public IActionResult OnPost()
     {
+        SetCheeps();
         if (!ModelState.IsValid)
         {
             return Page();

@@ -6,26 +6,29 @@
 
 <div>
     <h2> @routeName's Timeline </h2>
-
-    @if (Model.Cheeps.Any())
+    @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
+    @if (Model.Cheeps != null)
     {
-        <ul id="messagelist" class="cheeps">
-            @foreach (var cheep in Model.Cheeps)
-            {
-                <li>
-                    <p>
-                        <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
-                        </strong>
-                        @cheep.Message
-                        <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
-                    </p>
-                </li>
-            }
-        </ul>
-    }
-    else
-    {
-        <em>There are no cheeps so far.</em>
+        @if (Model.Cheeps.Any())
+        {
+            <ul id="messagelist" class="cheeps">
+                @foreach (var cheep in Model.Cheeps)
+                {
+                    <li>
+                        <p>
+                            <strong>
+                                <a href="/@cheep.Author">@cheep.Author</a>
+                            </strong>
+                            @cheep.Message
+                            <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <em>There are no cheeps so far.</em>
+        }
     }
 </div>
