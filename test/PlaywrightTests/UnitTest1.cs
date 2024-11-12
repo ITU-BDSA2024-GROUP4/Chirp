@@ -1,33 +1,48 @@
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
-using NUnit.Framework;
+using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace PlaywrightTests;
 
-[Parallelizable(ParallelScope.Self)]
-[TestFixture]
-public class ExampleTest : PageTest
+namespace PlaywrightTests
 {
-    [Test]
-    public async Task HasTitle()
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    public partial class ExampleTest : PageTest
     {
-        await Page.GotoAsync("https://playwright.dev");
 
-        // Expect a title "to contain" a substring.
-        await Expect(Page).ToHaveTitleAsync(new Regex("Playwright"));
+        private WebApplicationFactory<Program>? _factory;
+        private string? _baseAddress;
+
+        private HttpClient? _client;
+
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new WebApplicationFactory<Program>();
+            _factory.Server.Host.Start();
+
+            _client = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = true, HandleCookies = true });
+            _baseAddress = _client.BaseAddress.ToString();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _factory.Dispose();
+            _client.Dispose();
+        }
+
+
+        [Test]
+        public async Task HasTitle()
+        {
+            _ = await Page.GotoAsync($"{_baseAddress}");
+
+            // Expect a title "to contain" a substring.
+            await Expect(Page).ToHaveTitleAsync(MyRegex());
+        }
+
+        [GeneratedRegex("Chirp!")]
+        private static partial Regex MyRegex();
     }
-
-    [Test]
-    public async Task GetStartedLink()
-    {
-        await Page.GotoAsync("https://playwright.dev");
-
-        // Click the get started link.
-        await Page.GetByRole(AriaRole.Link, new() { Name = "Get started" }).ClickAsync();
-
-        // Expects page to have a heading with the name of Installation.
-        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Installation" })).ToBeVisibleAsync();
-    } 
 }
