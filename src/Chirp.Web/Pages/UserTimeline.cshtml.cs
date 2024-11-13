@@ -55,7 +55,7 @@ public class UserTimelineModel : PageModel
         
         string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
 
-        Author author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail);
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();
