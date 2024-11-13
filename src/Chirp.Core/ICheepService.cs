@@ -8,6 +8,6 @@ public interface ICheepService
 
     public List<CheepDTO> GetCheepsFromAuthor(string author, int page);
 
-    public CheepDTO GetOrCreateAuthor(string name, string email);
+    public AuthorDTO GetOrCreateAuthor(string name, string email);
     public void CreateCheep(string email, string message);
 }

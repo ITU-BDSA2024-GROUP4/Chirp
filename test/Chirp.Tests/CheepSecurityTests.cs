@@ -30,7 +30,7 @@ public class CheepSecurityTests : IAsyncLifetime
     [Fact]
     public void Cheep_SQL_InjectionTest()
     {
-        string author = _service.GetOrCreateAuthor("Hackerman", "hacker@hacker.hacker").Author;
+        string author = _service.GetOrCreateAuthor("Hackerman", "hacker@hacker.hacker").Idenitifer;
         string injection = ";DROP TABLE IF EXISTS Cheeps;-- ";
         _service.CreateCheep(author, injection);
         

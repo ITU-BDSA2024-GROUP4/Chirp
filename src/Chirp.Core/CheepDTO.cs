@@ -5,3 +5,6 @@ public class CheepDTO {
     public string Message { get; set; } = null!;
     public long TimeStamp { get; set; }
 }
+public class AuthorDTO {
+    public string Idenitifer { get; set; } = null!;
+}

@@ -35,7 +35,7 @@ public class CheepService : ICheepService
         _repository.CreateCheep(author, message);
     }
     
-    public CheepDTO GetOrCreateAuthor(string name, string email) {
+    public AuthorDTO GetOrCreateAuthor(string name, string email) {
         var authors = _repository.GetAuthor(email);
         if (authors.Count > 1) {
             return null; //Error, shouldn't be longer than 1
@@ -44,11 +44,9 @@ public class CheepService : ICheepService
             authors.Add(_repository.CreateAuthor(name, email));
         }
 
-        return new CheepDTO
+        return new AuthorDTO
                 {
-                    Author = authors[0].Email,
-                    Message = null,
-                    TimeStamp = 0L
+                    Idenitifer = authors[0].Email
                 };
     }
 }
