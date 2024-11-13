@@ -1,13 +1,20 @@
 using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
+using Chirp.Infrastructure.Data;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Buffers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<ChirpDBContext>(options =>
+    options.UseSqlite(builder.Configuration
+        .GetConnectionString("DefaultConnection")!));
+
+builder.Services.AddDefaultIdentity<ChirpUser>(options =>
+        options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ChirpDBContext>();
 
 builder.Services.AddAuthentication(options =>
     {
@@ -53,9 +60,10 @@ app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-
-
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 
