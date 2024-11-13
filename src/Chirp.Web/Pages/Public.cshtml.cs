@@ -19,6 +19,8 @@ public class PublicModel : PageModel
     }
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
+    [BindProperty]
+    public string Author { get; set; }
 
     public ActionResult OnGet()
     {
@@ -70,5 +72,17 @@ public class PublicModel : PageModel
         _service.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();
+    }
+    public IActionResult OnPostFollow()
+    {
+        Console.WriteLine("----------OnFollow Called");
+        Console.WriteLine(Author);
+        //SetCheeps();
+        if (!ModelState.IsValid)
+        {
+            return RedirectToPage("/UserTimeline", new { author = Author });
+        }
+
+        return RedirectToPage("/Works");
     }
 }
