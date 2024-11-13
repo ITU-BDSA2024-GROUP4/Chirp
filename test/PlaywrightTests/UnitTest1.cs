@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
+
+using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 
 namespace PlaywrightTests
@@ -10,39 +11,49 @@ namespace PlaywrightTests
     public partial class ExampleTest : PageTest
     {
 
-        private WebApplicationFactory<Program>? _factory;
-        private string? _baseAddress;
+        private ChirpWebfactory _factory = null!;
 
-        private HttpClient? _client;
-
-        [SetUp]
-        public void Setup()
+        public override BrowserNewContextOptions ContextOptions()
         {
-            _factory = new WebApplicationFactory<Program>();
-            _factory.Server.Host.Start();
-
-            _client = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = true, HandleCookies = true });
-            _baseAddress = _client.BaseAddress.ToString();
+            return new BrowserNewContextOptions
+            {
+                IgnoreHTTPSErrors = true
+            };
         }
 
-        [TearDown]
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _factory = new ChirpWebfactory();
+            _factory.Start();
+        }
+
+        [OneTimeTearDown]
         public void TearDown()
         {
             _factory.Dispose();
-            _client.Dispose();
         }
 
 
         [Test]
         public async Task HasTitle()
         {
-            _ = await Page.GotoAsync($"{_baseAddress}");
+
+            _ = await Page.GotoAsync(_factory.GetBaseAddress());
 
             // Expect a title "to contain" a substring.
-            await Expect(Page).ToHaveTitleAsync(MyRegex());
+            await Expect(Page).ToHaveTitleAsync("Chirp!");
         }
 
-        [GeneratedRegex("Chirp!")]
-        private static partial Regex MyRegex();
+        [Test]
+        public async Task HasHeader()
+        {
+            await Page.GotoAsync(_factory.GetBaseAddress());
+
+            await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "login" })).ToBeVisibleAsync();
+
+            // Expect a header to contain a substring.
+        }
+        
     }
 }
