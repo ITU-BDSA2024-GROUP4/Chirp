@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Chirp.Infrastructure.Data
+namespace Chirp.Infrastructure
 {
     public class ChirpUser : IdentityUser
     {

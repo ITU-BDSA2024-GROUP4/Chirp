@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core;
-using Chirp.Infrastructure.Data;
+using Chirp.Infrastructure;
 
 namespace Chirp.Infrastructure;
 
