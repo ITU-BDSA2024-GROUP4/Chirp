@@ -66,7 +66,7 @@ public class PublicModel : PageModel
 
         string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
 
-        Author author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail);
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail).Author;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();

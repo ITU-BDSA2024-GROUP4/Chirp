@@ -29,18 +29,26 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author, page);
     }
 
-    public void CreateCheep(Author author, string message)
+    public void CreateCheep(string email, string message)
     {
+        Author author = _repository.GetAuthor(email)[0];
         _repository.CreateCheep(author, message);
     }
     
-    public Author GetOrCreateAuthor(string name, string email) {
-        var author = _repository.GetAuthor(email);
-
-        if (!author.Any()) {
-            author.Add(_repository.CreateAuthor(name, email));
+    public CheepDTO GetOrCreateAuthor(string name, string email) {
+        var authors = _repository.GetAuthor(email);
+        if (authors.Count > 1) {
+            return null; //Error, shouldn't be longer than 1
+        }
+        if (!authors.Any()) {
+            authors.Add(_repository.CreateAuthor(name, email));
         }
 
-        return author[0];
+        return new CheepDTO
+                {
+                    Author = authors[0].Email,
+                    Message = null,
+                    TimeStamp = 0L
+                };
     }
 }
