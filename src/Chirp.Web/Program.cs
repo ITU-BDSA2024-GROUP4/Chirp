@@ -1,7 +1,6 @@
 using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
-using Chirp.Infrastructure;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Buffers;
