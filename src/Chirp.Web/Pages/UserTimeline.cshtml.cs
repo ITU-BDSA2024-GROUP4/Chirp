@@ -15,7 +15,7 @@ public class UserTimelineModel : PageModel
     public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty]
     public string Author { get; set; }
-
+    public string Email { get; set; }
     public UserTimelineModel(ICheepService service)
     {
         _service = service;
@@ -28,7 +28,8 @@ public class UserTimelineModel : PageModel
     }
     public void SetCheeps(string author) {
         var pageQuery = Request.Query["page"].ToString();
-        
+        Email = User.FindFirst(ClaimTypes.Email)?.Value;
+
         if (pageQuery == null)
         {
 
@@ -55,9 +56,7 @@ public class UserTimelineModel : PageModel
             return Page();
         }
         
-        string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail).Idenitifer;
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, Email).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();

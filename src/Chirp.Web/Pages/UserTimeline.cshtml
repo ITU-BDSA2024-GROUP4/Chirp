@@ -18,11 +18,14 @@
                         <p>
                             <strong>
                                 <a href="/@cheep.Author">@cheep.Author</a>
-                                <form method="post" asp-page-handler="Follow">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="author" value="@cheep.Author" />
-                                    <input type="submit" value="Follow" formaction="?handler=Follow">
-                                </form>
+                                @if (cheep.Email != Model.Email && User.Identity.IsAuthenticated)
+                                {
+                                    <form method="post" asp-page-handler="Follow">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="author" value="@cheep.Author" />
+                                        <input type="submit" value="Follow" formaction="?handler=Follow">
+                                    </form>
+                                }
                             </strong>
                             @cheep.Message
                             <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>

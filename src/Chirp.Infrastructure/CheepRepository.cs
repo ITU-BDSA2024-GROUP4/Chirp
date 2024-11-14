@@ -25,7 +25,8 @@ public class CheepRepository : ICheepRepository
                     orderby Cheeps.TimeStamp descending
                     select new CheepDTO
                     {
-                        Author = Author.Name, 
+                        Author = Author.Name,
+                        Email = Author.Email, 
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                     })
@@ -44,7 +45,8 @@ public class CheepRepository : ICheepRepository
                     where Author.Name == author
                     select new CheepDTO
                     {
-                        Author = Author.Name, 
+                        Author = Author.Name,
+                        Email = Author.Email,  
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                     })
@@ -64,6 +66,7 @@ public class CheepRepository : ICheepRepository
                 select new CheepDTO
                 {
                     Author = Author.Name,
+                    Email = Author.Email, 
                     Message = Cheeps.Text,
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                 })
