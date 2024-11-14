@@ -13,6 +13,8 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
+    [BindProperty]
+    public string Author { get; set; }
 
     public UserTimelineModel(ICheepService service)
     {
@@ -60,5 +62,17 @@ public class UserTimelineModel : PageModel
 
         return RedirectToPage();
         
+    }
+    public IActionResult OnPostFollow()
+    {
+        Console.WriteLine("----------OnFollow Called");
+        Console.WriteLine(Author);
+        //SetCheeps();
+        if (!ModelState.IsValid)
+        {
+            return RedirectToPage("/UserTimeline", new { author = Author });
+        }
+
+        return RedirectToPage("/Works");
     }
 }

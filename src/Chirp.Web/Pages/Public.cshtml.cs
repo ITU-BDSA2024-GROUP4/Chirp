@@ -12,15 +12,14 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
-    
-    public PublicModel(ICheepService service)
-    {
-        _service = service;
-    }
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty]
     public string Author { get; set; }
+    public PublicModel(ICheepService service)
+    {
+        _service = service;
+    }
 
     public ActionResult OnGet()
     {
@@ -57,15 +56,25 @@ public class PublicModel : PageModel
         }, CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    
+    private bool IsInvalid(string input)
+    {
+        foreach (var state in ModelState)
+        {
+            if (state.Key.StartsWith(input))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    } 
     public IActionResult OnPost()
     {
         SetCheeps();
-        if (!ModelState.IsValid)
+        if (IsInvalid(nameof(SubmitMessage)) || SubmitMessage.Message == null)
         {
             return Page();
         }
-
         string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
 
         string author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail).Idenitifer;
