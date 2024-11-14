@@ -62,16 +62,20 @@ public class PublicModel : PageModel
         {
             if (state.Key.StartsWith(input))
             {
-                return true;
+                foreach (var error in state.Value.Errors)
+                {
+                    return true; //Invalid because error :(
+                }
+                return false; //Its valid if exists and no error :)
             }
         }
 
-        return false;
+        return true; //Invalid because not exist :(
     } 
     public IActionResult OnPost()
     {
         SetCheeps();
-        if (IsInvalid(nameof(SubmitMessage)) || SubmitMessage.Message == null)
+        if (IsInvalid(nameof(SubmitMessage.Message)))
         {
             return Page();
         }
@@ -86,12 +90,20 @@ public class PublicModel : PageModel
     {
         Console.WriteLine("----------OnFollow Called");
         Console.WriteLine(Author);
+        Console.WriteLine(nameof(Author));
         //SetCheeps();
-        if (!ModelState.IsValid)
+        if (IsInvalid(nameof(Author)))
         {
-            return RedirectToPage("/UserTimeline", new { author = Author });
+            foreach (var state in ModelState)
+            {
+                Console.WriteLine($"Key: {state.Key}");
+                foreach (var error in state.Value.Errors)
+                {
+                    Console.WriteLine($"Error: {error.ErrorMessage}");
+                }
+            }
+            return RedirectToPage("/Stoooooooooooooopit");
         }
-
-        return RedirectToPage("/Works");
+        return RedirectToPage("/UserTimeline", new { author = Author });
     }
 }

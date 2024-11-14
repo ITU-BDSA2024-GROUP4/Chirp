@@ -70,9 +70,8 @@ public class UserTimelineModel : PageModel
         //SetCheeps();
         if (!ModelState.IsValid)
         {
-            return RedirectToPage("/UserTimeline", new { author = Author });
+            return RedirectToPage("/Stooopid");
         }
-
-        return RedirectToPage("/Works");
+        return RedirectToPage("/UserTimeline", new { author = Author });
     }
 }
