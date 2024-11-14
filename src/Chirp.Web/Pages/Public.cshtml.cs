@@ -1,10 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using Chirp.Core;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 using System.Security.Claims;
+
+using Chirp.Infrastructure;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Web.Pages;
 
@@ -12,50 +19,54 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
-    
+
     public PublicModel(ICheepService service)
     {
         _service = service;
     }
-    [BindProperty]
-    public SubmitMessageModel SubmitMessage { get; set; }
+
+    [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
 
     public ActionResult OnGet()
     {
         SetCheeps();
         return Page();
     }
-    public void SetCheeps() {
+
+    public void SetCheeps()
+    {
         var pageQuery = Request.Query["page"].ToString();
-        
+
         if (pageQuery == null)
         {
             Cheeps = _service.GetCheeps(0); // default to first page
         }
         else
         {
-            _ = int.TryParse(pageQuery, out int page);            
-            Cheeps = _service.GetCheeps(page-1); // minus 1 because pages are 0 indexed   
+            _ = int.TryParse(pageQuery, out int page);
+            Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
         }
     }
 
     //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogin()
     {
-        return Challenge(new AuthenticationProperties{
-            RedirectUri = "/"
-        },"GitHub");
+        Console.WriteLine();
+        return Challenge(new AuthenticationProperties { RedirectUri = "/", Items = {   }}, "GitHub");
     }
 
     //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogout()
     {
-        return SignOut(new AuthenticationProperties{
-            RedirectUri = "/"
-        }, CookieAuthenticationDefaults.AuthenticationScheme);
+        return SignOut(
+            new AuthenticationProperties { RedirectUri = "/" },
+            IdentityConstants.ApplicationScheme,
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            "Github"
+        );
     }
 
-    
+
     public IActionResult OnPost()
     {
         SetCheeps();

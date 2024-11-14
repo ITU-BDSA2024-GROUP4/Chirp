@@ -16,13 +16,9 @@ builder.Services.AddDefaultIdentity<ChirpUser>(options =>
         options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ChirpDBContext>();
 
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = "GitHub";
-    })
-    .AddCookie()
+builder.Services.AddAuthentication()
+    .AddCookie("Github")
+    .AddCookie("Cookies")
     .AddGitHub(o =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"];
@@ -61,10 +57,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
 
 app.Run();
