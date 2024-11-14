@@ -124,7 +124,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             {
                 var user = new ChirpUser { UserName = Input.Name, Email = Input.Email };
                 
-                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
