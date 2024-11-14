@@ -77,7 +77,7 @@ public class PublicModel : PageModel
         if (HelperMethods.IsInvalid(nameof(Author), ModelState) &&
                 HelperMethods.IsInvalid(nameof(Author_Email), ModelState))
         {
-            return RedirectToPage("/Stoooooooooooooopit");
+            return RedirectToPage("/Error");
         }
         UserEmail = HelperMethods.FindEmail(User);
         Console.WriteLine("Email: " + UserEmail);
@@ -91,6 +91,24 @@ public class PublicModel : PageModel
 
         _service.repository.CreateFollow(a0,a1);
         return RedirectToPage("/UserTimeline", new { author = Author });
+    }
+
+    public IActionResult OnPostUnfollow()
+    {
+        SetCheeps();
+        
+        if (HelperMethods.IsInvalid(nameof(Author), ModelState) &&
+            HelperMethods.IsInvalid(nameof(Author_Email), ModelState))
+        {
+            return RedirectToPage("/Error");
+        }
+        UserEmail = HelperMethods.FindEmail(User);
+        
+        Author a0 = _service.repository.GetAuthor(UserEmail)[0];
+        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
+        _service.repository.UnFollow(a0,a1);
+        
+        return Page();
     }
 
     public bool BlackMagic(string bruhh)
@@ -109,8 +127,7 @@ public class PublicModel : PageModel
         }
         catch (Exception e)
         {
-            Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!", e);
-            return !false;
+            return true;
         }
     }
 }

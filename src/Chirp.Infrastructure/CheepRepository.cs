@@ -152,4 +152,16 @@ public class CheepRepository : ICheepRepository
         
         return query;
     }
+
+    public void UnFollow(Author user, Author unfollowing)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == user.AuthorId && Follows.Following.AuthorId == unfollowing.AuthorId
+            select Follows);
+        foreach (var follow in query)
+        {
+            _context.Following.Remove(follow);
+        }
+        _context.SaveChanges();
+    }
 }
