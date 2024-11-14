@@ -13,4 +13,5 @@ public interface ICheepRepository {
 
     public List<Author> GetAuthor(string email);
     public void CreateFollow(Author user, Author following);
+    public bool IsFollowing(Author user, Author following);
 }

@@ -126,12 +126,7 @@ public class CheepRepository : ICheepRepository
         var query = (from Author in _context.Authors
                     where Author.Email == email
                     select Author);
-        Console.WriteLine(email);
-        Console.WriteLine("LIST ---------------------------------------------------------");
-        foreach (var a in query.ToList())
-        {
-            Console.WriteLine(a.Email);
-        }
+
         return query.ToList();
     }
     public void CreateFollow(Author user, Author following)
@@ -147,5 +142,14 @@ public class CheepRepository : ICheepRepository
         
         _context.Following.Add(follows);
         _context.SaveChanges();
+    }
+
+    public bool IsFollowing(Author user, Author following)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == user.AuthorId && Follows.Following.AuthorId == following.AuthorId
+            select Follows).Any();
+        
+        return query;
     }
 }

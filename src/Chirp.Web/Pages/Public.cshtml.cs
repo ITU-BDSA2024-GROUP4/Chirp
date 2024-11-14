@@ -84,12 +84,33 @@ public class PublicModel : PageModel
         Console.WriteLine("Author: " + Author_Email);
         
         _service.GetOrCreateAuthor(User.Identity.Name, UserEmail);
-
-        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
+        
         Author a0 = _service.repository.GetAuthor(UserEmail)[0];
+        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
 
 
         _service.repository.CreateFollow(a0,a1);
         return RedirectToPage("/UserTimeline", new { author = Author });
+    }
+
+    public bool BlackMagic(string bruhh)
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return false;    
+        }
+        UserEmail = HelperMethods.FindEmail(User);
+        
+        try
+        {
+            Author a0 = _service.repository.GetAuthor(UserEmail)[0];
+            Author a1 = _service.repository.GetAuthor(bruhh)[0];
+            return !_service.repository.IsFollowing(a0, a1);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!", e);
+            return !false;
+        }
     }
 }
