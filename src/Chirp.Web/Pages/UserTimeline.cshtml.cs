@@ -65,12 +65,9 @@ public class UserTimelineModel : PageModel
     }
     public IActionResult OnPostFollow()
     {
-        Console.WriteLine("----------OnFollow Called");
-        Console.WriteLine(Author);
-        //SetCheeps();
-        if (!ModelState.IsValid)
+        if (HelperMethods.IsInvalid(nameof(Author), ModelState))
         {
-            return RedirectToPage("/Stooopid");
+            return RedirectToPage("/Stoooooooooooooopit");
         }
         return RedirectToPage("/UserTimeline", new { author = Author });
     }

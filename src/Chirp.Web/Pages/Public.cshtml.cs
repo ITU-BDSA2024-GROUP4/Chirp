@@ -55,27 +55,10 @@ public class PublicModel : PageModel
             RedirectUri = "/"
         }, CookieAuthenticationDefaults.AuthenticationScheme);
     }
-
-    private bool IsInvalid(string input)
-    {
-        foreach (var state in ModelState)
-        {
-            if (state.Key.StartsWith(input))
-            {
-                foreach (var error in state.Value.Errors)
-                {
-                    return true; //Invalid because error :(
-                }
-                return false; //Its valid if exists and no error :)
-            }
-        }
-
-        return true; //Invalid because not exist :(
-    } 
     public IActionResult OnPost()
     {
         SetCheeps();
-        if (IsInvalid(nameof(SubmitMessage.Message)))
+        if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
             return Page();
         }
@@ -88,20 +71,8 @@ public class PublicModel : PageModel
     }
     public IActionResult OnPostFollow()
     {
-        Console.WriteLine("----------OnFollow Called");
-        Console.WriteLine(Author);
-        Console.WriteLine(nameof(Author));
-        //SetCheeps();
-        if (IsInvalid(nameof(Author)))
+        if (HelperMethods.IsInvalid(nameof(Author), ModelState))
         {
-            foreach (var state in ModelState)
-            {
-                Console.WriteLine($"Key: {state.Key}");
-                foreach (var error in state.Value.Errors)
-                {
-                    Console.WriteLine($"Error: {error.ErrorMessage}");
-                }
-            }
             return RedirectToPage("/Stoooooooooooooopit");
         }
         return RedirectToPage("/UserTimeline", new { author = Author });
