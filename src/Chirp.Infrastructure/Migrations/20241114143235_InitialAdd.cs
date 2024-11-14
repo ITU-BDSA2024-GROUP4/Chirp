@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Chirp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class intialCreate : Migration
+    public partial class InitialAdd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,10 +46,47 @@ namespace Chirp.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Following",
+                columns: table => new
+                {
+                    User_AuthorID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Following_AuthorID = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserAuthorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FollowingAuthorId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Following", x => x.User_AuthorID);
+                    table.ForeignKey(
+                        name: "FK_Following_Authors_FollowingAuthorId",
+                        column: x => x.FollowingAuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "AuthorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Following_Authors_UserAuthorId",
+                        column: x => x.UserAuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "AuthorId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cheeps_AuthorId",
                 table: "Cheeps",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Following_FollowingAuthorId",
+                table: "Following",
+                column: "FollowingAuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Following_UserAuthorId",
+                table: "Following",
+                column: "UserAuthorId");
         }
 
         /// <inheritdoc />
@@ -57,6 +94,9 @@ namespace Chirp.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Cheeps");
+
+            migrationBuilder.DropTable(
+                name: "Following");
 
             migrationBuilder.DropTable(
                 name: "Authors");

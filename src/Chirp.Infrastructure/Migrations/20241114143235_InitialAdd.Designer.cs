@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    [Migration("20241113150323_addFollows")]
-    partial class addFollows
+    [Migration("20241114143235_InitialAdd")]
+    partial class InitialAdd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,32 @@ namespace Chirp.Infrastructure.Migrations
                     b.ToTable("Cheeps");
                 });
 
+            modelBuilder.Entity("Chirp.Core.Follows", b =>
+                {
+                    b.Property<int>("User_AuthorID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("FollowingAuthorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Following_AuthorID")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(2);
+
+                    b.Property<int>("UserAuthorId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("User_AuthorID");
+
+                    b.HasIndex("FollowingAuthorId");
+
+                    b.HasIndex("UserAuthorId");
+
+                    b.ToTable("Following");
+                });
+
             modelBuilder.Entity("Chirp.Core.Cheep", b =>
                 {
                     b.HasOne("Chirp.Core.Author", "Author")
@@ -72,6 +98,25 @@ namespace Chirp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Chirp.Core.Follows", b =>
+                {
+                    b.HasOne("Chirp.Core.Author", "Following")
+                        .WithMany()
+                        .HasForeignKey("FollowingAuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Chirp.Core.Author", "User")
+                        .WithMany()
+                        .HasForeignKey("UserAuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Following");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Chirp.Core.Author", b =>

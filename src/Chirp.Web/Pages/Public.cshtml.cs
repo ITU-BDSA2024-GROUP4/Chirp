@@ -75,6 +75,10 @@ public class PublicModel : PageModel
         {
             return RedirectToPage("/Stoooooooooooooopit");
         }
+
+        Author a0 = _service.repository.GetAuthor("Nathan+Sirmon@dtu.dk")[0];
+        Author a1 = _service.repository.GetAuthor("Quintin+Sitts@itu.dk")[0];
+        _service.repository.CreateFollow(a0,a1);
         return RedirectToPage("/UserTimeline", new { author = Author });
     }
 }

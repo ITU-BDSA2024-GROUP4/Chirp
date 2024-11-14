@@ -120,6 +120,7 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
+    
 
     public List<Author> GetAuthor(string email) {
         var query = (from Author in _context.Authors
@@ -127,5 +128,19 @@ public class CheepRepository : ICheepRepository
                     select Author);
 
         return query.ToList();
+    }
+    public void CreateFollow(Author user, Author following)
+    {
+        Follows follows = new Follows() { User = user, Following = following };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(follows);
+        if (!Validator.TryValidateObject(follows, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Following.Add(follows);
+        _context.SaveChanges();
     }
 }

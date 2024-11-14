@@ -46,8 +46,18 @@ public class Cheep
 
 public class Follows
 {
+    [Key]
+    [Column(Order = 1)]
     [Required]
-    public int User { get; set; }
+    public int User_AuthorID { get; set; }
+    
+    [Column(Order = 2)]
     [Required]
-    public int Following { get; set; }
+    public int Following_AuthorID { get; set; }
+    
+    [Required]
+    public Author User { get; set; }
+
+    [Required]
+    public Author Following { get; set; }
 }

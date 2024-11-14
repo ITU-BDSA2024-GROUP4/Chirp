@@ -12,4 +12,5 @@ public interface ICheepRepository {
     public Cheep CreateCheep(Author author, string text);
 
     public List<Author> GetAuthor(string email);
+    public void CreateFollow(Author user, Author following);
 }
