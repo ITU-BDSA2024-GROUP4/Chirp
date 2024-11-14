@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Chirp.Web;
@@ -17,5 +19,10 @@ public static class HelperMethods {
         }
 
         return true; //Invalid because not exist :(
-    } 
+    }
+
+    public static string FindEmail(ClaimsPrincipal user)
+    {
+        return user.FindFirst(ClaimTypes.Email)?.Value;
+    }
 }

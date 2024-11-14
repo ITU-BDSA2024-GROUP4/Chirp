@@ -126,7 +126,12 @@ public class CheepRepository : ICheepRepository
         var query = (from Author in _context.Authors
                     where Author.Email == email
                     select Author);
-
+        Console.WriteLine(email);
+        Console.WriteLine("LIST ---------------------------------------------------------");
+        foreach (var a in query.ToList())
+        {
+            Console.WriteLine(a.Email);
+        }
         return query.ToList();
     }
     public void CreateFollow(Author user, Author following)

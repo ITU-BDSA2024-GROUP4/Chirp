@@ -16,7 +16,10 @@ public class PublicModel : PageModel
     public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty]
     public string Author { get; set; }
-    public string Email { get; set; }
+    [BindProperty]
+    public string Author_Email { get; set; }
+    
+    public string UserEmail { get; set; }
     public PublicModel(ICheepService service)
     {
         _service = service;
@@ -29,7 +32,7 @@ public class PublicModel : PageModel
     }
     public void SetCheeps() {
         var pageQuery = Request.Query["page"].ToString();
-        Email = User.FindFirst(ClaimTypes.Email)?.Value;
+        UserEmail = HelperMethods.FindEmail(User);
 
         if (pageQuery == null)
         {
@@ -64,20 +67,28 @@ public class PublicModel : PageModel
         {
             return Page();
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, Email).Idenitifer;
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         return RedirectToPage();
     }
     public IActionResult OnPostFollow()
     {
-        if (HelperMethods.IsInvalid(nameof(Author), ModelState))
+        if (HelperMethods.IsInvalid(nameof(Author), ModelState) &&
+                HelperMethods.IsInvalid(nameof(Author_Email), ModelState))
         {
             return RedirectToPage("/Stoooooooooooooopit");
         }
+        UserEmail = HelperMethods.FindEmail(User);
+        Console.WriteLine("Email: " + UserEmail);
+        Console.WriteLine("Author: " + Author_Email);
+        
+        _service.GetOrCreateAuthor(User.Identity.Name, UserEmail);
 
-        Author a0 = _service.repository.GetAuthor("Nathan+Sirmon@dtu.dk")[0];
-        Author a1 = _service.repository.GetAuthor("Quintin+Sitts@itu.dk")[0];
+        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
+        Author a0 = _service.repository.GetAuthor(UserEmail)[0];
+
+
         _service.repository.CreateFollow(a0,a1);
         return RedirectToPage("/UserTimeline", new { author = Author });
     }
