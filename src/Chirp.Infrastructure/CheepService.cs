@@ -65,7 +65,10 @@ public class CheepService : ICheepService
     public void UnFollow(string user, string unfollow) {
         _repository.UnFollow(user, unfollow);
     }
-    public bool IsFollowing(string user, string author) {
-        return _repository.IsFollowing(user,author);
+    public BoolDTO IsFollowing(string user, string author) {
+        return new BoolDTO
+                {
+                    Boolean = _repository.IsFollowing(user,author)
+                };
     }
 }

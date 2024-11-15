@@ -117,7 +117,7 @@ public class PublicModel : PageModel
         {
             string a0 = _service.GetAuthor(UserEmail).Idenitifer;
             string a1 = _service.GetAuthor(Author_Email).Idenitifer;
-            return _service.IsFollowing(a0, a1);
+            return _service.IsFollowing(a0, a1).Boolean;
         }
         catch (Exception e)
         {

@@ -13,5 +13,5 @@ public interface ICheepService
     public void CreateCheep(string email, string message);
     public void CreateFollow(string user, string follow);
     public void UnFollow(string user, string unfollow);
-    public bool IsFollowing(string user, string author);
+    public BoolDTO IsFollowing(string user, string author);
 }
