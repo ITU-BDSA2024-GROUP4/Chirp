@@ -129,9 +129,12 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
-    public void CreateFollow(Author user, Author following)
+    public void CreateFollow(string user, string following)
     {
-        Follows follows = new Follows() { User = user, Following = following };
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorFollowing = GetAuthor(following)[0];
+        
+        Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };
         
         var validationResults = new List<ValidationResult>();
         var valContext = new ValidationContext(follows);
@@ -144,24 +147,29 @@ public class CheepRepository : ICheepRepository
         _context.SaveChanges();
     }
 
-    public bool IsFollowing(Author user, Author following)
+    public void UnFollow(string user, string unfollowing)
     {
-        var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == user.AuthorId && Follows.Following.AuthorId == following.AuthorId
-            select Follows).Any();
-        
-        return query;
-    }
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
 
-    public void UnFollow(Author user, Author unfollowing)
-    {
         var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == user.AuthorId && Follows.Following.AuthorId == unfollowing.AuthorId
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
             select Follows);
         foreach (var follow in query)
         {
             _context.Following.Remove(follow);
         }
         _context.SaveChanges();
+    }
+    public bool IsFollowing(string user, string author)
+    {
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorAuthor = GetAuthor(author)[0];
+
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            select Follows).Any();
+        
+        return query;
     }
 }

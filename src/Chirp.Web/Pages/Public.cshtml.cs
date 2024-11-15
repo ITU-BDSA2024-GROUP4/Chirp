@@ -80,16 +80,14 @@ public class PublicModel : PageModel
             return RedirectToPage("/Error");
         }
         UserEmail = HelperMethods.FindEmail(User);
-        Console.WriteLine("Email: " + UserEmail);
-        Console.WriteLine("Author: " + Author_Email);
         
         _service.GetOrCreateAuthor(User.Identity.Name, UserEmail);
         
-        Author a0 = _service.repository.GetAuthor(UserEmail)[0];
-        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
+        string a0 = _service.GetAuthor(UserEmail).Idenitifer;
+        string a1 = _service.GetAuthor(Author_Email).Idenitifer;
 
 
-        _service.repository.CreateFollow(a0,a1);
+        _service.CreateFollow(a0,a1);
         return RedirectToPage("/UserTimeline", new { author = Author });
     }
 
@@ -104,30 +102,26 @@ public class PublicModel : PageModel
         }
         UserEmail = HelperMethods.FindEmail(User);
         
-        Author a0 = _service.repository.GetAuthor(UserEmail)[0];
-        Author a1 = _service.repository.GetAuthor(Author_Email)[0];
-        _service.repository.UnFollow(a0,a1);
+        string a0 = _service.GetAuthor(UserEmail).Idenitifer;
+        string a1 = _service.GetAuthor(Author_Email).Idenitifer;
+        _service.UnFollow(a0,a1);
         
         return Page();
     }
 
-    public bool BlackMagic(string bruhh)
+    public bool BlackMagic(string Author_Email)
     {
-        if (!User.Identity.IsAuthenticated)
-        {
-            return false;    
-        }
         UserEmail = HelperMethods.FindEmail(User);
         
         try
         {
-            Author a0 = _service.repository.GetAuthor(UserEmail)[0];
-            Author a1 = _service.repository.GetAuthor(bruhh)[0];
-            return !_service.repository.IsFollowing(a0, a1);
+            string a0 = _service.GetAuthor(UserEmail).Idenitifer;
+            string a1 = _service.GetAuthor(Author_Email).Idenitifer;
+            return _service.IsFollowing(a0, a1);
         }
         catch (Exception e)
         {
-            return true;
+            return false;
         }
     }
 }

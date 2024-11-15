@@ -13,9 +13,9 @@
                     <p>
                         <strong>
                             <a href="/@cheep.Author">@cheep.Author</a>
-                            @if (cheep.Email != Model.UserEmail)
+                            @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
                             {
-                                @if (Model.BlackMagic(cheep.Email)) 
+                                @if (!Model.BlackMagic(cheep.Email)) 
                                 {
                                     <form method="post" asp-page-handler="Follow">
                                         @Html.AntiForgeryToken()
