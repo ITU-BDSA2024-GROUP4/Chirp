@@ -4,6 +4,12 @@
 <div>
     <h2> Public Timeline </h2>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
+    @if (Model.SubmitMessage != null && Model.Author == null)
+    {
+        <div>
+            <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>
+        </div>
+    }
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">

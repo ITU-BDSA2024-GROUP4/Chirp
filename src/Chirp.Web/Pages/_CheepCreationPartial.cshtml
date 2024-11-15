@@ -1,3 +1,4 @@
+@using Chirp.Core
 @model Chirp.Web.Pages.SubmitMessageModel
 
 @if (User.Identity.IsAuthenticated)
@@ -18,10 +19,5 @@
         @Html.AntiForgeryToken()
     </form>
 </div>
-<div>
-    @if (Model != null)
-    {
-        <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>
-    }
-</div>
+
 }

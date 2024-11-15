@@ -15,7 +15,11 @@ public class UserTimelineModel : PageModel
     public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty]
     public string Author { get; set; }
+    [BindProperty]
+    public string Author_Email { get; set; }
+    
     public string Email { get; set; }
+    public string UserEmail { get; set; }
     public UserTimelineModel(ICheepService service)
     {
         _service = service;
@@ -64,10 +68,31 @@ public class UserTimelineModel : PageModel
     }
     public IActionResult OnPostFollow()
     {
-        if (HelperMethods.IsInvalid(nameof(Author), ModelState))
+        UserEmail = HelperMethods.FindEmail(User);
+        switch (HelperMethods.Follow(ModelState, nameof(Author_Email), nameof(Author), UserEmail, _service,
+                    User.Identity.Name, Author_Email))
         {
-            return RedirectToPage("/Stoooooooooooooopit");
+            case "Error":
+                return RedirectToPage("/Error");
+            case "UserTimeline":
+                return RedirectToPage("/UserTimeline", new { author = Author });
+            default:
+                return RedirectToPage("/Error");
         }
-        return RedirectToPage("/UserTimeline", new { author = Author });
+    }
+    public bool BlackMagic(string Author_Email)
+    {
+        UserEmail = HelperMethods.FindEmail(User);
+
+        try
+        {
+            string a0 = _service.GetAuthor(UserEmail).Idenitifer;
+            string a1 = _service.GetAuthor(Author_Email).Idenitifer;
+            return _service.IsFollowing(a0, a1).Boolean;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }
