@@ -7,6 +7,12 @@
 <div>
     <h2> @routeName's Timeline </h2>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
+    @if (Model.IsSubmitMessageInValid())
+    {
+        <div>
+            <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>
+        </div>
+    }
     @if (Model.Cheeps != null)
     {
         @if (Model.Cheeps.Any())
@@ -20,7 +26,7 @@
                                 <a href="/@cheep.Author">@cheep.Author</a>
                                 @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
                                 {
-                                    @if (!Model.BlackMagic(cheep.Email)) 
+                                    @if (!Model.IsFollowing(cheep.Email)) 
                                     {
                                         <form method="post" asp-page-handler="Follow">
                                             @Html.AntiForgeryToken()

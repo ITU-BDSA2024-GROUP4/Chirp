@@ -25,23 +25,21 @@ public class UserTimelineModel : PageModel
     {
         _service = service;
     }
-
+    public void SetEmail() {
+        UserEmail = HelperMethods.FindEmail(User);
+    }
     public ActionResult OnGet(string author)
     {
         SetCheeps();
         return Page();
     }
     public void SetCheeps() {
-        string author = "";
+        SetEmail();
         string url = HttpContext.Request.GetDisplayUrl();
         var match = Regex.Match(url, @"(?<=^https?://[^/]+/)([^?]+)");
-        if (match.Success)
+        if (!match.Success)
         {
-            Console.WriteLine("------");
-            Console.WriteLine(match.Value);
-            author = match.Value;
-        } else {
-            return;
+            throw new Exception("Url not matching");
         }
         // if (!ModelState.IsValid)
         // {
@@ -54,18 +52,23 @@ public class UserTimelineModel : PageModel
         if (pageQuery == null)
         {
 
-            Cheeps = _service.GetCheepsFromAuthor(author, 0); // default to first page
+            Cheeps = _service.GetCheepsFromAuthor(match.Value, 0); // default to first page
         }
         else
         {
             _ = int.TryParse(pageQuery, out int page);
-            Cheeps = _service.GetCheepsFromAuthor(author, page-1);
+            Cheeps = _service.GetCheepsFromAuthor(match.Value, page-1);
         }
     }
     public IActionResult OnPost()
     {
-        SetCheeps();   
-        
+        SetCheeps();
+        Console.WriteLine("--------------------");
+        Console.WriteLine("Is submitmessage valid? {0}", IsSubmitMessageInValid());
+        if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
+        {
+            return Page();
+        }
         string author = _service.GetOrCreateAuthor(User.Identity.Name, Email).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
@@ -74,7 +77,7 @@ public class UserTimelineModel : PageModel
     }
     public IActionResult OnPostFollow()
     {
-        UserEmail = HelperMethods.FindEmail(User);
+        SetEmail();
 
         switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
@@ -90,7 +93,6 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostUnfollow()
     {
         SetCheeps();
-        UserEmail = HelperMethods.FindEmail(User);
 
         switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
@@ -103,19 +105,15 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
-    public bool BlackMagic(string Author_Email)
+    public bool IsFollowing(string Author_Email)
     {
-        UserEmail = HelperMethods.FindEmail(User);
+        SetEmail();
 
-        try
-        {
-            string a0 = _service.GetAuthor(UserEmail).Idenitifer;
-            string a1 = _service.GetAuthor(Author_Email).Idenitifer;
-            return _service.IsFollowing(a0, a1).Boolean;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+        return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
+    }
+    public bool IsSubmitMessageInValid() {
+        return SubmitMessage != null &&
+        HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState) && 
+        HelperMethods.IsInvalid(nameof(SubmitMessage), ModelState);
     }
 }

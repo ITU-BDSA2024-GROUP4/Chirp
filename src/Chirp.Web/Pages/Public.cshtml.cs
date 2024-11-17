@@ -21,7 +21,9 @@ public class PublicModel : PageModel
     {
         _service = service;
     }
-
+    public void SetEmail() {
+        UserEmail = HelperMethods.FindEmail(User);
+    }
     public ActionResult OnGet()
     {
         SetCheeps();
@@ -30,8 +32,8 @@ public class PublicModel : PageModel
 
     public void SetCheeps()
     {
+        SetEmail();
         var pageQuery = Request.Query["page"].ToString();
-        UserEmail = HelperMethods.FindEmail(User);
 
         if (pageQuery == null)
         {
@@ -73,7 +75,8 @@ public class PublicModel : PageModel
 
     public IActionResult OnPostFollow()
     {
-        UserEmail = HelperMethods.FindEmail(User);
+        SetEmail();
+
         switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
@@ -89,7 +92,6 @@ public class PublicModel : PageModel
     public IActionResult OnPostUnfollow()
     {
         SetCheeps();
-        UserEmail = HelperMethods.FindEmail(User);
 
         switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
@@ -103,19 +105,9 @@ public class PublicModel : PageModel
         }
     }
 
-    public bool BlackMagic(string Author_Email)
+    public bool IsFollowing(string Author_Email)
     {
-        UserEmail = HelperMethods.FindEmail(User);
-
-        try
-        {
-            string a0 = _service.GetAuthor(UserEmail).Idenitifer;
-            string a1 = _service.GetAuthor(Author_Email).Idenitifer;
-            return _service.IsFollowing(a0, a1).Boolean;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+        SetEmail();
+        return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
     }
 }

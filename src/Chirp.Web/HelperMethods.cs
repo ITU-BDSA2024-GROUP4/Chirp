@@ -60,11 +60,25 @@ public static class HelperMethods {
 
             return "Error";
         }
-
+        
+        Console.WriteLine(authorEmail);
         string a0 = service.GetAuthor(userEmail).Idenitifer;
         string a1 = service.GetAuthor(authorEmail).Idenitifer;
+
         service.UnFollow(a0, a1);
 
         return "Page";
+    }
+    public static bool IsFollowing(ICheepService service, string userEmail, string authorEmail) {
+        try
+        {
+            string a0 = service.GetAuthor(userEmail).Idenitifer;
+            string a1 = service.GetAuthor(authorEmail).Idenitifer;
+            return service.IsFollowing(a0, a1).Boolean;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }
