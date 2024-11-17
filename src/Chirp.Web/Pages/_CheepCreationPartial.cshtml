@@ -5,7 +5,7 @@
 {
 <div class="cheepbox">
     <h3>What's on your mind @(User.Identity.Name)?</h3>
-    <form method="post">
+    <form method="post" action="@Url.Page("", new { handler = "Message" })">
         @if (Model != null)
         {
             <input style="float: left" type="text" asp-for="Message" name="Message" value="@Model.Message" class="form-control" maxlength="160">

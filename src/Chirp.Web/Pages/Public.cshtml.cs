@@ -11,9 +11,13 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
-    [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
-    [BindProperty] public string Author { get; set; }
-    [BindProperty] public string Author_Email { get; set; }
+    [BindProperty] 
+    public SubmitMessageModel SubmitMessage { get; set; }
+    [BindProperty] 
+    public string Author { get; set; }
+    [BindProperty] 
+    public string Author_Email { get; set; }
+    public bool InvalidCheep { get; set; } = false;
 
     public string UserEmail { get; set; }
 
@@ -58,23 +62,34 @@ public class PublicModel : PageModel
         return SignOut(new AuthenticationProperties { RedirectUri = "/" },
             CookieAuthenticationDefaults.AuthenticationScheme);
     }
+    public IActionResult OnPost() 
+    {
+        //This is a fall back if there is no OnPost[HandlerName]
+        SetCheeps();
+        return Page();
+    }
 
-    public IActionResult OnPost()
+    public IActionResult OnPostMessage()
     {
         SetCheeps();
         if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
+            InvalidCheep = true;
             return Page();
         }
-
+        if(!InvalidCheep) {
+            InvalidCheep = false;
+        }
         string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
-        return RedirectToPage();
+        SubmitMessage.Message = ""; //Clears text field
+        return RedirectToPage(); 
     }
 
     public IActionResult OnPostFollow()
     {
+        Console.WriteLine("OnPostFollow Called");
         SetEmail();
 
         switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
@@ -91,6 +106,7 @@ public class PublicModel : PageModel
 
     public IActionResult OnPostUnfollow()
     {
+        Console.WriteLine("OnPostFollow Called");
         SetCheeps();
 
         switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,

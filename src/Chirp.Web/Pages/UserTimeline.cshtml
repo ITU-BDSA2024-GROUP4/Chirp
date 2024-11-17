@@ -7,7 +7,7 @@
 <div>
     <h2> @routeName's Timeline </h2>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
-    @if (Model.IsSubmitMessageInValid())
+    @if (Model.InvalidCheep)
     {
         <div>
             <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>

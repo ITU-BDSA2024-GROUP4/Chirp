@@ -18,6 +18,7 @@ public class UserTimelineModel : PageModel
     public string Author { get; set; }
     [BindProperty]
     public string Author_Email { get; set; }
+    public bool InvalidCheep { get; set; } = false;
     
     public string Email { get; set; }
     public string UserEmail { get; set; }
@@ -60,21 +61,32 @@ public class UserTimelineModel : PageModel
             Cheeps = _service.GetCheepsFromAuthor(match.Value, page-1);
         }
     }
-    public IActionResult OnPost()
+    
+    public IActionResult OnPost() 
+    {
+        //This is a fall back if there is no OnPost[HandlerName]
+        SetCheeps();
+        return Page();
+    }
+
+    public IActionResult OnPostMessage()
     {
         SetCheeps();
-        Console.WriteLine("--------------------");
-        Console.WriteLine("Is submitmessage valid? {0}", IsSubmitMessageInValid());
         if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
+            InvalidCheep = true;
             return Page();
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, Email).Idenitifer;
+        if(!InvalidCheep) {
+            InvalidCheep = false;
+        }
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
-        return RedirectToPage();
-        
+        SubmitMessage.Message = ""; //Clears text field
+        return RedirectToPage(); 
     }
+
     public IActionResult OnPostFollow()
     {
         SetEmail();
@@ -90,6 +102,7 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
+    
     public IActionResult OnPostUnfollow()
     {
         SetCheeps();
@@ -105,15 +118,11 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
+
     public bool IsFollowing(string Author_Email)
     {
         SetEmail();
 
         return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
-    }
-    public bool IsSubmitMessageInValid() {
-        return SubmitMessage != null &&
-        HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState) && 
-        HelperMethods.IsInvalid(nameof(SubmitMessage), ModelState);
     }
 }
