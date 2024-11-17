@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using Chirp.Core;
-
+using Chirp.Web.Pages.Partials;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -75,7 +74,7 @@ public class PublicModel : PageModel
     public IActionResult OnPostFollow()
     {
         UserEmail = HelperMethods.FindEmail(User);
-        switch (HelperMethods.Follow(ModelState, nameof(Author_Email), nameof(Author), UserEmail, _service,
+        switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -90,25 +89,18 @@ public class PublicModel : PageModel
     public IActionResult OnPostUnfollow()
     {
         SetCheeps();
-
-        if (HelperMethods.IsInvalid(nameof(Author), ModelState) &&
-            HelperMethods.IsInvalid(nameof(Author_Email), ModelState))
-        {
-            if (SubmitMessage != null)
-            {
-                return Page();
-            }
-
-            return RedirectToPage("/ErrorUnfollow");
-        }
-
         UserEmail = HelperMethods.FindEmail(User);
 
-        string a0 = _service.GetAuthor(UserEmail).Idenitifer;
-        string a1 = _service.GetAuthor(Author_Email).Idenitifer;
-        _service.UnFollow(a0, a1);
-
-        return Page();
+        switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+                    Author_Email, SubmitMessage))
+        {
+            case "Error":
+                return RedirectToPage("/Error");
+            case "Page":
+                return Page();
+            default:
+                return RedirectToPage("/Error");
+        }
     }
 
     public bool BlackMagic(string Author_Email)
