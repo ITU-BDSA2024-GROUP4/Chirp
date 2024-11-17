@@ -33,7 +33,7 @@ public class PublicModel : PageModel
         SetCheeps();
         return Page();
     }
-
+    
     public void SetCheeps()
     {
         SetEmail();

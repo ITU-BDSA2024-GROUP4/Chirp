@@ -37,15 +37,12 @@ public class UserTimelineModel : PageModel
     public void SetCheeps() {
         SetEmail();
         string url = HttpContext.Request.GetDisplayUrl();
+        //Uses a regex to find the user in the url
         var match = Regex.Match(url, @"(?<=^https?://[^/]+/)([^?]+)");
         if (!match.Success)
         {
             throw new Exception("Url not matching");
         }
-        // if (!ModelState.IsValid)
-        // {
-        //     return Page();
-        // }
 
         var pageQuery = Request.Query["page"].ToString();
         Email = User.FindFirst(ClaimTypes.Email)?.Value;
