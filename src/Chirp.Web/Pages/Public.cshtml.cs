@@ -17,6 +17,9 @@ public class PublicModel : PageModel
     public string Author { get; set; }
     [BindProperty] 
     public string Author_Email { get; set; }
+    // Needs to be changed to use bindproperty, feels unnessecary to use in this case
+    // [BindProperty]
+    public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
 
     public string UserEmail { get; set; }
@@ -33,7 +36,7 @@ public class PublicModel : PageModel
         SetCheeps();
         return Page();
     }
-    
+
     public void SetCheeps()
     {
         SetEmail();
@@ -48,6 +51,8 @@ public class PublicModel : PageModel
             _ = int.TryParse(pageQuery, out int page);
             Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
         }
+
+        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
 
     //code credit to Adrian <adrianjuul123@gmail.com>
@@ -64,7 +69,6 @@ public class PublicModel : PageModel
     }
     public IActionResult OnPost() 
     {
-        //This is a fall back if there is no OnPost[HandlerName]
         SetCheeps();
         return Page();
     }
@@ -77,7 +81,7 @@ public class PublicModel : PageModel
             InvalidCheep = true;
             return Page();
         }
-        if(!InvalidCheep) {
+        if(InvalidCheep) {
             InvalidCheep = false;
         }
         string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
@@ -89,7 +93,6 @@ public class PublicModel : PageModel
 
     public IActionResult OnPostFollow()
     {
-        Console.WriteLine("OnPostFollow Called");
         SetEmail();
 
         switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
@@ -106,7 +109,6 @@ public class PublicModel : PageModel
 
     public IActionResult OnPostUnfollow()
     {
-        Console.WriteLine("OnPostFollow Called");
         SetCheeps();
 
         switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
@@ -119,11 +121,5 @@ public class PublicModel : PageModel
             default:
                 return RedirectToPage("/Error");
         }
-    }
-
-    public bool IsFollowing(string Author_Email)
-    {
-        SetEmail();
-        return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
     }
 }

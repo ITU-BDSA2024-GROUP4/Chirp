@@ -18,6 +18,9 @@ public class UserTimelineModel : PageModel
     public string Author { get; set; }
     [BindProperty]
     public string Author_Email { get; set; }
+    // Needs to be changed to use bindproperty, feels unnessecary to use in this case
+    // [BindProperty]
+    public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
     
     public string Email { get; set; }
@@ -57,6 +60,8 @@ public class UserTimelineModel : PageModel
             _ = int.TryParse(pageQuery, out int page);
             Cheeps = _service.GetCheepsFromAuthor(match.Value, page-1);
         }
+
+        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
     
     public IActionResult OnPost() 
@@ -114,12 +119,5 @@ public class UserTimelineModel : PageModel
             default:
                 return RedirectToPage("/Error");
         }
-    }
-
-    public bool IsFollowing(string Author_Email)
-    {
-        SetEmail();
-
-        return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
     }
 }
