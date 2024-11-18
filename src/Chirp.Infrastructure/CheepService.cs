@@ -16,8 +16,7 @@ public class CheepService : ICheepService
     public CheepService(DbContextOptions<ChirpDBContext> options)
     {
         var context = new ChirpDBContext(options);
-        
-        _repository = new Chirp.Infrastructure.CheepRepository(context);
+        _repository = new CheepRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page) 
@@ -59,7 +58,9 @@ public class CheepService : ICheepService
                     Idenitifer = authors[0].Email
                 };
     }
-    public void CreateFollow(string user, string follow) {
+    public void CreateFollow(string username, string user, string follow)
+    {
+        GetOrCreateAuthor(username, user);
         _repository.CreateFollow(user, follow);
     }
     public void UnFollow(string user, string unfollow) {

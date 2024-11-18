@@ -37,13 +37,8 @@ public static class HelperMethods {
         {
             return "Error";
         }
-        
-        service.GetOrCreateAuthor(userIdentityName, userEmail);
-        string a0 = service.GetAuthor(userEmail).Idenitifer;
-        string a1 = service.GetAuthor(authorEmail).Idenitifer;
 
-
-        service.CreateFollow(a0,a1);
+        service.CreateFollow(userIdentityName, userEmail, authorEmail);
         return "UserTimeline";
     }
     public static string Unfollow(ModelStateDictionary modelState, ICheepService service,
