@@ -16,8 +16,7 @@ public class CheepService : ICheepService
     public CheepService(DbContextOptions<ChirpDBContext> options)
     {
         var context = new ChirpDBContext(options);
-        
-        _repository = new Chirp.Infrastructure.CheepRepository(context);
+        _repository = new CheepRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page) 
@@ -34,7 +33,17 @@ public class CheepService : ICheepService
         Author author = _repository.GetAuthor(email)[0];
         _repository.CreateCheep(author, message);
     }
-    
+    public AuthorDTO GetAuthor(string email) {
+        var authors = _repository.GetAuthor(email);
+        if (authors.Count > 1) {
+            return null; //Error, shouldn't be longer than 1
+        }
+
+        return new AuthorDTO
+                {
+                    Idenitifer = authors[0].Email
+                };
+    }
     public AuthorDTO GetOrCreateAuthor(string name, string email) {
         var authors = _repository.GetAuthor(email);
         if (authors.Count > 1) {
@@ -48,5 +57,32 @@ public class CheepService : ICheepService
                 {
                     Idenitifer = authors[0].Email
                 };
+    }
+    public void CreateFollow(string username, string user, string follow)
+    {
+        GetOrCreateAuthor(username, user);
+        _repository.CreateFollow(user, follow);
+    }
+    public void UnFollow(string user, string unfollow) {
+        
+        _repository.UnFollow(user, unfollow);
+    }
+    public BoolDTO IsFollowing(string user, string author) {
+        return new BoolDTO
+                {
+                    Boolean = _repository.IsFollowing(user,author)
+                };
+    }
+
+    public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
+    {
+        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<string> followingString = new List<string>();
+        foreach (var follow in following)
+        {
+            followingString.Add(follow.Idenitifer);
+        }
+        followingString.Add(userEmail);
+        return repository.GetCheepsFromAuthors(followingString, page);
     }
 }

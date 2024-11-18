@@ -12,6 +12,7 @@ public class ChirpDBContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
+    public DbSet<Follows> Following { get; set; }
     private readonly DbContextOptions<ChirpDBContext> _options;
 
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
