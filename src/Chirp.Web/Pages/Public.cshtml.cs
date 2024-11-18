@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core;
+using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 
@@ -31,7 +32,7 @@ public class PublicModel : PageModel
         _service = service;
     }
     public void SetEmail() {
-        UserEmail = HelperMethods.FindEmail(User);
+        UserEmail = UserHandler.FindEmail(User);
     }
     public ActionResult OnGet()
     {
@@ -78,7 +79,7 @@ public class PublicModel : PageModel
     public IActionResult OnPostMessage()
     {
         SetCheeps();
-        if (FollowHandler.IsInvalid(nameof(SubmitMessage.Message), ModelState))
+        if (StateValidator.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
             InvalidCheep = true;
             return Page();

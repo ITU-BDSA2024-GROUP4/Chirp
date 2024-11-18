@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Text.RegularExpressions;
 using Chirp.Core;
+using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 
@@ -31,7 +32,7 @@ public class UserTimelineModel : PageModel
         _service = service;
     }
     public void SetEmail() {
-        UserEmail = HelperMethods.FindEmail(User);
+        UserEmail = UserHandler.FindEmail(User);
     }
     public ActionResult OnGet(string author)
     {
@@ -82,7 +83,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostMessage()
     {
         SetCheeps();
-        if (FollowHandler.IsInvalid(nameof(SubmitMessage.Message), ModelState))
+        if (StateValidator.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
             InvalidCheep = true;
             return Page();
