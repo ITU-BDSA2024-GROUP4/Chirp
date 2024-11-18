@@ -4,6 +4,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Text.RegularExpressions;
 using Chirp.Core;
+using Chirp.Infrastructure;
+using Chirp.Web.Pages.Partials;
+using Chirp.Web.Pages.Utils;
 
 namespace Chirp.Web.Pages;
 
@@ -13,52 +16,118 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
-
+    [BindProperty]
+    public string Author { get; set; }
+    [BindProperty]
+    public string Author_Email { get; set; }
+    // Needs to be changed to use bindproperty, feels unnessecary to use in this case
+    // [BindProperty]
+    public FollowButtonModel FollowButton { get; set; }
+    public bool InvalidCheep { get; set; } = false;
+    
+    public string Email { get; set; }
+    public string UserEmail { get; set; }
     public UserTimelineModel(ICheepService service)
     {
         _service = service;
     }
-
+    public void SetEmail() {
+        UserEmail = UserHandler.FindEmail(User);
+    }
     public ActionResult OnGet(string author)
     {
-        SetCheeps(author);
+        SetCheeps();
         return Page();
     }
-    public void SetCheeps(string author) {
-        var pageQuery = Request.Query["page"].ToString();
-        
-        if (pageQuery == null)
+    public void SetCheeps() {
+        SetEmail();
+        string url = HttpContext.Request.GetDisplayUrl();
+        //Uses a regex to find the user in the url
+        var match = Regex.Match(url, @"(?<=^https?://[^/]+/)([^?]+)");
+        int pageNumber = 0; //Defaults to first page
+        if (!match.Success)
         {
+            throw new Exception("Url not matching");
+        }
 
-            Cheeps = _service.GetCheepsFromAuthor(author, 0); // default to first page
+        var pageQuery = Request.Query["page"].ToString();
+        Email = User.FindFirst(ClaimTypes.Email)?.Value;
+        if (pageQuery != null)
+        {
+            _ = int.TryParse(pageQuery, out int page);
+            pageNumber = page - 1;
+        }
+        Console.Write("USR IDENTITY: {0}", User.Identity.Name);
+        Console.Write("MATCH VAL: {0}", match.Value);
+
+        if (match.Value == User.Identity.Name)
+        {
+            Cheeps = _service.GetOwnTimeline(UserEmail, pageNumber);
         }
         else
         {
-            _ = int.TryParse(pageQuery, out int page);
-            Cheeps = _service.GetCheepsFromAuthor(author, page-1);
+            Cheeps = _service.GetCheepsFromAuthor(match.Value, pageNumber); // default to first page
         }
+        
+
+        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
-    public IActionResult OnPost()
+    
+    public IActionResult OnPost() 
     {
-        string url = HttpContext.Request.GetDisplayUrl();
-        var match = Regex.Match(url, @"[^/]+$");
-        if (match.Success)
+        //This is a fall back if there is no OnPost[HandlerName]
+        SetCheeps();
+        return Page();
+    }
+
+    public IActionResult OnPostMessage()
+    {
+        SetCheeps();
+        if (StateValidator.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
-            SetCheeps(match.Value);
-        } else {
-            return RedirectToPage("/BigMistake");
-        }
-        if (!ModelState.IsValid)
-        {
+            InvalidCheep = true;
             return Page();
         }
-        
-        string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-
-        Author author = _service.GetOrCreateAuthor(User.Identity.Name, userEmail);
+        if(!InvalidCheep) {
+            InvalidCheep = false;
+        }
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
         _service.CreateCheep(author, SubmitMessage.Message);
 
-        return RedirectToPage();
-        
+        SubmitMessage.Message = ""; //Clears text field
+        return RedirectToPage(); 
     }
+
+    public IActionResult OnPostFollow()
+    {
+        SetEmail();
+
+        switch (FollowHandler.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+                    User.Identity.Name, Author_Email))
+        {
+            case "Error":
+                return RedirectToPage("/Error");
+            case "UserTimeline":
+                return RedirectToPage("/UserTimeline", new { author = Author });
+            default:
+                return RedirectToPage("/Error");
+        }
+    }
+    
+    public IActionResult OnPostUnfollow()
+    {
+        SetCheeps();
+
+        switch (FollowHandler.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+                    Author_Email, SubmitMessage))
+        {
+            case "Error":
+                return RedirectToPage("/Error");
+            case "Page":
+                return RedirectToPage();
+            default:
+                return RedirectToPage("/Error");
+        }
+    }
+
 }

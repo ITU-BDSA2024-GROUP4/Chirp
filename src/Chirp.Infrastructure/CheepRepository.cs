@@ -24,7 +24,8 @@ public class CheepRepository : ICheepRepository
                     orderby Cheeps.TimeStamp descending
                     select new CheepDTO
                     {
-                        Author = Author.Name, 
+                        Author = Author.Name,
+                        Email = Author.Email, 
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                     })
@@ -43,7 +44,8 @@ public class CheepRepository : ICheepRepository
                     where Author.Name == author
                     select new CheepDTO
                     {
-                        Author = Author.Name, 
+                        Author = Author.Name,
+                        Email = Author.Email,  
                         Message = Cheeps.Text, 
                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                     })
@@ -63,6 +65,7 @@ public class CheepRepository : ICheepRepository
                 select new CheepDTO
                 {
                     Author = Author.Name,
+                    Email = Author.Email, 
                     Message = Cheeps.Text,
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
                 })
@@ -116,6 +119,7 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
+    
 
     public List<Author> GetAuthor(string email) {
         var query = (from Author in _context.Authors
@@ -124,4 +128,80 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
+    
+    public void CreateFollow(string user, string following)
+    {
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorFollowing = GetAuthor(following)[0];
+        
+        Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(follows);
+        if (!Validator.TryValidateObject(follows, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Following.Add(follows);
+        _context.SaveChanges();
+    }
+
+    public void UnFollow(string user, string unfollowing)
+    {
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
+
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
+            select Follows);
+        foreach (var follow in query)
+        {
+            _context.Following.Remove(follow);
+        }
+        _context.SaveChanges();
+    }
+    public bool IsFollowing(string user, string author)
+    {
+        List<Author> AuthorUserList = GetAuthor(user);
+        List<Author> AuthorAuthorList = GetAuthor(author);
+        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
+            return false;
+        }
+        Author AuthorUser = AuthorUserList[0];
+        Author AuthorAuthor = AuthorAuthorList[0];
+
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            select Follows).Any();
+
+        return query;
+    }
+
+    public List<AuthorDTO> GetFollowers(string email)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Email == email
+            select new AuthorDTO { Idenitifer = Follows.Following.Email, });
+        return query.ToList();
+    }
+
+    public List<CheepDTO> GetCheepsFromAuthors(List<string> authors, int page)
+    {
+        var query = (from Author in _context.Authors
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where authors.Contains(Author.Email)
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email,  
+                    Message = Cheeps.Text, 
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                })
+            .Skip(_pageSize * page) // Same as SQL "OFFSET
+            .Take(_pageSize);       // Same as SQL "LIMIT"
+        return query.ToList();
+    }
+    
 }

@@ -4,21 +4,16 @@
 <div>
     <h2> Public Timeline </h2>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
+    @if (Model.InvalidCheep)
+    {
+        <div>
+            <h3>Invalid Cheep. Must be shorter than 160 characters!</h3>
+        </div>
+    }
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">
-            @foreach (var cheep in Model.Cheeps)
-            {
-                <li>
-                    <p>
-                        <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
-                        </strong>
-                        @cheep.Message
-                        <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
-                    </p>
-                </li>
-            }
+            @{ await Html.RenderPartialAsync("_FollowButtonPartial", Model.FollowButton); }
         </ul>
     }
     else
