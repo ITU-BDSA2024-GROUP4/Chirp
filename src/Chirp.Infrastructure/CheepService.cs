@@ -67,11 +67,8 @@ public class CheepService : ICheepService
         
         _repository.UnFollow(user, unfollow);
     }
-    public BoolDTO IsFollowing(string user, string author) {
-        return new BoolDTO
-                {
-                    Boolean = _repository.IsFollowing(user,author)
-                };
+    public bool IsFollowing(string user, string author) {
+        return _repository.IsFollowing(user,author);
     }
 
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
