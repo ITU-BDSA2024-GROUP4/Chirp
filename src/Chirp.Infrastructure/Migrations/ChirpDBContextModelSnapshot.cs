@@ -62,24 +62,21 @@ namespace Chirp.Infrastructure.Migrations
 
             modelBuilder.Entity("Chirp.Core.Follows", b =>
                 {
-                    b.Property<int>("User_AuthorID")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("FollowingAuthorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Following_AuthorID")
+                    b.Property<int>("FollowingId")
                         .HasColumnType("INTEGER")
                         .HasColumnOrder(2);
 
                     b.Property<int>("UserAuthorId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("User_AuthorID");
+                    b.HasKey("UserId");
 
-                    b.HasIndex("FollowingAuthorId");
+                    b.HasIndex("FollowingId");
 
                     b.HasIndex("UserAuthorId");
 
@@ -101,7 +98,7 @@ namespace Chirp.Infrastructure.Migrations
                 {
                     b.HasOne("Chirp.Core.Author", "Following")
                         .WithMany()
-                        .HasForeignKey("FollowingAuthorId")
+                        .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

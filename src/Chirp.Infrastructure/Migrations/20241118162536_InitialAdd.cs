@@ -50,18 +50,17 @@ namespace Chirp.Infrastructure.Migrations
                 name: "Following",
                 columns: table => new
                 {
-                    User_AuthorID = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Following_AuthorID = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserAuthorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FollowingAuthorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    FollowingId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserAuthorId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Following", x => x.User_AuthorID);
+                    table.PrimaryKey("PK_Following", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Following_Authors_FollowingAuthorId",
-                        column: x => x.FollowingAuthorId,
+                        name: "FK_Following_Authors_FollowingId",
+                        column: x => x.FollowingId,
                         principalTable: "Authors",
                         principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
@@ -79,9 +78,9 @@ namespace Chirp.Infrastructure.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Following_FollowingAuthorId",
+                name: "IX_Following_FollowingId",
                 table: "Following",
-                column: "FollowingAuthorId");
+                column: "FollowingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Following_UserAuthorId",

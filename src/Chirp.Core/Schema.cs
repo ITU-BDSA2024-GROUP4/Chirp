@@ -49,11 +49,11 @@ public class Follows
     [Key]
     [Column(Order = 1)]
     [Required]
-    public int User_AuthorID { get; set; }
+    public int UserId { get; set; }
     
     [Column(Order = 2)]
     [Required]
-    public int Following_AuthorID { get; set; }
+    public int FollowingId { get; set; }
     
     [Required]
     public Author User { get; set; }
