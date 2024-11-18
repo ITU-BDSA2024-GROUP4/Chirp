@@ -129,6 +129,7 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
+    
     public void CreateFollow(string user, string following)
     {
         Author AuthorUser = GetAuthor(user)[0];
@@ -163,13 +164,18 @@ public class CheepRepository : ICheepRepository
     }
     public bool IsFollowing(string user, string author)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorAuthor = GetAuthor(author)[0];
+        List<Author> AuthorUserList = GetAuthor(user);
+        List<Author> AuthorAuthorList = GetAuthor(author);
+        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
+            return false;
+        }
+        Author AuthorUser = AuthorUserList[0];
+        Author AuthorAuthor = AuthorAuthorList[0];
 
         var query = (from Follows in _context.Following
             where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
             select Follows).Any();
-        
+
         return query;
     }
 }
