@@ -8,7 +8,7 @@ namespace Chirp.Web.Pages;
     
 public class FollowButtonModel
 {
-    private ICheepService _service { get; set; }
+    public ICheepService _service { get; set; }
     public List<CheepDTO> Cheeps { get; set; }
     public string UserEmail { get; set; }
     public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail) 
@@ -20,6 +20,6 @@ public class FollowButtonModel
 
     public bool IsFollowing(string Author_Email)
     {
-        return HelperMethods.IsFollowing(_service, UserEmail, Author_Email);
+        return _service.IsFollowing(UserEmail, Author_Email).Boolean;
     }
 }
