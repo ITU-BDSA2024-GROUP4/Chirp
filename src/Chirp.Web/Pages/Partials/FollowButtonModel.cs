@@ -20,6 +20,6 @@ public class FollowButtonModel
 
     public bool IsFollowing(string Author_Email)
     {
-        return _service.IsFollowing(UserEmail, Author_Email).Boolean;
+        return _service.IsFollowing(UserEmail, Author_Email);
     }
 }
