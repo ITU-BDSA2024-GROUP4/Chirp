@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core;
 using Chirp.Web.Pages.Partials;
+using Chirp.Web.Pages.Utils;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -76,7 +78,7 @@ public class PublicModel : PageModel
     public IActionResult OnPostMessage()
     {
         SetCheeps();
-        if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
+        if (FollowHandler.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
             InvalidCheep = true;
             return Page();
@@ -95,7 +97,7 @@ public class PublicModel : PageModel
     {
         SetEmail();
 
-        switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -111,7 +113,7 @@ public class PublicModel : PageModel
     {
         SetCheeps();
 
-        switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":

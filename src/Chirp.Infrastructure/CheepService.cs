@@ -64,6 +64,7 @@ public class CheepService : ICheepService
         _repository.CreateFollow(user, follow);
     }
     public void UnFollow(string user, string unfollow) {
+        
         _repository.UnFollow(user, unfollow);
     }
     public BoolDTO IsFollowing(string user, string author) {
@@ -71,5 +72,17 @@ public class CheepService : ICheepService
                 {
                     Boolean = _repository.IsFollowing(user,author)
                 };
+    }
+
+    public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
+    {
+        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<string> followingString = new List<string>();
+        foreach (var follow in following)
+        {
+            followingString.Add(follow.Idenitifer);
+        }
+        followingString.Add(userEmail);
+        return repository.GetCheepsFromAuthors(followingString, page);
     }
 }

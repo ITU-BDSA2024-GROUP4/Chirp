@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using System.Text.RegularExpressions;
 using Chirp.Core;
 using Chirp.Web.Pages.Partials;
+using Chirp.Web.Pages.Utils;
 
 namespace Chirp.Web.Pages;
 
@@ -42,6 +43,7 @@ public class UserTimelineModel : PageModel
         string url = HttpContext.Request.GetDisplayUrl();
         //Uses a regex to find the user in the url
         var match = Regex.Match(url, @"(?<=^https?://[^/]+/)([^?]+)");
+        int pageNumber = 0; //Defaults to first page
         if (!match.Success)
         {
             throw new Exception("Url not matching");
@@ -49,17 +51,23 @@ public class UserTimelineModel : PageModel
 
         var pageQuery = Request.Query["page"].ToString();
         Email = User.FindFirst(ClaimTypes.Email)?.Value;
-
-        if (pageQuery == null)
+        if (pageQuery != null)
         {
+            _ = int.TryParse(pageQuery, out int page);
+            pageNumber = page - 1;
+        }
+        Console.Write("USR IDENTITY: {0}", User.Identity.Name);
+        Console.Write("MATCH VAL: {0}", match.Value);
 
-            Cheeps = _service.GetCheepsFromAuthor(match.Value, 0); // default to first page
+        if (match.Value == User.Identity.Name)
+        {
+            Cheeps = _service.GetOwnTimeline(UserEmail, pageNumber);
         }
         else
         {
-            _ = int.TryParse(pageQuery, out int page);
-            Cheeps = _service.GetCheepsFromAuthor(match.Value, page-1);
+            Cheeps = _service.GetCheepsFromAuthor(match.Value, pageNumber); // default to first page
         }
+        
 
         FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
@@ -74,7 +82,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostMessage()
     {
         SetCheeps();
-        if (HelperMethods.IsInvalid(nameof(SubmitMessage.Message), ModelState))
+        if (FollowHandler.IsInvalid(nameof(SubmitMessage.Message), ModelState))
         {
             InvalidCheep = true;
             return Page();
@@ -93,7 +101,7 @@ public class UserTimelineModel : PageModel
     {
         SetEmail();
 
-        switch (HelperMethods.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -109,13 +117,13 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
 
-        switch (HelperMethods.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":
                 return RedirectToPage("/Error");
             case "Page":
-                return Page();
+                return RedirectToPage();
             default:
                 return RedirectToPage("/Error");
         }

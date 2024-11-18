@@ -178,4 +178,31 @@ public class CheepRepository : ICheepRepository
 
         return query;
     }
+
+    public List<AuthorDTO> GetFollowers(string email)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Email == email
+            select new AuthorDTO { Idenitifer = Follows.Following.Email, });
+        return query.ToList();
+    }
+
+    public List<CheepDTO> GetCheepsFromAuthors(List<string> authors, int page)
+    {
+        var query = (from Author in _context.Authors
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where authors.Contains(Author.Email)
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email,  
+                    Message = Cheeps.Text, 
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                })
+            .Skip(_pageSize * page) // Same as SQL "OFFSET
+            .Take(_pageSize);       // Same as SQL "LIMIT"
+        return query.ToList();
+    }
+    
 }
