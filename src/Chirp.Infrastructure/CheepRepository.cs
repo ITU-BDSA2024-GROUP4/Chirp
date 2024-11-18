@@ -14,7 +14,6 @@ public class CheepRepository : ICheepRepository
     {   
         _context = context;
         
-        DbInitializer.SeedDatabase(_context);
     }
 
     //Query
