@@ -222,10 +222,6 @@ public class CheepRepository : ICheepRepository
 
     public void ForgetUser(string email)
     {
-        Console.WriteLine("CheepRepository VICTOR");
-        Console.WriteLine("Email passed to ForgetUser: " + email);
-
-        
         var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
         {
             throw new Exception("User not found.");

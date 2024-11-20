@@ -1,15 +1,9 @@
-
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IO.Compression;
 using Chirp.Core;
 using Chirp.Infrastructure;
-using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
-
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Chirp.Web.Pages;
 
@@ -120,10 +114,7 @@ public class AboutModel : PageModel {
     public IActionResult OnPostForgetMe()
     {
         UserEmail = UserHandler.FindEmail(User);
-        Console.WriteLine("DEBUUUUUUUUG");
-        Console.WriteLine(UserEmail +" UserEmail IS DEBUUUUG");
         _service.ForgetMe(UserEmail);
-        Console.WriteLine("USEREMAIL: (CSHTML) " + UserEmail);
         return Authentication.HandleLogout(this);
     }
     
