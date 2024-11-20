@@ -116,5 +116,15 @@ public class AboutModel : PageModel {
     {
         return Authentication.HandleLogout(this);
     }
+
+    public IActionResult OnPostForgetMe()
+    {
+        UserEmail = UserHandler.FindEmail(User);
+        Console.WriteLine("DEBUUUUUUUUG");
+        Console.WriteLine(UserEmail +" UserEmail IS DEBUUUUG");
+        _service.ForgetMe(UserEmail);
+        Console.WriteLine("USEREMAIL: (CSHTML) " + UserEmail);
+        return Authentication.HandleLogout(this);
+    }
     
 }

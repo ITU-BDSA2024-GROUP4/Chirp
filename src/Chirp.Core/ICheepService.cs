@@ -17,4 +17,5 @@ public interface ICheepService
     public bool IsFollowing(string user, string author);
     public List<AuthorDTO> GetFollowers(string email);
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page);
+    public void ForgetMe(string email);
 }

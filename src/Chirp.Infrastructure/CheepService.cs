@@ -93,4 +93,11 @@ public class CheepService : ICheepService
         followingString.Add(userEmail);
         return repository.GetCheepsFromAuthorPages(followingString, page);
     }
+
+    public void ForgetMe(string email)
+    {
+        _repository.ForgetUser(email);
+        Console.WriteLine("VICTORRRR");
+        Console.WriteLine("Forget User: " + email);
+    }
 }

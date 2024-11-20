@@ -219,5 +219,32 @@ public class CheepRepository : ICheepRepository
             .Take(_pageSize);       // Same as SQL "LIMIT"
         return query.ToList();
     }
+
+    public void ForgetUser(string email)
+    {
+        Console.WriteLine("CheepRepository VICTOR");
+        Console.WriteLine("Email passed to ForgetUser: " + email);
+
+        
+        var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
+        {
+            throw new Exception("User not found.");
+        }
+
+        
+        var cheeps = _context.Cheeps.Where(c => c.AuthorId == author.AuthorId).ToList();
+        _context.Cheeps.RemoveRange(cheeps);
+
+        
+        var follows = _context.Following.Where(f => f.User.AuthorId == author.AuthorId || f.Following.AuthorId == author.AuthorId).ToList();
+        _context.Following.RemoveRange(follows);
+
+        
+        _context.Authors.Remove(author);
+
+        
+        _context.SaveChanges();
+
+    }
     
 }
