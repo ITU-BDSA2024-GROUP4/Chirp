@@ -6,7 +6,9 @@
 @if (Model.UserIsAuthor) 
 {
 <div>
-    <h3>Your information :) </h3>
+    <h3>Your information</h3>
+    <h4>your email:</h4>
+    <h4>@Model.GetEmail()</h4>
 </div>
 }
 else 

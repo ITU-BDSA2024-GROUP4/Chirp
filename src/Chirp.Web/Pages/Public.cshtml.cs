@@ -87,7 +87,7 @@ public class PublicModel : PageModel
         if(InvalidCheep) {
             InvalidCheep = false;
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field

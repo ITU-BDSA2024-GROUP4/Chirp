@@ -15,6 +15,7 @@ namespace Chirp.Web.Pages;
 public class AboutModel : PageModel {
     private readonly ICheepService _service;
     public string Author;
+    public string UserEmail;
     public bool UserIsAuthor;
 
     public AboutModel(ICheepService service)
@@ -25,6 +26,10 @@ public class AboutModel : PageModel {
     {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
         Author = author;
+        UserEmail = UserHandler.FindEmail(User);
         return Page();
+    }
+    public string GetEmail() {
+        return _service.GetAuthor(UserEmail).Email;
     }
 }

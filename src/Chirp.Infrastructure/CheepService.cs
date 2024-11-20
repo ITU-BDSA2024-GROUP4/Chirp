@@ -41,7 +41,8 @@ public class CheepService : ICheepService
 
         return new AuthorDTO
                 {
-                    Idenitifer = authors[0].Email
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
                 };
     }
     public AuthorDTO GetOrCreateAuthor(string name, string email) {
@@ -55,7 +56,8 @@ public class CheepService : ICheepService
 
         return new AuthorDTO
                 {
-                    Idenitifer = authors[0].Email
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
                 };
     }
     public void CreateFollow(string username, string user, string follow)
@@ -77,7 +79,7 @@ public class CheepService : ICheepService
         List<string> followingString = new List<string>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Idenitifer);
+            followingString.Add(follow.Email);
         }
         followingString.Add(userEmail);
         return repository.GetCheepsFromAuthors(followingString, page);

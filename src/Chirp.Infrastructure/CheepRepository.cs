@@ -183,7 +183,7 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Follows in _context.Following
             where Follows.User.Email == email
-            select new AuthorDTO { Idenitifer = Follows.Following.Email, });
+            select new AuthorDTO { Name = Follows.Following.Name, Email = Follows.Following.Email, });
         return query.ToList();
     }
 
