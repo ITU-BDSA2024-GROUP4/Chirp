@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO.Compression;
 using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
@@ -35,8 +36,32 @@ public class AboutModel : PageModel {
 
         return Page();
     }
-    public string GetEmail() 
+    public ActionResult OnPostDownload()
     {
+        string emailFile = CreateEmailFile();
+        string nameFile = CreateNameFile();
+        var memoryStream = new MemoryStream();
+
+        using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+        {
+            var emailEntry = zipArchive.CreateEntry("Email.txt");
+            using (var writer = new StreamWriter(emailEntry.Open()))
+            {
+                writer.Write(emailFile);
+            }
+            var nameEntry = zipArchive.CreateEntry("Name.txt");
+            using (var writer = new StreamWriter(nameEntry.Open()))
+            {
+                writer.Write(nameFile);
+            }
+
+        }
+        memoryStream.Position = 0;
+        return File(memoryStream, "application/zip", $"archive-{DateTime.Now:yyyy-MMM-dd-HHmmss}.zip");
+    }
+
+    public string GetEmail() 
+    { 
         return _service.GetAuthor(UserEmail).Email;
     }
     public string GetName() 
@@ -50,5 +75,13 @@ public class AboutModel : PageModel {
     public List<CheepDTO> GetCheeps()
     {
         return _service.GetCheepsFromAuthor(Author);
+    }
+    public string CreateEmailFile()
+    {
+        return "Your email:\n" + UserEmail;
+    }
+    public string CreateNameFile()
+    {
+        return "Your name:\n" + "REPLACE";
     }
 }
