@@ -58,17 +58,14 @@ public class PublicModel : PageModel
         FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
 
-    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogin()
     {
-        return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "GitHub");
+        return Authentication.HandleLogin(this);
     }
 
-    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogout()
     {
-        return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-            CookieAuthenticationDefaults.AuthenticationScheme);
+        return Authentication.HandleLogout(this);
     }
     public IActionResult OnPost() 
     {

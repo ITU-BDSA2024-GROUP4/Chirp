@@ -134,13 +134,12 @@ public class UserTimelineModel : PageModel
     
     public IActionResult OnGetLogin()
     {
-        return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "GitHub");
+        return Authentication.HandleLogin(this);
     }
 
     public IActionResult OnGetLogout()
     {
-        return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-            CookieAuthenticationDefaults.AuthenticationScheme);
+        return Authentication.HandleLogout(this);
     }
-
+    
 }

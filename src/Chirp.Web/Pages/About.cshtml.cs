@@ -111,16 +111,10 @@ public class AboutModel : PageModel {
         }
         return returner;
     }
-    //CODE IS REDUNDANT WILL FIX LATER NO PROBLEM:)
-    //public IActionResult OnGetLogin()
-    //{
-        //DONT THINK IS NEEDEDreturn Challenge(new AuthenticationProperties { RedirectUri = "/" }, "GitHub");
-    //}
 
     public IActionResult OnGetLogout()
     {
-        return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-            CookieAuthenticationDefaults.AuthenticationScheme);
+        return Authentication.HandleLogout(this);
     }
     
 }
