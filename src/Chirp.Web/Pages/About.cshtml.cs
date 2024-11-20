@@ -41,38 +41,30 @@ public class AboutModel : PageModel {
     }
     public ActionResult OnPostDownload()
     {
-        SetInformation(); //Seems it needs to be set again
+        SetInformation(); // Seems it needs to be set again
 
-        string emailFile = CreateEmailFile();
-        string nameFile = CreateNameFile();
-        string followingFile = CreateFollowingFile();
-        string cheepFile = CreateCheepFile();
+        var files = new Dictionary<string, string>
+        {
+            { "Email.txt", CreateEmailFile() },
+            { "Name.txt", CreateNameFile() },
+            { "Following.txt", CreateFollowingFile() },
+            { "Cheeps.txt", CreateCheepFile() }
+        };
+
         var memoryStream = new MemoryStream();
 
         using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
         {
-            var emailEntry = zipArchive.CreateEntry("Email.txt");
-            using (var writer = new StreamWriter(emailEntry.Open()))
+            foreach (var file in files)
             {
-                writer.Write(emailFile);
+                var entry = zipArchive.CreateEntry(file.Key);
+                using (var writer = new StreamWriter(entry.Open()))
+                {
+                    writer.Write(file.Value);
+                }
             }
-            var nameEntry = zipArchive.CreateEntry("Name.txt");
-            using (var writer = new StreamWriter(nameEntry.Open()))
-            {
-                writer.Write(nameFile);
-            }
-            var followEntry = zipArchive.CreateEntry("Following.txt");
-            using (var writer = new StreamWriter(followEntry.Open()))
-            {
-                writer.Write(followingFile);
-            }
-            var cheepEntry = zipArchive.CreateEntry("Cheeps.txt");
-            using (var writer = new StreamWriter(cheepEntry.Open()))
-            {
-                writer.Write(cheepFile);
-            }
-
         }
+
         memoryStream.Position = 0;
         return File(memoryStream, "application/zip", $"archive-{DateTime.Now:yyyy-MMM-dd-HHmmss}.zip");
     }
