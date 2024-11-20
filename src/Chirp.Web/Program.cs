@@ -50,13 +50,7 @@ app.UseCookiePolicy(new CookiePolicyOptions()
     Secure = CookieSecurePolicy.Always,
     MinimumSameSitePolicy = SameSiteMode.None
 });
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
 
-    var chirpContext = services.GetRequiredService<ChirpDBContext>();
-    await DbInitializer.SeedDatabase(chirpContext, services);
-}
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();

@@ -43,10 +43,6 @@ public class PublicModel : PageModel
         _service = service;
     }
 
-
-    [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
-
-
     public void SetEmail() {
         UserEmail = UserHandler.FindEmail(User);
     }
