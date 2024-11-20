@@ -2,6 +2,7 @@ using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Chirp.Infrastructure;
 
@@ -13,8 +14,8 @@ public class CheepRepository : ICheepRepository
     public CheepRepository(ChirpDBContext context)
     {   
         _context = context;
-        
         DbInitializer.SeedDatabase(_context);
+        
     }
 
     //Query

@@ -1,12 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using Chirp.Core;
+
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+using System.Security.Claims;
+
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Chirp.Infrastructure;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Web.Pages;
 
@@ -14,6 +24,7 @@ public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
     public List<CheepDTO> Cheeps { get; set; } = null!;
+
     [BindProperty] 
     public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty] 
@@ -31,9 +42,11 @@ public class PublicModel : PageModel
     {
         _service = service;
     }
+
     public void SetEmail() {
         UserEmail = UserHandler.FindEmail(User);
     }
+
     public ActionResult OnGet()
     {
         SetCheeps();
@@ -42,6 +55,7 @@ public class PublicModel : PageModel
 
     public void SetCheeps()
     {
+
         SetEmail();
         var pageQuery = Request.Query["page"].ToString();
 
@@ -61,15 +75,23 @@ public class PublicModel : PageModel
     //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogin()
     {
-        return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "GitHub");
+
+        return Challenge(new AuthenticationProperties { RedirectUri = "/", Items = {   }}, "GitHub");
+
     }
 
     //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogout()
     {
-        return SignOut(new AuthenticationProperties { RedirectUri = "/" },
-            CookieAuthenticationDefaults.AuthenticationScheme);
+
+        return SignOut(
+            new AuthenticationProperties { RedirectUri = "/" },
+            IdentityConstants.ApplicationScheme,
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            "Github"
+        );
     }
+
     public IActionResult OnPost() 
     {
         SetCheeps();
