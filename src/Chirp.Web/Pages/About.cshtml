@@ -16,7 +16,7 @@
     {
         @foreach (var author in Model.Following)
         {
-            <h4>@author.Name</h4>
+            <a href="/@(author.Name)">@author.Name</a>
         }
     }
     else
@@ -24,11 +24,11 @@
         <h4>You dont follow anyone</h4>
     }
     <h4>Cheeps that your have chirped:</h4>
-    @if (Model.Following.Any())
+    @if (Model.Cheeps.Any())
     {
         @foreach (var cheep in Model.Cheeps)
         {
-            <h4>@cheep.Message</h4>
+            <a>@cheep.Message</a>
         }
     }
     else
