@@ -3,7 +3,16 @@
 @{
     var routeName = HttpContext.GetRouteValue("author");
 }
-
+@if (Model.UserIsAuthor) 
+{
 <div>
-    <h3>Filler text</h3>
+    <h3>Your information :) </h3>
 </div>
+}
+else 
+{
+<div>
+    <h3>Not your information >:( </h3>
+</div>
+}
+

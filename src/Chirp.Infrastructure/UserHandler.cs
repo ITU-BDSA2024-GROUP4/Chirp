@@ -8,4 +8,8 @@ public static class UserHandler
     {
         return user.FindFirst(ClaimTypes.Email)?.Value;
     }
+    public static string FindName(ClaimsPrincipal user)
+    {
+        return user.FindFirst(ClaimTypes.Name)?.Value;
+    }
 }
