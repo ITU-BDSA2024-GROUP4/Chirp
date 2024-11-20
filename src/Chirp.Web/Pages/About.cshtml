@@ -6,30 +6,33 @@
 @if (Model.UserIsAuthor) 
 {
 <div>
-    <h3>Your information</h3>
-    <h4>your email:</h4>
-    <h4>@Model.GetEmail()</h4>
-    <h4>your name:</h4>
-    <h4>@Model.GetName()</h4>
-    <h4>people your follow:</h4>
+    <h2>Your information</h2>
+    <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
+    <p><strong>Your name: </strong><span>@Model.GetName()</span></p>
+    
+    <h3>People your follow:</h3>
     @if (Model.Following.Any())
     {
+        <ul>
         @foreach (var author in Model.Following)
         {
-            <a href="/@(author.Name)">@author.Name</a>
+            <li><a href="/@(author.Name)">@author.Name</a></li>
         }
+        </ul>
     }
     else
     {
         <h4>You dont follow anyone</h4>
     }
-    <h4>Cheeps that your have chirped:</h4>
+    <h3>Cheeps that your have chirped:</h3>
     @if (Model.Cheeps.Any())
     {
+        <ul>
         @foreach (var cheep in Model.Cheeps)
         {
-            <a>@cheep.Message</a>
+            <li><i>@cheep.Message</i></li>
         }
+        </ul>
     }
     else
     {
