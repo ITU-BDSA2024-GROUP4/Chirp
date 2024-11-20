@@ -65,12 +65,17 @@ public class CheepService : ICheepService
         GetOrCreateAuthor(username, user);
         _repository.CreateFollow(user, follow);
     }
-    public void UnFollow(string user, string unfollow) {
-        
+    public void UnFollow(string user, string unfollow) 
+    {
         _repository.UnFollow(user, unfollow);
     }
-    public bool IsFollowing(string user, string author) {
+    public bool IsFollowing(string user, string author) 
+    {
         return _repository.IsFollowing(user,author);
+    }
+    public List<AuthorDTO> GetFollowers(string email) 
+    {
+        return _repository.GetFollowers(email);
     }
 
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)

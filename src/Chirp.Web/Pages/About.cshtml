@@ -9,6 +9,13 @@
     <h3>Your information</h3>
     <h4>your email:</h4>
     <h4>@Model.GetEmail()</h4>
+    <h4>your name:</h4>
+    <h4>@Model.GetName()</h4>
+    <h4>people your follow:</h4>
+    @foreach (var author in Model.GetFollowers())
+    {
+        <h4>@author.Name</h4>
+    }
 </div>
 }
 else 

@@ -29,7 +29,16 @@ public class AboutModel : PageModel {
         UserEmail = UserHandler.FindEmail(User);
         return Page();
     }
-    public string GetEmail() {
+    public string GetEmail() 
+    {
         return _service.GetAuthor(UserEmail).Email;
+    }
+    public string GetName() 
+    {
+        return _service.GetAuthor(UserEmail).Name;
+    }
+    public List<AuthorDTO> GetFollowers()
+    {
+        return _service.GetFollowers(UserEmail);
     }
 }
