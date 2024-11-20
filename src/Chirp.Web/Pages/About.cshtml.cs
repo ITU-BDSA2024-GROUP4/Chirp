@@ -17,6 +17,8 @@ public class AboutModel : PageModel {
     public string Author;
     public string UserEmail;
     public bool UserIsAuthor;
+    public List<AuthorDTO> Following;
+    public List<CheepDTO> Cheeps;
 
     public AboutModel(ICheepService service)
     {
@@ -27,6 +29,10 @@ public class AboutModel : PageModel {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
         Author = author;
         UserEmail = UserHandler.FindEmail(User);
+
+        Following = GetFollowers();
+        Cheeps = GetCheeps();
+
         return Page();
     }
     public string GetEmail() 
@@ -40,5 +46,9 @@ public class AboutModel : PageModel {
     public List<AuthorDTO> GetFollowers()
     {
         return _service.GetFollowers(UserEmail);
+    }
+    public List<CheepDTO> GetCheeps()
+    {
+        return _service.GetCheepsFromAuthor(Author);
     }
 }

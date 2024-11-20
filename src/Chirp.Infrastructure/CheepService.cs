@@ -23,9 +23,13 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheeps(page);
     }
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
-        return _repository.GetCheepsFromAuthor(author, page);
+        return _repository.GetCheepsFromAuthor(author);
+    }
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
+    {
+        return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
     public void CreateCheep(string email, string message)
@@ -87,6 +91,6 @@ public class CheepService : ICheepService
             followingString.Add(follow.Email);
         }
         followingString.Add(userEmail);
-        return repository.GetCheepsFromAuthors(followingString, page);
+        return repository.GetCheepsFromAuthorPages(followingString, page);
     }
 }

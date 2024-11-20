@@ -2,10 +2,10 @@ namespace Chirp.Core;
 
 public interface ICheepRepository {
     public List<CheepDTO> GetCheeps(int page);
-
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page);
+    public List<CheepDTO> GetCheepsFromAuthor(string author);
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email, int page);
+    public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
 
     public Author CreateAuthor(string name, string email);
 
@@ -16,7 +16,7 @@ public interface ICheepRepository {
     public void UnFollow(string user, string unfollowing);
     public bool IsFollowing(string user, string author);
     public List<AuthorDTO> GetFollowers(string email);
-    public List<CheepDTO> GetCheepsFromAuthors(List<string> authors, int page);
+    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
 
 
 }

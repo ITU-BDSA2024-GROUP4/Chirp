@@ -35,9 +35,24 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
-
+    public List<CheepDTO> GetCheepsFromAuthor(string author)
+    {
+        var query = (from Author in _context.Authors
+                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                    orderby Cheeps.TimeStamp descending
+                    where Author.Name == author
+                    select new CheepDTO
+                    {
+                        Author = Author.Name,
+                        Email = Author.Email,  
+                        Message = Cheeps.Text, 
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    });
+        
+        return query.ToList(); //Converts IQueryable<T> to List<T>
+    }
     //Query
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -57,7 +72,7 @@ public class CheepRepository : ICheepRepository
     }
 
     //Query
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
                 join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -187,7 +202,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    public List<CheepDTO> GetCheepsFromAuthors(List<string> authors, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors
                 join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId

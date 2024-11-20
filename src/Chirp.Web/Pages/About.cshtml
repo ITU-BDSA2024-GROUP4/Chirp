@@ -12,9 +12,28 @@
     <h4>your name:</h4>
     <h4>@Model.GetName()</h4>
     <h4>people your follow:</h4>
-    @foreach (var author in Model.GetFollowers())
+    @if (Model.Following.Any())
     {
-        <h4>@author.Name</h4>
+        @foreach (var author in Model.Following)
+        {
+            <h4>@author.Name</h4>
+        }
+    }
+    else
+    {
+        <h4>You dont follow anyone</h4>
+    }
+    <h4>Cheeps that your have chirped:</h4>
+    @if (Model.Following.Any())
+    {
+        @foreach (var cheep in Model.Cheeps)
+        {
+            <h4>@cheep.Message</h4>
+        }
+    }
+    else
+    {
+        <h4>You dont have chirped any cheeps</h4>
     }
 </div>
 }

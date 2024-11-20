@@ -66,7 +66,7 @@ public class UserTimelineModel : PageModel
         }
         else
         {
-            Cheeps = _service.GetCheepsFromAuthor(match.Value, pageNumber); // default to first page
+            Cheeps = _service.GetCheepsFromAuthorPage(match.Value, pageNumber); // default to first page
         }
         
 
