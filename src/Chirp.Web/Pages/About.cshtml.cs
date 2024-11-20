@@ -25,21 +25,28 @@ public class AboutModel : PageModel {
     {
         _service = service;
     }
-    public ActionResult OnGet(string author)
+    public ActionResult OnGet(string author)    
     {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
         Author = author;
+        SetInformation();
+        return Page();
+    }
+    public void SetInformation()
+    {
         UserEmail = UserHandler.FindEmail(User);
 
         Following = GetFollowers();
         Cheeps = GetCheeps();
-
-        return Page();
     }
     public ActionResult OnPostDownload()
     {
+        SetInformation(); //Seems it needs to be set again
+
         string emailFile = CreateEmailFile();
         string nameFile = CreateNameFile();
+        string followingFile = CreateFollowingFile();
+        string cheepFile = CreateCheepFile();
         var memoryStream = new MemoryStream();
 
         using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
@@ -53,6 +60,16 @@ public class AboutModel : PageModel {
             using (var writer = new StreamWriter(nameEntry.Open()))
             {
                 writer.Write(nameFile);
+            }
+            var followEntry = zipArchive.CreateEntry("Following.txt");
+            using (var writer = new StreamWriter(followEntry.Open()))
+            {
+                writer.Write(followingFile);
+            }
+            var cheepEntry = zipArchive.CreateEntry("Cheeps.txt");
+            using (var writer = new StreamWriter(cheepEntry.Open()))
+            {
+                writer.Write(cheepFile);
             }
 
         }
@@ -78,10 +95,28 @@ public class AboutModel : PageModel {
     }
     public string CreateEmailFile()
     {
-        return "Your email:\n" + UserEmail;
+        return "Your email:\n" + GetEmail();
     }
     public string CreateNameFile()
     {
-        return "Your name:\n" + "REPLACE";
+        return "Your name:\n" + GetName();
+    }
+    public string CreateFollowingFile()
+    {
+        string returner = "People that you follow:";
+        foreach (AuthorDTO author in Following)
+        {
+            returner += "\n" + author.Name;
+        }
+        return returner;
+    }
+    public string CreateCheepFile()
+    {
+        string returner = "Cheeps that you have chirped:";
+        foreach (CheepDTO cheep in Cheeps)
+        {
+            returner += "\n" + cheep.Message;
+        }
+        return returner;
     }
 }
