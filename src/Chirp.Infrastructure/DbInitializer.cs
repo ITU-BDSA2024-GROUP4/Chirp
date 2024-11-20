@@ -9,7 +9,7 @@ public static class DbInitializer
 {
     public static void SeedDatabase(ChirpDBContext chirpContext)
     {
-       
+
         if (!(chirpContext.Authors.Any() && chirpContext.Cheeps.Any()))
         {
             var a1 = new Author() { AuthorId = 1, Name = "Roger Histand", Email = "Roger+Histand@hotmail.com", Cheeps = new List<Cheep>() };
@@ -704,5 +704,34 @@ public static class DbInitializer
             chirpContext.SaveChanges();
         }
     }
-    
+
+    public static async Task SeedIdentityUsers(IServiceProvider service)
+    {
+        var userManager = service.GetRequiredService<UserManager<ChirpUser>>();
+        
+        var users = new List<(string username, string Email, string Password)>
+        {
+        ("Helge", "ropf@itu.dk", "LetM31n!"),
+        ("Adrian", "adho@itu.dk", "M32Want_Access")
+        };
+
+        foreach (var (username, email, password) in users)
+        {
+            if (await userManager.FindByEmailAsync(email) == null)
+            {
+                var user = new ChirpUser
+                {
+                    UserName = username,
+                    Email = email,
+                    EmailConfirmed = true // Set this to true if email confirmation is not required
+                };
+
+                var result = await userManager.CreateAsync(user, password);
+                if (!result.Succeeded)
+                {
+                    throw new Exception($"Error creating user {email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                }
+            }
+        }
+    }
 }
