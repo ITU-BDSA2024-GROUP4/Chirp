@@ -83,7 +83,12 @@ public class AboutModel : PageModel {
     }
     public List<CheepDTO> GetCheeps()
     {
-        return _service.GetCheepsFromAuthor(_service.GetAuthor(UserEmail).Name);
+        AuthorDTO authorDTO = _service.GetAuthor(UserEmail);
+        if (authorDTO == null)
+        {
+            return new List<CheepDTO>();
+        }
+        return _service.GetCheepsFromAuthor(authorDTO.Name);
     }
     public string CreateCsvContent()
     {
