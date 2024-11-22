@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IO.Compression;
+using System.Text;
 using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Utils;
@@ -29,38 +30,37 @@ public class AboutModel : PageModel {
     public void SetInformation()
     {
         UserEmail = UserHandler.FindEmail(User);
-
         Following = GetFollowers();
         Cheeps = GetCheeps();
     }
     public ActionResult OnPostDownload()
     {
-        SetInformation(); // Seems it needs to be set again
+        SetInformation(); // Ensure data is up-to-date
 
-        var files = new Dictionary<string, string>
-        {
-            { "Email.txt", CreateEmailFile() },
-            { "Name.txt", CreateNameFile() },
-            { "Following.txt", CreateFollowingFile() },
-            { "Cheeps.txt", CreateCheepFile() }
-        };
+        var csvContent = CreateCsvContent();
 
         var memoryStream = new MemoryStream();
-
-        using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+        try
         {
-            foreach (var file in files)
+            using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
-                var entry = zipArchive.CreateEntry(file.Key);
-                using (var writer = new StreamWriter(entry.Open()))
+                var entry = zipArchive.CreateEntry("Userdata.csv");
+                using (var entryStream = entry.Open())
+                using (var writer = new StreamWriter(entryStream, Encoding.UTF8))
                 {
-                    writer.Write(file.Value);
+                    writer.Write(csvContent);
                 }
             }
-        }
 
-        memoryStream.Position = 0;
-        return File(memoryStream, "application/zip", $"archive-{DateTime.Now:yyyy-MMM-dd-HHmmss}.zip");
+            memoryStream.Position = 0;
+
+            return File(memoryStream, "application/zip", $"Userdata-{DateTime.Now:yyyy-MMM-dd-HHmmss}.zip");
+        }
+        catch
+        {
+            memoryStream.Dispose();
+            throw;
+        }
     }
 
     public string GetEmail() 
@@ -77,33 +77,29 @@ public class AboutModel : PageModel {
     }
     public List<CheepDTO> GetCheeps()
     {
-        return _service.GetCheepsFromAuthor(Author);
+        return _service.GetCheepsFromAuthor(_service.GetAuthor(UserEmail).Name);
     }
-    public string CreateEmailFile()
+    public string CreateCsvContent()
     {
-        return "Your email:\n" + GetEmail();
-    }
-    public string CreateNameFile()
-    {
-        return "Your name:\n" + GetName();
-    }
-    public string CreateFollowingFile()
-    {
-        string returner = "People that you follow:";
-        foreach (AuthorDTO author in Following)
+        var sb = new StringBuilder();
+        
+        sb.AppendLine("Category,Data");
+        sb.AppendLine($"Email,{GetEmail()}");
+        sb.AppendLine($"Name,{GetName()}");
+
+        sb.AppendLine("Following");
+        foreach (var author in Following)
         {
-            returner += "\n" + author.Name;
+            sb.AppendLine($",{author.Name}");
         }
-        return returner;
-    }
-    public string CreateCheepFile()
-    {
-        string returner = "Cheeps that you have chirped:";
-        foreach (CheepDTO cheep in Cheeps)
+
+        sb.AppendLine("Cheeps");
+        foreach (var cheep in Cheeps)
         {
-            returner += "\n" + cheep.Message;
+            sb.AppendLine($",{cheep.Message}");
         }
-        return returner;
+
+        return sb.ToString();
     }
 
     public IActionResult OnGetLogout()
@@ -117,5 +113,4 @@ public class AboutModel : PageModel {
         _service.ForgetMe(UserEmail);
         return Authentication.HandleLogout(this);
     }
-    
 }
