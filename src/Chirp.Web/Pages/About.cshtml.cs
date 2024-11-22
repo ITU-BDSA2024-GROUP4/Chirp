@@ -6,19 +6,25 @@ using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Utils;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace Chirp.Web.Pages;
 
 public class AboutModel : PageModel {
     private readonly ICheepService _service;
+    private readonly SignInManager<ChirpUser> _signInManager;
+    private readonly UserManager<ChirpUser> _userManager;
     public string Author;
     public string UserEmail;
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
 
-    public AboutModel(ICheepService service)
+    public AboutModel(ICheepService service, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
         _service = service;
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
     public ActionResult OnGet(string author)    
     {
@@ -102,15 +108,26 @@ public class AboutModel : PageModel {
         return sb.ToString();
     }
 
-    public IActionResult OnGetLogout()
+    public async Task<IActionResult> OnGetLogout()
     {
-        return Authentication.HandleLogout(this);
+        var signOut = await Authentication.HandleLogout(_signInManager, this);
+        return signOut;
     }
 
-    public IActionResult OnPostForgetMe()
+    public async Task<IActionResult> OnPostForgetMe()
     {
         UserEmail = UserHandler.FindEmail(User);
         _service.ForgetMe(UserEmail);
-        return Authentication.HandleLogout(this);
+        var userId = _userManager.GetUserId(User);
+        var chirpUser = await _userManager.FindByIdAsync(userId);
+        if (chirpUser == null)
+        {
+            // Handle case when user is not found
+            throw new Exception();
+        }
+
+        // Attempt to delete the user
+        var result = await _userManager.DeleteAsync(chirpUser);
+        return await Authentication.HandleLogout(_signInManager, this);
     }
 }

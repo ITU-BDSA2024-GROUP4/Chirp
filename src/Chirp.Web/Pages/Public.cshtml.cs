@@ -23,6 +23,7 @@ namespace Chirp.Web.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepService _service;
+    private readonly SignInManager<ChirpUser> _signInManager;
     public List<CheepDTO> Cheeps { get; set; } = null!;
 
     [BindProperty] 
@@ -38,9 +39,10 @@ public class PublicModel : PageModel
 
     public string UserEmail { get; set; }
 
-    public PublicModel(ICheepService service)
+    public PublicModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
         _service = service;
+        _signInManager = signInManager;
     }
 
     public void SetEmail() {
@@ -77,9 +79,10 @@ public class PublicModel : PageModel
         return Authentication.HandleLogin(this);
     }
 
-    public IActionResult OnGetLogout()
+    public async Task<IActionResult> OnGetLogout()
     {
-        return Authentication.HandleLogout(this);
+        var signOut = await Authentication.HandleLogout(_signInManager, this);
+        return signOut;
     }
 
     public IActionResult OnPost() 
