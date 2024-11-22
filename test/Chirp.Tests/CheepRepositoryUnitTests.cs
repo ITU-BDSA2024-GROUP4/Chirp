@@ -31,7 +31,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Fact]
     public void DatabaseInitialization()
     {
-        var results = _repository.GetCheepsFromAuthor("Helge", 0);
+        var results = _repository.GetCheepsFromAuthorPage("Helge", 0);
 
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
@@ -67,10 +67,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Theory]
     [InlineData("Helge")]
     [InlineData("Adrian")]
-    public void GetCheepsFromAuthorTest(string author)
+    public void GetCheepsFromAuthorPageTest(string author)
     {
 
-        var cheeps = _repository.GetCheepsFromAuthor(author, 0);
+        var cheeps = _repository.GetCheepsFromAuthorPage(author, 0);
 
         Assert.True(cheeps.Count > 0);
         foreach (var cheep in cheeps)
@@ -93,9 +93,9 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Theory]
     [InlineData("ropf@itu.dk", "Helge")]
     [InlineData("adho@itu.dk", "Adrian")]
-    public void GetCheepsFromAuthorEmailTest(string email, string author)
+    public void GetCheepsFromAuthorPageEmailTest(string email, string author)
     {
-        var cheeps = _repository.GetCheepsFromAuthorEmail(email, 0);
+        var cheeps = _repository.GetCheepsFromAuthorPageEmail(email, 0);
 
         Assert.True(cheeps.Count > 0);
         foreach (var cheep in cheeps)

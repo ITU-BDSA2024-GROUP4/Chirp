@@ -23,9 +23,13 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheeps(page);
     }
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
-        return _repository.GetCheepsFromAuthor(author, page);
+        return _repository.GetCheepsFromAuthor(author);
+    }
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
+    {
+        return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
     public void CreateCheep(string email, string message)
@@ -41,7 +45,8 @@ public class CheepService : ICheepService
 
         return new AuthorDTO
                 {
-                    Idenitifer = authors[0].Email
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
                 };
     }
     public AuthorDTO GetOrCreateAuthor(string name, string email) {
@@ -55,7 +60,8 @@ public class CheepService : ICheepService
 
         return new AuthorDTO
                 {
-                    Idenitifer = authors[0].Email
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
                 };
     }
     public void CreateFollow(string username, string user, string follow)
@@ -63,12 +69,17 @@ public class CheepService : ICheepService
         GetOrCreateAuthor(username, user);
         _repository.CreateFollow(user, follow);
     }
-    public void UnFollow(string user, string unfollow) {
-        
+    public void UnFollow(string user, string unfollow) 
+    {
         _repository.UnFollow(user, unfollow);
     }
-    public bool IsFollowing(string user, string author) {
+    public bool IsFollowing(string user, string author) 
+    {
         return _repository.IsFollowing(user,author);
+    }
+    public List<AuthorDTO> GetFollowers(string email) 
+    {
+        return _repository.GetFollowers(email);
     }
 
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
@@ -77,9 +88,16 @@ public class CheepService : ICheepService
         List<string> followingString = new List<string>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Idenitifer);
+            followingString.Add(follow.Email);
         }
         followingString.Add(userEmail);
-        return repository.GetCheepsFromAuthors(followingString, page);
+        return repository.GetCheepsFromAuthorPages(followingString, page);
+    }
+
+    public void ForgetMe(string email)
+    {
+        _repository.ForgetUser(email);
+        Console.WriteLine("VICTORRRR");
+        Console.WriteLine("Forget User: " + email);
     }
 }

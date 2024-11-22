@@ -7,6 +7,8 @@ using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Chirp.Web.Pages;
 
@@ -66,7 +68,7 @@ public class UserTimelineModel : PageModel
         }
         else
         {
-            Cheeps = _service.GetCheepsFromAuthor(match.Value, pageNumber); // default to first page
+            Cheeps = _service.GetCheepsFromAuthorPage(match.Value, pageNumber); // default to first page
         }
         
 
@@ -91,7 +93,7 @@ public class UserTimelineModel : PageModel
         if(!InvalidCheep) {
             InvalidCheep = false;
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
@@ -129,5 +131,15 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
+    
+    public IActionResult OnGetLogin()
+    {
+        return Authentication.HandleLogin(this);
+    }
 
+    public IActionResult OnGetLogout()
+    {
+        return Authentication.HandleLogout(this);
+    }
+    
 }

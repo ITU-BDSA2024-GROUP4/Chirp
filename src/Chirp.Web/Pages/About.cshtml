@@ -1,0 +1,57 @@
+@page "/{author}/aboutme"
+@model Chirp.Web.Pages.AboutModel
+@{
+    var routeName = HttpContext.GetRouteValue("author");
+}
+@if (Model.UserIsAuthor) 
+{
+<div>
+    <h2>Your information</h2>
+    <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
+    <p><strong>Your name: </strong><span>@Model.GetName()</span></p>
+    
+    <h3>People your follow:</h3>
+    @if (Model.Following.Any())
+    {
+        <ul>
+        @foreach (var author in Model.Following)
+        {
+            <li><a href="/@(author.Name)">@author.Name</a></li>
+        }
+        </ul>
+    }
+    else
+    {
+        <h4>You dont follow anyone</h4>
+    }
+    <h3>Cheeps that your have chirped:</h3>
+    @if (Model.Cheeps.Any())
+    {
+        <ul>
+        @foreach (var cheep in Model.Cheeps)
+        {
+            <li><i>@cheep.Message</i></li>
+        }
+        </ul>
+    }
+    else
+    {
+        <h4>You dont have chirped any cheeps</h4>
+    }
+    <form method="post" asp-page-handler="Download">
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Download" formaction="?handler=Download">
+    </form>
+    <form method="post" asp-page-handler="ForgetMe">
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Forget me" formaction="?handler=ForgetMe">
+    </form>
+</div>
+}
+else 
+{
+<div>
+    <h3>Not your information >:( </h3>
+</div>
+}
+

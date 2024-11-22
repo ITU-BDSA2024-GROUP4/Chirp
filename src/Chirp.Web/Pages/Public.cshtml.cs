@@ -72,24 +72,14 @@ public class PublicModel : PageModel
         FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
 
-    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogin()
     {
-
-        return Challenge(new AuthenticationProperties { RedirectUri = "/", Items = {   }}, "GitHub");
-
+        return Authentication.HandleLogin(this);
     }
 
-    //code credit to Adrian <adrianjuul123@gmail.com>
     public IActionResult OnGetLogout()
     {
-
-        return SignOut(
-            new AuthenticationProperties { RedirectUri = "/" },
-            IdentityConstants.ApplicationScheme,
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            "Github"
-        );
+        return Authentication.HandleLogout(this);
     }
 
     public IActionResult OnPost() 
@@ -109,7 +99,7 @@ public class PublicModel : PageModel
         if(InvalidCheep) {
             InvalidCheep = false;
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Idenitifer;
+        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field

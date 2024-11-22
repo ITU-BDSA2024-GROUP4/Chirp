@@ -36,9 +36,24 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
-
+    public List<CheepDTO> GetCheepsFromAuthor(string author)
+    {
+        var query = (from Author in _context.Authors
+                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                    orderby Cheeps.TimeStamp descending
+                    where Author.Name == author
+                    select new CheepDTO
+                    {
+                        Author = Author.Name,
+                        Email = Author.Email,  
+                        Message = Cheeps.Text, 
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    });
+        
+        return query.ToList(); //Converts IQueryable<T> to List<T>
+    }
     //Query
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
         var query = (from Author in _context.Authors
                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -58,7 +73,7 @@ public class CheepRepository : ICheepRepository
     }
 
     //Query
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
                 join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -184,11 +199,11 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Follows in _context.Following
             where Follows.User.Email == email
-            select new AuthorDTO { Idenitifer = Follows.Following.Email, });
+            select new AuthorDTO { Name = Follows.Following.Name, Email = Follows.Following.Email, });
         return query.ToList();
     }
 
-    public List<CheepDTO> GetCheepsFromAuthors(List<string> authors, int page)
+    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors
                 join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -204,6 +219,29 @@ public class CheepRepository : ICheepRepository
             .Skip(_pageSize * page) // Same as SQL "OFFSET
             .Take(_pageSize);       // Same as SQL "LIMIT"
         return query.ToList();
+    }
+
+    public void ForgetUser(string email)
+    {
+        var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
+        {
+            throw new Exception("User not found.");
+        }
+
+        
+        var cheeps = _context.Cheeps.Where(c => c.AuthorId == author.AuthorId).ToList();
+        _context.Cheeps.RemoveRange(cheeps);
+
+        
+        var follows = _context.Following.Where(f => f.User.AuthorId == author.AuthorId || f.Following.AuthorId == author.AuthorId).ToList();
+        _context.Following.RemoveRange(follows);
+
+        
+        _context.Authors.Remove(author);
+
+        
+        _context.SaveChanges();
+
     }
     
 }
