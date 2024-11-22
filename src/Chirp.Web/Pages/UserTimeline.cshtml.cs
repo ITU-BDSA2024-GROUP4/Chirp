@@ -9,12 +9,15 @@ using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Web.Pages;
 
 public class UserTimelineModel : PageModel
 {
     private readonly ICheepService _service;
+    private readonly SignInManager<ChirpUser> _signInManager;
+
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
@@ -29,9 +32,10 @@ public class UserTimelineModel : PageModel
     
     public string Email { get; set; }
     public string UserEmail { get; set; }
-    public UserTimelineModel(ICheepService service)
+    public UserTimelineModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
         _service = service;
+        _signInManager = signInManager;
     }
     public void SetEmail() {
         UserEmail = UserHandler.FindEmail(User);
@@ -137,9 +141,10 @@ public class UserTimelineModel : PageModel
         return Authentication.HandleLogin(this);
     }
 
-    public IActionResult OnGetLogout()
+    public async Task<IActionResult> OnGetLogout()
     {
-        return Authentication.HandleLogout(this);
+        var signOut = await Authentication.HandleLogout(_signInManager, this);
+        return signOut;
     }
     
 }

@@ -2,9 +2,6 @@ using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
 
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Buffers;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
