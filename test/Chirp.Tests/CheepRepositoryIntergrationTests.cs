@@ -31,7 +31,7 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
 	[Fact]
     public void DatabaseInitialization()
     {
-        var results = _repository.GetCheepsFromAuthor("Helge", 0);
+        var results = _repository.GetCheepsFromAuthorPage("Helge", 0);
         
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
@@ -44,7 +44,7 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
         
         _repository.CreateCheep(newAuthor, message);
 
-        var result = _repository.GetCheepsFromAuthor(author, 0);
+        var result = _repository.GetCheepsFromAuthorPage(author, 0);
 
         Assert.True(result.Count>0);
 

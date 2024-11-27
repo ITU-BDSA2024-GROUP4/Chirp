@@ -16,26 +16,88 @@ public class CheepService : ICheepService
     public CheepService(DbContextOptions<ChirpDBContext> options)
     {
         var context = new ChirpDBContext(options);
-        
-        _repository = new Chirp.Infrastructure.CheepRepository(context);
+        _repository = new CheepRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page) 
     {
         return _repository.GetCheeps(page);
     }
-    public List<CheepDTO> GetCheepsFromAuthor(string author, int page)
+    public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
-        return _repository.GetCheepsFromAuthor(author, page);
+        return _repository.GetCheepsFromAuthor(author);
+    }
+    public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
+    {
+        return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
-    public Author GetOrCreateAuthor(string name, string email) {
-        var author = _repository.GetAuthor(email);
-
-        if (!author.Any()) {
-            author.Add(_repository.CreateAuthor(name, email));
+    public void CreateCheep(string email, string message)
+    {
+        Author author = _repository.GetAuthor(email)[0];
+        _repository.CreateCheep(author, message);
+    }
+    public AuthorDTO GetAuthor(string email) {
+        var authors = _repository.GetAuthor(email);
+        if (authors.Count > 1) {
+            return null; //Error, shouldn't be longer than 1
         }
 
-        return author[0];
+        return new AuthorDTO
+                {
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
+                };
+    }
+    public AuthorDTO GetOrCreateAuthor(string name, string email) {
+        var authors = _repository.GetAuthor(email);
+        if (authors.Count > 1) {
+            return null; //Error, shouldn't be longer than 1
+        }
+        if (!authors.Any()) {
+            authors.Add(_repository.CreateAuthor(name, email));
+        }
+
+        return new AuthorDTO
+                {
+                    Name = authors[0].Name,
+                    Email = authors[0].Email
+                };
+    }
+    public void CreateFollow(string username, string user, string follow)
+    {
+        GetOrCreateAuthor(username, user);
+        _repository.CreateFollow(user, follow);
+    }
+    public void UnFollow(string user, string unfollow) 
+    {
+        _repository.UnFollow(user, unfollow);
+    }
+    public bool IsFollowing(string user, string author) 
+    {
+        return _repository.IsFollowing(user,author);
+    }
+    public List<AuthorDTO> GetFollowers(string email) 
+    {
+        return _repository.GetFollowers(email);
+    }
+
+    public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
+    {
+        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<string> followingString = new List<string>();
+        foreach (var follow in following)
+        {
+            followingString.Add(follow.Email);
+        }
+        followingString.Add(userEmail);
+        return repository.GetCheepsFromAuthorPages(followingString, page);
+    }
+
+    public void ForgetMe(string email)
+    {
+        _repository.ForgetUser(email);
+        Console.WriteLine("VICTORRRR");
+        Console.WriteLine("Forget User: " + email);
     }
 }

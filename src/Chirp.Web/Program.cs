@@ -2,20 +2,21 @@ using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
 
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<ChirpDBContext>(options =>
+    options.UseSqlite(builder.Configuration
+        .GetConnectionString("DefaultConnection")!));
 
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = "GitHub";
-    })
-    .AddCookie()
+builder.Services.AddDefaultIdentity<ChirpUser>(options =>
+        options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ChirpDBContext>();
+
+
+builder.Services.AddAuthentication()
+    .AddCookie("Github")
+    .AddCookie("Cookies")
     .AddGitHub(o =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"];
@@ -46,6 +47,15 @@ app.UseCookiePolicy(new CookiePolicyOptions()
     Secure = CookieSecurePolicy.Always,
     MinimumSameSitePolicy = SameSiteMode.None
 });
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ChirpDBContext>();
+    
+    await DbInitializer.SeedIdentityUsers(services);
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
@@ -53,10 +63,9 @@ app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-
-
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
