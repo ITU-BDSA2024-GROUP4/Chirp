@@ -17,19 +17,28 @@ namespace PlaywrightTests
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
             _process.StartInfo.UseShellExecute = false;
-
-            Thread.Sleep(10000);
+            _process.StartInfo.CreateNoWindow = true;
+            
+            //Thread.Sleep(10000);
+            
         }
 
         public void Start()
         {
-            _ = _process.Start();
+            _process.Start();
+            WaitForIsStarted();
         }
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             _process.Kill();
             _process.Dispose();
+            var ChirpWebProcess = Process.GetProcessesByName("Chirp.Web");
+            if (ChirpWebProcess.Any())
+            {
+                ChirpWebProcess.ToList().ForEach(process => process.Kill());
+            }
         }
 
         public string GetBaseAddress()
@@ -37,7 +46,29 @@ namespace PlaywrightTests
             return _baseAddress;
         }
 
+        public void WaitForIsStarted()
+        {
+            var _client = new HttpClient();
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    var result = _client.GetAsync($"{_baseAddress}").Result;
 
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return;
+                    }
+                }
+                catch
+                {
+                   
+                }
+
+                Thread.Sleep(3000);
+            }
+
+            throw new Exception("Could not connect to server.");
+        }
     }
 }
-
