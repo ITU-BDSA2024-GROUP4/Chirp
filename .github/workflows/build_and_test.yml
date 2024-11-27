@@ -20,14 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Run Playwright tests
-      uses: microsoft/playwright-github-action@v1.5.7
     - name: Restore dependencies 
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Ensure browsers are installed
-      run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+      run: pwsh test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
       run: |
           export authentication_github_clientId="${{ secrets.GITHUBCLIENTID }}"
