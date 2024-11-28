@@ -32,6 +32,8 @@ public class PublicModel : PageModel
     public string Author { get; set; }
     [BindProperty] 
     public string Author_Email { get; set; }
+    [BindProperty]
+    public int Cheep_Id { get; set; }
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
     public FollowButtonModel FollowButton { get; set; }
@@ -139,5 +141,19 @@ public class PublicModel : PageModel
             default:
                 return RedirectToPage("/Error");
         }
+    }
+
+    public IActionResult OnPostLike()
+    {
+        SetCheeps();
+        _service.CreateLike(UserEmail, Cheep_Id);
+        return RedirectToPage();
+    }
+
+    public IActionResult OnPostUnlike()
+    {
+        SetCheeps();
+        _service.UnLike(UserEmail, Cheep_Id);
+        return RedirectToPage();
     }
 }

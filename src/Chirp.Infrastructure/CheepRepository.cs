@@ -29,7 +29,9 @@ public class CheepRepository : ICheepRepository
                         Author = Author.Name,
                         Email = Author.Email, 
                         Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                        CheepId = Cheeps.CheepId
+                        
                     })
                     .Skip(_pageSize * page) // Same as SQL "OFFSET
                     .Take(_pageSize);       // Same as SQL "LIMIT"
@@ -47,7 +49,8 @@ public class CheepRepository : ICheepRepository
                         Author = Author.Name,
                         Email = Author.Email,  
                         Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                        CheepId = Cheeps.CheepId
                     });
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
@@ -64,7 +67,8 @@ public class CheepRepository : ICheepRepository
                         Author = Author.Name,
                         Email = Author.Email,  
                         Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                        CheepId = Cheeps.CheepId
                     })
                     .Skip(_pageSize * page) // Same as SQL "OFFSET
                     .Take(_pageSize);       // Same as SQL "LIMIT"
@@ -84,7 +88,8 @@ public class CheepRepository : ICheepRepository
                     Author = Author.Name,
                     Email = Author.Email, 
                     Message = Cheeps.Text,
-                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
                 })
                 .Skip(_pageSize * page)
                 .Take(_pageSize);
@@ -214,11 +219,24 @@ public class CheepRepository : ICheepRepository
                     Author = Author.Name,
                     Email = Author.Email,  
                     Message = Cheeps.Text, 
-                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds()
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
                 })
             .Skip(_pageSize * page) // Same as SQL "OFFSET
             .Take(_pageSize);       // Same as SQL "LIMIT"
         return query.ToList();
+    }
+
+    public Cheep GetCheepFromId(int cheepId)
+    {
+        var query = (from Cheep in _context.Cheeps
+            where Cheep.CheepId == cheepId
+            select Cheep);
+        if (query.Count() != 1)
+        {
+            throw new Exception("Multiple cheeps same id or is invalid id");
+        }
+        return query.ToList()[0];
     }
 
     public void ForgetUser(string email)
@@ -244,4 +262,40 @@ public class CheepRepository : ICheepRepository
 
     }
     
+    public void CreateLike(string user, int CheepId)
+    {
+        Author AuthorUser = GetAuthor(user)[0];
+        Cheep ThisCheep = GetCheepFromId(CheepId);
+        Likes likes = new Likes() { User = AuthorUser, cheep = ThisCheep };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(likes);
+        if (!Validator.TryValidateObject(likes, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Likes.Add(likes);
+        _context.SaveChanges();
+    }
+
+    public bool IsLiked(string user, int CheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId 
+            select Likes).Any();
+
+        return query;
+    }
+    public void UnLike(string user, int CheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId
+            select Likes);
+        foreach (var like in query)
+        {
+            _context.Likes.Remove(like);
+        }
+        _context.SaveChanges();
+    }
 }

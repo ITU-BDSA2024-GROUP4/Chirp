@@ -13,7 +13,9 @@
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">
-            @{ await Html.RenderPartialAsync("_FollowButtonPartial", Model.FollowButton); }
+            @{
+                await Html.RenderPartialAsync("_FollowButtonPartial", Model.FollowButton);
+            }
         </ul>
     }
     else

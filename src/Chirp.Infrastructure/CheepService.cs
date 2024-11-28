@@ -100,4 +100,19 @@ public class CheepService : ICheepService
         Console.WriteLine("VICTORRRR");
         Console.WriteLine("Forget User: " + email);
     }
+
+    public void CreateLike(string user, int CheepId)
+    {
+        _repository.CreateLike(user, CheepId);
+    }
+
+    public bool IsLiked(string user, int CheepId)
+    {
+        return _repository.IsLiked(user, CheepId);
+    }
+
+    public void UnLike(string user, int CheepId)
+    {
+        _repository.UnLike(user, CheepId);
+    }
 }
