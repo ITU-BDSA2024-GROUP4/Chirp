@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Chirp.Infrastructure;
+using Chirp.Core;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ChirpUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly ICheepService _service;
 
         public ExternalLoginModel(
             SignInManager<ChirpUser> signInManager,
             UserManager<ChirpUser> userManager,
             IUserStore<ChirpUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICheepService service)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -44,6 +47,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _service = service;
         }
 
         /// <summary>
@@ -100,6 +104,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
+            
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
@@ -149,6 +154,13 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                 if (addLoginResult.Succeeded)
                 {
                     _logger.LogInformation("User created and logged in with {LoginProvider} provider.", info.LoginProvider);
+
+                    // Create author if it doesn't exist
+                    var author = _service.GetAuthor(email);
+                    if (author == null)
+                    {
+                        _service.CreateAuthor(email, email);
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
                     return LocalRedirect(returnUrl);

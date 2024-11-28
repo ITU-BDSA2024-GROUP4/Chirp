@@ -36,6 +36,7 @@ public class AboutModel : PageModel {
     public void SetInformation()
     {
         UserEmail = UserHandler.FindEmail(User);
+        System.Console.WriteLine(UserEmail);
         Following = GetFollowers();
         Cheeps = GetCheeps();
     }
