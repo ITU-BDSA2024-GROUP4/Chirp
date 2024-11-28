@@ -1,20 +1,13 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Chirp.Core;
 
-
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-using System.Security.Claims;
-
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 
-using Chirp.Infrastructure;
 
 using Microsoft.AspNetCore.Identity;
 

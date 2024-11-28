@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Infrastructure;
 
-public class cs : IdentityDbContext<IdentityUser>
+public class Cs : IdentityDbContext<IdentityUser>
 {
-    public cs(DbContextOptions<cs> options)
+    public Cs(DbContextOptions<Cs> options)
         : base(options)
     {
     }

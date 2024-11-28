@@ -5,7 +5,7 @@
         <p>
             <strong>
                 <a href="/@cheep.Author">@cheep.Author</a>
-                @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
+                @if (cheep.Email != Model.UserEmail && (User.Identity != null && User.Identity.IsAuthenticated))
                 {
                     @if (!Model.IsFollowing(cheep.Email)) 
                     {
