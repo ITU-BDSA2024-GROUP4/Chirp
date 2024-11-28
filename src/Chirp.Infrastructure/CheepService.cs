@@ -115,4 +115,9 @@ public class CheepService : ICheepService
     {
         _repository.UnLike(user, CheepId);
     }
+
+    public int LikeCount(int CheepId)
+    {
+        return _repository.LikeCount(CheepId);
+    }
 }

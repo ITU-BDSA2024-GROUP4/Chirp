@@ -29,4 +29,9 @@ public class FollowButtonModel
         Console.Write("DEBUG LUCVIC " +  _service.IsLiked(user, Cheep_Id) );
         return _service.IsLiked(user, Cheep_Id);
     }
+
+    public int LikeCount(int Cheep_Id)
+    {
+        return _service.LikeCount(Cheep_Id);
+    }
 }

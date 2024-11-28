@@ -298,4 +298,12 @@ public class CheepRepository : ICheepRepository
         }
         _context.SaveChanges();
     }
+
+    public int LikeCount(int CheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.cheep.CheepId == CheepId
+                select Likes).Count();
+        return query;
+    }
 }

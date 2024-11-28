@@ -5,6 +5,7 @@
         <p>
             <strong>
                 <a href="/@cheep.Author">@cheep.Author</a>
+                <h3>@Model.LikeCount(cheep.CheepId)</h3>
                 @if (User.Identity.IsAuthenticated)
                 {
                     @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
