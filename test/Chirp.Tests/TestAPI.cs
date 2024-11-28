@@ -14,10 +14,12 @@ public class TestAPI : IClassFixture<WebApplicationFactory<Program>>
     [Fact]
     public async void CanSeePublicTimeline()
     {
+        // Arrange && Act
         var response = await _client.GetAsync("/");
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-
+    
+        // Assert
         Assert.Contains("Chirp!", content);
         Assert.Contains("Public Timeline", content);
     }
@@ -27,10 +29,13 @@ public class TestAPI : IClassFixture<WebApplicationFactory<Program>>
     [InlineData("Adrian")]
     public async void CanSeePrivateTimeline(string author)
     {
+        
+        // Arrange && Act
         var response = await _client.GetAsync($"/{author}");
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-
+        
+        // Assert
         Assert.Contains("Chirp!", content);
         Assert.Contains($"{author}'s Timeline", content);
     }
