@@ -13,6 +13,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Chirp.Core;
 using Chirp.Infrastructure;
 
 using Microsoft.AspNetCore.Authentication;
@@ -34,13 +35,15 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ChirpUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICheepService _service;
 
         public RegisterModel(
             UserManager<ChirpUser> userManager,
             IUserStore<ChirpUser> userStore,
             SignInManager<ChirpUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICheepService service)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +51,8 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _service = service;
+
         }
 
         /// <summary>
@@ -123,7 +128,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ChirpUser { UserName = Input.Name, Email = Input.Email };
-                
+
                 await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -134,6 +139,14 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     await _userManager.AddClaimAsync(user, claim);
 
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Create author if it doesn't exist
+                    var author = _service.GetAuthor(Input.Email);
+
+                    if (author == null)
+                    {
+                        _service.CreateAuthor(Input.Email, Input.Email);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
