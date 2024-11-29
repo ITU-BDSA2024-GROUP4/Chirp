@@ -1,3 +1,4 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IO.Compression;
@@ -36,6 +37,7 @@ public class AboutModel : PageModel {
     public void SetInformation()
     {
         UserEmail = UserHandler.FindEmail(User);
+        System.Console.WriteLine(UserEmail);
         Following = GetFollowers();
         Cheeps = GetCheeps();
     }
