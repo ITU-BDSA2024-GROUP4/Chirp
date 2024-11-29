@@ -306,4 +306,8 @@ public class CheepRepository : ICheepRepository
                 select Likes).Count();
         return query;
     }
+    public int AmountOfCheeps()
+    {
+        return _context.Cheeps.Count();
+    }
 }

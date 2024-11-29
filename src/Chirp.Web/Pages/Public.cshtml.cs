@@ -151,4 +151,8 @@ public class PublicModel : PageModel
         _service.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
+    public bool GetMaxPage()
+    {
+        return CurrentPage <= (_service.AmountOfCheeps() / 32); //32 is got from repository "_pagesize"
+    }
 }

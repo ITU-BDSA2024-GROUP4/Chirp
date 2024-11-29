@@ -141,4 +141,8 @@ public class CheepService : ICheepService
     {
         return _repository.LikeCount(CheepId);
     }
+    public int AmountOfCheeps()
+    {
+        return _repository.AmountOfCheeps();
+    }
 }

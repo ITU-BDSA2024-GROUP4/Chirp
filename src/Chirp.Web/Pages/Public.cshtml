@@ -27,6 +27,9 @@
             {
                 <a href="@Url.Page("Public")?page=@(Model.CurrentPage - 1)" class="button">Previous Page</a>
             }
-            <a href="@Url.Page("Public")?page=@(Model.CurrentPage + 1)" class="button">Next Page</a>
+            @if(Model.GetMaxPage())
+            {
+                <a href="@Url.Page("Public")?page=@(Model.CurrentPage + 1)" class="button">Next Page</a>
+            }
     </div>
 </div>
