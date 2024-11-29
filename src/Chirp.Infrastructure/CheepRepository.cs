@@ -182,7 +182,15 @@ public class CheepRepository : ICheepRepository
         Author AuthorUser = GetAuthor(user)[0];
         Author AuthorFollowing = GetAuthor(following)[0];
         
-        bool AlreadyFollowing = AuthorFollowing.AuthorId == AuthorUser.AuthorId;
+        bool alreadyFollowing = _context.Following.Any(f =>
+            f.User.AuthorId == AuthorUser.AuthorId &&
+            f.Following.AuthorId == AuthorFollowing.AuthorId);
+
+        if (alreadyFollowing)
+        {
+            Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
+            throw new ApplicationException("this user is already following that author");
+        }
         
         Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };
         

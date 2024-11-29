@@ -146,12 +146,20 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("VictorDUplicate@dupe.it", "victor@nodupes.it")]
     public void DuplicateFollowTest(string userEmail, string authorEmail)
     {
-        int i = 0;
-        for (i = 0; i < 100; i++)
-        { _repository.CreateFollow(userEmail, authorEmail); }
+        _repository.CreateAuthor("JohnDoe", authorEmail);
+        
+        _repository.CreateFollow(userEmail, authorEmail);
+
+        var exception = Assert.Throws<ApplicationException>(() =>
+        {
+            _repository.CreateFollow(userEmail, authorEmail);
+        });
+
+        Assert.Equal("this user is already following that author", exception.Message);
+
         int followers = _repository.GetFollowerCount(authorEmail);
-        Assert.False(followers == i);
-        Assert.False(followers > 1);
+        Assert.Equal(1, followers);
     }
+
     
 }
