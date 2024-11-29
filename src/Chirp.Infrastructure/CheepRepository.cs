@@ -379,7 +379,7 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Cheep in _context.Cheeps
             join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
-            where Likes.User.Email == email  
+            where Cheep.Author.Email == email  
             select Likes).Count();
         Console.WriteLine("Total Likes = " + query);
         return query;
