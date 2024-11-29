@@ -194,5 +194,9 @@ public class UserTimelineModel : PageModel
     {
         return _service.GetTotalCheeps(Author);
     }
-    
+    public IActionResult OnPostBlock()
+    {
+        SetCheeps();
+        return RedirectToPage();
+    }
 }
