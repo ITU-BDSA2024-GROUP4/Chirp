@@ -375,6 +375,16 @@ public class CheepRepository : ICheepRepository
         return query;
     }
 
+    public int TotalLikeCountUser(string email)
+    {
+        var query = (from Cheep in _context.Cheeps
+            join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
+            where Likes.User.Email == email  
+            select Likes).Count();
+        Console.WriteLine("Total Likes = " + query);
+        return query;
+    }
+
     public int AmountOfCheeps()
     {
         return _context.Cheeps.Count();

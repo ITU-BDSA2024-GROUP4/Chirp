@@ -29,6 +29,7 @@ public interface ICheepRepository {
     public bool IsLiked(string user, int CheepId);
     public void UnLike(string user, int CheepId);
     public int LikeCount(int CheepId);
+    public int TotalLikeCountUser(string username);
     public int AmountOfCheeps();
     public List<CheepDTO> GetLiked(string user);
 
