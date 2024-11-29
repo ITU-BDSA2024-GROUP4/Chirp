@@ -22,7 +22,7 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty]
     public SubmitMessageModel SubmitMessage { get; set; }
-    [BindProperty]
+    [BindProperty(SupportsGet = true)]
     public string Author { get; set; }
     [BindProperty]
     public string Author_Email { get; set; }
@@ -36,7 +36,6 @@ public class UserTimelineModel : PageModel
     public string Email { get; set; }
     public string UserEmail { get; set; }
     public int CurrentPage { get; set; } = 0;
-    public string UserName { get; set; }
 
     public UserTimelineModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
@@ -51,17 +50,8 @@ public class UserTimelineModel : PageModel
         SetCheeps();
         return Page();
     }
-    public void SetCheeps() {
+   public void SetCheeps() {
         SetEmail();
-        string url = HttpContext.Request.GetDisplayUrl();
-        //Uses a regex to find the user in the url
-        var match = Regex.Match(url, @"(?<=^https?://[^/]+/)([^?]+)");
-        int pageNumber = 0; //Defaults to first page
-        if (!match.Success)
-        {
-            throw new Exception("Url not matching");
-        }
-        UserName = match.Value;
 
         var pageQuery = Request.Query["page"].ToString();
         Email = User.FindFirst(ClaimTypes.Email)?.Value;
@@ -69,18 +59,16 @@ public class UserTimelineModel : PageModel
         {
             _ = int.TryParse(pageQuery, out int page);
             CurrentPage = page;
-            pageNumber = page - 1;
         }
 
-        if (match.Value == User.Identity.Name)
+        if (Author == User.Identity.Name)
         {
-            Cheeps = _service.GetOwnTimeline(UserEmail, pageNumber);
+            Cheeps = _service.GetOwnTimelinePage(UserEmail, CurrentPage);
         }
         else
         {
-            Cheeps = _service.GetCheepsFromAuthorPage(match.Value, pageNumber); // default to first page
+            Cheeps = _service.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
-        
 
         FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
     }
@@ -168,7 +156,13 @@ public class UserTimelineModel : PageModel
     }
     public bool GetMaxPage()
     {
-        return CurrentPage <= (_service.GetCheepsFromAuthor(UserName).Count() / 32); //32 is got from repository "_pagesize"
+        if (Author == User.Identity.Name)
+        {
+            return CurrentPage <= (_service.GetOwnTimeline(UserEmail).Count() / 32);
+        }
+        else
+        {
+            return CurrentPage <= (_service.GetCheepsFromAuthor(Author).Count() / 32); //32 is got from repository "_pagesize"
+        }
     }
-    
 }

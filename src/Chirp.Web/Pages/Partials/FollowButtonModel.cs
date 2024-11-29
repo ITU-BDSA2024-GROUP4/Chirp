@@ -26,7 +26,6 @@ public class FollowButtonModel
 
     public bool IsLiked(string user, int Cheep_Id)
     {
-        Console.Write("DEBUG LUCVIC " +  _service.IsLiked(user, Cheep_Id) );
         return _service.IsLiked(user, Cheep_Id);
     }
 

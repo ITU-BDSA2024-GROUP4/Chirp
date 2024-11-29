@@ -102,8 +102,24 @@ public class CheepService : ICheepService
     {
         return _repository.GetFollowers(email);
     }
+    public List<CheepDTO> GetOwnTimeline(string userEmail)
+    {
+        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<string> followingString = new List<string>();
+        List<CheepDTO> Cheeps = new List<CheepDTO>();
+        foreach (var follow in following)
+        {
+            followingString.Add(follow.Email);
+        }
+        followingString.Add(userEmail);
+        foreach(var email in followingString) 
+        {
+            Cheeps.AddRange(_repository.GetCheepsFromAuthorEmail(email));
+        }
+        return Cheeps;
+    }
 
-    public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
+    public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
     {
         List<AuthorDTO> following = repository.GetFollowers(userEmail);
         List<string> followingString = new List<string>();
@@ -118,8 +134,6 @@ public class CheepService : ICheepService
     public void ForgetMe(string email)
     {
         _repository.ForgetUser(email);
-        Console.WriteLine("VICTORRRR");
-        Console.WriteLine("Forget User: " + email);
     }
 
     public void CreateLike(string user, int CheepId)
