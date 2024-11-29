@@ -195,6 +195,11 @@ public class CheepService : ICheepService
     {
         return _repository.LikeCount(CheepId);
     }
+
+    public int TotalLikeCountUser(string username)
+    {
+        return _repository.TotalLikeCountUser(username);
+    }
     public int AmountOfCheeps()
     {
         return _repository.AmountOfCheeps();
@@ -208,5 +213,10 @@ public class CheepService : ICheepService
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
     {
         throw new NotImplementedException();
+    }
+
+    public int GetTotalCheeps(string email)
+    {
+        return _repository.GetCheepsFromAuthor(email).Count;
     }
 }

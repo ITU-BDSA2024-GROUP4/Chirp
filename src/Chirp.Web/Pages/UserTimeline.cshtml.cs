@@ -182,8 +182,17 @@ public class UserTimelineModel : PageModel
 
     public int GetFollowingCount()
     {
-        Console.WriteLine("DEBAAAG " + Author);
         return _service.GetFollowingCount(Author);
+    }
+
+    public int GetTotalLikesCount()
+    {
+        return _service.TotalLikeCountUser(GetEmail());
+    }
+
+    public int GetTotalCheepsCount()
+    {
+        return _service.GetTotalCheeps(Author);
     }
     
 }
