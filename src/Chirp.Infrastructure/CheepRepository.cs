@@ -225,6 +225,23 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
+    public int GetFollowerCount(string email)
+    {
+        var query = (from Follows in _context.Following
+                where Follows.Following.Email == email
+                    select Follows).Count();
+        return query;
+
+    }
+    public int GetFollowerCountUserName(string username)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.Following.Name == username
+            select Follows).Count();
+        return query;
+
+    }
+    
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors

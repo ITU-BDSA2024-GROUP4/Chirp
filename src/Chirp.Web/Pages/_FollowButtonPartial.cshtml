@@ -1,3 +1,4 @@
+@using Chirp.Web.Pages
 @model Chirp.Web.Pages.FollowButtonModel
 @foreach (var cheep in Model.Cheeps)
 {
@@ -32,6 +33,7 @@
             @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
             {
                 <span class="follow-section">
+                    <h3>@Model.FollowCount(cheep.Email)</h3>
                     @if (!Model.IsFollowing(cheep.Email))
                     {
                         <form method="post" action="@Url.Page("", new { handler = "Follow" })">
