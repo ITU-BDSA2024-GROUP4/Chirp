@@ -123,6 +123,11 @@ public class CheepService : ICheepService
     {
         return _repository.GetFollowerCount(email);
     }
+
+    public int GetFollowerCountUserName(string username)
+    {
+        return _repository.GetFollowerCountUserName(username);
+    }
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
     {
         List<AuthorDTO> following = repository.GetFollowers(userEmail);

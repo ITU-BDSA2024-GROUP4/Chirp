@@ -167,8 +167,8 @@ public class UserTimelineModel : PageModel
         }
     }
 
-    public int Followers(string pageEmail)
+    public int Followers()
     {
-        return _service.GetFollowerCount(pageEmail);
+        return _service.GetFollowerCountUserName(Author);
     }
 }
