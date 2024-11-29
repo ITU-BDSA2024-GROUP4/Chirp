@@ -27,6 +27,8 @@ public class UserTimelineModel : PageModel
     public string Author_Email { get; set; }
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
+    [BindProperty]
+    public int Cheep_Id { get; set; }
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
     
@@ -145,6 +147,20 @@ public class UserTimelineModel : PageModel
     {
         var signOut = await Authentication.HandleLogout(_signInManager, this);
         return signOut;
+    }
+    
+    public IActionResult OnPostLike()
+    {
+        SetCheeps();
+        _service.CreateLike(UserEmail, Cheep_Id);
+        return RedirectToPage();
+    }
+
+    public IActionResult OnPostUnlike()
+    {
+        SetCheeps();
+        _service.UnLike(UserEmail, Cheep_Id);
+        return RedirectToPage();
     }
     
 }
