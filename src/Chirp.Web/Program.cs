@@ -8,8 +8,14 @@ using Chirp.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ChirpDBContext>(options =>
+{
     options.UseSqlite(builder.Configuration
-        .GetConnectionString("DefaultConnection")!));
+        .GetConnectionString("DefaultConnection")!);
+
+    options.UseLoggerFactory(LoggerFactory.Create(builder => builder
+        .AddFilter((category, level) =>
+            !category.Equals("Microsoft.EntityFrameworkCore.Database.Command") || level < LogLevel.Information)));
+});
 
 builder.Services.AddDefaultIdentity<ChirpUser>(options =>
         options.SignIn.RequireConfirmedAccount = false)

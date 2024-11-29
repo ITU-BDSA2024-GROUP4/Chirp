@@ -96,6 +96,23 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList();
     }
+    public List<CheepDTO> GetCheepsFromAuthorEmail(string email)
+    {
+        var query = (from Author in _context.Authors
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where Author.Email == email
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email, 
+                    Message = Cheeps.Text,
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
+                });
+        
+        return query.ToList();
+    }
 
     //Command
     public Author CreateAuthor(string name, string email)
@@ -322,6 +339,11 @@ public class CheepRepository : ICheepRepository
             where Likes.cheep.CheepId == CheepId
                 select Likes).Count();
         return query;
+    }
+
+    public int AmountOfCheeps()
+    {
+        return _context.Cheeps.Count();
     }
 
     public List<CheepDTO> GetLiked(string email)

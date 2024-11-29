@@ -194,7 +194,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                 var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
                 var userName = info.Principal.FindFirstValue(ClaimTypes.Name);
 
-                Console.WriteLine($"{userName} {userEmail}");
+                //Console.WriteLine($"{userName} {userEmail}");
 
                 await _userStore.SetUserNameAsync(user, userName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

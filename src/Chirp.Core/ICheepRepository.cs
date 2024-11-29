@@ -18,11 +18,13 @@ public interface ICheepRepository {
     public List<AuthorDTO> GetFollowers(string email);
     public int GetFollowerCount(string email);
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
+    public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
     public void CreateLike(string user, int CheepId);
     public void ForgetUser(string email);
     public bool IsLiked(string user, int CheepId);
     public void UnLike(string user, int CheepId);
     public int LikeCount(int CheepId);
+    public int AmountOfCheeps();
     public List<CheepDTO> GetLiked(string user);
 
 }
