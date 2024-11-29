@@ -77,7 +77,6 @@ public class UserTimelineModel : PageModel
     {
         //This is a fall back if there is no OnPost[HandlerName]
         SetCheeps();
-        Console.WriteLine("Brah brhuh" + _service.GetFollowerCount(UserEmail));
         return Page();
     }
 

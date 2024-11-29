@@ -38,7 +38,6 @@ public class FollowButtonModel
 
     public int FollowCount(string email)
     {
-        Console.WriteLine("Brah brhuh" + _service.GetFollowerCount(UserEmail));
         return _service.GetFollowerCount(email);
 
     }
