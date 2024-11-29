@@ -214,4 +214,9 @@ public class CheepService : ICheepService
     {
         throw new NotImplementedException();
     }
+
+    public int GetTotalCheeps(string email)
+    {
+        return _repository.GetCheepsFromAuthor(email).Count;
+    }
 }

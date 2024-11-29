@@ -384,7 +384,6 @@ public class CheepRepository : ICheepRepository
         Console.WriteLine("Total Likes = " + query);
         return query;
     }
-
     public int AmountOfCheeps()
     {
         return _context.Cheeps.Count();

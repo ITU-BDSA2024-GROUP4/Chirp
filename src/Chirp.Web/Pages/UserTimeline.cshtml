@@ -6,7 +6,7 @@
 
 <div>
     <h2> @routeName's Timeline </h2>
-    <h3>Followers: @Model.Followers() Following: @Model.GetFollowingCount() Cheeps: Likes: @Model.GetTotalLikesCount()</h3>
+    <h3>Followers: @Model.Followers() Following: @Model.GetFollowingCount() Cheeps: @Model.GetTotalCheepsCount() Likes: @Model.GetTotalLikesCount()</h3>
     @if (Model.Author != User.Identity.Name)
     {
         @if (!Model.IsFollowing())

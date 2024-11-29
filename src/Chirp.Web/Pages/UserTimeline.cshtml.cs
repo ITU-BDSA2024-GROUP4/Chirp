@@ -192,5 +192,11 @@ public class UserTimelineModel : PageModel
         Console.WriteLine(_service.TotalLikeCountUser(GetEmail()));
         return _service.TotalLikeCountUser(GetEmail());
     }
+
+    public int GetTotalCheepsCount()
+    {
+        Console.WriteLine("GetTotalCheepsCount  " +_service.GetTotalCheeps(GetEmail()));
+        return _service.GetTotalCheeps(Author);
+    }
     
 }
