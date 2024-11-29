@@ -15,7 +15,7 @@ public interface ICheepRepository {
     public List<Author> GetAuthorUserName(string userName);
     public void CreateFollow(string user, string following);
     public void UnFollow(string user, string unfollowing);
-    public bool IsFollowing(string user, string author);
+    public bool IsFollowing(string email, string authorEmail);
     public bool IsFollowingUserName(string username, string author);
     public List<AuthorDTO> GetFollowers(string email);
     public int GetFollowerCount(string email);

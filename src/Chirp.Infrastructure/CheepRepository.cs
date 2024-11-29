@@ -209,10 +209,10 @@ public class CheepRepository : ICheepRepository
         }
         _context.SaveChanges();
     }
-    public bool IsFollowing(string user, string author)
+    public bool IsFollowing(string email, string authorEmail)
     {
-        List<Author> AuthorUserList = GetAuthor(user);
-        List<Author> AuthorAuthorList = GetAuthor(author);
+        List<Author> AuthorUserList = GetAuthor(email);
+        List<Author> AuthorAuthorList = GetAuthor(authorEmail);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }

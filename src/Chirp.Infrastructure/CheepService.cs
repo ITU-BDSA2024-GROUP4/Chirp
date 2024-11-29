@@ -115,9 +115,9 @@ public class CheepService : ICheepService
     {
         _repository.UnFollow(user, unfollow);
     }
-    public bool IsFollowing(string user, string author)
+    public bool IsFollowing(string email, string authorEmail)
     {
-        return _repository.IsFollowing(user, author);
+        return _repository.IsFollowing(email, authorEmail);
     }
 
     public bool IsFollowingUserName(string username, string author)
