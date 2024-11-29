@@ -27,19 +27,6 @@ input[type="password"] {
     color: #571010;
 }
 
-input[type="submit"] {
-  background: #571010;
-  border: 1px solid #3b0707;
-  padding: 1px 3px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  color: white;
-}
-
 div.page {
   background: white;
   border: 1px solid #cc6e6e;
@@ -309,3 +296,52 @@ ul.nav li a:hover {
 .heart-button:hover {
   color: #ff6666; 
 }
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between items */
+}
+
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between like count and button */
+}
+
+.like-section h3 {
+    margin: 0; /* Remove any default margin */
+    font-size: 1em;
+    color: #571010;
+}
+
+.follow-section {
+    margin-left: auto; /* Push the follow button to the right */
+}
+
+input[type="submit"].heart-button {
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+
+input[type="submit"].follow-button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background: #571010;
+    border: 1px solid #3b0707;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: white;
+}
+
+.heart-button:hover {
+    color: #ff6666;
+}
+
+.heart-button.liked {
+    color: red;
+}
+

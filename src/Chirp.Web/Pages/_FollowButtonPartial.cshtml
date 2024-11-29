@@ -2,9 +2,12 @@
 @foreach (var cheep in Model.Cheeps)
 {
     <li>
-        <p>
-            <strong>
-                <a href="/@cheep.Author">@cheep.Author</a>
+    <p>
+        <strong>
+            <a href="/@cheep.Author">@cheep.Author</a>
+        </strong>
+        <div class="actions">
+            <span class="like-section">
                 <h3>@Model.LikeCount(cheep.CheepId)</h3>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -24,32 +27,34 @@
                             <input type="submit" class="heart-button liked" value="♥" formaction="?handler=UnLike">
                         </form>
                     }
-                    
-                    @if (cheep.Email != Model.UserEmail)
-                    {
-                        @if (!Model.IsFollowing(cheep.Email))
-                        {
-                            <form method="post" action="@Url.Page("", new { handler = "Follow" })">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="author" value="@cheep.Author"/>
-                                <input type="hidden" name="author_email" value="@cheep.Email"/>
-                                <input type="submit" value="Follow" formaction="?handler=Follow">
-                            </form>
-                        }
-                        else
-                        {
-                            <form method="post" asp-page-handler="Unfollow">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="author" value="@cheep.Author"/>
-                                <input type="hidden" name="author_email" value="@cheep.Email"/>
-                                <input type="submit" value="Unfollow" formaction="?handler=Unfollow">
-                            </form>
-                        }
-                    }
                 }
-            </strong>
-            @cheep.Message
-            <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
-        </p>
-    </li>
+            </span>
+            @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
+            {
+                <span class="follow-section">
+                    @if (!Model.IsFollowing(cheep.Email))
+                    {
+                        <form method="post" action="@Url.Page("", new { handler = "Follow" })">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="author" value="@cheep.Author"/>
+                            <input type="hidden" name="author_email" value="@cheep.Email"/>
+                            <input type="submit" class="follow-button" value="Follow" formaction="?handler=Follow">
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-page-handler="Unfollow">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="author" value="@cheep.Author"/>
+                            <input type="hidden" name="author_email" value="@cheep.Email"/>
+                            <input type="submit" class="follow-button" value="Unfollow" formaction="?handler=Unfollow">
+                        </form>
+                    }
+                </span>
+            }
+        </div>
+        <span>@cheep.Message</span>
+        <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+    </p>
+</li>
 }
