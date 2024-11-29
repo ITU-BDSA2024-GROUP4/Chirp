@@ -177,8 +177,13 @@ public class UserTimelineModel : PageModel
     }
     public bool IsFollowing()
     {
-        Console.WriteLine("UserEmail: " + UserEmail + " Author: " + Author);
         return _service.IsFollowingUserName(UserEmail, GetEmail());
+    }
+
+    public int GetFollowingCount()
+    {
+        Console.WriteLine("DEBAAAG " + Author);
+        return _service.GetFollowingCount(Author);
     }
     
 }

@@ -20,6 +20,7 @@ public interface ICheepRepository {
     public List<AuthorDTO> GetFollowers(string email);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
+    public int GetFollowingCount(string username);
 
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email);

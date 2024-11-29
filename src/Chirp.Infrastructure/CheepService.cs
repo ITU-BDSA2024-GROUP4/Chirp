@@ -37,6 +37,8 @@ public class CheepService : ICheepService
         Author author = _repository.GetAuthor(email)[0];
         _repository.CreateCheep(author, message);
     }
+
+    
     public AuthorDTO GetAuthor(string email)
     {
         var authors = _repository.GetAuthor(email);
@@ -151,6 +153,11 @@ public class CheepService : ICheepService
     public int GetFollowerCountUserName(string username)
     {
         return _repository.GetFollowerCountUserName(username);
+    }
+
+    public int GetFollowingCount(string username)
+    {
+        return _repository.GetFollowingCount(username);
     }
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
     {

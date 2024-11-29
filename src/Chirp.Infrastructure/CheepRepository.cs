@@ -267,7 +267,15 @@ public class CheepRepository : ICheepRepository
         return query;
 
     }
-    
+    public int GetFollowingCount(string username)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Name == username
+            select Follows).Count();
+        Console.WriteLine("Username = " + username);
+        return query;
+
+    }
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors

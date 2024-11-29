@@ -25,6 +25,7 @@ public interface ICheepService
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
+    public int GetFollowingCount(string username);
     public void ForgetMe(string email);
     public void CreateLike(string user, int CheepId);
     public bool IsLiked(string user, int CheepId);
