@@ -5,48 +5,64 @@
 }
 @if (Model.UserIsAuthor) 
 {
-<div>
-    <h2>Your information</h2>
-    <p><strong>Your name: </strong><span>@User.Identity?.Name</span></p>
-    <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
+    <div>
+        <h2>Your information</h2>
+        <p><strong>Your name: </strong><span>@User.Identity?.Name</span></p>
+        <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
     
-    <h3>People your follow:</h3>
-    @if (Model.Following.Any())
-    {
-        <ul>
-        @foreach (var author in Model.Following)
+        <h3>People your follow:</h3>
+        @if (Model.Following.Any())
         {
-            <li><a href="/@(author.Name)">@author.Name</a></li>
+            <ul>
+                @foreach (var author in Model.Following)
+                {
+                    <li><a href="/@(author.Name)">@author.Name</a></li>
+                }
+            </ul>
         }
-        </ul>
-    }
-    else
-    {
-        <h4>You dont follow anyone</h4>
-    }
-    <h3>Cheeps that your have chirped:</h3>
-    @if (Model.Cheeps.Any())
-    {
-        <ul>
-        @foreach (var cheep in Model.Cheeps)
+        else
         {
-            <li><i>@cheep.Message</i></li>
+            <h4>You dont follow anyone</h4>
         }
-        </ul>
-    }
-    else
-    {
-        <h4>You dont have chirped any cheeps</h4>
-    }
-    <form method="post" asp-page-handler="Download">
-        @Html.AntiForgeryToken()
-        <input type="submit" value="Download" formaction="?handler=Download">
-    </form>
-    <form method="post" asp-page-handler="ForgetMe">
-        @Html.AntiForgeryToken()
-        <input type="submit" value="Forget me" formaction="?handler=ForgetMe">
-    </form>
-</div>
+        <h3>Cheeps that you have chirped:</h3>
+        @if (Model.Cheeps.Any())
+        {
+            <ul>
+                @foreach (var cheep in Model.Cheeps)
+                {
+                    <li><i>@cheep.Message</i></li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h4>You have not chirped any cheeps</h4>
+        }
+        
+        <h3>Cheeps you liked</h3>
+        @if (Model.Likes.Any())
+        {
+            <ul>
+                @foreach (var cheep in Model.Likes)
+                {
+                    <li><i>@cheep.Author: @cheep.Message</i></li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h4>You have not liked any cheeps 🎃</h4>
+        }
+        <form method="post" asp-page-handler="Download">
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Download" formaction="?handler=Download">
+        </form>
+        <form method="post" asp-page-handler="ForgetMe">
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Forget me" formaction="?handler=ForgetMe">
+        </form>
+    </div>
+    
 }
 else 
 {
