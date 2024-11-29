@@ -18,6 +18,7 @@ public interface ICheepService
     public void UnFollow(string user, string unfollow);
     public bool IsFollowing(string user, string author);
     public List<AuthorDTO> GetFollowers(string email);
+    public int GetFollowerCount(string email);
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page);
     public void ForgetMe(string email);
     public void CreateLike(string user, int CheepId);

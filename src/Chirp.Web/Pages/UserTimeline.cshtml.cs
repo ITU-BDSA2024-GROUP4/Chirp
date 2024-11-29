@@ -86,6 +86,7 @@ public class UserTimelineModel : PageModel
     {
         //This is a fall back if there is no OnPost[HandlerName]
         SetCheeps();
+        Console.WriteLine("Brah brhuh" + _service.GetFollowerCount(UserEmail));
         return Page();
     }
 
@@ -162,6 +163,11 @@ public class UserTimelineModel : PageModel
         SetCheeps();
         _service.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
+    }
+
+    public int Followers(string pageEmail)
+    {
+        return _service.GetFollowerCount(pageEmail);
     }
     
 }

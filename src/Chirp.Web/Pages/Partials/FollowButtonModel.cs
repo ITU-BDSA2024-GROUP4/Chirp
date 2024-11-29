@@ -34,4 +34,11 @@ public class FollowButtonModel
     {
         return _service.LikeCount(Cheep_Id);
     }
+
+    public int FollowCount(string email)
+    {
+        Console.WriteLine("Brah brhuh" + _service.GetFollowerCount(UserEmail));
+        return _service.GetFollowerCount(email);
+
+    }
 }

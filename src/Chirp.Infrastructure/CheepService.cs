@@ -103,6 +103,10 @@ public class CheepService : ICheepService
         return _repository.GetFollowers(email);
     }
 
+    public int GetFollowerCount(string email)
+    {
+        return _repository.GetFollowerCount(email);
+    }
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
     {
         List<AuthorDTO> following = repository.GetFollowers(userEmail);

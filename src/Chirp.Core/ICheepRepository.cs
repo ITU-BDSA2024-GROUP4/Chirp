@@ -16,6 +16,7 @@ public interface ICheepRepository {
     public void UnFollow(string user, string unfollowing);
     public bool IsFollowing(string user, string author);
     public List<AuthorDTO> GetFollowers(string email);
+    public int GetFollowerCount(string email);
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public void CreateLike(string user, int CheepId);
     public void ForgetUser(string email);
