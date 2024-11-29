@@ -145,7 +145,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
 
                     if (author == null)
                     {
-                        _service.CreateAuthor(Input.Email, Input.Email);
+                        _service.CreateAuthor(Input.Name, Input.Email);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);

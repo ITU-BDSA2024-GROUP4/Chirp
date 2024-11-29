@@ -205,4 +205,8 @@ public class CheepService : ICheepService
         return _repository.GetLiked(email);
     }
 
+    public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
+    {
+        throw new NotImplementedException();
+    }
 }

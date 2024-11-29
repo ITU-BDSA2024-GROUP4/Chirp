@@ -159,7 +159,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     var author = _service.GetAuthor(email);
                     if (author == null)
                     {
-                        _service.CreateAuthor(email, email);
+                        _service.CreateAuthor(userName, email);
                     }
 
                     await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
