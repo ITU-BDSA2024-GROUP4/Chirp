@@ -129,11 +129,9 @@ public class AboutModel : PageModel {
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
         {
-            // Handle case when user is not found
             throw new Exception();
         }
 
-        // Attempt to delete the user
         var result = await _userManager.DeleteAsync(chirpUser);
         return await Authentication.HandleLogout(_signInManager, this);
     }

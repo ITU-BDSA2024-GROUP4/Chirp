@@ -17,6 +17,10 @@ public interface ICheepRepository {
     public bool IsFollowing(string user, string author);
     public List<AuthorDTO> GetFollowers(string email);
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
+    public void CreateLike(string user, int CheepId);
     public void ForgetUser(string email);
+    public bool IsLiked(string user, int CheepId);
+    public void UnLike(string user, int CheepId);
+    public int LikeCount(int CheepId);
 
 }
