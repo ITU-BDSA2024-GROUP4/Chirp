@@ -8,6 +8,7 @@ using Chirp.Infrastructure;
 using Chirp.Web.Pages.Utils;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Chirp.Web.Pages;
 
@@ -20,6 +21,7 @@ public class AboutModel : PageModel {
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
+    public List<CheepDTO> Likes;
 
     public AboutModel(ICheepService service, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
@@ -37,9 +39,9 @@ public class AboutModel : PageModel {
     public void SetInformation()
     {
         UserEmail = UserHandler.FindEmail(User);
-        System.Console.WriteLine(UserEmail);
         Following = GetFollowers();
         Cheeps = GetCheeps();
+        Likes = GetLikes();
     }
     public ActionResult OnPostDownload()
     {
@@ -92,6 +94,19 @@ public class AboutModel : PageModel {
         }
         return _service.GetCheepsFromAuthor(authorDTO.Name);
     }
+
+    public List<CheepDTO> GetLikes()
+    {
+        foreach (var a in _service.GetLiked(UserEmail))
+        {
+            Console.WriteLine("Debuga");
+            Console.WriteLine(a.Message);
+            Console.WriteLine(a.CheepId);
+            Console.WriteLine(a.Author);
+            Console.WriteLine(a.TimeStamp);
+        }
+        return _service.GetLiked(UserEmail);
+    }
     public string CreateCsvContent()
     {
         var sb = new StringBuilder();
@@ -110,6 +125,12 @@ public class AboutModel : PageModel {
         foreach (var cheep in Cheeps)
         {
             sb.AppendLine($",{cheep.Message}");
+        }
+        
+        sb.AppendLine("Cheeps you liked");
+        foreach (var cheep in Likes)
+        {
+            sb.AppendLine($"{cheep.Author},{cheep.Message}");
         }
 
         return sb.ToString();

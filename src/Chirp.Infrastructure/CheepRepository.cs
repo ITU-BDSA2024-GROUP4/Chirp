@@ -306,4 +306,23 @@ public class CheepRepository : ICheepRepository
                 select Likes).Count();
         return query;
     }
+
+    public List<CheepDTO> GetLiked(string email)
+    {
+
+        var query = (from Cheep in _context.Cheeps
+            join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
+            orderby Cheep.TimeStamp descending
+            where Likes.User.Email == email
+            select new CheepDTO
+            {
+                CheepId = Cheep.CheepId,
+                TimeStamp = ((DateTimeOffset)Cheep.TimeStamp).ToUnixTimeSeconds(),
+                Author = Cheep.Author.Name,
+                Message = Cheep.Text
+            });
+    //where authors.Contains(Author.Email)
+
+    return query.ToList();
+    }
 }

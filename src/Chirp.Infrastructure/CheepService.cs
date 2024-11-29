@@ -141,4 +141,10 @@ public class CheepService : ICheepService
     {
         return _repository.LikeCount(CheepId);
     }
+
+    public List<CheepDTO> GetLiked(string email)
+    {
+        return _repository.GetLiked(email);
+    }
+    
 }
