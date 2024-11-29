@@ -189,7 +189,7 @@ public class CheepRepository : ICheepRepository
         if (alreadyFollowing)
         {
             Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
-            throw new ApplicationException("this user is already following that author");
+            throw new ApplicationException("TooManyFollows");
         }
         
         Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };

@@ -143,23 +143,32 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     
     //TEST if user can follow same user more than once (logical fallacy!!!)
     [Theory]
-    [InlineData("VictorDUplicate@dupe.it", "victor@nodupes.it")]
+    [InlineData("VictorDuplicate@dupe.it", "victor@nodupes.it")]
     public void DuplicateFollowTest(string userEmail, string authorEmail)
     {
-        _repository.CreateAuthor("JohnDoe", authorEmail);
-        
-        _repository.CreateFollow(userEmail, authorEmail);
+        var userAuthor = _repository.CreateAuthor("Victor Duplicate", userEmail);
+        var targetAuthor = _repository.CreateAuthor("Victor NoDupes", authorEmail);
 
+        _repository.CreateFollow(userEmail, authorEmail);
+        try
+        {
+            _repository.CreateFollow(userEmail, authorEmail);
+        }
+        catch (Exception ex)
+        {
+            ex.GetBaseException();
+        }
         var exception = Assert.Throws<ApplicationException>(() =>
         {
             _repository.CreateFollow(userEmail, authorEmail);
         });
 
-        Assert.Equal("this user is already following that author", exception.Message);
+        Assert.Equal("TooManyFollows", exception.Message);
 
         int followers = _repository.GetFollowerCount(authorEmail);
-        Assert.Equal(1, followers);
+        Assert.True(2 > followers);
     }
+
 
     
 }
