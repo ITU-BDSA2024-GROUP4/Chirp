@@ -7,8 +7,8 @@
 {
 <div>
     <h2>Your information</h2>
+    <p><strong>Your name: </strong><span>@User.Identity?.Name</span></p>
     <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
-    <p><strong>Your name: </strong><span>@Model.GetName()</span></p>
     
     <h3>People your follow:</h3>
     @if (Model.Following.Any())
