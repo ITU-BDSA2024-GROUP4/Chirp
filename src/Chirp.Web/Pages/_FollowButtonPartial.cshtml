@@ -12,16 +12,16 @@
                     {
                         <form method="post" action="@Url.Page("", new { handler = "Like" })">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
-                            <input type="submit" value="Like" formaction="?handler=Like">
-                        </form>    
+                            <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                            <input type="submit" class="heart-button" value="♡" formaction="?handler=Like">
+                        </form>
                     }
                     else
                     {
                         <form method="post" action="@Url.Page("", new { handler = "UnLike" })">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
-                            <input type="submit" value="Liked" formaction="?handler=UnLike">
+                            <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                            <input type="submit" class="heart-button liked" value="♥" formaction="?handler=UnLike">
                         </form>
                     }
                     

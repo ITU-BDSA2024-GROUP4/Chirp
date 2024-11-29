@@ -287,3 +287,25 @@ ul.nav li a {
 ul.nav li a:hover {
     background-color: #8b4949;
 }
+
+.heart-button {
+  font-size: 1.5em;
+  color: gray;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.heart-button.liked {
+  color: red;
+}
+
+.heart-button:focus {
+  outline: none;
+}
+
+.heart-button:hover {
+  color: #ff6666; 
+}
