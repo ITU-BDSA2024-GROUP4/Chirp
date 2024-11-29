@@ -9,6 +9,8 @@ public interface ICheepService
 
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public AuthorDTO GetAuthor(string email);
+    public AuthorDTO GetAuthorUserName(string userName);
+
 
     public AuthorDTO GetOrCreateAuthor(string name, string email);
     public void CreateCheep(string email, string message);
@@ -17,11 +19,13 @@ public interface ICheepService
     public void CreateFollow(string username, string user, string follow);
     public void UnFollow(string user, string unfollow);
     public bool IsFollowing(string user, string author);
+    public bool IsFollowingUserName(string username, string author);
     public List<AuthorDTO> GetFollowers(string email);
     public List<CheepDTO> GetOwnTimeline(string userEmail);
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page);
     public int GetFollowerCount(string email);
-    public List<CheepDTO> GetOwnTimeline(string userEmail, int page);
+    public int GetFollowerCountUserName(string username);
+    public int GetFollowingCount(string username);
     public void ForgetMe(string email);
     public void CreateLike(string user, int CheepId);
     public bool IsLiked(string user, int CheepId);

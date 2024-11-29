@@ -70,14 +70,13 @@ public class UserTimelineModel : PageModel
             Cheeps = _service.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
-    }
+        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail, Author == User.Identity.Name); 
+   }   
     
     public IActionResult OnPost() 
     {
         //This is a fall back if there is no OnPost[HandlerName]
         SetCheeps();
-        Console.WriteLine("Brah brhuh" + _service.GetFollowerCount(UserEmail));
         return Page();
     }
 
@@ -167,8 +166,24 @@ public class UserTimelineModel : PageModel
         }
     }
 
-    public int Followers(string pageEmail)
+    public int Followers()
     {
-        return _service.GetFollowerCount(pageEmail);
+        return _service.GetFollowerCountUserName(Author);
     }
+
+    public string GetEmail()
+    {
+        return _service.GetAuthorUserName(Author).Email;
+    }
+    public bool IsFollowing()
+    {
+        return _service.IsFollowingUserName(UserEmail, GetEmail());
+    }
+
+    public int GetFollowingCount()
+    {
+        Console.WriteLine("DEBAAAG " + Author);
+        return _service.GetFollowingCount(Author);
+    }
+    
 }

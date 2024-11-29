@@ -167,6 +167,15 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
+
+    public List<Author> GetAuthorUserName(string userName)
+    {
+        var query = (from Author in _context.Authors
+            where Author.Name == userName
+            select Author);
+
+        return query.ToList();
+    }
     
     public void CreateFollow(string user, string following)
     {
@@ -217,6 +226,23 @@ public class CheepRepository : ICheepRepository
         return query;
     }
 
+    public bool IsFollowingUserName(string username, string author)
+    {
+        List<Author> AuthorUserList = GetAuthorUserName(username);
+        List<Author> AuthorAuthorList = GetAuthor(author);
+        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
+            return false;
+        }
+        Author AuthorUser = AuthorUserList[0];
+        Author AuthorAuthor = AuthorAuthorList[0];
+
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            select Follows).Any();
+
+        return query;
+    }
+
     public List<AuthorDTO> GetFollowers(string email)
     {
         var query = (from Follows in _context.Following
@@ -241,7 +267,15 @@ public class CheepRepository : ICheepRepository
         return query;
 
     }
-    
+    public int GetFollowingCount(string username)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Name == username
+            select Follows).Count();
+        Console.WriteLine("Username = " + username);
+        return query;
+
+    }
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors

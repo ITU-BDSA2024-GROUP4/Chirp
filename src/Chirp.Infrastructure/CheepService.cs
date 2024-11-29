@@ -37,9 +37,30 @@ public class CheepService : ICheepService
         Author author = _repository.GetAuthor(email)[0];
         _repository.CreateCheep(author, message);
     }
+
+    
     public AuthorDTO GetAuthor(string email)
     {
         var authors = _repository.GetAuthor(email);
+        if (authors.Count > 1)
+        {
+            return null; //Error, shouldn't be longer than 1
+        }
+        if (authors.Count == 0)
+        {
+            return null; //Error, should exist
+        }
+
+        return new AuthorDTO
+        {
+            Name = authors[0].Name,
+            Email = authors[0].Email
+        };
+    }
+
+    public AuthorDTO GetAuthorUserName(string userName)
+    {
+        var authors = _repository.GetAuthorUserName(userName);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1
@@ -98,6 +119,11 @@ public class CheepService : ICheepService
     {
         return _repository.IsFollowing(user, author);
     }
+
+    public bool IsFollowingUserName(string username, string author)
+    {
+        return _repository.IsFollowingUserName(username, author);
+    }
     public List<AuthorDTO> GetFollowers(string email)
     {
         return _repository.GetFollowers(email);
@@ -122,6 +148,16 @@ public class CheepService : ICheepService
     public int GetFollowerCount(string email)
     {
         return _repository.GetFollowerCount(email);
+    }
+
+    public int GetFollowerCountUserName(string username)
+    {
+        return _repository.GetFollowerCountUserName(username);
+    }
+
+    public int GetFollowingCount(string username)
+    {
+        return _repository.GetFollowingCount(username);
     }
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
     {
