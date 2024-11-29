@@ -1,7 +1,8 @@
+#nullable disable
+
 using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
