@@ -159,4 +159,10 @@ public class CheepService : ICheepService
     {
         return _repository.AmountOfCheeps();
     }
+
+    public List<CheepDTO> GetLiked(string email)
+    {
+        return _repository.GetLiked(email);
+    }
+
 }
