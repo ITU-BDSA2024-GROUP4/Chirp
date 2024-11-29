@@ -11,12 +11,14 @@ public class FollowButtonModel
     public ICheepService _service { get; set; }
     public List<CheepDTO> Cheeps { get; set; }
     public string UserEmail { get; set; }
+    public bool ShowOnCheeps { get; set; }
     
-    public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail) 
+    public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
     {
         _service = service;
         Cheeps = cheeps;
-        UserEmail = userEmail;;
+        UserEmail = userEmail;
+        ShowOnCheeps = showOnCheeps;
     }
 
     public bool IsFollowing(string Author_Email)

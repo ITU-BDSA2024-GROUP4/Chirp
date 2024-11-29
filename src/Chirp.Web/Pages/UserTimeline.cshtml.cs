@@ -70,7 +70,7 @@ public class UserTimelineModel : PageModel
             Cheeps = _service.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
+        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail, Author == User.Identity.Name);
     }
     
     public IActionResult OnPost() 

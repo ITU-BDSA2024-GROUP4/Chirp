@@ -6,7 +6,7 @@
 
 <div>
     <h2> @routeName's Timeline </h2>
-    <h1>Foll0w3R2 @Model.Followers()</h1>
+    <h3>Followers: @Model.Followers()</h3>
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
     @if (Model.InvalidCheep)
     {
