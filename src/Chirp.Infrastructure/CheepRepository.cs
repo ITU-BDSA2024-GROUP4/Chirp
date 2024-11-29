@@ -182,6 +182,8 @@ public class CheepRepository : ICheepRepository
         Author AuthorUser = GetAuthor(user)[0];
         Author AuthorFollowing = GetAuthor(following)[0];
         
+        bool AlreadyFollowing = AuthorFollowing.AuthorId == AuthorUser.AuthorId;
+        
         Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };
         
         var validationResults = new List<ValidationResult>();

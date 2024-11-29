@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using Chirp.Infrastructure;
 using Chirp.Core;
 
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+using Xunit.Abstractions;
+
 public class CheepRepositoryUnitTests : IAsyncLifetime
 {
     private SqliteConnection _connection = null!;
@@ -136,4 +140,18 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         // Act && Assert
         Assert.Throws<ValidationException>( () => _repository.CreateCheep(newAuthor, message));
     }
+    
+    //TEST if user can follow same user more than once (logical fallacy!!!)
+    [Theory]
+    [InlineData("VictorDUplicate@dupe.it", "victor@nodupes.it")]
+    public void DuplicateFollowTest(string userEmail, string authorEmail)
+    {
+        int i = 0;
+        for (i = 0; i < 100; i++)
+        { _repository.CreateFollow(userEmail, authorEmail); }
+        int followers = _repository.GetFollowerCount(authorEmail);
+        Assert.False(followers == i);
+        Assert.False(followers > 1);
+    }
+    
 }
