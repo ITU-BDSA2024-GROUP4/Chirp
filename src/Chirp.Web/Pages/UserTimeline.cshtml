@@ -6,7 +6,30 @@
 
 <div>
     <h2> @routeName's Timeline </h2>
-    <h3>Followers: @Model.Followers()</h3>
+    <h3>Followers: @Model.Followers() </h3>
+    @if (Model.Author != User.Identity.Name)
+    {
+        @if (!Model.IsFollowing())
+        {
+            <form method="post" action="@Url.Page("", new { handler = "Follow" })">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="author" value="@Model.Author"/>
+                <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+                <input type="submit" class="follow-button" value="Follow"
+                       formaction="?handler=Follow">
+            </form>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="Unfollow">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="author" value="@Model.Author"/>
+                <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+                <input type="submit" class="follow-button" value="Unfollow"
+                       formaction="?handler=Unfollow">
+            </form>
+        }
+    }
     @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
     @if (Model.InvalidCheep)
     {
@@ -25,14 +48,16 @@
         <em>There are no cheeps so far.</em>
     }
     <div class="pagination">
-            @if (Model.CurrentPage > 0)
-            {
-                <a href="@Url.Page("UserTimeline", new { author = Model.Author} )?page=@(Model.CurrentPage - 1)" class="button">Previous Page</a>
-            }
-            @if(Model.GetMaxPage())
-            {
-                <a href="@Url.Page("UserTimeline", new { author = Model.Author} )?page=@(Model.CurrentPage + 1)" class="button">Next Page</a>
-            }
+        @if (Model.CurrentPage > 0)
+        {
+            <a href="@Url.Page("UserTimeline", new { author = Model.Author })?page=@(Model.CurrentPage - 1)"
+               class="button">Previous Page</a>
+        }
+        @if (Model.GetMaxPage())
+        {
+            <a href="@Url.Page("UserTimeline", new { author = Model.Author })?page=@(Model.CurrentPage + 1)"
+               class="button">Next Page</a>
+        }
     </div>
-    
+
 </div>

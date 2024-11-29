@@ -39,6 +39,5 @@ public class FollowButtonModel
     public int FollowCount(string email)
     {
         return _service.GetFollowerCount(email);
-
     }
 }

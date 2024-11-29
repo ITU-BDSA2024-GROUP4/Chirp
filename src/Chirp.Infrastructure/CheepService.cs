@@ -56,6 +56,25 @@ public class CheepService : ICheepService
         };
     }
 
+    public AuthorDTO GetAuthorUserName(string userName)
+    {
+        var authors = _repository.GetAuthorUserName(userName);
+        if (authors.Count > 1)
+        {
+            return null; //Error, shouldn't be longer than 1
+        }
+        if (authors.Count == 0)
+        {
+            return null; //Error, should exist
+        }
+
+        return new AuthorDTO
+        {
+            Name = authors[0].Name,
+            Email = authors[0].Email
+        };
+    }
+
     public void CreateAuthor(string name, string email)
     {
         _repository.CreateAuthor(name, email);
@@ -97,6 +116,11 @@ public class CheepService : ICheepService
     public bool IsFollowing(string user, string author)
     {
         return _repository.IsFollowing(user, author);
+    }
+
+    public bool IsFollowingUserName(string username, string author)
+    {
+        return _repository.IsFollowingUserName(username, author);
     }
     public List<AuthorDTO> GetFollowers(string email)
     {
