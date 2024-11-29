@@ -23,5 +23,15 @@
     {
         <em>There are no cheeps so far.</em>
     }
+    <div class="pagination">
+            @if (Model.CurrentPage > 0)
+            {
+                <a href="@Url.Page("Public")?page=@(Model.CurrentPage - 1)" class="button">Previous Page</a>
+            }
+            @if(Model.GetMaxPage())
+            {
+                <a href="@Url.Page("UserTimeline", new { author = Model.Author} )?page=@(Model.CurrentPage + 1)" class="button">Next Page</a>
+            }
+    </div>
     
 </div>

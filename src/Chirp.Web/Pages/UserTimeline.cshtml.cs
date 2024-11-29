@@ -35,6 +35,9 @@ public class UserTimelineModel : PageModel
     
     public string Email { get; set; }
     public string UserEmail { get; set; }
+    public int CurrentPage { get; set; } = 0;
+    public string UserName { get; set; }
+
     public UserTimelineModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
         _service = service;
@@ -58,16 +61,16 @@ public class UserTimelineModel : PageModel
         {
             throw new Exception("Url not matching");
         }
+        UserName = match.Value;
 
         var pageQuery = Request.Query["page"].ToString();
         Email = User.FindFirst(ClaimTypes.Email)?.Value;
         if (pageQuery != null)
         {
             _ = int.TryParse(pageQuery, out int page);
+            CurrentPage = page;
             pageNumber = page - 1;
         }
-        Console.Write("USR IDENTITY: {0}", User.Identity.Name);
-        Console.Write("MATCH VAL: {0}", match.Value);
 
         if (match.Value == User.Identity.Name)
         {
@@ -162,6 +165,10 @@ public class UserTimelineModel : PageModel
         SetCheeps();
         _service.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
+    }
+    public bool GetMaxPage()
+    {
+        return CurrentPage <= (_service.GetCheepsFromAuthor(UserName).Count() / 32); //32 is got from repository "_pagesize"
     }
     
 }
