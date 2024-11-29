@@ -1,15 +1,16 @@
+/* General Styles */
 body {
-  background: #eccaca;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 14px;
+    background: #eccaca;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 14px;
 }
 
 a {
-  color: #26776F;
+    color: #26776F;
 }
 
 a:hover {
-  color: #333;
+    color: #333;
 }
 
 input[type="email"],
@@ -27,41 +28,60 @@ input[type="password"] {
     color: #571010;
 }
 
+/* Page Structure */
 div.page {
-  background: white;
-  border: 1px solid #cc6e6e;
-  width: 700px;
-  margin: 30px auto;
+    background: white;
+    border: 1px solid #cc6e6e;
+    width: 700px;
+    margin: 30px auto;
 }
 
 div.page > h1 {
-  background: #cc6e6e;
-  margin: 0;
-  padding: 10px 14px;
-  color: white;
-  letter-spacing: 1px;
-  text-shadow: 0 0 3px #772424;
-  font-weight: normal;
-  font-size: 80px;
+    background: #cc6e6e;
+    margin: 0;
+    padding: 10px 14px;
+    color: white;
+    letter-spacing: 1px;
+    text-shadow: 0 0 3px #772424;
+    font-weight: normal;
+    font-size: 80px;
 }
 
 div.page h1 img {
-  height: 1em;
+    height: 1em;
 }
 
+div.page h2 {
+    margin: 0 0 15px 0;
+    color: #571010;
+    text-shadow: 0 1px 2px #ccc;
+}
+
+div.page div.body {
+    padding: 10px;
+}
+
+div.page div.footer {
+    background: #eee;
+    color: #888;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Navigation */
 div.page div.navigation {
-  background: #DEE9E8;
-  padding: 4px 10px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #eee;
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+    background: #DEE9E8;
+    padding: 4px 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #eee;
+    color: #888;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
 div.page div.navigation a {
-  color: #444;
-  font-weight: bold;
+    color: #444;
+    font-weight: bold;
 }
 
 div.page div.navigation form {
@@ -81,174 +101,32 @@ div.page div.navigation form button {
     letter-spacing: unset;
 }
 
-div.page h2 {
-  margin: 0 0 15px 0;
-  color: #571010;
-  text-shadow: 0 1px 2px #ccc;
-}
-
-div.page div.body {
-  padding: 10px;
-}
-
-div.page div.footer {
-  background: #eee;
-  color: #888;
-  padding: 5px 10px;
-  font-size: 12px;
-}
-
-div.page div.followstatus {
-  border: 1px solid #ccc;
-  background: #E3EBEA;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 3px;
-  font-size: 13px;
-}
-
+/* Lists and Items */
 div.page ul.cheeps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 div.page ul.cheeps li {
-  margin: 10px 0;
-  padding: 5px;
-  background: #F0FAF9;
-  border: 1px solid #DBF3F1;
-  border-radius: 2px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  min-height: 48px;
-}
-
-div.page ul.cheeps p {
-  margin: 0;
+    margin: 10px 0;
+    padding: 5px;
+    background: #F0FAF9;
+    border: 1px solid #DBF3F1;
+    border-radius: 2px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    min-height: 48px;
 }
 
 div.page ul.cheeps li img {
-  float: left;
-  padding: 0 10px 0 0;
+    float: left;
+    padding: 0 10px 0 0;
 }
 
+div.page ul.cheeps p,
 div.page ul.cheeps li small {
-  font-size: 0.9em;
-  color: #888;
-}
-
-div.page div.cheepbox {
-  margin: 10px 0;
-  padding: 5px;
-  background: #F0FAF9;
-  border: 1px solid #e29494;
-  border-radius: 2px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-div.page div.cheepbox h3 {
-  margin: 0;
-  font-size: 1em;
-  color: #7e2c2c;
-}
-
-div.page div.cheepbox p {
-  margin: 0;
-}
-
-div.page div.cheepbox input[type="text"] {
-  width: 585px;
-}
-
-div.page div.cheepbox input[type="submit"] {
-  width: 70px;
-  margin-left: 5px;
-}
-
-div.message {
-  list-style: none;
-  margin: 10px 10px 0 10px;
-
-  background: #f3b9b9;
-  border: 1px solid #ce8181;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 4px;
-  font-size: 13px;
-}
-
-ul.message li {
-  background: #f3b9b9;
-  border: 1px solid #ce8181;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 4px;
-  font-size: 13px;
-}
-
-div.error {
-  margin: 10px 0;
-  background: #FAE4E4;
-  border: 1px solid #DD6F6F;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 4px;
-  font-size: 13px;
-}
-
-div.topics {
-  width: 180px;
-  height: 250px;
-  background: #ffffff;
-  border: 1px solid #e29494;
-  border-radius: 2px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin-left: 460px;
-  padding: 10px;
-}
-
-ul.topic {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li.topic {
-  margin: 10px 0;
-  padding: 5px;
-  background: #F0FAF9;
-  border: 1px solid #DBF3F1;
-  border-radius: 2px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  min-height: 20px;
-}
-
-form * {
-    margin: 2px 0;
-}
-
-button {
-    background-color: #cc6e6e;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #8b4949;
+    margin: 0;
 }
 
 ul.nav {
@@ -275,47 +153,64 @@ ul.nav li a:hover {
     background-color: #8b4949;
 }
 
+/* Message and Error Styles */
+div.message,
+ul.message li {
+    background: #f3b9b9;
+    border: 1px solid #ce8181;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 4px;
+    font-size: 13px;
+}
+
+div.error {
+    margin: 10px 0;
+    background: #FAE4E4;
+    border: 1px solid #DD6F6F;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 4px;
+    font-size: 13px;
+}
+
+/* Interactive Elements */
+button {
+    background-color: #cc6e6e;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #8b4949;
+}
+
 .heart-button {
-  font-size: 1.5em;
-  color: gray;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-}
-
-.heart-button.liked {
-  color: red;
-}
-
-.heart-button:focus {
-  outline: none;
+    font-size: 1.5em;
+    color: gray;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 
 .heart-button:hover {
-  color: #ff6666; 
-}
-.actions {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between items */
+    color: #ff6666;
 }
 
-.like-section {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Space between like count and button */
+.heart-button.liked {
+    color: red;
 }
 
-.like-section h3 {
-    margin: 0; /* Remove any default margin */
-    font-size: 1em;
-    color: #571010;
-}
-
-.follow-section {
-    margin-left: auto; /* Push the follow button to the right */
+.heart-button:focus {
+    outline: none;
 }
 
 input[type="submit"].heart-button {
@@ -332,16 +227,98 @@ input[type="submit"].follow-button {
     font-family: 'Trebuchet MS', sans-serif;
     font-weight: bold;
     border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
     color: white;
 }
 
-.heart-button:hover {
-    color: #ff6666;
+/* Sections */
+div.page div.followstatus {
+    border: 1px solid #ccc;
+    background: #E3EBEA;
+    border-radius: 2px;
+    padding: 3px;
+    font-size: 13px;
 }
 
-.heart-button.liked {
-    color: red;
+div.page div.cheepbox {
+    margin: 10px 0;
+    padding: 5px;
+    background: #F0FAF9;
+    border: 1px solid #e29494;
+    border-radius: 2px;
 }
 
+div.page div.cheepbox h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #7e2c2c;
+}
+
+div.page div.cheepbox p {
+    margin: 0;
+}
+
+div.page div.cheepbox input[type="text"] {
+    width: 585px;
+}
+
+div.page div.cheepbox input[type="submit"] {
+    width: 70px;
+    margin-left: 5px;
+}
+
+/* Topics */
+div.topics {
+    width: 180px;
+    height: 250px;
+    background: #ffffff;
+    border: 1px solid #e29494;
+    border-radius: 2px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 460px;
+    padding: 10px;
+}
+
+ul.topic {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.topic {
+    margin: 10px 0;
+    padding: 5px;
+    background: #F0FAF9;
+    border: 1px solid #DBF3F1;
+    border-radius: 2px;
+    min-height: 20px;
+}
+
+/* Action Sections */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-section h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #571010;
+}
+
+.follow-section {
+    margin-left: auto;
+}
+
+form * {
+    margin: 2px 0;
+}
