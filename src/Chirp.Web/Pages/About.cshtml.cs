@@ -97,14 +97,6 @@ public class AboutModel : PageModel {
 
     public List<CheepDTO> GetLikes()
     {
-        foreach (var a in _service.GetLiked(UserEmail))
-        {
-            Console.WriteLine("Debuga");
-            Console.WriteLine(a.Message);
-            Console.WriteLine(a.CheepId);
-            Console.WriteLine(a.Author);
-            Console.WriteLine(a.TimeStamp);
-        }
         return _service.GetLiked(UserEmail);
     }
     public string CreateCsvContent()

@@ -272,7 +272,6 @@ public class CheepRepository : ICheepRepository
         var query = (from Follows in _context.Following
             where Follows.User.Name == username
             select Follows).Count();
-        Console.WriteLine("Username = " + username);
         return query;
 
     }
@@ -381,7 +380,6 @@ public class CheepRepository : ICheepRepository
             join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
             where Cheep.Author.Email == email  
             select Likes).Count();
-        Console.WriteLine("Total Likes = " + query);
         return query;
     }
     public int AmountOfCheeps()
