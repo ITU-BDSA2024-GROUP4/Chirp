@@ -33,6 +33,7 @@ public class PublicModel : PageModel
     public bool InvalidCheep { get; set; } = false;
 
     public string UserEmail { get; set; }
+    public int CurrentPage { get; set; }
 
     public PublicModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
@@ -52,17 +53,18 @@ public class PublicModel : PageModel
 
     public void SetCheeps()
     {
-
         SetEmail();
         var pageQuery = Request.Query["page"].ToString();
 
         if (pageQuery == null)
         {
+            CurrentPage = 0;
             Cheeps = _service.GetCheeps(0); // default to first page
         }
         else
         {
             _ = int.TryParse(pageQuery, out int page);
+            CurrentPage = page;
             Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
         }
 
