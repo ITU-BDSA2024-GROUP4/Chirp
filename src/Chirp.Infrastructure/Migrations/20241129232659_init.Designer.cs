@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    [Migration("20241128134040_initialAdd")]
-    partial class initialAdd
+    [Migration("20241129232659_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -335,7 +335,7 @@ namespace Chirp.Infrastructure.Migrations
 
             modelBuilder.Entity("Chirp.Core.Likes", b =>
                 {
-                    b.HasOne("Chirp.Core.Cheep", "Cheep")
+                    b.HasOne("Chirp.Core.Cheep", "cheep")
                         .WithMany()
                         .HasForeignKey("CheepId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,9 +347,9 @@ namespace Chirp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cheep");
-
                     b.Navigation("User");
+
+                    b.Navigation("cheep");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
