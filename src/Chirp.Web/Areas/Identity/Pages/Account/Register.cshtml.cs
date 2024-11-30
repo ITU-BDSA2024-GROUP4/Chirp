@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 using Chirp.Core;
 using Chirp.Infrastructure;
+using Chirp.Web.Pages.Utils;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -201,6 +202,16 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<ChirpUser>)_userStore;
+        }
+        public IActionResult OnGetLogin()
+        {
+            return Authentication.HandleLogin(this);
+        }
+
+        public async Task<IActionResult> OnGetLogout()
+        {
+            var signOut = await Authentication.HandleLogout(_signInManager, this);
+            return signOut;
         }
     }
 }

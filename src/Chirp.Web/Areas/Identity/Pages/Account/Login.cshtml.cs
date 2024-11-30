@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Chirp.Infrastructure;
 using Chirp.Core;
+using Chirp.Web.Pages.Utils;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
@@ -153,6 +154,16 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+        public IActionResult OnGetLogin()
+        {
+            return Authentication.HandleLogin(this);
+        }
+
+        public async Task<IActionResult> OnGetLogout()
+        {
+            var signOut = await Authentication.HandleLogout(_signInManager, this);
+            return signOut;
         }
     }
 }
