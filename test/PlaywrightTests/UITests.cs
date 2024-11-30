@@ -1,7 +1,9 @@
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+
 
 namespace PlaywrightTests
 {
@@ -82,9 +84,8 @@ namespace PlaywrightTests
         public async Task Can_Post_As_User()
         {
             // Arrange
-            var random = new Random();
-            var randomNumber = random.Next(0, 1_000_000);
-            var message = $"{randomNumber}";
+            var message = Faker.Lorem.Sentence();
+            var user = "Helge";
             await Page.GotoAsync(_factory.GetBaseAddress());
 
             // Act
@@ -96,11 +97,11 @@ namespace PlaywrightTests
             await Page.Locator("#Message").FillAsync($"{message}");
             await Page.Locator("#Message").PressAsync("Enter");
             await Page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
+
             
             // Assert
-            await Expect(Page.Locator("li").Filter(new() { HasText = $"Helge {message}" })).ToBeVisibleAsync();
-            
-            
+            var postLocator = Page.Locator("li").Filter(new() { HasText=$"{user}" }).First;
+            await Expect(postLocator).ToHaveTextAsync(new Regex($".*{message}.*"));            
             
         }
     }

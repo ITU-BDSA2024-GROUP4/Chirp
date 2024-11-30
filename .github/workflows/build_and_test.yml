@@ -24,10 +24,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Ensure browsers are installed
-      run: pwsh test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
       run: |
           export authentication_github_clientId="${{ secrets.GITHUBCLIENTID }}"
           export authentication_github_clientSecrets="${{ secrets.GITHUBCLIENTSECRET }}"
-          dotnet test --no-build --verbosity normal
+          dotnet test test/Chirp.Tests/Chirp.Tests.csproj --no-build --verbosity normal

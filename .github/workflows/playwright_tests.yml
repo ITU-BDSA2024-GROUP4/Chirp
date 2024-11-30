@@ -1,0 +1,31 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v4
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: 8.0.x
+        - name: Restore dependencies 
+          run: dotnet restore
+        - name: Build
+          run: dotnet build --no-restore
+        - name: Ensure browsers are installed
+          run: pwsh test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
+        - name: Test
+          run: |
+              export authentication_github_clientId="${{ secrets.GITHUBCLIENTID }}"
+              export authentication_github_clientSecrets="${{ secrets.GITHUBCLIENTSECRET }}"
+              dotnet test test/PlaywrightTests/PlaywrightTests.csproj --no-build --verbosity normal
