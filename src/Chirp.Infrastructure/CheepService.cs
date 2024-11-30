@@ -215,6 +215,11 @@ public class CheepService : ICheepService
         throw new NotImplementedException();
     }
 
+    public void CreateBlock(string userEmail, string blockemail)
+    {
+        _repository.CreateBlock(userEmail, blockemail);
+    }
+
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;

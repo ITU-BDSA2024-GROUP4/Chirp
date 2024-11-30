@@ -378,13 +378,32 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Cheep in _context.Cheeps
             join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
-            where Cheep.Author.Email == email  
+            where Cheep.Author.Email == email
             select Likes).Count();
         return query;
     }
     public int AmountOfCheeps()
     {
         return _context.Cheeps.Count();
+    }
+
+    public void CreateBlock(string userEmail, string blockemail)
+    {
+        Author AuthorUser = GetAuthor(userEmail)[0];
+        Author AuthorBlocking = GetAuthor(blockemail)[0];
+        
+        Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(blocked);
+        if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Blocked.Add(blocked);
+        _context.SaveChanges();
+        Console.WriteLine("Blocked");
     }
 
     public List<CheepDTO> GetLiked(string email)

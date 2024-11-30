@@ -12,6 +12,7 @@ public class ChirpDBContext : IdentityDbContext<ChirpUser>
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Follows> Following { get; set; }
     public DbSet<Likes> Likes { get; set; }
+    public DbSet<Blocked> Blocked { get; set; }
     private readonly DbContextOptions<ChirpDBContext> _options;
 
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
