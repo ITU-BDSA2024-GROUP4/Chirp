@@ -188,7 +188,6 @@ public class CheepRepository : ICheepRepository
 
         if (alreadyFollowing)
         {
-            Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
             throw new ApplicationException("TooManyFollows");
         }
         
