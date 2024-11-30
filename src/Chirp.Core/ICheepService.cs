@@ -35,5 +35,6 @@ public interface ICheepService
     public int AmountOfCheeps();
     public List<CheepDTO> GetLiked(string user);
     public void CreateBlock(string userEmail, string blockemail);
+    public bool IsBlocked(string userEmail, string blockEmail);
     public int GetTotalCheeps(string email);
 }

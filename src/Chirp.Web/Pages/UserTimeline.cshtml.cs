@@ -196,8 +196,8 @@ public class UserTimelineModel : PageModel
     }
     public IActionResult OnPostBlock()
     {
-        SetCheeps();
         _service.CreateBlock(UserEmail, GetEmail());
+        SetCheeps();
         return RedirectToPage();
     }
 }

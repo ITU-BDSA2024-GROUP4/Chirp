@@ -416,6 +416,17 @@ public class CheepRepository : ICheepRepository
         Console.WriteLine("Blocked");
     }
 
+    public bool IsBlocked(string userEmail, string blockEmail)
+    {
+        //Author AuthorUser = GetAuthor(userEmail)[0];
+        //Author AuthorBlocking = GetAuthor(blockEmail)[0];
+        var query = (from Blocked in _context.Blocked
+            where Blocked.User.Email == userEmail && Blocked.BlockedUser.Email == blockEmail
+            select Blocked).Count();
+        Console.WriteLine("Blocked = " + (query > 0));
+        return query > 0;
+    }
+
     public List<CheepDTO> GetLiked(string email)
     {
 
