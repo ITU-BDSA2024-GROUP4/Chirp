@@ -38,5 +38,6 @@ public interface ICheepService
     public bool IsBlocked(string userEmail, string blockEmail);
     public bool UserBlockedSomeone(string userEmail);
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
+    public List<AuthorDTO> GetBlockedAuthors(string userEmail);
     public int GetTotalCheeps(string email);
 }

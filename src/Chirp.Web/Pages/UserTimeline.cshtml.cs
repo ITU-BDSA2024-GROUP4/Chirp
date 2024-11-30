@@ -201,4 +201,13 @@ public class UserTimelineModel : PageModel
         _service.UserBlockedSomeone(UserEmail);
         return RedirectToPage();
     }
+    public List<AuthorDTO> GetBlockedAuthors()
+    {
+        return _service.GetBlockedAuthors(UserEmail);
+    }
+
+    public IActionResult OnPostUnBlock()
+    {
+        return RedirectToPage("/", new { author = UserEmail });
+    }
 }
