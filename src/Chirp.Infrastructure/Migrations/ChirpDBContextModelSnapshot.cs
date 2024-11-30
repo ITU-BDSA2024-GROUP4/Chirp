@@ -332,7 +332,7 @@ namespace Chirp.Infrastructure.Migrations
 
             modelBuilder.Entity("Chirp.Core.Likes", b =>
                 {
-                    b.HasOne("Chirp.Core.Cheep", "Cheep")
+                    b.HasOne("Chirp.Core.Cheep", "cheep")
                         .WithMany()
                         .HasForeignKey("CheepId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,9 +344,9 @@ namespace Chirp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cheep");
-
                     b.Navigation("User");
+
+                    b.Navigation("cheep");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

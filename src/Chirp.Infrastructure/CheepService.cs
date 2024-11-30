@@ -115,9 +115,9 @@ public class CheepService : ICheepService
     {
         _repository.UnFollow(user, unfollow);
     }
-    public bool IsFollowing(string user, string author)
+    public bool IsFollowing(string email, string authorEmail)
     {
-        return _repository.IsFollowing(user, author);
+        return _repository.IsFollowing(email, authorEmail);
     }
 
     public bool IsFollowingUserName(string username, string author)
@@ -213,6 +213,15 @@ public class CheepService : ICheepService
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
     {
         throw new NotImplementedException();
+    }
+
+    public void CreateBlock(string userEmail, string blockEmail)
+    {
+        if (IsFollowing(userEmail, blockEmail))
+        {
+            _repository.UnFollow(userEmail, blockEmail);
+        }
+        _repository.CreateBlock(userEmail, blockEmail);
     }
 
     public int GetTotalCheeps(string email)

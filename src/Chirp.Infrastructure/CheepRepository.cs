@@ -182,6 +182,15 @@ public class CheepRepository : ICheepRepository
         Author AuthorUser = GetAuthor(user)[0];
         Author AuthorFollowing = GetAuthor(following)[0];
         
+        bool alreadyFollowing = _context.Following.Any(f =>
+            f.User.AuthorId == AuthorUser.AuthorId &&
+            f.Following.AuthorId == AuthorFollowing.AuthorId);
+
+        if (alreadyFollowing)
+        {
+            throw new ApplicationException("TooManyFollows");
+        }
+        
         Follows follows = new Follows() { User = AuthorUser, Following = AuthorFollowing };
         
         var validationResults = new List<ValidationResult>();
@@ -209,10 +218,10 @@ public class CheepRepository : ICheepRepository
         }
         _context.SaveChanges();
     }
-    public bool IsFollowing(string user, string author)
+    public bool IsFollowing(string email, string authorEmail)
     {
-        List<Author> AuthorUserList = GetAuthor(user);
-        List<Author> AuthorAuthorList = GetAuthor(author);
+        List<Author> AuthorUserList = GetAuthor(email);
+        List<Author> AuthorAuthorList = GetAuthor(authorEmail);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }
@@ -378,13 +387,32 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Cheep in _context.Cheeps
             join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
-            where Cheep.Author.Email == email  
+            where Cheep.Author.Email == email
             select Likes).Count();
         return query;
     }
     public int AmountOfCheeps()
     {
         return _context.Cheeps.Count();
+    }
+
+    public void CreateBlock(string userEmail, string blockemail)
+    {
+        Author AuthorUser = GetAuthor(userEmail)[0];
+        Author AuthorBlocking = GetAuthor(blockemail)[0];
+        
+        Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(blocked);
+        if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Blocked.Add(blocked);
+        _context.SaveChanges();
+        Console.WriteLine("Blocked");
     }
 
     public List<CheepDTO> GetLiked(string email)

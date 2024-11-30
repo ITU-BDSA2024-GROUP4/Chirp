@@ -177,7 +177,7 @@ public class UserTimelineModel : PageModel
     }
     public bool IsFollowing()
     {
-        return _service.IsFollowingUserName(UserEmail, GetEmail());
+        return _service.IsFollowing(UserEmail, GetEmail());
     }
 
     public int GetFollowingCount()
@@ -194,5 +194,10 @@ public class UserTimelineModel : PageModel
     {
         return _service.GetTotalCheeps(Author);
     }
-    
+    public IActionResult OnPostBlock()
+    {
+        SetCheeps();
+        _service.CreateBlock(UserEmail, GetEmail());
+        return RedirectToPage();
+    }
 }
