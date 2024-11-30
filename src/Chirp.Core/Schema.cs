@@ -74,3 +74,18 @@ public class Likes
     [Required]
     public Cheep cheep { get; set; }
 }
+
+public class Blocked
+{
+    [Key]
+    [Required]
+    public int BlockedId { get; set; }
+    
+    [Key]
+    [Required]
+    public Author User { get; set; }
+    
+    [Required]
+    public Author BlockedUser { get; set; }
+
+}

@@ -215,6 +215,15 @@ public class CheepService : ICheepService
         throw new NotImplementedException();
     }
 
+    public void CreateBlock(string userEmail, string blockEmail)
+    {
+        if (IsFollowing(userEmail, blockEmail))
+        {
+            _repository.UnFollow(userEmail, blockEmail);
+        }
+        _repository.CreateBlock(userEmail, blockEmail);
+    }
+
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;

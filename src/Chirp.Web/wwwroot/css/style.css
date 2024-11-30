@@ -322,3 +322,14 @@ li.topic {
 form * {
     margin: 2px 0;
 }
+input[type="submit"].block-button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background: #571010;
+    border: 1px solid #3b0707;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    border-radius: 2px;
+    color: white;
+}
