@@ -233,6 +233,16 @@ public class CheepService : ICheepService
         return _repository.IsBlocked(userEmail, blockEmail);
     }
 
+    public bool UserBlockedSomeone(string userEmail)
+    {
+        return _repository.UserBlockedSomeone(userEmail);
+    }
+
+    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
+    {
+        return _repository.GetCheepsNotBlocked(userEmail);
+    }
+
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;

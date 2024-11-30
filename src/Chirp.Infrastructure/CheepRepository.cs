@@ -427,6 +427,33 @@ public class CheepRepository : ICheepRepository
         return query > 0;
     }
 
+    public bool UserBlockedSomeone(string userEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where Blocked.User.Email != null
+            select Blocked).Count();
+        Console.WriteLine("User:" + userEmail + " blocked people amount = " + query);
+        return query > 0;
+    }
+
+    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
+    {
+        var query = (from Author in _context.Authors
+            join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+            where !_context.Blocked.Any(b => b.User.Email == userEmail && b.BlockedUser.Email == Author.Email)
+            orderby Cheeps.TimeStamp descending
+            select new CheepDTO
+            {
+                Author = Author.Name,
+                Email = Author.Email,
+                Message = Cheeps.Text,
+                TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                CheepId = Cheeps.CheepId
+            });
+
+        return query.ToList();
+    }
+
     public List<CheepDTO> GetLiked(string email)
     {
 

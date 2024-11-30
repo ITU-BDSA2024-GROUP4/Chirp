@@ -33,6 +33,8 @@ public interface ICheepRepository {
     public int AmountOfCheeps();
     public void CreateBlock(string userEmail, string blockemail);
     public bool IsBlocked(string userEmail, string blockEmail);
+    public bool UserBlockedSomeone(string userEmail);
+    public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
     public List<CheepDTO> GetLiked(string user);
 
 }
