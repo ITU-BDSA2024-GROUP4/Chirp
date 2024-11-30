@@ -206,8 +206,9 @@ public class UserTimelineModel : PageModel
         return _service.GetBlockedAuthors(UserEmail);
     }
 
-    public IActionResult OnPostUnBlock()
+    public IActionResult OnPostUnblock()
     {
-        return RedirectToPage("/", new { author = UserEmail });
+        Console.WriteLine("UNBLOCK" + Author_Email);
+        return Page();
     }
 }

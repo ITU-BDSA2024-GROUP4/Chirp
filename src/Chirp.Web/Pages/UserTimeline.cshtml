@@ -12,7 +12,7 @@
     {
         <div>
             <h4>Blocked Authors</h4>
-            <select id="blockedAuthorsDropdown" name="blockedAuthors">
+            <select id="blockedAuthorsDropdown" name="author_email">
                 @foreach (var author in blockedAuthors)
                 {
                     @if (author.Name != User.Identity.Name)
