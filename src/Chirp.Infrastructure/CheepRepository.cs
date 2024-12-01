@@ -397,10 +397,10 @@ public class CheepRepository : ICheepRepository
         return _context.Cheeps.Count();
     }
 
-    public void CreateBlock(string userEmail, string blockemail)
+    public void CreateBlock(string userEmail, string blockEmail)
     {
         Author AuthorUser = GetAuthor(userEmail)[0];
-        Author AuthorBlocking = GetAuthor(blockemail)[0];
+        Author AuthorBlocking = GetAuthor(blockEmail)[0];
         
         Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
         
@@ -408,12 +408,31 @@ public class CheepRepository : ICheepRepository
         var valContext = new ValidationContext(blocked);
         if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
         {
-            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+            throw new ValidationException("Block validation failed: " + string.Join(", ", validationResults));
         }
         
         _context.Blocked.Add(blocked);
         _context.SaveChanges();
-        Console.WriteLine("Blocked");
+        Console.WriteLine("User " + userEmail + " has blocked " + blockEmail);
+    }
+
+    public void UnBlock(string userEmail, string blockEmail)
+    {
+        Author AuthorUser = GetAuthor(userEmail)[0];
+        Author AuthorBlocking = GetAuthor(blockEmail)[0];
+        
+        Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
+        
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(blocked);
+        if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
+        {
+            throw new ValidationException("Unblock validation failed: " + string.Join(", ", validationResults));
+        }
+        
+        _context.Blocked.Remove(blocked);
+        _context.SaveChanges();
+        Console.WriteLine("User " + userEmail + " has Unblocked " + blockEmail);
     }
 
     public bool IsBlocked(string userEmail, string blockEmail)
