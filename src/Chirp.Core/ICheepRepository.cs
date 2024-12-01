@@ -32,6 +32,7 @@ public interface ICheepRepository {
     public int TotalLikeCountUser(string username);
     public int AmountOfCheeps();
     public void CreateBlock(string userEmail, string blockemail);
+    public void UnBlock(string userEmail, string blockEmail);
     public bool IsBlocked(string userEmail, string blockEmail);
     public bool UserBlockedSomeone(string userEmail);
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);

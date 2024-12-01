@@ -23,7 +23,12 @@
                         }
                     }
                 </select>
-                <input type="submit" class="block-button" value="Unblock">
+                <form method="post" action="@Url.Page("", new { handler = "UnBlock" })">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="user_email" value="@Model.UserEmail" />
+                    <input type="hidden" name="author_email" value="@Model.GetEmail()" />
+                    <input type="submit" class="block-button" value="Unblock" formaction="?handler=UnBlock">
+                </form>
             </form>
         </div>
     }

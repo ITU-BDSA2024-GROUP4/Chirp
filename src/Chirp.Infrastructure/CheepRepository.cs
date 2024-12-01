@@ -208,6 +208,7 @@ public class CheepRepository : ICheepRepository
     public void UnFollow(string user, string unfollowing)
     {
         Author AuthorUser = GetAuthor(user)[0];
+        Console.WriteLine("arg user = " + user + " Authoruserem = " + AuthorUser.Email);
         Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
 
         var query = (from Follows in _context.Following
@@ -416,23 +417,19 @@ public class CheepRepository : ICheepRepository
         Console.WriteLine("User " + userEmail + " has blocked " + blockEmail);
     }
 
-    public void UnBlock(string userEmail, string blockEmail)
+    public void UnBlock(string userName, string blockUserName)
     {
-        Author AuthorUser = GetAuthor(userEmail)[0];
-        Author AuthorBlocking = GetAuthor(blockEmail)[0];
         
-        Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
-        
-        var validationResults = new List<ValidationResult>();
-        var valContext = new ValidationContext(blocked);
-        if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
+        var AuthorUser = GetAuthor(userName);
+        if (AuthorUser == null || !AuthorUser.Any())
         {
-            throw new ValidationException("Unblock validation failed: " + string.Join(", ", validationResults));
+            Console.WriteLine($"No author found for userName: {userName}");
+            return;
         }
+
+        Author user = AuthorUser[0];
+        Console.WriteLine(user.Name);
         
-        _context.Blocked.Remove(blocked);
-        _context.SaveChanges();
-        Console.WriteLine("User " + userEmail + " has Unblocked " + blockEmail);
     }
 
     public bool IsBlocked(string userEmail, string blockEmail)

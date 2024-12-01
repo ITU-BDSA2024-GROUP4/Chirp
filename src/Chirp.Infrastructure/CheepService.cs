@@ -228,6 +228,11 @@ public class CheepService : ICheepService
         }
     }
 
+    public void UnBlock(string userEmail, string blockEmail)
+    {
+        _repository.UnBlock(userEmail, blockEmail);
+    }
+
     public bool IsBlocked(string userEmail, string blockEmail)
     {
         return _repository.IsBlocked(userEmail, blockEmail);
