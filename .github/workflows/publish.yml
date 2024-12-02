@@ -28,7 +28,7 @@ jobs:
           dotnet publish src/Chirp.Web -c Release -o ./publish
         
       - name: Zip folder
-        run: zip -r publish.zip ./publish
+        run: zip -r publish.zip ./publish/Chirp.Web.dll
         
   release:
     needs: build
