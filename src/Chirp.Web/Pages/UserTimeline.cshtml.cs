@@ -200,6 +200,5 @@ public class UserTimelineModel : PageModel
         Console.WriteLine("USEREMAIL BLOCK : " + UserEmail);
         _service.CreateBlock(UserEmail, GetEmail());
         _service.UserBlockedSomeone(UserEmail);
-        return RedirectToPage();
-    }
+        return Redirect("~/");    }
 }
