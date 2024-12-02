@@ -24,7 +24,7 @@ jobs:
       - name: Publish
         run: |
           cd src/Chirp.Web
-          dotnet publish -c Release -o ./publish
+          dotnet publish src/Chirp.Web -c Release -o ./publish
       - name: Zip folder
         run: zip -r src/Chirp.Web/publish
         
@@ -40,9 +40,4 @@ jobs:
           files: "src/Chirp.web/publish.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Remove zip and publish folder
-        run: |
-          rm src/Chirp.web/publish.zip
-          rm -r src/Chirp.web/publish
           
