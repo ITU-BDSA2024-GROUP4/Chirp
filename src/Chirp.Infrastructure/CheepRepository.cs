@@ -415,13 +415,13 @@ public class CheepRepository : ICheepRepository
         Console.WriteLine("User " + userEmail + " has blocked " + blockEmail);
     }
 
-    public void UnBlock(string userName, string blockUserName)
+    public void UnBlock(string userEmail, string blockEmail)
     {
-        
-        var AuthorUser = GetAuthor(userName);
+        Console.WriteLine("User " + userEmail + " unblocked " + blockEmail);
+        var AuthorUser = GetAuthor(userEmail);
         if (AuthorUser == null || !AuthorUser.Any())
         {
-            Console.WriteLine($"No author found for userName: {userName}");
+            Console.WriteLine($"No author found for userName: {userEmail}");
             return;
         }
 

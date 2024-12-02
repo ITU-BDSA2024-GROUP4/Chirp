@@ -2,9 +2,25 @@
 @model Chirp.Web.Pages.AboutModel
 @{
     var routeName = HttpContext.GetRouteValue("author");
+    var blockedAuthors = Model.GetBlockedAuthors();
+
 }
 @if (Model.UserIsAuthor) 
 {
+    @if (Model.UserBlockedSomeOne())
+    {
+        <form method="post" asp-page-handler="Unblock">
+            @Html.AntiForgeryToken()
+            <select name="unblock_user" class="dropdown">
+                @foreach (var blocked in Model.GetBlockedAuthors())
+                {
+                    <option value="@blocked.Email" >@blocked.Name</option>
+                }
+            </select>
+            <input type="hidden" name="user_email" value="@Model.User_Email"/>
+            <button type="submit" class="follow-button">Unblock</button>
+        </form>
+    }
     <div>
         <h2>Your information</h2>
         <p><strong>Your name: </strong><span>@User.Identity?.Name</span></p>

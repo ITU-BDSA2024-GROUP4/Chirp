@@ -52,8 +52,6 @@ public class PublicModel : PageModel
     {
         SetEmail();
         var pageQuery = Request.Query["page"].ToString();
-        Console.WriteLine("USEREMAIL: " + UserEmail);
-        Console.WriteLine("author email " + Author_Email);
         if (!_service.UserBlockedSomeone(UserEmail))
         {
             if (pageQuery == null)

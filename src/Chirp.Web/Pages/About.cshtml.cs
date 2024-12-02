@@ -22,6 +22,10 @@ public class AboutModel : PageModel {
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
     public List<CheepDTO> Likes;
+    [BindProperty] 
+    public string User_Email { get; set; }
+    [BindProperty]
+    public string Unblock_User { get; set; }
 
     public AboutModel(ICheepService service, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
@@ -148,4 +152,29 @@ public class AboutModel : PageModel {
         var result = await _userManager.DeleteAsync(chirpUser);
         return await Authentication.HandleLogout(_signInManager, this);
     }
+    
+    public bool UserBlockedSomeOne()
+    {
+        return _service.UserBlockedSomeone(UserEmail);
+    }
+    
+    public IActionResult OnPostUnblock()
+    {
+        User_Email = UserHandler.FindEmail(User);
+        Console.WriteLine(User_Email + " unblocked " + Unblock_User);
+
+        if (!string.IsNullOrEmpty(Author))
+        {
+            Console.WriteLine($"Unblocking user: {Author}");
+            _service.UnBlock(User_Email, Author);
+        }
+
+        return RedirectToPage();
+    }
+
+    public List<AuthorDTO> GetBlockedAuthors()
+    {
+        return _service.GetBlockedAuthors(UserEmail);
+    }
+    
 }

@@ -197,17 +197,9 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostBlock()
     {
         SetCheeps();
+        Console.WriteLine("USEREMAIL BLOCK : " + UserEmail);
         _service.CreateBlock(UserEmail, GetEmail());
         _service.UserBlockedSomeone(UserEmail);
         return RedirectToPage();
-    }
-    public List<AuthorDTO> GetBlockedAuthors()
-    {
-        return _service.GetBlockedAuthors(UserEmail);
-    }
-
-    public bool UserBlockedSomeOne()
-    {
-        return _service.UserBlockedSomeone(UserEmail);
     }
 }

@@ -2,22 +2,11 @@
 @model Chirp.Web.Pages.UserTimelineModel
 @{
     var routeName = HttpContext.GetRouteValue("author");
-    var blockedAuthors = Model.GetBlockedAuthors();
 }
 
 <div>
     <h2> @routeName's Timeline </h2>
     <h3>Followers: @Model.Followers() Following: @Model.GetFollowingCount() Cheeps: @Model.GetTotalCheepsCount() Likes: @Model.GetTotalLikesCount()</h3>
-    @if (Model.Author == User.Identity.Name && Model.UserBlockedSomeOne())
-    {
-        <form method="post" asp-page-handler="BlockedUsers">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="author" value="@Model.Author"/>
-            <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
-            <input type="submit" class="follow-button" value="Blocked users"
-                   formaction="?handler=Blockedusers">
-        </form>
-    }
     @if (Model.Author != User.Identity.Name)
     {
         <form method="post" action="@Url.Page("", new { handler = "Block" })">
