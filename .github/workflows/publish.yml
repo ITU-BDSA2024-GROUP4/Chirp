@@ -22,9 +22,8 @@ jobs:
         run: dotnet build --no-restore
       
       - name: Publish
-        run: |
-          cd src/Chirp.Web
-          dotnet publish src/Chirp.Web -c Release -o ./publish
+        run: dotnet publish src/Chirp.Web -c Release -o ./publish
+        
       - name: Zip folder
         run: zip -r src/Chirp.Web/publish
         
