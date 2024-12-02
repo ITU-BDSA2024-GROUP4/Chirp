@@ -8,29 +8,15 @@
 <div>
     <h2> @routeName's Timeline </h2>
     <h3>Followers: @Model.Followers() Following: @Model.GetFollowingCount() Cheeps: @Model.GetTotalCheepsCount() Likes: @Model.GetTotalLikesCount()</h3>
-    @if (Model.Author == User.Identity.Name)
+    @if (Model.Author == User.Identity.Name && Model.UserBlockedSomeOne())
     {
-        <div>
-            <h4>Blocked Authors</h4>
-            <form method="post" action="@Url.Page("", new { handler = "UnBlock" })">
-                @Html.AntiForgeryToken()
-                <select id="blockedAuthorsDropdown" name="author_email">
-                    @foreach (var author in blockedAuthors)
-                    {
-                        @if (author.Name != User.Identity.Name)
-                        {
-                            <option value="@author.Email">@author.Name</option>
-                        }
-                    }
-                </select>
-                <form method="post" action="@Url.Page("", new { handler = "UnBlock" })">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="user_email" value="@Model.UserEmail" />
-                    <input type="hidden" name="author_email" value="@Model.GetEmail()" />
-                    <input type="submit" class="block-button" value="Unblock" formaction="?handler=UnBlock">
-                </form>
-            </form>
-        </div>
+        <form method="post" asp-page-handler="BlockedUsers">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="author" value="@Model.Author"/>
+            <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+            <input type="submit" class="follow-button" value="Blocked users"
+                   formaction="?handler=Blockedusers">
+        </form>
     }
     @if (Model.Author != User.Identity.Name)
     {

@@ -203,17 +203,11 @@ public class UserTimelineModel : PageModel
     }
     public List<AuthorDTO> GetBlockedAuthors()
     {
-        Console.WriteLine(UserEmail + " usmal");
         return _service.GetBlockedAuthors(UserEmail);
     }
 
-    public IActionResult OnPostUnblock()
+    public bool UserBlockedSomeOne()
     {
-        Console.WriteLine("UserEmail : " );
-        _service.UnBlock(UserEmail, Author_Email);
-        Console.WriteLine("UserEmail : " + UserEmail);
-        SetCheeps();
-        //Console.WriteLine("UNBLOCK" + Author_Email);
-        return Page();
+        return _service.UserBlockedSomeone(UserEmail);
     }
 }

@@ -188,7 +188,6 @@ public class CheepRepository : ICheepRepository
 
         if (alreadyFollowing)
         {
-            Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
             throw new ApplicationException("TooManyFollows");
         }
         
@@ -208,7 +207,6 @@ public class CheepRepository : ICheepRepository
     public void UnFollow(string user, string unfollowing)
     {
         Author AuthorUser = GetAuthor(user)[0];
-        Console.WriteLine("arg user = " + user + " Authoruserem = " + AuthorUser.Email);
         Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
 
         var query = (from Follows in _context.Following
@@ -428,7 +426,7 @@ public class CheepRepository : ICheepRepository
         }
 
         Author user = AuthorUser[0];
-        Console.WriteLine(user.Name);
+        Console.WriteLine("SUCESS " + user.Name);
         
     }
 
