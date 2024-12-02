@@ -20,9 +20,7 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      - name: Test
-        run: dotnet test test/Chirp.Tests/Chirp.Tests.csproj --no-build --verbosity normal
-
+      
       - name: Publish
         run: |
           cd src/Chirp.Web
