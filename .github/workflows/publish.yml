@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test test/Chirp.Tests/Chirp.Tests.csproj --no-build --verbosity normal
 
       - name: Publish
         run: |
