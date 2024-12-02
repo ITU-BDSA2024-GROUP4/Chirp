@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using Chirp.Core;
-
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
-
 
 using Microsoft.AspNetCore.Identity;
 
@@ -19,14 +17,12 @@ public class PublicModel : PageModel
     private readonly SignInManager<ChirpUser> _signInManager;
     public List<CheepDTO> Cheeps { get; set; } = null!;
 
-    [BindProperty] 
-    public SubmitMessageModel SubmitMessage { get; set; }
-    [BindProperty] 
-    public string Author { get; set; }
-    [BindProperty] 
-    public string Author_Email { get; set; }
-    [BindProperty]
-    public int Cheep_Id { get; set; }
+    [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
+    [BindProperty] public string Author { get; set; }
+    [BindProperty] public string Author_Email { get; set; }
+
+    [BindProperty] public int Cheep_Id { get; set; }
+
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
     public FollowButtonModel FollowButton { get; set; }
@@ -43,7 +39,8 @@ public class PublicModel : PageModel
         _signInManager = signInManager;
     }
 
-    public void SetEmail() {
+    public void SetEmail()
+    {
         UserEmail = UserHandler.FindEmail(User);
     }
 
@@ -57,17 +54,25 @@ public class PublicModel : PageModel
     {
         SetEmail();
         var pageQuery = Request.Query["page"].ToString();
-
-        if (pageQuery == null)
+        if (!_service.UserBlockedSomeone(UserEmail))
         {
-            CurrentPage = 0;
-            Cheeps = _service.GetCheeps(0); // default to first page
+            if (pageQuery == null)
+            {
+                CurrentPage = 0;
+                Cheeps = _service.GetCheeps(0); // default to first page
+            }
+            else
+            {
+                _ = int.TryParse(pageQuery, out int page);
+                CurrentPage = page;
+                Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
+            }
         }
         else
         {
             _ = int.TryParse(pageQuery, out int page);
             CurrentPage = page;
-            Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
+            Cheeps = _service.GetCheepsNotBlocked(UserEmail); // minus 1 because pages are 0 indexed  
         }
 
         FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
@@ -84,7 +89,7 @@ public class PublicModel : PageModel
         return signOut;
     }
 
-    public IActionResult OnPost() 
+    public IActionResult OnPost()
     {
         SetCheeps();
         return Page();
@@ -98,14 +103,17 @@ public class PublicModel : PageModel
             InvalidCheep = true;
             return Page();
         }
-        if(InvalidCheep) {
+
+        if (InvalidCheep)
+        {
             InvalidCheep = false;
         }
+
         string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
         _service.CreateCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
-        return RedirectToPage(); 
+        return RedirectToPage();
     }
 
     public IActionResult OnPostFollow()
@@ -153,6 +161,7 @@ public class PublicModel : PageModel
         _service.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
+
     public bool GetMaxPage()
     {
         return CurrentPage <= (_service.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"

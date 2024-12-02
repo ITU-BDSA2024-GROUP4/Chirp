@@ -396,10 +396,10 @@ public class CheepRepository : ICheepRepository
         return _context.Cheeps.Count();
     }
 
-    public void CreateBlock(string userEmail, string blockemail)
+    public void CreateBlock(string userEmail, string blockEmail)
     {
         Author AuthorUser = GetAuthor(userEmail)[0];
-        Author AuthorBlocking = GetAuthor(blockemail)[0];
+        Author AuthorBlocking = GetAuthor(blockEmail)[0];
         
         Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
         
@@ -407,12 +407,70 @@ public class CheepRepository : ICheepRepository
         var valContext = new ValidationContext(blocked);
         if (!Validator.TryValidateObject(blocked, valContext, validationResults, true))
         {
-            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+            throw new ValidationException("Block validation failed: " + string.Join(", ", validationResults));
         }
         
         _context.Blocked.Add(blocked);
         _context.SaveChanges();
-        Console.WriteLine("Blocked");
+    }
+
+    public void UnBlock(string userEmail, string blockEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
+            select Blocked);
+        
+        foreach (var block in query)
+        {
+            _context.Blocked.Remove(block);
+        }
+        _context.SaveChanges();
+        
+    }
+
+    public bool IsBlocked(string userEmail, string blockEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where Blocked.User.Email == userEmail && Blocked.BlockedUser.Email == blockEmail
+            select Blocked).Count();
+        return query > 0;
+    }
+
+    public bool UserBlockedSomeone(string userEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where Blocked.User.Email != null
+            select Blocked).Count();
+        return query > 0;
+    }
+
+    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
+    {
+        var query = (from Author in _context.Authors
+            join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+            where !_context.Blocked.Any(b => b.User.Email == userEmail && b.BlockedUser.Email == Author.Email)
+            orderby Cheeps.TimeStamp descending
+            select new CheepDTO
+            {
+                Author = Author.Name,
+                Email = Author.Email,
+                Message = Cheeps.Text,
+                TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                CheepId = Cheeps.CheepId
+            });
+
+        return query.ToList();
+    }
+
+    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
+    {
+        var query = (from Author in _context.Authors
+                join Blocked in _context.Blocked on Author.Email equals Blocked.User.Email
+                select new AuthorDTO
+                {
+                    Name = Blocked.BlockedUser.Name, Email = Blocked.BlockedUser.Email,
+                });
+        return query.ToList();
     }
 
     public List<CheepDTO> GetLiked(string email)
