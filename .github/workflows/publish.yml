@@ -22,7 +22,10 @@ jobs:
         run: dotnet build --no-restore
       
       - name: Publish
-        run: dotnet publish src/Chirp.Web -c Release -o ./publish
+        run: |
+          export authentication_github_clientId="${{ secrets.GITHUBCLIENTID }}"
+          export authentication_github_clientSecrets="${{ secrets.GITHUBCLIENTSECRET }}"
+          dotnet publish src/Chirp.Web -c Release -o ./publish
         
       - name: Zip folder
         run: zip -r publish.zip ./publish
