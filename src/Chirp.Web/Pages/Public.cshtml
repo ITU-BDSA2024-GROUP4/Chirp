@@ -3,7 +3,9 @@
 
 <div>
     <h2> Public Timeline </h2>
-    @{ await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage); }
+    @{
+        await Html.RenderPartialAsync("_CheepCreationPartial", Model.SubmitMessage);
+    }
     @if (Model.InvalidCheep)
     {
         <div>
@@ -23,13 +25,24 @@
         <em>There are no cheeps so far.</em>
     }
     <div class="pagination">
-            @if (Model.CurrentPage > 0)
+        @if (Model.CurrentPage > 0)
+        {   
+            @if(Model.CurrentPage != 1 && Model.CurrentPage != 0)
             {
-                <a href="@Url.Page("Public")?page=@(Model.CurrentPage - 1)" class="button">Previous Page</a>
+                <a href="@Url.Page("Public")?page=@(Model.CurrentPage - 1)" class="button">Previous</a>
             }
-            @if(Model.GetMaxPage())
+        }
+        @if (Model.GetMaxPage())
+        {
+            @if (Model.CurrentPage == 0)
             {
-                <a href="@Url.Page("Public")?page=@(Model.CurrentPage + 1)" class="button">Next Page</a>
+                <span>Page @(Model.CurrentPage + 1)</span>
+                <a href="@Url.Page("Public")?page=@(Model.CurrentPage + 2)" class="button">Next</a>
+            } else
+            {
+                <span>Page @(Model.CurrentPage)</span>
+                <a href="@Url.Page("Public")?page=@(Model.CurrentPage + 1)" class="button">Next</a>
             }
+        }
     </div>
 </div>
