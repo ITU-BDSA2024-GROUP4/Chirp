@@ -123,6 +123,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
                 } else{
                     userName = user.UserName;
                 }

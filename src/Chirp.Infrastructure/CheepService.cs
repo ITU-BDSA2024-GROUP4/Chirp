@@ -41,9 +41,11 @@ public class CheepService : ICheepService
         _repository.CreateCheep(author, message);
     }
 
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+    public AuthorDTO? GetAuthor(string email)
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
-    public AuthorDTO GetAuthor(string email)
-    {
+{
         var authors = _repository.GetAuthor(email);
         if (authors.Count > 1)
         {
@@ -58,7 +60,9 @@ public class CheepService : ICheepService
         return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
     }
 
-    public AuthorDTO GetAuthorUserName(string userName)
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+    public AuthorDTO? GetAuthorUserName(string userName)
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     {
         var authors = _repository.GetAuthorUserName(userName);
         if (authors.Count > 1)

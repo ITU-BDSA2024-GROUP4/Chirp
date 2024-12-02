@@ -10,65 +10,68 @@
             <div class="actions">
                 <span class="like-section">
                     <h3>@Model.LikeCount(cheep.CheepId)</h3>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+
+                  
                     {
                         @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
                         {
-                            <form method="post" action="@Url.Page("", new { handler = "Like" })">
+                        <form method="post" action="@Url.Page("", new { handler = "Like" })">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
-                                <input type="submit" class="heart-button" value="♡" formaction="?handler=Like">
-                            </form>
+                            <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                            <input type="submit" class="heart-button" value="♡" formaction="?handler=Like">
+                        </form>
                         }
                         else
                         {
-                            <form method="post" action="@Url.Page("", new { handler = "UnLike" })">
+                        <form method="post" action="@Url.Page("", new { handler = "UnLike" })">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
-                                <input type="submit" class="heart-button liked" value="♥" formaction="?handler=UnLike">
-                            </form>
+                            <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                            <input type="submit" class="heart-button liked" value="♥" formaction="?handler=UnLike">
+                        </form>
                         }
                     }
                     else
                     {
-                        <a href="/Identity/Account/Register">♡</a>
+                    <a href="/Identity/Account/Register">♡</a>
                     }
                 </span>
-                @if (cheep.Email != Model.UserEmail && User.Identity.IsAuthenticated)
+
+                  
+                @if (cheep.Email != Model.UserEmail && User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <span class="follow-section">
+
+                <span class="follow-section">
+
                         @if (Model.ShowOnCheeps)
                         {
                             @if (!Model.IsFollowing(cheep.Email))
                             {
-                                <form method="post" action="@Url.Page("", new { handler = "Follow" })">
+                            <form method="post" action="@Url.Page("", new { handler = "Follow" })">
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="author" value="@cheep.Author"/>
-                                    <input type="hidden" name="author_email" value="@cheep.Email"/>
-                                    <input type="submit" class="follow-button" value="Follow @Model.FollowCount(cheep.Email)" formaction="?handler=Follow">
-                                </form>
+                                <input type="hidden" name="author" value="@cheep.Author" />
+                                <input type="hidden" name="author_email" value="@cheep.Email" />
+                                <input type="submit" class="follow-button" value="Follow @Model.FollowCount(cheep.Email)"
+                                    formaction="?handler=Follow">
+                            </form>
                             }
                             else
                             {
-                                <form method="post" asp-page-handler="Unfollow">
+                            <form method="post" asp-page-handler="Unfollow">
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="author" value="@cheep.Author"/>
-                                    <input type="hidden" name="author_email" value="@cheep.Email"/>
-                                    <input type="submit" class="follow-button" value="Unfollow @Model.FollowCount(cheep.Email)"
-                                           formaction="?handler=Unfollow">
-                                </form>
+                                <input type="hidden" name="author" value="@cheep.Author" />
+                                <input type="hidden" name="author_email" value="@cheep.Email" />
+                                <input type="submit" class="follow-button" value="Unfollow @Model.FollowCount(cheep.Email)"
+                                    formaction="?handler=Unfollow">
+                            </form>
                             }
                         }
-                    </span>
+                </span>
                 }
-            </div>
             <span>@cheep.Message</span>
-            <small>&mdash; @DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+            <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+
+        </div>
         </p>
     </li>
 }
-
-
-
-
-

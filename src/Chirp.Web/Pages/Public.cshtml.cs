@@ -31,6 +31,8 @@ public class PublicModel : PageModel
     public string UserEmail { get; set; }
     public int CurrentPage { get; set; }
 
+    private readonly int _pagesize = 32;
+
     public PublicModel(ICheepService service, SignInManager<ChirpUser> signInManager)
     {
         _service = service;
@@ -162,6 +164,6 @@ public class PublicModel : PageModel
 
     public bool GetMaxPage()
     {
-        return CurrentPage <= (_service.AmountOfCheeps() / 32); //32 is got from repository "_pagesize"
+        return CurrentPage <= (_service.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"
     }
 }
