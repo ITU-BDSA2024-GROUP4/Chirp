@@ -161,13 +161,9 @@ public class AboutModel : PageModel {
     public IActionResult OnPostUnblock()
     {
         User_Email = UserHandler.FindEmail(User);
-        Console.WriteLine(User_Email + " unblocked " + Unblock_User);
-
-        if (!string.IsNullOrEmpty(Author))
-        {
-            Console.WriteLine($"Unblocking user: {Author}");
-            _service.UnBlock(User_Email, Author);
-        }
+        
+        _service.UnBlock(User_Email, Unblock_User);
+        
 
         return RedirectToPage();
     }

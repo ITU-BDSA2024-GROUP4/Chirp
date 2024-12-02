@@ -412,32 +412,27 @@ public class CheepRepository : ICheepRepository
         
         _context.Blocked.Add(blocked);
         _context.SaveChanges();
-        Console.WriteLine("User " + userEmail + " has blocked " + blockEmail);
     }
 
     public void UnBlock(string userEmail, string blockEmail)
     {
-        Console.WriteLine("User " + userEmail + " unblocked " + blockEmail);
-        var AuthorUser = GetAuthor(userEmail);
-        if (AuthorUser == null || !AuthorUser.Any())
+        var query = (from Blocked in _context.Blocked
+            where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
+            select Blocked);
+        
+        foreach (var block in query)
         {
-            Console.WriteLine($"No author found for userName: {userEmail}");
-            return;
+            _context.Blocked.Remove(block);
         }
-
-        Author user = AuthorUser[0];
-        Console.WriteLine("SUCESS " + user.Name);
+        _context.SaveChanges();
         
     }
 
     public bool IsBlocked(string userEmail, string blockEmail)
     {
-        //Author AuthorUser = GetAuthor(userEmail)[0];
-        //Author AuthorBlocking = GetAuthor(blockEmail)[0];
         var query = (from Blocked in _context.Blocked
             where Blocked.User.Email == userEmail && Blocked.BlockedUser.Email == blockEmail
             select Blocked).Count();
-        Console.WriteLine("Blocked = " + (query > 0));
         return query > 0;
     }
 
@@ -446,7 +441,6 @@ public class CheepRepository : ICheepRepository
         var query = (from Blocked in _context.Blocked
             where Blocked.User.Email != null
             select Blocked).Count();
-        Console.WriteLine("User:" + userEmail + " blocked people amount = " + query);
         return query > 0;
     }
 
