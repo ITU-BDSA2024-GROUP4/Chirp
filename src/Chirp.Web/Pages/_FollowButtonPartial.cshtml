@@ -3,14 +3,16 @@
 @foreach (var cheep in Model.Cheeps)
 {
     <li>
-    <p>
-        <strong>
-            <a href="/@cheep.Author">@cheep.Author</a>
-        </strong>
-    <div class="actions">
-        <span class="like-section">
-            <h3>@Model.LikeCount(cheep.CheepId)</h3>
-            @if (User.Identity != null && User.Identity.IsAuthenticated)
+        <p>
+            <strong>
+                <a href="/@cheep.Author">@cheep.Author</a>
+            </strong>
+            <div class="actions">
+                <span class="like-section">
+                    <h3>@Model.LikeCount(cheep.CheepId)</h3>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+
+                  
                     {
                         @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
                         {
@@ -33,7 +35,9 @@
                     {
                     <a href="/Identity/Account/Register">♡</a>
                     }
-            </span>
+                </span>
+
+                  
                 @if (cheep.Email != Model.UserEmail && User.Identity != null && User.Identity.IsAuthenticated)
                 {
 
