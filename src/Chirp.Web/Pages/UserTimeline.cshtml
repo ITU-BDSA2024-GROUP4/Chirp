@@ -7,7 +7,7 @@
 <div>
     <h2> @routeName's Timeline </h2>
     <h3>Followers: @Model.Followers() Following: @Model.GetFollowingCount() Cheeps: @Model.GetTotalCheepsCount() Likes: @Model.GetTotalLikesCount()</h3>
-    @if (Model.Author != User.Identity.Name)
+    @if (User.Identity != null && Model.Author != User.Identity.Name)
     {
         <form method="post" action="@Url.Page("", new { handler = "Block" })">
             @Html.AntiForgeryToken()
