@@ -206,17 +206,21 @@ public class CheepRepository : ICheepRepository
 
     public void UnFollow(string user, string unfollowing)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
-
-        var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
-            select Follows);
-        foreach (var follow in query)
+        foreach (var follow in GetPersonToUnfollow(user, unfollowing))
         {
             _context.Following.Remove(follow);
         }
         _context.SaveChanges();
+    }
+
+    public List<Follows> GetPersonToUnfollow(string user, string unfollowing)
+    {
+        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
+            select Follows);
+        return query.ToList();
     }
     public bool IsFollowing(string email, string authorEmail)
     {

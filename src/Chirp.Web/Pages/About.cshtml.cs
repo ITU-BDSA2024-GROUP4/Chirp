@@ -161,10 +161,8 @@ public class AboutModel : PageModel {
     public IActionResult OnPostUnblock()
     {
         User_Email = UserHandler.FindEmail(User);
-        
         _service.UnBlock(User_Email, Unblock_User);
         
-
         return RedirectToPage();
     }
 
