@@ -61,13 +61,14 @@
                             }
                             else
                             {
-                            <form method="post" asp-page-handler="Unfollow">
+                                <form method="post" asp-page-handler="Unfollow">
                                     @Html.AntiForgeryToken()
-                                <input type="hidden" name="author" value="@cheep.Author" />
-                                <input type="hidden" name="author_email" value="@cheep.Email" />
-                                <input type="submit" class="follow-button" value="Unfollow @Model.FollowCount(cheep.Email)"
-                                    formaction="?handler=Unfollow">
-                            </form>
+                                    <input type="hidden" name="author" value="@cheep.Author" />
+                                    <input type="hidden" name="author_email" value="@cheep.Email" />
+                                    <input type="submit" class="follow-button" value="Unfollow"
+                                           formaction="?handler=Unfollow">
+                                </form>
+                                <p>@Model.FollowCount(cheep.Email)</p>
                             }
                         }
                 </span>
