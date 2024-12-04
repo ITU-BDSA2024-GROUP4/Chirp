@@ -164,12 +164,6 @@ public class CheepRepository : ICheepRepository
         var query = (from cheep in _context.Cheeps
             where cheep.Author.Email == userEmail
             select cheep);
-
-        foreach (var cheep in query)
-        {
-            Console.Write("Remove Cheep : " + cheep.Text);
-        }
-        
         return query.ToList();
     }
 
