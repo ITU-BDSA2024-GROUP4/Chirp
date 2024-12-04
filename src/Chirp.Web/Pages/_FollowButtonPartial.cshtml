@@ -11,8 +11,6 @@
                 <span class="like-section">
                     <h3>@Model.LikeCount(cheep.CheepId)</h3>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
-
-                  
                     {
                         @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
                         {
@@ -68,10 +66,25 @@
                         }
                 </span>
                 }
-            <span>@cheep.Message</span>
-            <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+                else
+                {
+                    <span>@cheep.Message</span>
+                    <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+                    @if (cheep.Author == User.Identity.Name)
+                    {
+                        Model.isMyOwnCheep = true;
+                        <form method="post" asp-page-handler="DeleteCheep">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                            <input type="hidden" name="author_email" value="@cheep.Email" />
+                            <input type="submit" class="follow-button" value="Un-cheep"
+                                   formaction="?handler=DeleteCheep">
+                        </form>
+                        Console.WriteLine("Cheepid : " + cheep.CheepId + " TEXT : " + cheep.Message);
+                    }
+                }
 
-        </div>
+            </div>
         </p>
     </li>
 }
