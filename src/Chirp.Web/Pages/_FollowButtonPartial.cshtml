@@ -11,7 +11,7 @@
                 <div class="cheep-metadata">
                     <a href="/@cheep.Author" class="author">@cheep.Author</a>
                     <span class="date-time">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString()</span>
-                    <span>followers: @Model.FollowCount(cheep.Email)</span>
+                    <span class="follow-count">followers: @Model.FollowCount(cheep.Email)</span>
                     </div>
             </strong>
             <div class="actions">
