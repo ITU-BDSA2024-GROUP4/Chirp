@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Chirp.Core;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace Chirp.Web.Pages;
     
 public class FollowButtonModel
@@ -12,6 +14,7 @@ public class FollowButtonModel
     public List<CheepDTO> Cheeps { get; set; }
     public string UserEmail { get; set; }
     public bool ShowOnCheeps { get; set; }
+    public bool isMyOwnCheep { get; set; }
     
     public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
     {
@@ -24,6 +27,15 @@ public class FollowButtonModel
     public bool IsFollowing(string Author_Email)
     {
         return _service.IsFollowing(UserEmail, Author_Email);
+    }
+
+    public bool IsMyOwnCheep(string Author_Email)
+    {
+        if (Author_Email == UserEmail)
+        {
+            return true;
+        } 
+        return false;
     }
 
     public bool IsLiked(string user, int Cheep_Id)
