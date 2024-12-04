@@ -134,22 +134,32 @@ div.page ul.cheeps {
 }
 
 div.page ul.cheeps li {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between; 
     margin: 10px 0;
-    max-height: 100px;
-    overflow: hidden;
     padding: 15px;
     background: #2C2C2E;
     border: 1px solid #3A3A3C;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     overflow-wrap: break-word;
-    word-break: break-all;
-    
+    word-break: break-word;
+    line-height: 1.4;
 }
-
+div.page ul.cheeps li .cheep-content {
+    flex-grow: 1; 
+    white-space: pre-wrap; 
+}
+div.page ul.cheeps li .cheep-metadata {
+    display: flex;
+    justify-content: space-between; 
+    font-size: 0.9rem; 
+    color: #9CA3AF;
+    margin-top: 10px;
+    border-top: 1px solid #3A3A3C; 
+    padding-top: 5px; 
+}
 div.page ul.cheeps li img {
     border-radius: 50%;
     height: 48px;
