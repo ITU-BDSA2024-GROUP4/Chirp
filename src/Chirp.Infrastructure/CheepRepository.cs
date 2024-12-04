@@ -15,7 +15,6 @@ public class CheepRepository : ICheepRepository
     {   
         _context = context;
         DbInitializer.SeedDatabase(_context);
-        
     }
 
     //Query
@@ -38,6 +37,7 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
+    //Query
     public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
         var query = (from Author in _context.Authors
@@ -56,7 +56,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
     
-
+    //Query TODO: NAME CHANGE
     public List<Cheep> GetCheepToDelete(string userEmail, int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
@@ -64,7 +64,7 @@ public class CheepRepository : ICheepRepository
             select Cheep);
         return query.ToList();
     }
-
+    //COMMAND TODO: RENAME REMOVE
     public void DeleteCheep(Cheep cheep)
     {
         _context.Cheeps.Remove(cheep);
@@ -111,6 +111,7 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList();
     }
+    //QUERY TODO: Unify email and username calls to one or the other
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email)
     {
         var query = (from Author in _context.Authors
@@ -129,13 +130,13 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    //Command
-    public Author CreateAuthor(string name, string email)
+    //Command TODO: Author repo and change create to add
+    public Author CreateAuthor(string username, string email)
     {
         Author author = new Author()
         {
             AuthorId = _context.Authors.Count() + 1,
-            Name = name,
+            Name = username,
             Email = email,
             Cheeps = new List<Cheep>()
         };
@@ -147,8 +148,8 @@ public class CheepRepository : ICheepRepository
         return author;
     }
 
-    //Command
-    public Cheep CreateCheep(Author author, string text)
+    //Command TODO: cahnge create to add
+    public Cheep AddCheep(Author author, string text)
     {
         Cheep cheep = new Cheep()
         {
@@ -173,6 +174,7 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
+    //QUERY
     public List<Author> GetAuthor(string email) {
         var query = (from Author in _context.Authors
                     where Author.Email == email
@@ -180,7 +182,7 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
-
+    // TODO: Unify
     public List<Author> GetAuthorUserName(string userName)
     {
         var query = (from Author in _context.Authors
@@ -189,7 +191,7 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
-    
+    // TODO: add follow?
     public void CreateFollow(string user, string following)
     {
         Author AuthorUser = GetAuthor(user)[0];
@@ -216,7 +218,7 @@ public class CheepRepository : ICheepRepository
         _context.Following.Add(follows);
         _context.SaveChanges();
     }
-
+    //TODO: rename remove follow
     public void UnFollow(string user, string unfollowing)
     {
         foreach (var follow in GetPersonToUnfollow(user, unfollowing))

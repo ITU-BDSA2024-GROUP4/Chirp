@@ -92,7 +92,7 @@ public class UserTimelineModel : PageModel
             InvalidCheep = false;
         }
         string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
-        _service.CreateCheep(author, SubmitMessage.Message);
+        _service.AddCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
         return RedirectToPage(); 

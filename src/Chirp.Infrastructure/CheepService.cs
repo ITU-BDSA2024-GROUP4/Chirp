@@ -43,10 +43,10 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
-    public void CreateCheep(string email, string message)
+    public void AddCheep(string email, string message)
     {
         Author author = _repository.GetAuthor(email)[0];
-        _repository.CreateCheep(author, message);
+        _repository.AddCheep(author, message);
     }
 
 #pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
