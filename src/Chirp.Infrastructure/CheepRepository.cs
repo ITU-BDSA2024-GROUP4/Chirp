@@ -158,7 +158,20 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
-    
+
+    public List<Cheep> GetOwnCheeps(string userEmail)
+    {
+        var query = (from cheep in _context.Cheeps
+            where cheep.Author.Email == userEmail
+            select cheep);
+
+        foreach (var cheep in query)
+        {
+            Console.Write("Remove Cheep : " + cheep.Text);
+        }
+        
+        return query.ToList();
+    }
 
     public List<Author> GetAuthor(string email) {
         var query = (from Author in _context.Authors
