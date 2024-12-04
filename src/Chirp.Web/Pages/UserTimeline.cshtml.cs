@@ -197,8 +197,20 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostBlock()
     {
         SetCheeps();
-        Console.WriteLine("USEREMAIL BLOCK : " + UserEmail);
         _service.CreateBlock(UserEmail, GetEmail());
         _service.UserBlockedSomeone(UserEmail);
-        return Redirect("~/");    }
+        return Redirect("~/");    
+    }
+
+    public IActionResult OnPostDeleteCheep()
+    {
+        SetCheeps();
+        if (GetEmail() != Author_Email)
+        {
+            throw new Exception("Author Email is not the logged in user.");
+        }
+        _service.DeleteCheep(UserEmail, Cheep_Id);
+        return RedirectToPage();
+    }
 }
+
