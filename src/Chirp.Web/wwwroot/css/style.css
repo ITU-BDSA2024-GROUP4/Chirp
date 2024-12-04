@@ -135,16 +135,18 @@ div.page ul.cheeps {
 
 div.page ul.cheeps li {
     margin: 10px 0;
-
     padding: 15px;
     background: #2C2C2E;
     border: 1px solid #3A3A3C;
     border-radius: 8px;
     display: flex;
-    align-items: center;
+    flex-direction: column; 
     gap: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 div.page ul.cheeps li img {
