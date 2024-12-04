@@ -9,9 +9,10 @@
         <p>
             <strong>
                 <div class="cheep-metadata">
-                    <a href="/@cheep.Author" class="author">@cheep.Author followers: @Model.FollowCount(cheep.Email)</a>
+                    <a href="/@cheep.Author" class="author">@cheep.Author</a>
                     <span class="date-time">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString()</span>
-                </div>
+                    <span>followers: @Model.FollowCount(cheep.Email)</span>
+                    </div>
             </strong>
             <div class="actions">
                 <span class="like-section">
