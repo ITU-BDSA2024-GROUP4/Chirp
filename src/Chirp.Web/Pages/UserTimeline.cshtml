@@ -46,9 +46,10 @@
     }
     @if (Model.Cheeps.Any())
     {
-        bool myOwnCheep = false;
         <ul id="messagelist" class="cheeps">
-            @{ await Html.RenderPartialAsync("_FollowButtonPartial", Model.FollowButton); }
+            @{
+                await Html.RenderPartialAsync("_FollowButtonPartial", Model.FollowButton);
+            }
         </ul>
     }
     else
