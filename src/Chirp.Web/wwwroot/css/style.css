@@ -160,6 +160,15 @@ div.page ul.cheeps li .cheep-metadata {
     border-top: 1px solid #3A3A3C; 
     padding-top: 5px; 
 }
+div.cheep-metadata a.author:hover {
+    text-decoration: underline; 
+    color: #74C0FF; 
+}
+div.cheep-metadata a.author {
+    text-decoration: none; 
+    color: #58A6FF; 
+    font-weight: 500; 
+}
 div.page ul.cheeps li img {
     border-radius: 50%;
     height: 48px;

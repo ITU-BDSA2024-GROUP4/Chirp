@@ -8,7 +8,10 @@
     <li>
         <p>
             <strong>
-                <a href="/@cheep.Author">@cheep.Author</a>
+                <div class="cheep-metadata">
+                    <a href="/@cheep.Author" class="author">@cheep.Author</a>
+                    <span class="date-time">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString()</span>
+                </div>
             </strong>
             <div class="actions">
                 <span class="like-section">
@@ -71,8 +74,10 @@
                 }
                 else
                 {
-                    <span>@cheep.Message</span>
-                    <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+                    <div class="cheep-content">
+                        @cheep.Message
+                    </div>
+                    
                     <form method="post" asp-page-handler="DeleteCheep">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
