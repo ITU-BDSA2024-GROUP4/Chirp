@@ -3,33 +3,39 @@
 
 @if (User.Identity != null && User.Identity.IsAuthenticated)
 {
-<div class="cheepbox">
-    <h3>What's on your mind @(User.Identity.Name)?</h3>
-    <form method="post" action="@Url.Page("", new { handler = "Message" })">
-        @if (Model != null)
-        {
-            <input style="float: left" type="text" asp-for="Message" name="Message" value="@Model.Message" class="form-control" maxlength="160">
-        }
-        else 
-        {
-            <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control" maxlength="160">
-        }
-        
-        <div class="char-count">
-            @if (Model != null && !string.IsNullOrEmpty(Model.Message))
+    <div class="cheepbox">
+        <h3>What's on your mind @(User.Identity.Name)?</h3>
+        <form method="post" action="@Url.Page("", new { handler = "Message" })">
+            @if (Model != null)
             {
-                @Model.Message.Length <p>/ 160 characters</p>
+                <input style="float: left" type="text" asp-for="Message" name="Message" value="@Model.Message" class="form-control" maxlength="160" id="MessageInput">
             }
-            else
+            else 
             {
-                <p>0 / 160 characters</p>
+                <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control" maxlength="160" id="MessageInput">
             }
-        </div>
-        
-        <span asp-validation-for="Message"></span>
-        <input type="submit" value="Share">
-        @Html.AntiForgeryToken()
-    </form>
-</div>
 
+            <div class="char-count">
+                <span id="charCount">0</span> / 160 characters
+            </div>
+            <span asp-validation-for="Message"></span>
+            <input type="submit" value="Share">
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+    
+    <style>
+    .char-count {
+        font-size: 12px;
+        color: grey;
+        margin-top: 5px;
+    }
+    </style>
+    
+    <script>
+        document.getElementById('MessageInput').addEventListener('input', function() {
+            const messageLength = this.value.length;
+            document.getElementById('charCount').textContent = messageLength;
+        });
+    </script>
 }
