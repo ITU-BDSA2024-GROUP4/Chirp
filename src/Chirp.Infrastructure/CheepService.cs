@@ -35,7 +35,6 @@ public class CheepService : ICheepService
         List<Cheep> list = _repository.GetCheepToDelete(userEmail, cheepId);
         foreach (var cheep in list)
         {
-            Console.Write(cheep.Text + " Delted ");
             _repository.DeleteCheep(cheep);
         }
     }
