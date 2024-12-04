@@ -14,6 +14,18 @@
         {
             <input style="float: left" type="text" asp-for="Message" name="Message" value="" class="form-control" maxlength="160">
         }
+        
+        <div class="char-count">
+            @if (Model != null && !string.IsNullOrEmpty(Model.Message))
+            {
+                @Model.Message.Length <p>/ 160 characters</p>
+            }
+            else
+            {
+                <p>0 / 160 characters</p>
+            }
+        </div>
+        
         <span asp-validation-for="Message"></span>
         <input type="submit" value="Share">
         @Html.AntiForgeryToken()
