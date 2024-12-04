@@ -55,6 +55,21 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
+    
+
+    public List<Cheep> GetCheepToDelete(string userEmail, int cheepId)
+    {
+        var query = (from Cheep in _context.Cheeps
+            where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
+            select Cheep);
+        return query.ToList();
+    }
+
+    public void DeleteCheep(Cheep cheep)
+    {
+        _context.Cheeps.Remove(cheep);
+        _context.SaveChanges();
+    }
     //Query
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {

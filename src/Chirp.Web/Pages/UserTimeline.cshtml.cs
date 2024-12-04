@@ -144,7 +144,8 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostLike()
     {
         SetCheeps();
-        _service.CreateLike(UserEmail, Cheep_Id);
+        _service.DeleteCheep(UserEmail, Cheep_Id);
+        //_service.CreateLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 
