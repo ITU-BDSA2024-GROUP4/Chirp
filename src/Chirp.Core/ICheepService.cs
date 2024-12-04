@@ -3,7 +3,7 @@ namespace Chirp.Core;
 public interface ICheepService 
 {
     ICheepRepository repository { get; set; }
-    
+    public IAuthorRepository TEMP { get; set; }
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public void DeleteCheep(string userEmail, int cheepId);
@@ -15,7 +15,6 @@ public interface ICheepService
     public AuthorDTO GetOrCreateAuthor(string name, string email);
     public void AddCheep(string email, string message);
 
-    public void AddAuthor(string name, string email);
     public void CreateFollow(string username, string user, string follow);
     public void UnFollow(string user, string unfollow);
     public bool IsFollowing(string email, string authorEmail);

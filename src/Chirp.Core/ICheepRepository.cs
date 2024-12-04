@@ -4,15 +4,9 @@ public interface ICheepRepository {
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-    
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
 
-    public Author AddAuthor(string name, string email);
-
     public Cheep AddCheep(Author author, string text);
-
-    public List<Author> GetAuthor(string email);
-    public List<Author> GetAuthorUserName(string userName);
     public void CreateFollow(string user, string following);
     public void UnFollow(string user, string unfollowing);
     public bool IsFollowing(string email, string authorEmail);

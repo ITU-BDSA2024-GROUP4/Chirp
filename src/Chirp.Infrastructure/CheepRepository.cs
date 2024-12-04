@@ -9,11 +9,13 @@ namespace Chirp.Infrastructure;
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
+    private readonly IAuthorRepository _TEMP;
     private readonly int _pageSize = 32;
     
     public CheepRepository(ChirpDBContext context)
     {   
         _context = context;
+        _TEMP = new AuthorRepository(_context);
     }
 
     //Query
@@ -128,24 +130,6 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList();
     }
-
-    //Command TODO: Author repo and change create to add
-    public Author AddAuthor(string username, string email)
-    {
-        Author author = new Author()
-        {
-            AuthorId = _context.Authors.Count() + 1,
-            Name = username,
-            Email = email,
-            Cheeps = new List<Cheep>()
-        };
-        
-        _context.Authors.Add(author);
-        
-        _context.SaveChanges();
-        
-        return author;
-    }
     
     public Cheep AddCheep(Author author, string text)
     {
@@ -172,28 +156,12 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
-    //QUERY
-    public List<Author> GetAuthor(string email) {
-        var query = (from Author in _context.Authors
-                    where Author.Email == email
-                    select Author);
-
-        return query.ToList();
-    }
-    // TODO: Unify
-    public List<Author> GetAuthorUserName(string userName)
-    {
-        var query = (from Author in _context.Authors
-            where Author.Name == userName
-            select Author);
-
-        return query.ToList();
-    }
+    
     // TODO: add follow?
     public void CreateFollow(string user, string following)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorFollowing = GetAuthor(following)[0];
+        Author AuthorUser = _TEMP.GetAuthor(user)[0];
+        Author AuthorFollowing = _TEMP.GetAuthor(following)[0];
         
         bool alreadyFollowing = _context.Following.Any(f =>
             f.User.AuthorId == AuthorUser.AuthorId &&
@@ -228,8 +196,8 @@ public class CheepRepository : ICheepRepository
 
     public List<Follows> GetPersonToUnfollow(string user, string unfollowing)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
+        Author AuthorUser = _TEMP.GetAuthor(user)[0];
+        Author AuthorUnfollowing = _TEMP.GetAuthor(unfollowing)[0];
         var query = (from Follows in _context.Following
             where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
             select Follows);
@@ -237,8 +205,8 @@ public class CheepRepository : ICheepRepository
     }
     public bool IsFollowing(string email, string authorEmail)
     {
-        List<Author> AuthorUserList = GetAuthor(email);
-        List<Author> AuthorAuthorList = GetAuthor(authorEmail);
+        List<Author> AuthorUserList = _TEMP.GetAuthor(email);
+        List<Author> AuthorAuthorList = _TEMP.GetAuthor(authorEmail);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }
@@ -254,8 +222,8 @@ public class CheepRepository : ICheepRepository
 
     public bool IsFollowingUserName(string username, string author)
     {
-        List<Author> AuthorUserList = GetAuthorUserName(username);
-        List<Author> AuthorAuthorList = GetAuthor(author);
+        List<Author> AuthorUserList = _TEMP.GetAuthorUserName(username);
+        List<Author> AuthorAuthorList = _TEMP.GetAuthor(author);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }
@@ -357,7 +325,7 @@ public class CheepRepository : ICheepRepository
     
     public void CreateLike(string user, int CheepId)
     {
-        Author AuthorUser = GetAuthor(user)[0];
+        Author AuthorUser = _TEMP.GetAuthor(user)[0];
         Cheep ThisCheep = GetCheepFromId(CheepId);
         Likes likes = new Likes() { User = AuthorUser, cheep = ThisCheep };
         
@@ -415,8 +383,8 @@ public class CheepRepository : ICheepRepository
 
     public void CreateBlock(string userEmail, string blockEmail)
     {
-        Author AuthorUser = GetAuthor(userEmail)[0];
-        Author AuthorBlocking = GetAuthor(blockEmail)[0];
+        Author AuthorUser = _TEMP.GetAuthor(userEmail)[0];
+        Author AuthorBlocking = _TEMP.GetAuthor(blockEmail)[0];
         
         Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
         

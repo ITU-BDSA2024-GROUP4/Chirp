@@ -7,6 +7,12 @@ namespace Chirp.Infrastructure;
 public class CheepService : ICheepService
 {
     private ICheepRepository _repository;
+    private IAuthorRepository _TEMP;
+    public IAuthorRepository TEMP
+    {
+        get => _TEMP;
+        set => _TEMP = value;
+    }
 
     public ICheepRepository repository
     {
@@ -18,6 +24,7 @@ public class CheepService : ICheepService
     {
         var context = new ChirpDBContext(options);
         _repository = new CheepRepository(context);
+        _TEMP = new AuthorRepository(context);
     }
 
     public List<CheepDTO> GetCheeps(int page)
@@ -45,7 +52,7 @@ public class CheepService : ICheepService
 
     public void AddCheep(string email, string message)
     {
-        Author author = _repository.GetAuthor(email)[0];
+        Author author = TEMP.GetAuthor(email)[0];
         _repository.AddCheep(author, message);
     }
 
@@ -54,7 +61,7 @@ public class CheepService : ICheepService
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 {
-        var authors = _repository.GetAuthor(email);
+        var authors = TEMP.GetAuthor(email);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1
@@ -72,7 +79,7 @@ public class CheepService : ICheepService
     public AuthorDTO? GetAuthorUserName(string userName)
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     {
-        var authors = _repository.GetAuthorUserName(userName);
+        var authors = _TEMP.GetAuthorUserName(userName);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1
@@ -86,14 +93,9 @@ public class CheepService : ICheepService
         return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
     }
 
-    public void AddAuthor(string name, string email)
-    {
-        _repository.AddAuthor(name, email);
-    }
-
     public AuthorDTO GetOrCreateAuthor(string name, string email)
     {
-        var authors = _repository.GetAuthor(email);
+        var authors = TEMP.GetAuthor(email);
         if (authors.Count > 1)
         {
             throw new InvalidOperationException($"Multiple authors found for email: {email}");
@@ -101,8 +103,8 @@ public class CheepService : ICheepService
 
         if (authors.Count == 0)
         {
-            _repository.AddAuthor(name, email);
-            authors = _repository.GetAuthor(email);
+            TEMP.AddAuthor(name, email);
+            authors = TEMP.GetAuthor(email);
         }
 
         var author = authors.First();
