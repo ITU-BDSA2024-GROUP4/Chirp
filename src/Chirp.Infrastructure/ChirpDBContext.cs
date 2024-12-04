@@ -19,5 +19,6 @@ public class ChirpDBContext : IdentityDbContext<ChirpUser>
     {
         _options = options;
         Database.EnsureCreated();
+        DbInitializer.SeedDatabase(this);
     }
 }

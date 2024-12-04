@@ -14,7 +14,6 @@ public class CheepRepository : ICheepRepository
     public CheepRepository(ChirpDBContext context)
     {   
         _context = context;
-        DbInitializer.SeedDatabase(_context);
     }
 
     //Query
