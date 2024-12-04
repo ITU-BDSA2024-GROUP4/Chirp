@@ -30,6 +30,14 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author);
     }
 
+    public void DeleteCheep(string userEmail, int cheepId)
+    {
+        foreach (var cheep in _repository.GetCheepToDelete(userEmail, cheepId))
+        {
+            _repository.DeleteCheep(cheep);
+        }
+    }
+
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
         return _repository.GetCheepsFromAuthorPage(author, page);
@@ -260,4 +268,5 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheepsFromAuthor(email).Count;
     }
+    
 }

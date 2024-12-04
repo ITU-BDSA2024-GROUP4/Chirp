@@ -24,6 +24,8 @@ public interface ICheepRepository {
 
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
+    public List<Cheep> GetCheepToDelete(string userEmail, int cheepId);
+    public void DeleteCheep(Cheep cheep);
     public void CreateLike(string user, int CheepId);
     public void ForgetUser(string email);
     public bool IsLiked(string user, int CheepId);
