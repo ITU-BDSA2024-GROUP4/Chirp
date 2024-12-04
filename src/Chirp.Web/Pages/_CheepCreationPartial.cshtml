@@ -23,19 +23,5 @@
             @Html.AntiForgeryToken()
         </form>
     </div>
-    
-    <style>
-    .char-count {
-        font-size: 12px;
-        color: grey;
-        margin-top: 5px;
-    }
-    </style>
-    
-    <script>
-        document.getElementById('MessageInput').addEventListener('input', function() {
-            const messageLength = this.value.length;
-            document.getElementById('charCount').textContent = messageLength;
-        });
-    </script>
+    <script>document.getElementById('MessageInput').addEventListener('input', function() {const messageLength = this.value.length;document.getElementById('charCount').textContent = messageLength;});</script>
 }
