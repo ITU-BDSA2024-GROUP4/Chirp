@@ -1,4 +1,7 @@
+@using Chirp.Core
 @using Chirp.Web.Pages
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage
 @model Chirp.Web.Pages.FollowButtonModel
 @foreach (var cheep in Model.Cheeps)
 {
@@ -11,8 +14,6 @@
                 <span class="like-section">
                     <h3>@Model.LikeCount(cheep.CheepId)</h3>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
-
-                  
                     {
                         @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
                         {
@@ -37,7 +38,7 @@
                     }
                 </span>
 
-                  
+                
                 @if (cheep.Email != Model.UserEmail && User.Identity != null && User.Identity.IsAuthenticated)
                 {
 
@@ -68,10 +69,19 @@
                         }
                 </span>
                 }
-            <span>@cheep.Message</span>
-            <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
-
-        </div>
+                else
+                {
+                    <span>@cheep.Message</span>
+                    <small id="date">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString() </small>
+                    <form method="post" asp-page-handler="DeleteCheep">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
+                        <input type="hidden" name="author_email" value="@cheep.Email" />
+                        <input type="submit" class="follow-button" value="Un-cheep"
+                               formaction="?handler=DeleteCheep">
+                    </form>
+                }
+            </div>
         </p>
     </li>
 }

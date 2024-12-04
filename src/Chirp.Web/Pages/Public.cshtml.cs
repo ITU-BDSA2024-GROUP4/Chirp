@@ -1,4 +1,6 @@
 #nullable disable
+using AspNet.Security.OAuth.GitHub;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -165,5 +167,17 @@ public class PublicModel : PageModel
     public bool GetMaxPage()
     {
         return CurrentPage <= (_service.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"
+    }
+
+    public string GetLoggedMail() { return _service.GetAuthorUserName(User.Identity.Name).Email; }
+    public IActionResult OnPostDeleteCheep()
+    {
+        SetCheeps();
+        if (GetLoggedMail() != Author_Email)
+        {
+            throw new Exception("Author Email is not the logged in user.");
+        }
+        _service.DeleteCheep(UserEmail, Cheep_Id);
+        return RedirectToPage();
     }
 }
