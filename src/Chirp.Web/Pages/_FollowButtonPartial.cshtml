@@ -74,10 +74,6 @@
                 }
                 else
                 {
-                    <div class="cheep-content">
-                        @cheep.Message
-                    </div>
-                    
                     <form method="post" asp-page-handler="DeleteCheep">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="cheep_id" value="@cheep.CheepId" />
@@ -86,6 +82,7 @@
                                formaction="?handler=DeleteCheep">
                     </form>
                 }
+                <span class="cheep-content">@cheep.Message</span>
             </div>
         </p>
     </li>
