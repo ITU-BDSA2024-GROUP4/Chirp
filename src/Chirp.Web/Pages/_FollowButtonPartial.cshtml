@@ -9,7 +9,7 @@
         <p>
             <strong>
                 <div class="cheep-metadata">
-                    <a href="/@cheep.Author" class="author">@cheep.Author</a>
+                    <a href="/@cheep.Author" class="author">@cheep.Author followers: @Model.FollowCount(cheep.Email)</a>
                     <span class="date-time">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString()</span>
                 </div>
             </strong>
@@ -58,7 +58,6 @@
                                     <input type="submit" class="follow-button" value="Follow"
                                            formaction="?handler=Follow">
                                 </form>
-                                <p>@Model.FollowCount(cheep.Email)</p>
                             }
                             else
                             {
@@ -69,7 +68,6 @@
                                     <input type="submit" class="follow-button" value="Unfollow"
                                            formaction="?handler=Unfollow">
                                 </form>
-                                <p>@Model.FollowCount(cheep.Email)</p>
                             }
                         }
                 </span>
