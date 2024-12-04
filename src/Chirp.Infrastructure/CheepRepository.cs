@@ -131,7 +131,7 @@ public class CheepRepository : ICheepRepository
     }
 
     //Command TODO: Author repo and change create to add
-    public Author CreateAuthor(string username, string email)
+    public Author AddAuthor(string username, string email)
     {
         Author author = new Author()
         {
@@ -147,8 +147,7 @@ public class CheepRepository : ICheepRepository
         
         return author;
     }
-
-    //Command TODO: cahnge create to add
+    
     public Cheep AddCheep(Author author, string text)
     {
         Cheep cheep = new Cheep()

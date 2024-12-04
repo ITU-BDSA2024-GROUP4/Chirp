@@ -7,7 +7,7 @@ public interface ICheepRepository {
     
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
 
-    public Author CreateAuthor(string name, string email);
+    public Author AddAuthor(string name, string email);
 
     public Cheep AddCheep(Author author, string text);
 

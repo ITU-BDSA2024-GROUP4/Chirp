@@ -35,7 +35,7 @@ public class CheepSecurityTests : IAsyncLifetime
         string injection = ";DROP TABLE IF EXISTS Cheeps;-- ";
         
         // Act
-        _service.CreateCheep(author, injection);
+        _service.AddAuthor(author, injection);
         
         var cheeps = _service.GetCheeps(0);
         

@@ -46,7 +46,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     public void CreateAuthorTest(string author, string email)
     {   
         // Arrange && Act
-        Author result = _repository.CreateAuthor(author, email);
+        Author result = _repository.AddAuthor(author, email);
         
         // Assert
         Assert.Equal("test", result.Name);
@@ -67,7 +67,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         };
         
         // Act
-        Cheep cheep = _repository.CreateCheep(newAuthor, "test");
+        Cheep cheep = _repository.AddCheep(newAuthor, "test");
         
         // Assert
         Assert.Equal("test", cheep.Text);
@@ -138,7 +138,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         string message = new string('a',161);
         
         // Act && Assert
-        Assert.Throws<ValidationException>( () => _repository.CreateCheep(newAuthor, message));
+        Assert.Throws<ValidationException>( () => _repository.AddCheep(newAuthor, message));
     }
     
     //TEST if user can follow same user more than once (logical fallacy!!!)
@@ -146,8 +146,8 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("VictorDuplicate@dupe.it", "victor@nodupes.it")]
     public void DuplicateFollowTest(string userEmail, string authorEmail)
     {
-        var userAuthor = _repository.CreateAuthor("Victor Duplicate", userEmail);
-        var targetAuthor = _repository.CreateAuthor("Victor NoDupes", authorEmail);
+        var userAuthor = _repository.AddAuthor("Victor Duplicate", userEmail);
+        var targetAuthor = _repository.AddAuthor("Victor NoDupes", authorEmail);
 
         _repository.CreateFollow(userEmail, authorEmail);
         try

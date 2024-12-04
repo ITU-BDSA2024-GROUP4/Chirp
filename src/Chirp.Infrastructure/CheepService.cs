@@ -86,9 +86,9 @@ public class CheepService : ICheepService
         return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
     }
 
-    public void CreateAuthor(string name, string email)
+    public void AddAuthor(string name, string email)
     {
-        _repository.CreateAuthor(name, email);
+        _repository.AddAuthor(name, email);
     }
 
     public AuthorDTO GetOrCreateAuthor(string name, string email)
@@ -101,7 +101,7 @@ public class CheepService : ICheepService
 
         if (authors.Count == 0)
         {
-            _repository.CreateAuthor(name, email);
+            _repository.AddAuthor(name, email);
             authors = _repository.GetAuthor(email);
         }
 
