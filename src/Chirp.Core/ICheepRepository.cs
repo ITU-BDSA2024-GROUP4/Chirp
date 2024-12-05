@@ -11,7 +11,6 @@ public interface ICheepRepository {
     public void UnFollow(string user, string unfollowing);
     public bool IsFollowing(string email, string authorEmail);
     public bool IsFollowingUserName(string username, string author);
-    public List<AuthorDTO> GetFollowers(string email);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
@@ -32,7 +31,6 @@ public interface ICheepRepository {
     public bool IsBlocked(string userEmail, string blockEmail);
     public bool UserBlockedSomeone(string userEmail);
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail);
     public List<CheepDTO> GetLiked(string user);
 
 }

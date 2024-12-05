@@ -49,4 +49,25 @@ public class AuthorRepository : IAuthorRepository
 
         return query.ToList();
     }
+    
+    //QUERY
+    public List<AuthorDTO> GetFollowers(string email)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Email == email
+            select new AuthorDTO { Name = Follows.Following.Name, Email = Follows.Following.Email, });
+        return query.ToList();
+    }
+    
+    //QUERY
+    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
+    {
+        var query = (from Author in _context.Authors
+            join Blocked in _context.Blocked on Author.Email equals Blocked.User.Email
+            select new AuthorDTO
+            {
+                Name = Blocked.BlockedUser.Name, Email = Blocked.BlockedUser.Email,
+            });
+        return query.ToList();
+    }
 }
