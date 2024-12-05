@@ -1,10 +1,11 @@
 namespace Chirp.Core;
 
-public interface ICheepRepository {
+public interface ICheepRepository
+{
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-    
+
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
 
     public Author CreateAuthor(string name, string email);
@@ -40,5 +41,4 @@ public interface ICheepRepository {
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
     public List<AuthorDTO> GetBlockedAuthors(string userEmail);
     public List<CheepDTO> GetLiked(string user);
-
 }
