@@ -79,7 +79,7 @@ public class PublicModel : PageModel
             Cheeps = _cheepService.GetCheepsNotBlocked(UserEmail); // minus 1 because pages are 0 indexed  
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, Cheeps, UserEmail);
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, UserEmail);
     }
 
     public IActionResult OnGetLogin()
@@ -124,7 +124,7 @@ public class PublicModel : PageModel
     {
         SetEmail();
 
-        switch (FollowHandler.Follow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -140,7 +140,7 @@ public class PublicModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":

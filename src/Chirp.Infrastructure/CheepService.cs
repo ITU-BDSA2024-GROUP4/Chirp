@@ -7,6 +7,7 @@ namespace Chirp.Infrastructure;
 public class CheepService : ICheepService
 {
     private ICheepRepository _repository;
+    private IAuthorRepository _authorRepository;
     private IAuthorRepository _TEMP;
     public IAuthorRepository TEMP
     {
@@ -20,11 +21,11 @@ public class CheepService : ICheepService
         set => _repository = value;
     }
 
-    public CheepService(DbContextOptions<ChirpDBContext> options)
+    public CheepService(ICheepRepository repository, IAuthorRepository authorRepository)
     {
-        var context = new ChirpDBContext(options);
-        _repository = new CheepRepository(context);
-        _TEMP = new AuthorRepository(context);
+        _repository = repository;
+        _authorRepository = authorRepository;
+        _TEMP = _authorRepository; //IDK -\_O_/- temp
     }
 
     public List<CheepDTO> GetCheeps(int page)
@@ -54,24 +55,6 @@ public class CheepService : ICheepService
     {
         Author author = TEMP.GetAuthor(email)[0];
         _repository.AddCheep(author, message);
-    }
-
-    public void CreateFollow(string username, string user, string follow)
-    {
-        /*
-        _TEMP.GetOrCreateAuthor(username, user);
-        _repository.CreateFollow(user, follow);
-        */
-    }
-
-    public void UnFollow(string user, string unfollow)
-    {
-        _repository.UnFollow(user, unfollow);
-    }
-
-    public bool IsFollowing(string email, string authorEmail)
-    {
-        return _repository.IsFollowing(email, authorEmail);
     }
 
     public bool IsFollowingUserName(string username, string author)
@@ -138,7 +121,12 @@ public class CheepService : ICheepService
 
     public void CreateLike(string user, int CheepId)
     {
-        _repository.CreateLike(user, CheepId);
+        Author author = _authorRepository.GetAuthor(user)[0];
+        Cheep cheep = _repository.GetCheepFromId(CheepId);
+        
+        Likes likes = new Likes() { User = author, cheep = cheep };
+        
+        _repository.AddLike(likes);
     }
 
     public bool IsLiked(string user, int CheepId)
@@ -176,27 +164,9 @@ public class CheepService : ICheepService
         throw new NotImplementedException();
     }
 
-    public void CreateBlock(string userEmail, string blockEmail)
-    {
-        if (!IsBlocked(userEmail, blockEmail))
-        {
-            if (IsFollowing(userEmail, blockEmail))
-            {
-                _repository.UnFollow(userEmail, blockEmail);
-            }
-
-            _repository.CreateBlock(userEmail, blockEmail);
-        }
-    }
-
     public void UnBlock(string userEmail, string blockEmail)
     {
         _repository.UnBlock(userEmail, blockEmail);
-    }
-
-    public bool IsBlocked(string userEmail, string blockEmail)
-    {
-        return _repository.IsBlocked(userEmail, blockEmail);
     }
 
     public bool UserBlockedSomeone(string userEmail)

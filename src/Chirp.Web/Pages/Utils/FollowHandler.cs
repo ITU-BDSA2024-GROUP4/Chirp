@@ -7,7 +7,7 @@ namespace Chirp.Web.Pages.Utils;
 
 public static class FollowHandler
 {
-    public static string Follow(ModelStateDictionary modelState, ICheepService service,
+    public static string Follow(ModelStateDictionary modelState, IAuthorService service,
         string nameOfAuthorEmail, string nameOfAuthor, string userEmail,
         string userIdentityName, string authorEmail)
     {
@@ -20,7 +20,7 @@ public static class FollowHandler
         service.CreateFollow(userIdentityName, userEmail, authorEmail);
         return "UserTimeline";
     }
-    public static string Unfollow(ModelStateDictionary modelState, ICheepService service,
+    public static string Unfollow(ModelStateDictionary modelState, IAuthorService service,
         string nameOfAuthorEmail, string nameOfAuthor, string userEmail,
         string authorEmail, SubmitMessageModel submitMessage)
     {

@@ -72,7 +72,7 @@ public class UserTimelineModel : PageModel
             Cheeps = _cheepService.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, Cheeps, UserEmail, Author == User.Identity.Name); 
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, UserEmail, Author == User.Identity.Name); 
    }   
     
     public IActionResult OnPost() 
@@ -104,7 +104,7 @@ public class UserTimelineModel : PageModel
     {
         SetEmail();
 
-        switch (FollowHandler.Follow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -120,7 +120,7 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":
@@ -179,7 +179,7 @@ public class UserTimelineModel : PageModel
     }
     public bool IsFollowing()
     {
-        return _cheepService.IsFollowing(UserEmail, GetEmail());
+        return _authorService.IsFollowing(UserEmail, GetEmail());
     }
 
     public int GetFollowingCount()
@@ -199,7 +199,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostBlock()
     {
         SetCheeps();
-        _cheepService.CreateBlock(UserEmail, GetEmail());
+        _authorService.CreateBlock(UserEmail, GetEmail());
         _cheepService.UserBlockedSomeone(UserEmail);
         return Redirect("~/");    
     }
