@@ -8,7 +8,8 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
 {
     private SqliteConnection _connection = null!;
     private ChirpDBContext _context = null!;
-    private CheepRepository _repository = null!;
+    private ICheepRepository _cheepRepository = null!;
+    private IAuthorRepository _authorRepository = null!;
     
     public async Task InitializeAsync()
     {
@@ -19,7 +20,8 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
         _context = new ChirpDBContext(builder.Options);
         await _context.Database.EnsureCreatedAsync();
 
-        _repository = new CheepRepository(_context);
+        _cheepRepository = new CheepRepository(_context);
+        _authorRepository = new AuthorRepository(_context);
     }
     
     public async Task DisposeAsync()
@@ -31,7 +33,7 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
 	[Fact]
     public void DatabaseInitialization()
     {
-        var results = _repository.GetCheepsFromAuthorPage("Helge", 0);
+        var results = _cheepRepository.GetCheepsFromAuthorPage("Helge", 0);
         
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
@@ -41,13 +43,13 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
     [InlineData("johnDoe", "john.doe@mail.com", "some text")]
     public void CreateAuthorAndCheepTest(string author, string email, string message){
         // Arrange
-        Author newAuthor = _repository.AddAuthor(author, email);
+        Author newAuthor = _authorRepository.AddAuthor(author, email);
         
         // Act
-        _repository.AddCheep(newAuthor, message);
+        _cheepRepository.AddCheep(newAuthor, message);
         
         // Assert
-        var result = _repository.GetCheepsFromAuthorPage(author, 0);
+        var result = _cheepRepository.GetCheepsFromAuthorPage(author, 0);
 
         Assert.True(result.Count>0);
 
