@@ -295,5 +295,9 @@ button:hover {
     input[type="text"] {
         width: 100%;
     }
-    
+    .char-count {
+        font-size: 12px;
+        color: grey;
+        margin-top: 5px;
+    }
 }

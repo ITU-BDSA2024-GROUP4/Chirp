@@ -13,6 +13,7 @@ public class SubmitMessageModel
     [StringLength(160, MinimumLength = 1, ErrorMessage = "Message length must be between {2} and {1} characters.")]
     [Display(Name = "Message Text")]
     public string Message { get; set; }
+    public int MessageLength => Message?.Length ?? 0;
     public SubmitMessageModel() {
         
     }
