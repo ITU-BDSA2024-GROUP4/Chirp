@@ -40,10 +40,12 @@ public class CheepService : ICheepService
 
     public void DeleteCheep(string userEmail, int cheepId)
     {
-        foreach (var cheep in _repository.GetCheepToDelete(userEmail, cheepId))
+        List<Cheep> cheeps = _repository.GetCheep(userEmail, cheepId);
+        if (cheeps == null || cheeps.Count > 1)
         {
-            _repository.DeleteCheep(cheep);
+            throw new ApplicationException("There are multiple cheeps with same email and cheep ID.");
         }
+        _repository.DeleteCheep(cheeps[0]);
     }
 
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
@@ -55,11 +57,6 @@ public class CheepService : ICheepService
     {
         Author author = TEMP.GetAuthor(email)[0];
         _repository.AddCheep(author, message);
-    }
-
-    public bool IsFollowingUserName(string username, string author)
-    {
-        return _repository.IsFollowingUserName(username, author);
     }
 
     public List<AuthorDTO> GetFollowers(string email)
@@ -86,21 +83,6 @@ public class CheepService : ICheepService
         return Cheeps;
     }
 
-    public int GetFollowerCount(string email)
-    {
-        return _repository.GetFollowerCount(email);
-    }
-
-    public int GetFollowerCountUserName(string username)
-    {
-        return _repository.GetFollowerCountUserName(username);
-    }
-
-    public int GetFollowingCount(string username)
-    {
-        return _repository.GetFollowingCount(username);
-    }
-
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
     {
         List<AuthorDTO> following = TEMP.GetFollowers(userEmail);
@@ -112,11 +94,6 @@ public class CheepService : ICheepService
 
         followingString.Add(userEmail);
         return repository.GetCheepsFromAuthorPages(followingString, page);
-    }
-
-    public void ForgetMe(string email)
-    {
-        _repository.ForgetUser(email);
     }
 
     public void CreateLike(string user, int CheepId)

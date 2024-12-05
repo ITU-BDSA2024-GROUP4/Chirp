@@ -14,7 +14,7 @@ public class AuthorRepository : IAuthorRepository
         _context = context;
     }
     
-    //COMMAND
+    // Command
     public Author AddAuthor(string username, string email)
     {
         Author author = new Author()
@@ -32,7 +32,7 @@ public class AuthorRepository : IAuthorRepository
         return author;
     }
     
-    //QUERY
+    // Query
     public List<Author> GetAuthor(string email) {
         var query = (from Author in _context.Authors
             where Author.Email == email
@@ -41,7 +41,7 @@ public class AuthorRepository : IAuthorRepository
         return query.ToList();
     }
     
-    //COMMAND
+    // Command
     public List<Author> GetAuthorUserName(string userName)
     {
         var query = (from Author in _context.Authors
@@ -51,7 +51,7 @@ public class AuthorRepository : IAuthorRepository
         return query.ToList();
     }
     
-    //QUERY
+    // Query
     public List<AuthorDTO> GetFollowers(string email)
     {
         var query = (from Follows in _context.Following
@@ -60,7 +60,7 @@ public class AuthorRepository : IAuthorRepository
         return query.ToList();
     }
     
-    //QUERY
+    // Query
     public List<AuthorDTO> GetBlockedAuthors(string userEmail)
     {
         var query = (from Author in _context.Authors
@@ -154,11 +154,84 @@ public class AuthorRepository : IAuthorRepository
         _context.Blocked.Add(blocked);
         _context.SaveChanges();
     }
+    
+    // Query TODO: boolean logic moved to service
     public bool IsBlocked(string userEmail, string blockEmail)
     {
         var query = (from Blocked in _context.Blocked
             where Blocked.User.Email == userEmail && Blocked.BlockedUser.Email == blockEmail
             select Blocked).Count();
         return query > 0;
+    }
+    
+    // TODO: Both query and command
+    public void ForgetUser(string email)
+    {
+        var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
+        {
+            throw new Exception("User not found.");
+        }
+
+        
+        var cheeps = _context.Cheeps.Where(c => c.AuthorId == author.AuthorId).ToList();
+        _context.Cheeps.RemoveRange(cheeps);
+
+        
+        var follows = _context.Following.Where(f => f.User.AuthorId == author.AuthorId || f.Following.AuthorId == author.AuthorId).ToList();
+        _context.Following.RemoveRange(follows);
+
+        
+        _context.Authors.Remove(author);
+
+        
+        _context.SaveChanges();
+    }
+    
+    // Query
+    public int GetFollowerCount(string email)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.Following.Email == email
+            select Follows).Count();
+        return query;
+
+    }
+    
+    // Query
+    public int GetFollowerCountUserName(string username)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.Following.Name == username
+            select Follows).Count();
+        return query;
+
+    }
+    
+    // Query
+    public int GetFollowingCount(string username)
+    {
+        var query = (from Follows in _context.Following
+            where Follows.User.Name == username
+            select Follows).Count();
+        return query;
+
+    }
+    
+    // TODO: Multiple queries, move logic to service
+    public bool IsFollowingUserName(string username, string author)
+    {
+        List<Author> AuthorUserList = GetAuthorUserName(username);
+        List<Author> AuthorAuthorList = GetAuthor(author);
+        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
+            return false;
+        }
+        Author AuthorUser = AuthorUserList[0];
+        Author AuthorAuthor = AuthorAuthorList[0];
+
+        var query = (from Follows in _context.Following
+            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            select Follows).Any();
+
+        return query;
     }
 }

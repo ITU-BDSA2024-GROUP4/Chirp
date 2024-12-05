@@ -17,7 +17,7 @@ public class CheepRepository : ICheepRepository
         _context = context;
     }
 
-    //Query
+    // Query
     public List<CheepDTO> GetCheeps(int page)
     {
         var query = (from Author in _context.Authors
@@ -37,7 +37,7 @@ public class CheepRepository : ICheepRepository
         
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
-    //Query
+    // Query
     public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
         var query = (from Author in _context.Authors
@@ -56,8 +56,8 @@ public class CheepRepository : ICheepRepository
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
     
-    //Query TODO: NAME CHANGE
-    public List<Cheep> GetCheepToDelete(string userEmail, int cheepId)
+    // Query TODO: NAME CHANGE
+    public List<Cheep> GetCheep(string userEmail, int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
             where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
@@ -130,6 +130,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
     
+    // Commands TODO: move creation of cheep to service
     public Cheep AddCheep(Author author, string text)
     {
         Cheep cheep = new Cheep()
@@ -155,48 +156,8 @@ public class CheepRepository : ICheepRepository
         
         return cheep;
     }
-
-    public bool IsFollowingUserName(string username, string author)
-    {
-        List<Author> AuthorUserList = _TEMP.GetAuthorUserName(username);
-        List<Author> AuthorAuthorList = _TEMP.GetAuthor(author);
-        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
-            return false;
-        }
-        Author AuthorUser = AuthorUserList[0];
-        Author AuthorAuthor = AuthorAuthorList[0];
-
-        var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
-            select Follows).Any();
-
-        return query;
-    }
-
-    public int GetFollowerCount(string email)
-    {
-        var query = (from Follows in _context.Following
-                where Follows.Following.Email == email
-                    select Follows).Count();
-        return query;
-
-    }
-    public int GetFollowerCountUserName(string username)
-    {
-        var query = (from Follows in _context.Following
-            where Follows.Following.Name == username
-            select Follows).Count();
-        return query;
-
-    }
-    public int GetFollowingCount(string username)
-    {
-        var query = (from Follows in _context.Following
-            where Follows.User.Name == username
-            select Follows).Count();
-        return query;
-
-    }
+    
+    // Query
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors
@@ -216,6 +177,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
+    // Query TODO: move logic to service
     public Cheep GetCheepFromId(int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
@@ -227,31 +189,8 @@ public class CheepRepository : ICheepRepository
         }
         return query.ToList()[0];
     }
-
-    public void ForgetUser(string email)
-    {
-        var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
-        {
-            throw new Exception("User not found.");
-        }
-
-        
-        var cheeps = _context.Cheeps.Where(c => c.AuthorId == author.AuthorId).ToList();
-        _context.Cheeps.RemoveRange(cheeps);
-
-        
-        var follows = _context.Following.Where(f => f.User.AuthorId == author.AuthorId || f.Following.AuthorId == author.AuthorId).ToList();
-        _context.Following.RemoveRange(follows);
-
-        
-        _context.Authors.Remove(author);
-
-        
-        _context.SaveChanges();
-
-    }
     
-    //COMMAND
+    // Command
     public void AddLike(Likes likes)
     {
         var validationResults = new List<ValidationResult>();
@@ -265,6 +204,7 @@ public class CheepRepository : ICheepRepository
         _context.SaveChanges();
     }
 
+    // Query
     public bool IsLiked(string user, int CheepId)
     {
         var query = (from Likes in _context.Likes
@@ -273,6 +213,8 @@ public class CheepRepository : ICheepRepository
 
         return query;
     }
+    
+    // TODO: Query and Command
     public void UnLike(string user, int CheepId)
     {
         var query = (from Likes in _context.Likes
@@ -285,6 +227,7 @@ public class CheepRepository : ICheepRepository
         _context.SaveChanges();
     }
 
+    // Query
     public int LikeCount(int CheepId)
     {
         var query = (from Likes in _context.Likes
@@ -293,6 +236,7 @@ public class CheepRepository : ICheepRepository
         return query;
     }
 
+    // Query TODO: move to author repo
     public int TotalLikeCountUser(string email)
     {
         var query = (from Cheep in _context.Cheeps
@@ -301,11 +245,13 @@ public class CheepRepository : ICheepRepository
             select Likes).Count();
         return query;
     }
+    // Query ?? maybe change to linq query ??
     public int AmountOfCheeps()
     {
         return _context.Cheeps.Count();
     }
 
+    // TODO: Query and command
     public void UnBlock(string userEmail, string blockEmail)
     {
         var query = (from Blocked in _context.Blocked
@@ -320,6 +266,7 @@ public class CheepRepository : ICheepRepository
         
     }
 
+    // Query
     public bool UserBlockedSomeone(string userEmail)
     {
         var query = (from Blocked in _context.Blocked
@@ -328,6 +275,7 @@ public class CheepRepository : ICheepRepository
         return query > 0;
     }
 
+    // Query
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
     {
         var query = (from Author in _context.Authors
@@ -346,6 +294,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
+    // Query
     public List<CheepDTO> GetLiked(string email)
     {
 

@@ -143,7 +143,7 @@ public class AboutModel : PageModel {
     public async Task<IActionResult> OnPostForgetMe()
     {
         UserEmail = UserHandler.FindEmail(User);
-        _cheepService.ForgetMe(UserEmail);
+        _authorService.ForgetMe(UserEmail);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)

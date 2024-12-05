@@ -107,4 +107,29 @@ public class AuthorService : IAuthorService
             _repository.CreateBlock(userEmail, blockEmail);
         }
     }
+    
+    public void ForgetMe(string email)
+    {
+        _repository.ForgetUser(email);
+    }
+    
+    public int GetFollowerCount(string email)
+    {
+        return _repository.GetFollowerCount(email);
+    }
+
+    public int GetFollowerCountUserName(string username)
+    {
+        return _repository.GetFollowerCountUserName(username);
+    }
+
+    public int GetFollowingCount(string username)
+    {
+        return _repository.GetFollowingCount(username);
+    }
+    public bool IsFollowingUserName(string username, string author)
+    {
+        return _repository.IsFollowingUserName(username, author);
+    }
+    
 }

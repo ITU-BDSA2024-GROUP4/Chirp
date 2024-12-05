@@ -170,7 +170,7 @@ public class UserTimelineModel : PageModel
 
     public int Followers()
     {
-        return _cheepService.GetFollowerCountUserName(Author);
+        return _authorService.GetFollowerCountUserName(Author);
     }
 
     public string GetEmail()
@@ -184,7 +184,7 @@ public class UserTimelineModel : PageModel
 
     public int GetFollowingCount()
     {
-        return _cheepService.GetFollowingCount(Author);
+        return _authorService.GetFollowingCount(Author);
     }
 
     public int GetTotalLikesCount()

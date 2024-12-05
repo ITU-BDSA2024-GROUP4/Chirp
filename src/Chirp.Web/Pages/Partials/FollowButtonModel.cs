@@ -44,6 +44,6 @@ public class FollowButtonModel
 
     public int FollowCount(string email)
     {
-        return _cheepService.GetFollowerCount(email);
+        return _authorService.GetFollowerCount(email);
     }
 }
