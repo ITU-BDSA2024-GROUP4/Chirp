@@ -6,7 +6,6 @@ namespace Chirp.Infrastructure;
 public class AuthorRepository : IAuthorRepository
 {
     private readonly ChirpDBContext _context;
-    private readonly int _pageSize = 32;
 
     public AuthorRepository(ChirpDBContext context)
     {

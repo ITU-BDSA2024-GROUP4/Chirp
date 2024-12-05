@@ -56,65 +56,12 @@ public class CheepService : ICheepService
         _repository.AddCheep(author, message);
     }
 
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    public AuthorDTO? GetAuthor(string email)
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-
-{
-        var authors = TEMP.GetAuthor(email);
-        if (authors.Count > 1)
-        {
-            return null; //Error, shouldn't be longer than 1
-        }
-
-        if (authors.Count == 0)
-        {
-            return null; //Error, should exist
-        }
-
-        return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
-    }
-
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    public AuthorDTO? GetAuthorUserName(string userName)
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    {
-        var authors = _TEMP.GetAuthorUserName(userName);
-        if (authors.Count > 1)
-        {
-            return null; //Error, shouldn't be longer than 1
-        }
-
-        if (authors.Count == 0)
-        {
-            return null; //Error, should exist
-        }
-
-        return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
-    }
-
-    public AuthorDTO GetOrCreateAuthor(string name, string email)
-    {
-        var authors = TEMP.GetAuthor(email);
-        if (authors.Count > 1)
-        {
-            throw new InvalidOperationException($"Multiple authors found for email: {email}");
-        }
-
-        if (authors.Count == 0)
-        {
-            TEMP.AddAuthor(name, email);
-            authors = TEMP.GetAuthor(email);
-        }
-
-        var author = authors.First();
-        return new AuthorDTO { Name = author.Name, Email = author.Email };
-    }
-
     public void CreateFollow(string username, string user, string follow)
     {
-        GetOrCreateAuthor(username, user);
+        /*
+        _TEMP.GetOrCreateAuthor(username, user);
         _repository.CreateFollow(user, follow);
+        */
     }
 
     public void UnFollow(string user, string unfollow)
@@ -261,11 +208,7 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheepsNotBlocked(userEmail);
     }
-
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
-    {
-        return TEMP.GetBlockedAuthors(userEmail);
-    }
+    
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;

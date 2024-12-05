@@ -13,7 +13,8 @@ using Microsoft.CodeAnalysis.Elfie.Extensions;
 namespace Chirp.Web.Pages;
 
 public class AboutModel : PageModel {
-    private readonly ICheepService _service;
+    private readonly ICheepService _cheepService;
+    private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
     private readonly UserManager<ChirpUser> _userManager;
     public string Author;
@@ -27,9 +28,10 @@ public class AboutModel : PageModel {
     [BindProperty]
     public string Unblock_User { get; set; }
 
-    public AboutModel(ICheepService service, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
+    public AboutModel(ICheepService cheepService, IAuthorService authorService,SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
-        _service = service;
+        _cheepService = cheepService;
+        _authorService = authorService;
         _signInManager = signInManager;
         _userManager = userManager;
     }
@@ -79,29 +81,29 @@ public class AboutModel : PageModel {
 
     public string GetEmail() 
     { 
-        return _service.GetAuthor(UserEmail).Email;
+        return _authorService.GetAuthor(UserEmail).Email;
     }
     public string GetName() 
     {
-        return _service.GetAuthor(UserEmail).Name;
+        return _authorService.GetAuthor(UserEmail).Name;
     }
     public List<AuthorDTO> GetFollowers()
     {
-        return _service.GetFollowers(UserEmail);
+        return _cheepService.GetFollowers(UserEmail);
     }
     public List<CheepDTO> GetCheeps()
     {
-        AuthorDTO authorDTO = _service.GetAuthor(UserEmail);
+        AuthorDTO authorDTO = _authorService.GetAuthor(UserEmail);
         if (authorDTO == null)
         {
             return new List<CheepDTO>();
         }
-        return _service.GetCheepsFromAuthor(authorDTO.Name);
+        return _cheepService.GetCheepsFromAuthor(authorDTO.Name);
     }
 
     public List<CheepDTO> GetLikes()
     {
-        return _service.GetLiked(UserEmail);
+        return _cheepService.GetLiked(UserEmail);
     }
     public string CreateCsvContent()
     {
@@ -141,7 +143,7 @@ public class AboutModel : PageModel {
     public async Task<IActionResult> OnPostForgetMe()
     {
         UserEmail = UserHandler.FindEmail(User);
-        _service.ForgetMe(UserEmail);
+        _cheepService.ForgetMe(UserEmail);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
@@ -155,20 +157,20 @@ public class AboutModel : PageModel {
     
     public bool UserBlockedSomeOne()
     {
-        return _service.UserBlockedSomeone(UserEmail);
+        return _cheepService.UserBlockedSomeone(UserEmail);
     }
     
     public IActionResult OnPostUnblock()
     {
         User_Email = UserHandler.FindEmail(User);
-        _service.UnBlock(User_Email, Unblock_User);
+        _cheepService.UnBlock(User_Email, Unblock_User);
         
         return RedirectToPage();
     }
 
     public List<AuthorDTO> GetBlockedAuthors()
     {
-        return _service.GetBlockedAuthors(UserEmail);
+        return _authorService.GetBlockedAuthors(UserEmail);
     }
     
 }

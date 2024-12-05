@@ -11,11 +11,10 @@ public class CheepRepository : ICheepRepository
     private readonly ChirpDBContext _context;
     private readonly IAuthorRepository _TEMP;
     private readonly int _pageSize = 32;
-    
+
     public CheepRepository(ChirpDBContext context)
-    {   
+    {
         _context = context;
-        _TEMP = new AuthorRepository(_context);
     }
 
     //Query

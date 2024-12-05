@@ -16,7 +16,8 @@ namespace Chirp.Web.Pages;
 
 public class UserTimelineModel : PageModel
 {
-    private readonly ICheepService _service;
+    private readonly ICheepService _cheepService;
+    private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
 
     public List<CheepDTO> Cheeps { get; set; } = null!;
@@ -37,9 +38,10 @@ public class UserTimelineModel : PageModel
     public string UserEmail { get; set; }
     public int CurrentPage { get; set; } = 0;
 
-    public UserTimelineModel(ICheepService service, SignInManager<ChirpUser> signInManager)
+    public UserTimelineModel(ICheepService cheepService, IAuthorService authorService, SignInManager<ChirpUser> signInManager)
     {
-        _service = service;
+        _cheepService = cheepService;
+        _authorService = authorService;
         _signInManager = signInManager;
     }
     public void SetEmail() {
@@ -63,14 +65,14 @@ public class UserTimelineModel : PageModel
 
         if (Author == User.Identity.Name)
         {
-            Cheeps = _service.GetOwnTimelinePage(UserEmail, CurrentPage);
+            Cheeps = _cheepService.GetOwnTimelinePage(UserEmail, CurrentPage);
         }
         else
         {
-            Cheeps = _service.GetCheepsFromAuthorPage(Author, CurrentPage);
+            Cheeps = _cheepService.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail, Author == User.Identity.Name); 
+        FollowButton = new FollowButtonModel(_cheepService, Cheeps, UserEmail, Author == User.Identity.Name); 
    }   
     
     public IActionResult OnPost() 
@@ -91,8 +93,8 @@ public class UserTimelineModel : PageModel
         if(!InvalidCheep) {
             InvalidCheep = false;
         }
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
-        _service.AddCheep(author, SubmitMessage.Message);
+        string author = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
+        _cheepService.AddCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
         return RedirectToPage(); 
@@ -102,7 +104,7 @@ public class UserTimelineModel : PageModel
     {
         SetEmail();
 
-        switch (FollowHandler.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -118,7 +120,7 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":
@@ -144,61 +146,61 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostLike()
     {
         SetCheeps();
-        _service.CreateLike(UserEmail, Cheep_Id);
+        _cheepService.CreateLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 
     public IActionResult OnPostUnlike()
     {
         SetCheeps();
-        _service.UnLike(UserEmail, Cheep_Id);
+        _cheepService.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
     public bool GetMaxPage()
     {
         if (Author == User.Identity.Name)
         {
-            return CurrentPage <= (_service.GetOwnTimeline(UserEmail).Count() / 32);
+            return CurrentPage <= (_cheepService.GetOwnTimeline(UserEmail).Count() / 32);
         }
         else
         {
-            return CurrentPage <= (_service.GetCheepsFromAuthor(Author).Count() / 32); //32 is got from repository "_pagesize"
+            return CurrentPage <= (_cheepService.GetCheepsFromAuthor(Author).Count() / 32); //32 is got from repository "_pagesize"
         }
     }
 
     public int Followers()
     {
-        return _service.GetFollowerCountUserName(Author);
+        return _cheepService.GetFollowerCountUserName(Author);
     }
 
     public string GetEmail()
     {
-        return _service.GetAuthorUserName(Author).Email;
+        return _authorService.GetAuthorUserName(Author).Email;
     }
     public bool IsFollowing()
     {
-        return _service.IsFollowing(UserEmail, GetEmail());
+        return _cheepService.IsFollowing(UserEmail, GetEmail());
     }
 
     public int GetFollowingCount()
     {
-        return _service.GetFollowingCount(Author);
+        return _cheepService.GetFollowingCount(Author);
     }
 
     public int GetTotalLikesCount()
     {
-        return _service.TotalLikeCountUser(GetEmail());
+        return _cheepService.TotalLikeCountUser(GetEmail());
     }
 
     public int GetTotalCheepsCount()
     {
-        return _service.GetTotalCheeps(Author);
+        return _cheepService.GetTotalCheeps(Author);
     }
     public IActionResult OnPostBlock()
     {
         SetCheeps();
-        _service.CreateBlock(UserEmail, GetEmail());
-        _service.UserBlockedSomeone(UserEmail);
+        _cheepService.CreateBlock(UserEmail, GetEmail());
+        _cheepService.UserBlockedSomeone(UserEmail);
         return Redirect("~/");    
     }
 
@@ -209,7 +211,7 @@ public class UserTimelineModel : PageModel
         {
             throw new Exception("Author Email is not the logged in user.");
         }
-        _service.DeleteCheep(UserEmail, Cheep_Id);
+        _cheepService.DeleteCheep(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 }

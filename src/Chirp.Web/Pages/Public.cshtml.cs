@@ -15,7 +15,8 @@ namespace Chirp.Web.Pages;
 
 public class PublicModel : PageModel
 {
-    private readonly ICheepService _service;
+    private readonly ICheepService _cheepService;
+    private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
     public List<CheepDTO> Cheeps { get; set; } = null!;
 
@@ -35,9 +36,10 @@ public class PublicModel : PageModel
 
     private readonly int _pagesize = 32;
 
-    public PublicModel(ICheepService service, SignInManager<ChirpUser> signInManager)
+    public PublicModel(ICheepService cheepService, IAuthorService authorService, SignInManager<ChirpUser> signInManager)
     {
-        _service = service;
+        _cheepService = cheepService;
+        _authorService = authorService;
         _signInManager = signInManager;
     }
 
@@ -56,28 +58,28 @@ public class PublicModel : PageModel
     {
         SetEmail();
         var pageQuery = Request.Query["page"].ToString();
-        if (!_service.UserBlockedSomeone(UserEmail))
+        if (!_cheepService.UserBlockedSomeone(UserEmail))
         {
             if (pageQuery == null)
             {
                 CurrentPage = 0;
-                Cheeps = _service.GetCheeps(0); // default to first page
+                Cheeps = _cheepService.GetCheeps(0); // default to first page
             }
             else
             {
                 _ = int.TryParse(pageQuery, out int page);
                 CurrentPage = page;
-                Cheeps = _service.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
+                Cheeps = _cheepService.GetCheeps(page - 1); // minus 1 because pages are 0 indexed   
             }
         }
         else
         {
             _ = int.TryParse(pageQuery, out int page);
             CurrentPage = page;
-            Cheeps = _service.GetCheepsNotBlocked(UserEmail); // minus 1 because pages are 0 indexed  
+            Cheeps = _cheepService.GetCheepsNotBlocked(UserEmail); // minus 1 because pages are 0 indexed  
         }
 
-        FollowButton = new FollowButtonModel(_service, Cheeps, UserEmail);
+        FollowButton = new FollowButtonModel(_cheepService, Cheeps, UserEmail);
     }
 
     public IActionResult OnGetLogin()
@@ -111,8 +113,8 @@ public class PublicModel : PageModel
             InvalidCheep = false;
         }
 
-        string author = _service.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
-        _service.AddCheep(author, SubmitMessage.Message);
+        string author = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
+        _cheepService.AddCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
         return RedirectToPage();
@@ -122,7 +124,7 @@ public class PublicModel : PageModel
     {
         SetEmail();
 
-        switch (FollowHandler.Follow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Follow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
                     User.Identity.Name, Author_Email))
         {
             case "Error":
@@ -138,7 +140,7 @@ public class PublicModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _service, nameof(Author_Email), nameof(Author), UserEmail,
+        switch (FollowHandler.Unfollow(ModelState, _cheepService, nameof(Author_Email), nameof(Author), UserEmail,
                     Author_Email, SubmitMessage))
         {
             case "Error":
@@ -153,23 +155,23 @@ public class PublicModel : PageModel
     public IActionResult OnPostLike()
     {
         SetCheeps();
-        _service.CreateLike(UserEmail, Cheep_Id);
+        _cheepService.CreateLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 
     public IActionResult OnPostUnlike()
     {
         SetCheeps();
-        _service.UnLike(UserEmail, Cheep_Id);
+        _cheepService.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 
     public bool GetMaxPage()
     {
-        return CurrentPage <= (_service.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"
+        return CurrentPage <= (_cheepService.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"
     }
 
-    public string GetLoggedMail() { return _service.GetAuthorUserName(User.Identity.Name).Email; }
+    public string GetLoggedMail() { return _authorService.GetAuthorUserName(User.Identity.Name).Email; }
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
@@ -177,7 +179,7 @@ public class PublicModel : PageModel
         {
             throw new Exception("Author Email is not the logged in user.");
         }
-        _service.DeleteCheep(UserEmail, Cheep_Id);
+        _cheepService.DeleteCheep(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
 }

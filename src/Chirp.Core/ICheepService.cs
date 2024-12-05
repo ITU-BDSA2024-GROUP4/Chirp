@@ -8,11 +8,6 @@ public interface ICheepService
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public void DeleteCheep(string userEmail, int cheepId);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-    public AuthorDTO GetAuthor(string email);
-    public AuthorDTO GetAuthorUserName(string userName);
-
-
-    public AuthorDTO GetOrCreateAuthor(string name, string email);
     public void AddCheep(string email, string message);
 
     public void CreateFollow(string username, string user, string follow);
@@ -38,6 +33,5 @@ public interface ICheepService
     public bool IsBlocked(string userEmail, string blockEmail);
     public bool UserBlockedSomeone(string userEmail);
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail);
     public int GetTotalCheeps(string email);
 }
