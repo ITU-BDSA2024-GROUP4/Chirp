@@ -144,7 +144,7 @@ public class PublicModel : PageModel
             case "Error":
                 return RedirectToPage("/Error");
             case "Page":
-                return Page();
+                return RedirectToPage();
             default:
                 return RedirectToPage("/Error");
         }
