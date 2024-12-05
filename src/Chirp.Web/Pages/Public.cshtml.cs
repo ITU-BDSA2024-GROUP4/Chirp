@@ -170,6 +170,7 @@ public class PublicModel : PageModel
     }
 
     public string GetLoggedMail() { return _service.GetAuthorUserName(User.Identity.Name).Email; }
+
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
@@ -177,6 +178,7 @@ public class PublicModel : PageModel
         {
             throw new Exception("Author Email is not the logged in user.");
         }
+
         _service.DeleteCheep(UserEmail, Cheep_Id);
         return RedirectToPage();
     }

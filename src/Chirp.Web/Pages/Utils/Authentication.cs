@@ -19,7 +19,8 @@ namespace Chirp.Web.Pages.Utils
         }
         
 
-        public static async Task<IActionResult> HandleLogout(SignInManager<ChirpUser> manager, PageModel page, string redirectUri = "/")
+        public static async Task<IActionResult> HandleLogout(SignInManager<ChirpUser> manager, PageModel page,
+            string redirectUri = "/")
         {
             await manager.SignOutAsync();
             return page.SignOut(
