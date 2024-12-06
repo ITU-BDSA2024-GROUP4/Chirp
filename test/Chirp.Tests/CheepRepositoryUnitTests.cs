@@ -89,6 +89,22 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             Assert.Equal(author, cheep.Author);
         }
     }
+    
+    [Theory]
+    [InlineData("Helge")]
+    public void GetCheepsFromAuthorTest(string author)
+    {
+        
+        // Arrange && Assert
+        var cheeps = _repository.GetCheepsFromAuthor(author);
+        
+        // Assert
+        Assert.True(cheeps.Count > 0);
+        foreach (var cheep in cheeps)
+        {
+            Assert.Equal(author, cheep.Author);
+        }
+    }
 
     [Theory]
     [InlineData(0)]
@@ -169,6 +185,6 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         Assert.True(2 > followers);
     }
 
-
+    
     
 }
