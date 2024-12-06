@@ -157,6 +157,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
 
 
 
+
     [Theory]
     [InlineData("johnDoe", "john.doe@gmail.com", 0)]
     public void MaxLengthCheep(string author, string email, int authorId)
@@ -235,6 +236,20 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         }
     }
 
+    [Theory]
+    [InlineData("JohnDoe", "johndoe@gmail.com", "Helge", "ropf@itu.dk")]
+    public void CanFollowUserTest(string author, string email, string authorToFollow, string emailToFollow){
+        // Arrange
+        var user = _repository.CreateAuthor(author, email);
+
+        // Act
+        _repository.CreateFollow(email, emailToFollow);
+
+        // Assert
+        var result = _repository.GetFollowerCount(emailToFollow);
+
+        Assert.True(result>0);
+    }
 
 
 }
