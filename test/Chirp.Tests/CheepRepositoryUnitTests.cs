@@ -1,6 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations; 
+using System.ComponentModel.DataAnnotations;
 using Chirp.Infrastructure;
 using Chirp.Core;
 
@@ -44,10 +44,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Theory]
     [InlineData("test", "test@gmail.com")]
     public void CreateAuthorTest(string author, string email)
-    {   
+    {
         // Arrange && Act
         Author result = _repository.CreateAuthor(author, email);
-        
+
         // Assert
         Assert.Equal("test", result.Name);
         Assert.Equal("test@gmail.com", result.Email);
@@ -65,10 +65,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             AuthorId = authorId,
             Cheeps = new List<Cheep>()
         };
-        
+
         // Act
         Cheep cheep = _repository.CreateCheep(newAuthor, "test");
-        
+
         // Assert
         Assert.Equal("test", cheep.Text);
     }
@@ -78,10 +78,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("Adrian")]
     public void GetCheepsFromAuthorPageTest(string author)
     {
-        
+
         // Arrange && Assert
         var cheeps = _repository.GetCheepsFromAuthorPage(author, 0);
-        
+
         // Assert
         Assert.True(cheeps.Count > 0);
         foreach (var cheep in cheeps)
@@ -89,15 +89,15 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             Assert.Equal(author, cheep.Author);
         }
     }
-    
+
     [Theory]
     [InlineData("Helge")]
     public void GetCheepsFromAuthorTest(string author)
     {
-        
+
         // Arrange && Assert
         var cheeps = _repository.GetCheepsFromAuthor(author);
-        
+
         // Assert
         Assert.True(cheeps.Count > 0);
         foreach (var cheep in cheeps)
@@ -114,7 +114,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         // Arrange && Act
         var cheeps = _repository.GetCheeps(page);
-        
+
         // Assert
         Assert.Equal(32, cheeps.Count);
     }
@@ -123,8 +123,8 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("ropf@itu.dk", "Helge")]
     [InlineData("adho@itu.dk", "Adrian")]
     public void GetCheepsFromAuthorPageEmailTest(string email, string author)
-    {   
-        
+    {
+
         // Arrange && Act
         var cheeps = _repository.GetCheepsFromAuthorPageEmail(email, 0);
 
@@ -135,13 +135,33 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             Assert.Equal(author, cheep.Author);
         }
     }
+    [Theory]
+    [InlineData("ropf@itu.dk")]
+    [InlineData("adho@itu.dk")]
+
+    public void GetCheepsFromAuthorEmailTest(string email)
+    {
+
+        // Arrange && Act
+        var cheeps = _repository.GetCheepsFromAuthorEmail(email);
+
+        // Assert
+        Assert.True(cheeps.Count > 0);
+
+        foreach (var cheep in cheeps)
+        {
+            Assert.Equal(email, cheep.Email);
+        }
+    }
+
+
 
 
     [Theory]
     [InlineData("johnDoe", "john.doe@gmail.com", 0)]
     public void MaxLengthCheep(string author, string email, int authorId)
     {
-        
+
         // Arrange
         Author newAuthor = new Author()
         {
@@ -150,13 +170,13 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             AuthorId = authorId,
             Cheeps = new List<Cheep>()
         };
-        
-        string message = new string('a',161);
-        
+
+        string message = new string('a', 161);
+
         // Act && Assert
-        Assert.Throws<ValidationException>( () => _repository.CreateCheep(newAuthor, message));
+        Assert.Throws<ValidationException>(() => _repository.CreateCheep(newAuthor, message));
     }
-    
+
     //TEST if user can follow same user more than once (logical fallacy!!!)
     [Theory]
     [InlineData("VictorDuplicate@dupe.it", "victor@nodupes.it")]
@@ -193,7 +213,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         // Arrange && Act
         var result = _repository.GetAuthor(email);
-        
+
         // Assert
         foreach (var author in result)
         {
@@ -207,7 +227,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         // Arrange && Act
         var result = _repository.GetAuthorUserName(name);
-        
+
         // Assert
         foreach (var author in result)
         {
@@ -215,6 +235,6 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         }
     }
 
-    
-    
+
+
 }
