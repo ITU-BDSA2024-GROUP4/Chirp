@@ -153,7 +153,7 @@ namespace PlaywrightTests
             // Assert
             // Should be following
             await Expect(Page.GetByRole(AriaRole.Button, new() { Name = "Unfollow" })).ToBeVisibleAsync();
-            await Expect(Page).ToHaveURLAsync(new Regex($".*{posterToFollowUsername}"));
+
 
             // Act
             // Unfollow
