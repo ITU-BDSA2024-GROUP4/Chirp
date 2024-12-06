@@ -185,6 +185,36 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         Assert.True(2 > followers);
     }
 
+    //Tests for AuthorRepository when implemented
+
+    [Theory]
+    [InlineData("ropf@itu.dk")]
+    public void GetAuthorTest(string email)
+    {
+        // Arrange && Act
+        var result = _repository.GetAuthor(email);
+        
+        // Assert
+        foreach (var author in result)
+        {
+            Assert.Equal(email, author.Email);
+        }
+    }
+
+    [Theory]
+    [InlineData("Helge")]
+    public void GetAuthorFromNameTest(string name)
+    {
+        // Arrange && Act
+        var result = _repository.GetAuthorUserName(name);
+        
+        // Assert
+        foreach (var author in result)
+        {
+            Assert.Equal(name, author.Name);
+        }
+    }
+
     
     
 }
