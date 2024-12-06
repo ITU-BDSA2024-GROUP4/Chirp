@@ -93,9 +93,9 @@ namespace PlaywrightTests
             await Page.GetByPlaceholder("name@example.com").FillAsync("ropf@itu.dk");
             await Page.GetByPlaceholder("password").FillAsync("LetM31n!");
             await Page.GetByRole(AriaRole.Button, new() { Name = "Log in" }).ClickAsync();
-            await Page.Locator("#Message").ClickAsync();
-            await Page.Locator("#Message").FillAsync($"{message}");
-            await Page.Locator("#Message").PressAsync("Enter");
+            await Page.Locator("#MessageInput").ClickAsync();
+            await Page.Locator("#MessageInput").FillAsync($"{message}");
+            await Page.Locator("#MessageInput").PressAsync("Enter");
             await Page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
 
             
@@ -133,8 +133,8 @@ namespace PlaywrightTests
 
             // Act
             // Post Cheep
-            await Page.Locator("#Message").ClickAsync();
-            await Page.Locator("#Message").FillAsync(message);
+            await Page.Locator("#MessageInput").ClickAsync();
+            await Page.Locator("#MessageInput").FillAsync(message);
             await Page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
 
             // Assert
@@ -144,11 +144,11 @@ namespace PlaywrightTests
 
             // Act
             // Follow
-            var posterToFollow = Page.Locator("li").Filter(new() { HasText = "Follow 0" }).GetByRole(AriaRole.Button).Nth(1);
+            var posterToFollow = Page.Locator(".author").Nth(2);
             var posterToFollowUsername = await posterToFollow.TextContentAsync();
             await posterToFollow.ClickAsync();
+            await Page.GetByRole(AriaRole.Button, new() { Name = "Follow" }).ClickAsync();
 
-            Console.WriteLine($"Text: {posterToFollowUsername}");
 
             // Assert
             // Should be following
