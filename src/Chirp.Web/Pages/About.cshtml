@@ -3,9 +3,8 @@
 @{
     var routeName = HttpContext.GetRouteValue("author");
     var blockedAuthors = Model.GetBlockedAuthors();
-
 }
-@if (Model.UserIsAuthor) 
+@if (Model.UserIsAuthor)
 {
     @if (Model.UserBlockedSomeOne())
     {
@@ -14,18 +13,19 @@
             <select name="unblock_user" class="dropdown">
                 @foreach (var blocked in Model.GetBlockedAuthors())
                 {
-                    <option value="@blocked.Email" >@blocked.Name</option>
+                    <option value="@blocked.Email">@blocked.Name</option>
                 }
             </select>
             <input type="hidden" name="user_email" value="@Model.User_Email"/>
             <button type="submit" class="follow-button">Unblock</button>
         </form>
     }
+
     <div>
         <h2>Your information</h2>
         <p><strong>Your name: </strong><span>@User.Identity?.Name</span></p>
         <p><strong>Your email: </strong><span>@Model.GetEmail()</span></p>
-    
+
         <h3>People your follow:</h3>
         @if (Model.Following.Any())
         {
@@ -54,7 +54,7 @@
         {
             <h4>You have not chirped any cheeps</h4>
         }
-        
+
         <h3>Cheeps you liked</h3>
         @if (Model.Likes.Any())
         {
@@ -78,12 +78,11 @@
             <input type="submit" value="Forget me" formaction="?handler=ForgetMe">
         </form>
     </div>
-    
 }
-else 
+else
 {
-<div>
-    <h3>Not your information >:( </h3>
-</div>
+    <div>
+        <h3>Not your information >:( </h3>
+    </div>
 }
 
