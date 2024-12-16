@@ -8,7 +8,6 @@ public interface ICheepRepository
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
     public List<Cheep> GetCheep(string username, int cheepId);
 
     public List<CheepDTO> GetCheepsNotBlocked(string username);

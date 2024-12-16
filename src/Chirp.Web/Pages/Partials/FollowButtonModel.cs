@@ -44,8 +44,8 @@ public class FollowButtonModel
         return _cheepService.LikeCount(Cheep_Id);
     }
 
-    public int FollowCount(string email)
+    public int FollowCount(string username)
     {
-        return _authorService.GetFollowerCount(email);
+        return _authorService.GetFollowerCount(username);
     }
 }

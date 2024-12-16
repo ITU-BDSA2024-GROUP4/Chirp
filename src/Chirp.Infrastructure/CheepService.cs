@@ -82,13 +82,13 @@ public class CheepService : ICheepService
         List<CheepDTO> Cheeps = new List<CheepDTO>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Email);
+            followingString.Add(follow.Name);
         }
 
         followingString.Add(username);
-        foreach (var email in followingString)
+        foreach (var usr in followingString)
         {
-            Cheeps.AddRange(_repository.GetCheepsFromAuthorEmail(email));
+            Cheeps.AddRange(_repository.GetCheepsFromAuthor(usr));
         }
 
         return Cheeps;
@@ -96,11 +96,11 @@ public class CheepService : ICheepService
 
     public List<CheepDTO> GetOwnTimelinePage(string username, int page)
     {
-        List<AuthorDTO> following = TEMP.GetFollowers(username);
+        List<AuthorDTO> following = _authorRepository.GetFollowers(username);
         List<string> followingString = new List<string>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Email);
+            followingString.Add(follow.Name);
         }
 
         followingString.Add(username);

@@ -14,7 +14,7 @@ public interface IAuthorRepository
     public void CreateBlock(string username, string blockUsername);
     public void ForgetUser(string username);
     public bool IsFollowingUserName(string username, string followingUsername);
-    public int GetFollowerCount(string email);
+    public int GetFollowerCount(string username);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
     public List<Follows> GetPersonToUnfollow(string username, string unfollowingUsername);

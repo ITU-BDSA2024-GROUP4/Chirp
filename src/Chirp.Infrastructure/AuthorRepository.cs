@@ -64,7 +64,7 @@ public class AuthorRepository : IAuthorRepository
     public List<AuthorDTO> GetBlockedAuthors(string username)
     {
         var query = (from Author in _context.Authors
-            join Blocked in _context.Blocked on Author.Email equals Blocked.User.Email
+            join Blocked in _context.Blocked on Author.Name equals Blocked.User.Name
             select new AuthorDTO
             {
                 Name = Blocked.BlockedUser.Name, Email = Blocked.BlockedUser.Email,
@@ -190,10 +190,10 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // Query
-    public int GetFollowerCount(string email)
+    public int GetFollowerCount(string username)
     {
         var query = (from Follows in _context.Following
-            where Follows.Following.Email == email
+            where Follows.Following.Name == username
             select Follows).Count();
         return query;
 

@@ -173,7 +173,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
 
         Assert.Equal("TooManyFollows", exception.Message);
 
-        int followers = _authorRepository.GetFollowerCount(authorEmail);
+        int followers = _authorRepository.GetFollowerCount(authorEmail); //TODO: change to username
         Assert.True(2 > followers);
     }
 

@@ -113,9 +113,9 @@ public class AuthorService : IAuthorService
         _repository.ForgetUser(username);
     }
     
-    public int GetFollowerCount(string email)
+    public int GetFollowerCount(string username)
     {
-        return _repository.GetFollowerCount(email);
+        return _repository.GetFollowerCount(username);
     }
 
     public int GetFollowerCountUserName(string username)

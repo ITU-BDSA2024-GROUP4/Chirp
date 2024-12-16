@@ -94,6 +94,7 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query
+        // Only used for testing
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
@@ -110,25 +111,6 @@ public class CheepRepository : ICheepRepository
                      })
             .Skip(_pageSize * page)
             .Take(_pageSize);
-
-        return query.ToList();
-    }
-
-    // Query TODO: Unify email and username calls to one or the other
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email)
-    {
-        var query = (from Author in _context.Authors
-                     join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                     orderby Cheeps.TimeStamp descending
-                     where Author.Email == email
-                     select new CheepDTO
-                     {
-                         Author = Author.Name,
-                         Email = Author.Email,
-                         Message = Cheeps.Text,
-                         TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                         CheepId = Cheeps.CheepId
-                     });
 
         return query.ToList();
     }
@@ -157,7 +139,7 @@ public class CheepRepository : ICheepRepository
         var query = (from Author in _context.Authors
                      join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
                      orderby Cheeps.TimeStamp descending
-                     where authors.Contains(Author.Email)
+                     where authors.Contains(Author.Name)
                      select new CheepDTO
                      {
                          Author = Author.Name,
@@ -249,7 +231,7 @@ public class CheepRepository : ICheepRepository
     public void UnBlock(string userEmail, string blockEmail)
     {
         var query = (from Blocked in _context.Blocked
-                     where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
+                     where userEmail == Blocked.User.Name && blockEmail == Blocked.BlockedUser.Name
                      select Blocked);
 
         foreach (var block in query)
@@ -275,7 +257,7 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Author in _context.Authors
                      join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                     where !_context.Blocked.Any(b => b.User.Name == username && b.BlockedUser.Email == Author.Email)
+                     where !_context.Blocked.Any(b => b.User.Name == username && b.BlockedUser.Name == Author.Name)
                      orderby Cheeps.TimeStamp descending
                      select new CheepDTO
                      {
@@ -303,7 +285,6 @@ public class CheepRepository : ICheepRepository
                          Author = Cheep.Author.Name,
                          Message = Cheep.Text
                      });
-        // where authors.Contains(Author.Email)
 
         return query.ToList();
     }

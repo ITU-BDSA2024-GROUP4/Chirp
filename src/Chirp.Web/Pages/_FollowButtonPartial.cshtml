@@ -14,7 +14,7 @@
                         class="date-time">@DateTimeOffset.FromUnixTimeSeconds(cheep.TimeStamp).LocalDateTime.ToString()</span>
                     @if (Model.ShowOnCheeps)
                     {
-                        <span class="follow-count">Followers: @Model.FollowCount(cheep.Email)</span>
+                        <span class="follow-count">Followers: @Model.FollowCount(cheep.Author)</span>
                     }
                 </div>
             </strong>

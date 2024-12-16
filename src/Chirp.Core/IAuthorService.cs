@@ -13,7 +13,7 @@ public interface IAuthorService
     public bool IsBlocked(string username, string blockUsername);
     public void UnFollow(string username, string unfollowUsername);
     public void ForgetMe(string username);
-    public int GetFollowerCount(string email);
+    public int GetFollowerCount(string username);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
     public bool IsFollowingUserName(string username, string followingUsername);
