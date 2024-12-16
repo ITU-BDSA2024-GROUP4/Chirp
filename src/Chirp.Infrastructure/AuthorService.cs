@@ -85,7 +85,7 @@ public class AuthorService : IAuthorService
     public void CreateFollow(string username, string user, string follow)
     {
         GetOrCreateAuthor(username, user);
-        _repository.AddFollow(user, follow);
+        _repository.AddFollow(username, follow);
     }
     public void UnFollow(string user, string unfollow)
     {

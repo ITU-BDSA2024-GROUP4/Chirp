@@ -97,9 +97,9 @@ public class AuthorRepository : IAuthorRepository
         return query;
     }
     //TODO: Multiple commands
-    public void AddFollow(string user, string following)
+    public void AddFollow(string username, string following)
     {
-        Author AuthorUser = TEMPgetAUTHORwithEMAIL(user)[0];
+        Author AuthorUser = GetAuthor(username)[0];
         Author AuthorFollowing = TEMPgetAUTHORwithEMAIL(following)[0];
         
         bool alreadyFollowing = _context.Following.Any(f =>
