@@ -106,10 +106,10 @@ public class CheepService : ICheepService
         return repository.GetCheepsFromAuthorPages(followingString, page);
     }
 
-    public void CreateLike(string user, int CheepId)
+    public void CreateLike(string username, int cheepId)
     {
-        List<Author> authors = _authorRepository.TEMPgetAUTHORwithEMAIL(user);
-        List<Cheep> cheeps = _repository.GetCheepFromId(CheepId);
+        List<Author> authors = _authorRepository.GetAuthor(username);
+        List<Cheep> cheeps = _repository.GetCheepFromId(cheepId);
 
         if (cheeps.Count != 1)
         { 

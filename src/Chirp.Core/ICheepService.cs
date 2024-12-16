@@ -12,7 +12,7 @@ public interface ICheepService
     public List<AuthorDTO> GetFollowers(string email);
     public List<CheepDTO> GetOwnTimeline(string userEmail);
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page);
-    public void CreateLike(string user, int CheepId);
+    public void CreateLike(string username, int cheepId);
     public bool IsLiked(string username, int CheepId);
     public void UnLike(string username, int CheepId);
     public int LikeCount(int CheepId);

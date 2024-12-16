@@ -163,7 +163,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostLike()
     {
         SetCheeps();
-        _cheepService.CreateLike(TEMPUserEmail, Cheep_Id);
+        _cheepService.CreateLike(Username, Cheep_Id);
         return RedirectToPage();
     }
 
