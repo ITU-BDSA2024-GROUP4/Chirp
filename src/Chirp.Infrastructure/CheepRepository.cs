@@ -1,11 +1,7 @@
 using System.Data;
-
 using Microsoft.EntityFrameworkCore;
-
 using Chirp.Core;
-
 using System.ComponentModel.DataAnnotations;
-
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Chirp.Infrastructure;
@@ -21,7 +17,7 @@ public class CheepRepository : ICheepRepository
         _context = context;
     }
 
-    // Query
+    // Methods for retrieving cheeps
     public List<CheepDTO> GetCheeps(int page)
     {
         var query = (from Author in _context.Authors
@@ -35,12 +31,12 @@ public class CheepRepository : ICheepRepository
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
                     CheepId = Cheeps.CheepId
                 })
-            .Skip(_pageSize * page) // Same as SQL "OFFSET
-            .Take(_pageSize); // Same as SQL "LIMIT"
+            .Skip(_pageSize * page)
+            .Take(_pageSize);
 
-        return query.ToList(); //Converts IQueryable<T> to List<T>
+        return query.ToList();
     }
-    // Query
+
     public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
         var query = (from Author in _context.Authors
@@ -56,25 +52,9 @@ public class CheepRepository : ICheepRepository
                 CheepId = Cheeps.CheepId
             });
 
-        return query.ToList(); //Converts IQueryable<T> to List<T>
-    }
-    
-    // Query TODO: NAME CHANGE
-    public List<Cheep> GetCheep(string userEmail, int cheepId)
-    {
-        var query = (from Cheep in _context.Cheeps
-            where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
-            select Cheep);
         return query.ToList();
     }
-    //COMMAND
-    public void RemoveCheep(Cheep cheep)
-    {
-        _context.Cheeps.Remove(cheep);
-        _context.SaveChanges();
-    }
-    
-    //Query
+
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
         var query = (from Author in _context.Authors
@@ -89,13 +69,12 @@ public class CheepRepository : ICheepRepository
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
                     CheepId = Cheeps.CheepId
                 })
-            .Skip(_pageSize * page) // Same as SQL "OFFSET
-            .Take(_pageSize); // Same as SQL "LIMIT"
+            .Skip(_pageSize * page)
+            .Take(_pageSize);
 
-        return query.ToList(); //Converts IQueryable<T> to List<T>
+        return query.ToList();
     }
 
-    //Query
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
@@ -115,7 +94,27 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
-    //QUERY TODO: Unify email and username calls to one or the other
+
+    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
+    {
+        var query = (from Author in _context.Authors
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where authors.Contains(Author.Email)
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email,
+                    Message = Cheeps.Text,
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
+                })
+            .Skip(_pageSize * page)
+            .Take(_pageSize);
+
+        return query.ToList();
+    }
+
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email)
     {
         var query = (from Author in _context.Authors
@@ -133,143 +132,7 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList();
     }
-    
-    // Commands
-    public Cheep AddCheep(Cheep cheep, Author author)
-    {
-        var validationResults = new List<ValidationResult>();
-        var valContext = new ValidationContext(cheep);
-        if (!Validator.TryValidateObject(cheep, valContext, validationResults, true))
-        {
-            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
-        }
 
-        _context.Cheeps.Add(cheep);
-        author.Cheeps.Add(cheep);
-
-        _context.SaveChanges();
-        
-        return cheep; // Returns so it made easier to test
-    }
-    
-    // Query TODO: simplify names/merge methods
-    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
-    {
-        var query = (from Author in _context.Authors
-                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                orderby Cheeps.TimeStamp descending
-                where authors.Contains(Author.Email)
-                select new CheepDTO
-                {
-                    Author = Author.Name,
-                    Email = Author.Email,
-                    Message = Cheeps.Text,
-                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                    CheepId = Cheeps.CheepId
-                })
-            .Skip(_pageSize * page) // Same as SQL "OFFSET
-            .Take(_pageSize); // Same as SQL "LIMIT"
-        return query.ToList();
-    }
-
-    // Query TODO: move logic to service
-    public List<Cheep> GetCheepFromId(int cheepId)
-    {
-        var query = (from Cheep in _context.Cheeps
-            where Cheep.CheepId == cheepId
-            select Cheep);
-       
-        return query.ToList();
-    }
-    
-    // Command
-    public void AddLike(Likes likes)
-    {
-        var validationResults = new List<ValidationResult>();
-        var valContext = new ValidationContext(likes);
-        if (!Validator.TryValidateObject(likes, valContext, validationResults, true))
-        {
-            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
-        }
-
-        _context.Likes.Add(likes);
-        _context.SaveChanges();
-    }
-
-    // Query
-    public bool IsLiked(string user, int CheepId)
-    {
-        var query = (from Likes in _context.Likes
-            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId
-            select Likes).Any();
-
-        return query;
-    }
-
-    public List<Likes> GetLike(string user, int cheepId)
-    {
-        var query = (from Likes in _context.Likes
-            where Likes.User.Email == user && Likes.cheep.CheepId == cheepId
-            select Likes);
-        return query.ToList();
-    }
-    // TODO: Query and Command
-    // Command
-    public void UnLike(Likes like)
-    {
-        _context.Likes.Remove(like);
-        _context.SaveChanges();
-    }
-
-    // Query
-    public int LikeCount(int CheepId)
-    {
-        var query = (from Likes in _context.Likes
-            where Likes.cheep.CheepId == CheepId
-            select Likes).Count();
-        return query;
-    }
-
-    // Query TODO: move to author repo
-    public int TotalLikeCountUser(string email)
-    {
-        var query = (from Cheep in _context.Cheeps
-            join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
-            where Cheep.Author.Email == email
-            select Likes).Count();
-        return query;
-    }
-    // Query ?? maybe change to linq query ??
-    public int AmountOfCheeps()
-    {
-        return _context.Cheeps.Count();
-    }
-
-    // TODO: Query and command
-    public void UnBlock(string userEmail, string blockEmail)
-    {
-        var query = (from Blocked in _context.Blocked
-            where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
-            select Blocked);
-
-        foreach (var block in query)
-        {
-            _context.Blocked.Remove(block);
-        }
-
-        _context.SaveChanges();
-    }
-
-    // Query
-    public bool UserBlockedSomeone(string userEmail)
-    {
-        var query = (from Blocked in _context.Blocked
-            where Blocked.User.Email != null
-            select Blocked).Count();
-        return query > 0;
-    }
-
-    // Query
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
     {
         var query = (from Author in _context.Authors
@@ -288,7 +151,6 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    // Query
     public List<CheepDTO> GetLiked(string email)
     {
         var query = (from Cheep in _context.Cheeps
@@ -302,15 +164,142 @@ public class CheepRepository : ICheepRepository
                 Author = Cheep.Author.Name,
                 Message = Cheep.Text
             });
-        //where authors.Contains(Author.Email)
 
         return query.ToList();
     }
-    
-    // Query
+
+    public List<Cheep> GetCheep(string userEmail, int cheepId)
+    {
+        var query = (from Cheep in _context.Cheeps
+            where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
+            select Cheep);
+
+        return query.ToList();
+    }
+
+    public List<Cheep> GetCheepFromId(int cheepId)
+    {
+        var query = (from Cheep in _context.Cheeps
+            where Cheep.CheepId == cheepId
+            select Cheep);
+
+        return query.ToList();
+    }
+
+    // Methods for adding and removing cheeps
+    public Cheep AddCheep(Cheep cheep, Author author)
+    {
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(cheep);
+        if (!Validator.TryValidateObject(cheep, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+
+        _context.Cheeps.Add(cheep);
+        author.Cheeps.Add(cheep);
+
+        _context.SaveChanges();
+
+        return cheep;
+    }
+
+    public void RemoveCheep(Cheep cheep)
+    {
+        _context.Cheeps.Remove(cheep);
+        _context.SaveChanges();
+    }
+
+    // Methods for handling likes
+    public void AddLike(Likes likes)
+    {
+        var validationResults = new List<ValidationResult>();
+        var valContext = new ValidationContext(likes);
+        if (!Validator.TryValidateObject(likes, valContext, validationResults, true))
+        {
+            throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
+        }
+
+        _context.Likes.Add(likes);
+        _context.SaveChanges();
+    }
+
+    public bool IsLiked(string user, int CheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId
+            select Likes).Any();
+
+        return query;
+    }
+
+    public List<Likes> GetLike(string user, int cheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.User.Email == user && Likes.cheep.CheepId == cheepId
+            select Likes);
+
+        return query.ToList();
+    }
+
+    public void UnLike(Likes like)
+    {
+        _context.Likes.Remove(like);
+        _context.SaveChanges();
+    }
+
+    public int LikeCount(int CheepId)
+    {
+        var query = (from Likes in _context.Likes
+            where Likes.cheep.CheepId == CheepId
+            select Likes).Count();
+
+        return query;
+    }
+
+    public int TotalLikeCountUser(string email)
+    {
+        var query = (from Cheep in _context.Cheeps
+            join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
+            where Cheep.Author.Email == email
+            select Likes).Count();
+
+        return query;
+    }
+
+    // Methods for counting cheeps
+    public int AmountOfCheeps()
+    {
+        return _context.Cheeps.Count();
+    }
+
     public int CheepCount()
     {
         return (from Cheep in _context.Cheeps
                 select 1).Count();
+    }
+
+    // Methods for blocking-related functionality
+    public void UnBlock(string userEmail, string blockEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
+            select Blocked);
+
+        foreach (var block in query)
+        {
+            _context.Blocked.Remove(block);
+        }
+
+        _context.SaveChanges();
+    }
+
+    public bool UserBlockedSomeone(string userEmail)
+    {
+        var query = (from Blocked in _context.Blocked
+            where Blocked.User.Email != null
+            select Blocked).Count();
+
+        return query > 0;
     }
 }
