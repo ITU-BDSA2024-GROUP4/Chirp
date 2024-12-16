@@ -29,9 +29,7 @@ public class UserTimelineModel : PageModel
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty(SupportsGet = true)] public string Author { get; set; }
     [BindProperty] public string Author_Username { get; set; }
-
-    // Needs to be changed to use bindproperty, feels unnessecary to use in this case
-    // [BindProperty]
+    
     [BindProperty] public int Cheep_Id { get; set; }
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
@@ -78,7 +76,7 @@ public class UserTimelineModel : PageModel
 
         if (Author == User.Identity.Name)
         {
-            Cheeps = _cheepService.GetOwnTimelinePage(TEMPUserEmail, CurrentPage);
+            Cheeps = _cheepService.GetOwnTimelinePage(Username, CurrentPage);
         }
         else
         {
@@ -177,7 +175,7 @@ public class UserTimelineModel : PageModel
     {
         if (Author == User.Identity.Name)
         {
-            return CurrentPage <= (_cheepService.GetOwnTimeline(TEMPUserEmail).Count() / 32);
+            return CurrentPage <= (_cheepService.GetOwnTimeline(Username).Count() / 32);
         }
         else
         {

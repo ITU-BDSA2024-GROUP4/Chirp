@@ -75,9 +75,9 @@ public class CheepService : ICheepService
         return TEMP.GetFollowers(email);
     }
 
-    public List<CheepDTO> GetOwnTimeline(string userEmail)
+    public List<CheepDTO> GetOwnTimeline(string username)
     {
-        List<AuthorDTO> following = TEMP.GetFollowers(userEmail);
+        List<AuthorDTO> following = _authorRepository.GetFollowers(username);
         List<string> followingString = new List<string>();
         List<CheepDTO> Cheeps = new List<CheepDTO>();
         foreach (var follow in following)
@@ -85,7 +85,7 @@ public class CheepService : ICheepService
             followingString.Add(follow.Email);
         }
 
-        followingString.Add(userEmail);
+        followingString.Add(username);
         foreach (var email in followingString)
         {
             Cheeps.AddRange(_repository.GetCheepsFromAuthorEmail(email));
@@ -94,16 +94,16 @@ public class CheepService : ICheepService
         return Cheeps;
     }
 
-    public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
+    public List<CheepDTO> GetOwnTimelinePage(string username, int page)
     {
-        List<AuthorDTO> following = TEMP.GetFollowers(userEmail);
+        List<AuthorDTO> following = TEMP.GetFollowers(username);
         List<string> followingString = new List<string>();
         foreach (var follow in following)
         {
             followingString.Add(follow.Email);
         }
 
-        followingString.Add(userEmail);
+        followingString.Add(username);
         return repository.GetCheepsFromAuthorPages(followingString, page);
     }
 

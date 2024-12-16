@@ -51,10 +51,10 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // Query
-    public List<AuthorDTO> GetFollowers(string email)
+    public List<AuthorDTO> GetFollowers(string username)
     {
         var query = (from Follows in _context.Following
-            where Follows.User.Email == email
+            where Follows.User.Name == username
             select new AuthorDTO { Name = Follows.Following.Name, Email = Follows.Following.Email, });
         return query.ToList();
     }

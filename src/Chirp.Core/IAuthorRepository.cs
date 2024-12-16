@@ -5,7 +5,7 @@ public interface IAuthorRepository
     public List<Author> GetAuthor(string username);
     public Author AddAuthor(string name, string email);
     public List<Author> GetAuthorUserName(string userName);
-    public List<AuthorDTO> GetFollowers(string email);
+    public List<AuthorDTO> GetFollowers(string username);
     public List<AuthorDTO> GetBlockedAuthors(string userEmail);
     public bool IsFollowing(string username, string followingUsername);
     public void AddFollow(string username, string followingUsername);
