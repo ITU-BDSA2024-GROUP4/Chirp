@@ -102,6 +102,8 @@ The diagrams provide a clear overview of user journeys, including registering, p
 
 ### License
 
+We decided to go ahead with and use the **MIT License**
+
 ### LLMs, ChatGPT, CoPilot, and others
 
 In the development of our project we used ChatGPT, and when we did so, we made sure to add ChatGPT as a co-author in our git commit message like so:
