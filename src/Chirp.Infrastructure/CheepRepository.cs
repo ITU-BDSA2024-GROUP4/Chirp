@@ -205,10 +205,10 @@ public class CheepRepository : ICheepRepository
         return query;
     }
 
-    public List<Likes> GetLike(string user, int cheepId)
+    public List<Likes> GetLike(string username, int cheepId)
     {
         var query = (from Likes in _context.Likes
-                     where Likes.User.Email == user && Likes.cheep.CheepId == cheepId
+                     where Likes.User.Name == username && Likes.cheep.CheepId == cheepId
                      select Likes);
         return query.ToList();
     }

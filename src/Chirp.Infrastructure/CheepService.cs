@@ -133,9 +133,9 @@ public class CheepService : ICheepService
         return _repository.IsLiked(user, CheepId);
     }
 
-    public void UnLike(string user, int CheepId)
+    public void UnLike(string username, int CheepId)
     {
-        List<Likes> likes = _repository.GetLike(user, CheepId);
+        List<Likes> likes = _repository.GetLike(username, CheepId);
         if (likes.Count() != 1)
         {
             throw new Exception("Multiple likes with same user on same cheepid");

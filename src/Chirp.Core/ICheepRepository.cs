@@ -24,7 +24,7 @@ public interface ICheepRepository
     public void UnLike(Likes like);
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);
-    public List<Likes> GetLike(string user, int cheepId);
+    public List<Likes> GetLike(string username, int cheepId);
 
     // Methods for counting cheeps
     public int AmountOfCheeps();

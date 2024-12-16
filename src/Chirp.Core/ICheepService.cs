@@ -15,7 +15,7 @@ public interface ICheepService
     public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page);
     public void CreateLike(string user, int CheepId);
     public bool IsLiked(string user, int CheepId);
-    public void UnLike(string user, int CheepId);
+    public void UnLike(string username, int CheepId);
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);
     public int AmountOfCheeps();
