@@ -135,4 +135,9 @@ public class AuthorService : IAuthorService
     {
         return _repository.IsFollowingUserName(username, followingUsername);
     }
+    
+    public List<AuthorDTO> GetFollowers(string username)
+    {
+        return _repository.GetFollowers(username);
+    }
 }

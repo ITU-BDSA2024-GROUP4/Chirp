@@ -3,13 +3,11 @@ namespace Chirp.Core;
 public interface ICheepService
 {
     ICheepRepository repository { get; set; }
-    public IAuthorRepository TEMP { get; set; }
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public void RemoveCheep(string username, int cheepId);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public void AddCheep(string username, string message);
-    public List<AuthorDTO> GetFollowers(string username);
     public List<CheepDTO> GetOwnTimeline(string username);
     public List<CheepDTO> GetOwnTimelinePage(string username, int page);
     public void CreateLike(string username, int cheepId);

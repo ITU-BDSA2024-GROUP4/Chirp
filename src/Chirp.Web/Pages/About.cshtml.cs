@@ -91,7 +91,7 @@ public class AboutModel : PageModel {
 
     public List<AuthorDTO> GetFollowers()
     {
-        return _cheepService.GetFollowers(Username);
+        return _authorService.GetFollowers(Username);
     }
 
     public List<CheepDTO> GetCheeps()

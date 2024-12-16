@@ -8,12 +8,6 @@ public class CheepService : ICheepService
 {
     private ICheepRepository _repository;
     private IAuthorRepository _authorRepository;
-    private IAuthorRepository _TEMP;
-    public IAuthorRepository TEMP
-    {
-        get => _TEMP;
-        set => _TEMP = value;
-    }
 
     public ICheepRepository repository
     {
@@ -25,7 +19,6 @@ public class CheepService : ICheepService
     {
         _repository = repository;
         _authorRepository = authorRepository;
-        _TEMP = _authorRepository; //IDK -\_O_/- temp
     }
 
     public List<CheepDTO> GetCheeps(int page)
@@ -67,12 +60,6 @@ public class CheepService : ICheepService
         };
         
         _repository.AddCheep(cheep, author);
-    }
-
-    // TODO: Move to auhtor service
-    public List<AuthorDTO> GetFollowers(string username)
-    {
-        return TEMP.GetFollowers(username);
     }
 
     public List<CheepDTO> GetOwnTimeline(string username)

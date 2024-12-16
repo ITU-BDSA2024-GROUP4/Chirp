@@ -17,4 +17,5 @@ public interface IAuthorService
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
     public bool IsFollowingUserName(string username, string followingUsername);
+    public List<AuthorDTO> GetFollowers(string username);
 }
