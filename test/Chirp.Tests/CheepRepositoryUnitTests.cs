@@ -67,9 +67,13 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             AuthorId = authorId,
             Cheeps = new List<Cheep>()
         };
+        Cheep newCheep = new Cheep()
+        {
+            Author = newAuthor, CheepId = newAuthor.AuthorId, Text = "test", TimeStamp = DateTime.Now,
+        };
         
         // Act
-        Cheep cheep = _cheepRepository.AddCheep(newAuthor, "test");
+        Cheep cheep = _cheepRepository.AddCheep(newCheep, newAuthor);
         
         // Assert
         Assert.Equal("test", cheep.Text);
