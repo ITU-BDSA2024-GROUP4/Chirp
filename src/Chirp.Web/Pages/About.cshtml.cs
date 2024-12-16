@@ -19,8 +19,6 @@ public class AboutModel : PageModel {
     private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
     private readonly UserManager<ChirpUser> _userManager;
-    public string Author;
-    public string TEMPuserEmail;
     public string Username;
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
@@ -40,14 +38,12 @@ public class AboutModel : PageModel {
     public ActionResult OnGet(string author)
     {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
-        Author = author;
         SetInformation();
         return Page();
     }
 
     public void SetInformation()
     {
-        TEMPuserEmail = UserHandler.FindEmail(User);
         Username = UserHandler.FindName(User);
         Following = GetFollowers();
         Cheeps = GetCheeps();
@@ -96,7 +92,7 @@ public class AboutModel : PageModel {
 
     public List<AuthorDTO> GetFollowers()
     {
-        return _cheepService.GetFollowers(TEMPuserEmail);
+        return _cheepService.GetFollowers(Username);
     }
 
     public List<CheepDTO> GetCheeps()
@@ -111,7 +107,7 @@ public class AboutModel : PageModel {
 
     public List<CheepDTO> GetLikes()
     {
-        return _cheepService.GetLiked(TEMPuserEmail);
+        return _cheepService.GetLiked(Username);
     }
 
     public string CreateCsvContent()
@@ -151,8 +147,7 @@ public class AboutModel : PageModel {
 
     public async Task<IActionResult> OnPostForgetMe()
     {
-        TEMPuserEmail = UserHandler.FindEmail(User);
-        _authorService.ForgetMe(TEMPuserEmail);
+        _authorService.ForgetMe(Username);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
@@ -166,7 +161,7 @@ public class AboutModel : PageModel {
 
     public bool UserBlockedSomeOne()
     {
-        return _cheepService.UserBlockedSomeone(TEMPuserEmail);
+        return _cheepService.UserBlockedSomeone(Username);
     }
 
     public IActionResult OnPostUnblock()
@@ -179,6 +174,6 @@ public class AboutModel : PageModel {
 
     public List<AuthorDTO> GetBlockedAuthors()
     {
-        return _authorService.GetBlockedAuthors(TEMPuserEmail);
+        return _authorService.GetBlockedAuthors(Username);
     }
 }

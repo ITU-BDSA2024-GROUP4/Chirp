@@ -3,7 +3,7 @@
 public interface IAuthorService
 {
     public void AddAuthor(string name, string email);
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail);
+    public List<AuthorDTO> GetBlockedAuthors(string username);
     public AuthorDTO GetAuthor(string username);
     public AuthorDTO GetAuthorUserName(string username);
     public AuthorDTO GetOrCreateAuthor(string username, string email);
@@ -12,7 +12,7 @@ public interface IAuthorService
     public void CreateBlock(string userEmail, string blockemail);
     public bool IsBlocked(string username, string blockUsername);
     public void UnFollow(string username, string unfollowUsername);
-    public void ForgetMe(string email);
+    public void ForgetMe(string username);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);

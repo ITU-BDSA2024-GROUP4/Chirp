@@ -35,7 +35,7 @@ public class UserTimelineModel : PageModel
     public bool InvalidCheep { get; set; } = false;
     
     public string Email { get; set; }
-    public string TEMPUserEmail { get; set; }
+    public string UserEmail { get; set; }
     public string Username { get; set; }
     public int CurrentPage { get; set; } = 0;
 
@@ -45,14 +45,10 @@ public class UserTimelineModel : PageModel
         _authorService = authorService;
         _signInManager = signInManager;
     }
-
-    public void TEMPSetEmail()
-    {
-        TEMPUserEmail = UserHandler.FindEmail(User);
-    }
-    public void SetUsername()
+    public void SetUserInfo()
     {
         Username = UserHandler.FindName(User);
+        UserEmail = UserHandler.FindEmail(User);
     }
 
     public ActionResult OnGet(string author)
@@ -63,8 +59,7 @@ public class UserTimelineModel : PageModel
 
     public void SetCheeps()
     {
-        TEMPSetEmail();
-        SetUsername();
+        SetUserInfo();
 
         var pageQuery = Request.Query["page"].ToString();
         Email = User.FindFirst(ClaimTypes.Email)?.Value;
@@ -83,7 +78,7 @@ public class UserTimelineModel : PageModel
             Cheeps = _cheepService.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, TEMPUserEmail, Username, Author == User.Identity.Name); 
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, Username, Author == User.Identity.Name); 
    }   
     
     public IActionResult OnPost() 
@@ -106,7 +101,7 @@ public class UserTimelineModel : PageModel
         {
             InvalidCheep = false;
         }
-        string username = _authorService.GetOrCreateAuthor(User.Identity.Name, TEMPUserEmail).Name;
+        string username = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Name;
         _cheepService.AddCheep(username, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
@@ -115,8 +110,7 @@ public class UserTimelineModel : PageModel
 
     public IActionResult OnPostFollow()
     {
-        TEMPSetEmail();
-        SetUsername();
+        SetUserInfo();
 
         switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), Username,
                     User.Identity.Name, Author_Username))
@@ -188,11 +182,6 @@ public class UserTimelineModel : PageModel
         return _authorService.GetFollowerCountUserName(Author);
     }
 
-    public string TEMPGetEmail()
-    {
-        return _authorService.GetAuthorUserName(Author).Email;
-    }
-
     public string GetUsername()
     {
         return _authorService.GetAuthorUserName(Author).Name;
@@ -222,7 +211,6 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
         _authorService.CreateBlock(Username, GetUsername());
-        _cheepService.UserBlockedSomeone(TEMPUserEmail);
         return Redirect("~/");    
     }
 

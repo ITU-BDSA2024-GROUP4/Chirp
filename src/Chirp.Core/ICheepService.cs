@@ -9,7 +9,7 @@ public interface ICheepService
     public void RemoveCheep(string username, int cheepId);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public void AddCheep(string username, string message);
-    public List<AuthorDTO> GetFollowers(string email);
+    public List<AuthorDTO> GetFollowers(string username);
     public List<CheepDTO> GetOwnTimeline(string username);
     public List<CheepDTO> GetOwnTimelinePage(string username, int page);
     public void CreateLike(string username, int cheepId);
@@ -18,9 +18,9 @@ public interface ICheepService
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);
     public int AmountOfCheeps();
-    public List<CheepDTO> GetLiked(string user);
+    public List<CheepDTO> GetLiked(string username);
     public void UnBlock(string userEmail, string blockEmail);
-    public bool UserBlockedSomeone(string userEmail);
-    public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
+    public bool UserBlockedSomeone(string username);
+    public List<CheepDTO> GetCheepsNotBlocked(string username);
     public int GetTotalCheeps(string email);
 }

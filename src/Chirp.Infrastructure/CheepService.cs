@@ -70,9 +70,9 @@ public class CheepService : ICheepService
     }
 
     // TODO: Move to auhtor service
-    public List<AuthorDTO> GetFollowers(string email)
+    public List<AuthorDTO> GetFollowers(string username)
     {
-        return TEMP.GetFollowers(email);
+        return TEMP.GetFollowers(username);
     }
 
     public List<CheepDTO> GetOwnTimeline(string username)
@@ -162,9 +162,9 @@ public class CheepService : ICheepService
         return _repository.AmountOfCheeps();
     }
 
-    public List<CheepDTO> GetLiked(string email)
+    public List<CheepDTO> GetLiked(string username)
     {
-        return _repository.GetLiked(email);
+        return _repository.GetLiked(username);
     }
 
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
@@ -177,14 +177,14 @@ public class CheepService : ICheepService
         _repository.UnBlock(userEmail, blockEmail);
     }
 
-    public bool UserBlockedSomeone(string userEmail)
+    public bool UserBlockedSomeone(string username)
     {
-        return _repository.UserBlockedSomeone(userEmail);
+        return _repository.UserBlockedSomeone(username);
     }
 
-    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
+    public List<CheepDTO> GetCheepsNotBlocked(string username)
     {
-        return _repository.GetCheepsNotBlocked(userEmail);
+        return _repository.GetCheepsNotBlocked(username);
     }
     
     public int GetTotalCheeps(string email)

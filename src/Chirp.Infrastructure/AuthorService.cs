@@ -19,9 +19,9 @@ public class AuthorService : IAuthorService
         _repository.AddAuthor(name, email);
     }
     
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
+    public List<AuthorDTO> GetBlockedAuthors(string username)
     {
-        return _repository.GetBlockedAuthors(userEmail);
+        return _repository.GetBlockedAuthors(username);
     }
     #pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     public AuthorDTO? GetAuthor(string username)
@@ -108,9 +108,9 @@ public class AuthorService : IAuthorService
         }
     }
     
-    public void ForgetMe(string email)
+    public void ForgetMe(string username)
     {
-        _repository.ForgetUser(email);
+        _repository.ForgetUser(username);
     }
     
     public int GetFollowerCount(string email)

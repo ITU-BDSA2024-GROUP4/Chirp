@@ -17,16 +17,14 @@ public class FollowButtonModel
     private ICheepService _cheepService { get; set; }
     private IAuthorService _authorService { get; set; }
     public List<CheepDTO> Cheeps { get; set; }
-    public string TEMPUserEmail { get; set; } // TODO: remove
     public string Username { get; set; }
     public bool ShowOnCheeps { get; set; }
 
-    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string tempUserEmail, string username, bool showOnCheeps = true) 
+    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string username, bool showOnCheeps = true) 
     {
         _cheepService = cheepService;
         _authorService = authorService;
         Cheeps = cheeps;
-        TEMPUserEmail = tempUserEmail;
         Username = username;
         ShowOnCheeps = showOnCheeps;
     }

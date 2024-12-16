@@ -29,8 +29,6 @@ public class PublicModel : PageModel
     // [BindProperty]
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
-
-    public string TEMPUserEmail { get; set; }
     public string Username { get; set; }
     public int CurrentPage { get; set; }
 
@@ -43,12 +41,7 @@ public class PublicModel : PageModel
         _signInManager = signInManager;
     }
 
-    public void TEMPSetEmail()
-    {
-        TEMPUserEmail = UserHandler.FindEmail(User);
-    }
-
-    public void SetUsername()
+    public void SetUserInfo()
     {
         Username = UserHandler.FindName(User);
     }
@@ -61,10 +54,9 @@ public class PublicModel : PageModel
 
     public void SetCheeps()
     {
-        TEMPSetEmail();
-        SetUsername();
+        SetUserInfo();
         var pageQuery = Request.Query["page"].ToString();
-        if (!_cheepService.UserBlockedSomeone(TEMPUserEmail))
+        if (!_cheepService.UserBlockedSomeone(Username))
         {
             if (pageQuery == null)
             {
@@ -82,10 +74,10 @@ public class PublicModel : PageModel
         {
             _ = int.TryParse(pageQuery, out int page);
             CurrentPage = page;
-            Cheeps = _cheepService.GetCheepsNotBlocked(TEMPUserEmail); // minus 1 because pages are 0 indexed  
+            Cheeps = _cheepService.GetCheepsNotBlocked(Username); // minus 1 because pages are 0 indexed  
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, UserHandler.FindEmail(User), Username);
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, Username);
     }
 
     public IActionResult OnGetLogin()
@@ -128,8 +120,7 @@ public class PublicModel : PageModel
 
     public IActionResult OnPostFollow()
     {
-        TEMPSetEmail();
-        SetUsername();
+        SetUserInfo();
 
         switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), Username,
                     User.Identity.Name, Author_Username))

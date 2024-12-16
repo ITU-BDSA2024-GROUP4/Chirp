@@ -60,7 +60,8 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // Query
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
+    // TODO: why input?
+    public List<AuthorDTO> GetBlockedAuthors(string username)
     {
         var query = (from Author in _context.Authors
             join Blocked in _context.Blocked on Author.Email equals Blocked.User.Email
@@ -164,9 +165,11 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // TODO: Both query and commands
-    public void ForgetUser(string email)
+    public void ForgetUser(string username)
     {
-        var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)
+        var author = _context.Authors.SingleOrDefault(a => a.Name.ToLower() == username.ToLower());        
+        
+        if (author == null)
         {
             throw new Exception("User not found.");
         }

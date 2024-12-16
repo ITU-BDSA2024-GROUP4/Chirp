@@ -55,15 +55,6 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList(); // Converts IQueryable<T> to List<T>
     }
-
-    // Query TODO: Remove
-    public List<Cheep> TEMPGetCheepWithEmail(string userEmail, int cheepId)
-    {
-        var query = (from Cheep in _context.Cheeps
-                     where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
-                     select Cheep);
-        return query.ToList();
-    }
     
     // Query
     public List<Cheep> GetCheep(string username, int cheepId)
@@ -270,20 +261,21 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query
-    public bool UserBlockedSomeone(string userEmail)
+    // TODO: Why is username even parsed here?
+    public bool UserBlockedSomeone(string username)
     {
         var query = (from Blocked in _context.Blocked
-                     where Blocked.User.Email != null
+                     where Blocked.User.Name != null
                      select Blocked).Count();
         return query > 0;
     }
 
     // Query
-    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
+    public List<CheepDTO> GetCheepsNotBlocked(string username)
     {
         var query = (from Author in _context.Authors
                      join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                     where !_context.Blocked.Any(b => b.User.Email == userEmail && b.BlockedUser.Email == Author.Email)
+                     where !_context.Blocked.Any(b => b.User.Name == username && b.BlockedUser.Email == Author.Email)
                      orderby Cheeps.TimeStamp descending
                      select new CheepDTO
                      {
@@ -298,12 +290,12 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query
-    public List<CheepDTO> GetLiked(string email)
+    public List<CheepDTO> GetLiked(string username)
     {
         var query = (from Cheep in _context.Cheeps
                      join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
                      orderby Cheep.TimeStamp descending
-                     where Likes.User.Email == email
+                     where Likes.User.Name == username
                      select new CheepDTO
                      {
                          CheepId = Cheep.CheepId,
