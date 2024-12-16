@@ -80,9 +80,9 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // TODO: CHANGE IS BOTH COMMANDS AND QUERY
-    public bool IsFollowing(string email, string followingUsername)
+    public bool IsFollowing(string username, string followingUsername)
     {
-        List<Author> AuthorUserList = TEMPgetAUTHORwithEMAIL(email);
+        List<Author> AuthorUserList = GetAuthor(username);
         List<Author> AuthorAuthorList = GetAuthor(followingUsername);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;

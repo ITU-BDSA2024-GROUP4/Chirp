@@ -7,7 +7,7 @@ public interface IAuthorService
     public AuthorDTO GetAuthor(string username);
     public AuthorDTO GetAuthorUserName(string username);
     public AuthorDTO GetOrCreateAuthor(string username, string email);
-    public bool IsFollowing(string email, string followingUsername);
+    public bool IsFollowing(string username, string followingUsername);
     public void CreateFollow(string username, string user, string follow);
     public void CreateBlock(string userEmail, string blockemail);
     public bool IsBlocked(string userEmail, string blockEmail);

@@ -8,7 +8,7 @@ public interface IAuthorRepository
     public List<Author> GetAuthorUserName(string userName);
     public List<AuthorDTO> GetFollowers(string email);
     public List<AuthorDTO> GetBlockedAuthors(string userEmail);
-    public bool IsFollowing(string email, string followingUsername);
+    public bool IsFollowing(string username, string followingUsername);
     public void AddFollow(string username, string following);
     public void UnFollow(string user, string unfollowing);
     public bool IsBlocked(string userEmail, string blockEmail);

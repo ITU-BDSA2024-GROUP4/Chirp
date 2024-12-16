@@ -77,9 +77,9 @@ public class AuthorService : IAuthorService
         var author = authors.First();
         return new AuthorDTO { Name = author.Name, Email = author.Email };
     }
-    public bool IsFollowing(string email, string followingUsername)
+    public bool IsFollowing(string username, string followingUsername)
     {
-        return _repository.IsFollowing(email, followingUsername);
+        return _repository.IsFollowing(username, followingUsername);
     }
     
     public void CreateFollow(string username, string user, string follow)
@@ -97,9 +97,11 @@ public class AuthorService : IAuthorService
     }
     public void CreateBlock(string userEmail, string blockEmail)
     {
+        string TEMPusername = "";
+        string TEMPBlockusername = "";
         if (!IsBlocked(userEmail, blockEmail))
         {
-            if (_repository.IsFollowing(userEmail, blockEmail))
+            if (_repository.IsFollowing(TEMPusername, TEMPBlockusername))
             {
                 _repository.UnFollow(userEmail, blockEmail);
             }

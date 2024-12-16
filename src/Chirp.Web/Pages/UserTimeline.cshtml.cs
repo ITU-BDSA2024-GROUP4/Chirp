@@ -203,7 +203,7 @@ public class UserTimelineModel : PageModel
 
     public bool IsFollowing()
     {
-        return _authorService.IsFollowing(TEMPUserEmail, TEMPGetEmail());
+        return _authorService.IsFollowing(Username, GetUsername());
     }
 
     public int GetFollowingCount()

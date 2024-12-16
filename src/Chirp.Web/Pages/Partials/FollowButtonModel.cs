@@ -33,7 +33,7 @@ public class FollowButtonModel
 
     public bool IsFollowing(string username)
     {
-        return _authorService.IsFollowing(TEMPUserEmail, username); // TODO: change UserEmail to its username
+        return _authorService.IsFollowing(Username, username); // TODO: change UserEmail to its username
     }
 
     public bool IsLiked(string username, int Cheep_Id)
