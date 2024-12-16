@@ -225,10 +225,10 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // TODO: Multiple queries, move logic to service
-    public bool IsFollowingUserName(string username, string author)
+    public bool IsFollowingUserName(string username, string followingUsername)
     {
         List<Author> AuthorUserList = GetAuthorUserName(username);
-        List<Author> AuthorAuthorList = TEMPgetAUTHORwithEMAIL(author);
+        List<Author> AuthorAuthorList = GetAuthor(followingUsername);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }

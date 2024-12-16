@@ -127,9 +127,8 @@ public class AuthorService : IAuthorService
     {
         return _repository.GetFollowingCount(username);
     }
-    public bool IsFollowingUserName(string username, string author)
+    public bool IsFollowingUserName(string username, string followingUsername)
     {
-        return _repository.IsFollowingUserName(username, author);
+        return _repository.IsFollowingUserName(username, followingUsername);
     }
-    
 }

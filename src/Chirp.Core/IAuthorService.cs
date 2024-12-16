@@ -16,5 +16,5 @@ public interface IAuthorService
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
-    public bool IsFollowingUserName(string username, string author);
+    public bool IsFollowingUserName(string username, string followingUsername);
 }

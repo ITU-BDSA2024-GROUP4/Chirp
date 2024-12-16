@@ -14,7 +14,7 @@ public interface IAuthorRepository
     public bool IsBlocked(string userEmail, string blockEmail);
     public void CreateBlock(string userEmail, string blockemail);
     public void ForgetUser(string email);
-    public bool IsFollowingUserName(string username, string author);
+    public bool IsFollowingUserName(string username, string followingUsername);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);
     public int GetFollowingCount(string username);
