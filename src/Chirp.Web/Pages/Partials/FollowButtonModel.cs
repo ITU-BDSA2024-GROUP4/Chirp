@@ -19,13 +19,8 @@ public class FollowButtonModel
     public List<CheepDTO> Cheeps { get; set; }
     public string UserEmail { get; set; }
     public bool ShowOnCheeps { get; set; }
-<<<<<<< HEAD
-    
-    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
-=======
 
-    public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true)
->>>>>>> origin/main
+    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
     {
         _cheepService = cheepService;
         _authorService = authorService;
