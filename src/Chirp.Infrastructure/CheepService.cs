@@ -55,7 +55,7 @@ public class CheepService : ICheepService
 
     public void AddCheep(string email, string message)
     {
-        Author author = TEMP.GetAuthor(email)[0];
+        Author author = TEMP.TEMPgetAUTHORwithEMAIL(email)[0];
         
         Cheep cheep = new Cheep()
         {
@@ -108,7 +108,7 @@ public class CheepService : ICheepService
 
     public void CreateLike(string user, int CheepId)
     {
-        List<Author> authors = _authorRepository.GetAuthor(user);
+        List<Author> authors = _authorRepository.TEMPgetAUTHORwithEMAIL(user);
         List<Cheep> cheeps = _repository.GetCheepFromId(CheepId);
 
         if (cheeps.Count != 1)

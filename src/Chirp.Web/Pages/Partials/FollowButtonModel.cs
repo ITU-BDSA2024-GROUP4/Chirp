@@ -29,9 +29,9 @@ public class FollowButtonModel
         ShowOnCheeps = showOnCheeps;
     }
 
-    public bool IsFollowing(string Author_Email)
+    public bool IsFollowing(string username)
     {
-        return _authorService.IsFollowing(UserEmail, Author_Email);
+        return _authorService.IsFollowing(UserEmail, username); // TODO: change UserEmail to its username
     }
 
     public bool IsLiked(string user, int Cheep_Id)

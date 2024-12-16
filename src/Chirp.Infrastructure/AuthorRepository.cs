@@ -31,9 +31,16 @@ public class AuthorRepository : IAuthorRepository
         
         return author;
     }
-    
     // Query
-    public List<Author> GetAuthor(string email) {
+    public List<Author> GetAuthor(string username) {
+        var query = (from Author in _context.Authors
+            where Author.Name == username
+            select Author);
+
+        return query.ToList();
+    }
+    // Query
+    public List<Author> TEMPgetAUTHORwithEMAIL(string email) {
         var query = (from Author in _context.Authors
             where Author.Email == email
             select Author);
@@ -73,10 +80,10 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // TODO: CHANGE IS BOTH COMMANDS AND QUERY
-    public bool IsFollowing(string email, string authorEmail)
+    public bool IsFollowing(string email, string followingUsername)
     {
-        List<Author> AuthorUserList = GetAuthor(email);
-        List<Author> AuthorAuthorList = GetAuthor(authorEmail);
+        List<Author> AuthorUserList = TEMPgetAUTHORwithEMAIL(email);
+        List<Author> AuthorAuthorList = GetAuthor(followingUsername);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }
@@ -92,8 +99,8 @@ public class AuthorRepository : IAuthorRepository
     //TODO: Multiple commands
     public void AddFollow(string user, string following)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorFollowing = GetAuthor(following)[0];
+        Author AuthorUser = TEMPgetAUTHORwithEMAIL(user)[0];
+        Author AuthorFollowing = TEMPgetAUTHORwithEMAIL(following)[0];
         
         bool alreadyFollowing = _context.Following.Any(f =>
             f.User.AuthorId == AuthorUser.AuthorId &&
@@ -129,8 +136,8 @@ public class AuthorRepository : IAuthorRepository
     //TODO: Multiple Commands and also query
     public List<Follows> GetPersonToUnfollow(string user, string unfollowing)
     {
-        Author AuthorUser = GetAuthor(user)[0];
-        Author AuthorUnfollowing = GetAuthor(unfollowing)[0];
+        Author AuthorUser = TEMPgetAUTHORwithEMAIL(user)[0];
+        Author AuthorUnfollowing = TEMPgetAUTHORwithEMAIL(unfollowing)[0];
         var query = (from Follows in _context.Following
             where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
             select Follows);
@@ -139,8 +146,8 @@ public class AuthorRepository : IAuthorRepository
     //TODO: Multiple Commands
     public void CreateBlock(string userEmail, string blockEmail)
     {
-        Author AuthorUser = GetAuthor(userEmail)[0];
-        Author AuthorBlocking = GetAuthor(blockEmail)[0];
+        Author AuthorUser = TEMPgetAUTHORwithEMAIL(userEmail)[0];
+        Author AuthorBlocking = TEMPgetAUTHORwithEMAIL(blockEmail)[0];
         
         Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
         
@@ -221,7 +228,7 @@ public class AuthorRepository : IAuthorRepository
     public bool IsFollowingUserName(string username, string author)
     {
         List<Author> AuthorUserList = GetAuthorUserName(username);
-        List<Author> AuthorAuthorList = GetAuthor(author);
+        List<Author> AuthorAuthorList = TEMPgetAUTHORwithEMAIL(author);
         if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
             return false;
         }

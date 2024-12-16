@@ -28,7 +28,7 @@ public class AuthorService : IAuthorService
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 {
-        var authors = _repository.GetAuthor(email);
+        var authors = _repository.TEMPgetAUTHORwithEMAIL(email);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1
@@ -62,7 +62,7 @@ public class AuthorService : IAuthorService
 
     public AuthorDTO GetOrCreateAuthor(string name, string email)
     {
-        var authors = _repository.GetAuthor(email);
+        var authors = _repository.TEMPgetAUTHORwithEMAIL(email);
         if (authors.Count > 1)
         {
             throw new InvalidOperationException($"Multiple authors found for email: {email}");
@@ -71,15 +71,15 @@ public class AuthorService : IAuthorService
         if (authors.Count == 0)
         {
             _repository.AddAuthor(name, email);
-            authors = _repository.GetAuthor(email);
+            authors = _repository.TEMPgetAUTHORwithEMAIL(email);
         }
 
         var author = authors.First();
         return new AuthorDTO { Name = author.Name, Email = author.Email };
     }
-    public bool IsFollowing(string email, string authorEmail)
+    public bool IsFollowing(string email, string followingUsername)
     {
-        return _repository.IsFollowing(email, authorEmail);
+        return _repository.IsFollowing(email, followingUsername);
     }
     
     public void CreateFollow(string username, string user, string follow)

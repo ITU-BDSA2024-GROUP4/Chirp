@@ -53,7 +53,7 @@
 
                         @if (Model.ShowOnCheeps)
                     {
-                        @if (!Model.IsFollowing(cheep.Email))
+                        @if (!Model.IsFollowing(cheep.Author))
                         {
                             <form method="post" action="@Url.Page("", new { handler = "Follow" })">
                                     @Html.AntiForgeryToken()
