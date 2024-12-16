@@ -15,6 +15,7 @@
             @Html.AntiForgeryToken()
             <input type="hidden" name="author" value="@Model.Author"/>
             <input type="hidden" name="author_email" value="@Model.TEMPGetEmail()"/>
+            <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
             <input type="submit" class="block-button" value="Block"
                    formaction="?handler=Block">
         </form>
@@ -24,6 +25,7 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="author" value="@Model.Author"/>
                 <input type="hidden" name="author_email" value="@Model.TEMPGetEmail()"/>
+                <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
                 <input type="submit" class="follow-button" value="Follow"
                        formaction="?handler=Follow">
             </form>
@@ -34,6 +36,7 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="author" value="@Model.Author"/>
                 <input type="hidden" name="author_email" value="@Model.TEMPGetEmail()"/>
+                <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
                 <input type="submit" class="follow-button" value="Unfollow"
                        formaction="?handler=Unfollow">
             </form>

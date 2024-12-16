@@ -82,31 +82,29 @@ public class AuthorService : IAuthorService
         return _repository.IsFollowing(username, followingUsername);
     }
     
-    public void CreateFollow(string username, string user, string follow)
+    public void CreateFollow(string username, string user, string followingUsername)
     {
         GetOrCreateAuthor(username, user);
-        _repository.AddFollow(username, follow);
+        _repository.AddFollow(username, followingUsername);
     }
     public void UnFollow(string username, string unfollowUsername)
     {
         _repository.UnFollow(username, unfollowUsername);
     }
-    public bool IsBlocked(string userEmail, string blockEmail)
+    public bool IsBlocked(string username, string blockUsername)
     {
-        return _repository.IsBlocked(userEmail, blockEmail);
+        return _repository.IsBlocked(username, blockUsername);
     }
-    public void CreateBlock(string userEmail, string blockEmail)
+    public void CreateBlock(string username, string blockUsername)
     {
-        string TEMPusername = "";
-        string TEMPBlockusername = "";
-        if (!IsBlocked(userEmail, blockEmail))
+        if (!IsBlocked(username, blockUsername))
         {
-            if (_repository.IsFollowing(TEMPusername, TEMPBlockusername))
+            if (_repository.IsFollowing(username, blockUsername))
             {
-                _repository.UnFollow(TEMPusername, TEMPBlockusername);
+                _repository.UnFollow(username, blockUsername);
             }
 
-            _repository.CreateBlock(TEMPusername, TEMPBlockusername);
+            _repository.CreateBlock(username, blockUsername);
         }
     }
     

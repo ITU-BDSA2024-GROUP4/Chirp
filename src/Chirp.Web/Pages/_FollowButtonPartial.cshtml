@@ -59,6 +59,7 @@
                                     @Html.AntiForgeryToken()
                                 <input type="hidden" name="author" value="@cheep.Author"/>
                                 <input type="hidden" name="author_email" value="@cheep.Email"/>
+                                <input type="hidden" name="author_username" value="@cheep.Author"/>
                                 <input type="submit" class="follow-button" value="Follow"
                                        formaction="?handler=Follow">
                                 </form>
@@ -69,6 +70,7 @@
                                     @Html.AntiForgeryToken()
                                 <input type="hidden" name="author" value="@cheep.Author"/>
                                 <input type="hidden" name="author_email" value="@cheep.Email"/>
+                                <input type="hidden" name="author_username" value="@cheep.Author"/>
                                 <input type="submit" class="follow-button" value="Unfollow"
                                        formaction="?handler=Unfollow">
                                 </form>
@@ -82,6 +84,7 @@
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
                     <input type="hidden" name="author_email" value="@cheep.Email"/>
+                    <input type="hidden" name="author_username" value="@cheep.Author"/>
                     <input type="submit" class="follow-button" value="Un-cheep"
                            formaction="?handler=DeleteCheep">
                 </form>

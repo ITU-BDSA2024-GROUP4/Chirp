@@ -29,7 +29,8 @@ public class UserTimelineModel : PageModel
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty(SupportsGet = true)] public string Author { get; set; }
 
-    [BindProperty] public string Author_Emailtemp { get; set; }
+    [BindProperty] public string Author_Email { get; set; }
+    
     [BindProperty] public string Author_Username { get; set; }
 
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
@@ -122,8 +123,8 @@ public class UserTimelineModel : PageModel
         TEMPSetEmail();
         SetUsername();
 
-        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Emailtemp), nameof(Author), TEMPUserEmail,
-                    User.Identity.Name, Author_Emailtemp))
+        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), nameof(Author), Username,
+                    User.Identity.Name, Author_Username))
         {
             case "Error":
                 return RedirectToPage("/Error");
@@ -138,8 +139,8 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Emailtemp), nameof(Author), TEMPUserEmail,
-                    Author_Emailtemp, SubmitMessage))
+        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Email), nameof(Author), Username,
+                    Author_Username, SubmitMessage))
         {
             case "Error":
                 return RedirectToPage("/Error");
@@ -225,7 +226,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostBlock()
     {
         SetCheeps();
-        _authorService.CreateBlock(TEMPUserEmail, TEMPGetEmail());
+        _authorService.CreateBlock(Username, GetUsername());
         _cheepService.UserBlockedSomeone(TEMPUserEmail);
         return Redirect("~/");    
     }
@@ -233,7 +234,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
-        if (TEMPGetEmail() != Author_Emailtemp)
+        if (TEMPGetEmail() != Author_Email)
         {
             throw new Exception("Author Email is not the logged in user.");
         }

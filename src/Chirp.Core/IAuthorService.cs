@@ -8,9 +8,9 @@ public interface IAuthorService
     public AuthorDTO GetAuthorUserName(string username);
     public AuthorDTO GetOrCreateAuthor(string username, string email);
     public bool IsFollowing(string username, string followingUsername);
-    public void CreateFollow(string username, string user, string follow);
+    public void CreateFollow(string username, string user, string followingUsername);
     public void CreateBlock(string userEmail, string blockemail);
-    public bool IsBlocked(string userEmail, string blockEmail);
+    public bool IsBlocked(string username, string blockUsername);
     public void UnFollow(string username, string unfollowUsername);
     public void ForgetMe(string email);
     public int GetFollowerCount(string email);

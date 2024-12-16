@@ -97,10 +97,10 @@ public class AuthorRepository : IAuthorRepository
         return query;
     }
     //TODO: Multiple commands
-    public void AddFollow(string username, string following)
+    public void AddFollow(string username, string followingUsername)
     {
         Author AuthorUser = GetAuthor(username)[0];
-        Author AuthorFollowing = TEMPgetAUTHORwithEMAIL(following)[0];
+        Author AuthorFollowing = GetAuthor(followingUsername)[0];
         
         bool alreadyFollowing = _context.Following.Any(f =>
             f.User.AuthorId == AuthorUser.AuthorId &&
@@ -163,10 +163,10 @@ public class AuthorRepository : IAuthorRepository
     }
     
     // Query TODO: move boolean logic to service
-    public bool IsBlocked(string userEmail, string blockEmail)
+    public bool IsBlocked(string username, string blockUsername)
     {
         var query = (from Blocked in _context.Blocked
-            where Blocked.User.Email == userEmail && Blocked.BlockedUser.Email == blockEmail
+            where Blocked.User.Name == username && Blocked.BlockedUser.Name == blockUsername
             select Blocked).Count();
         return query > 0;
     }
