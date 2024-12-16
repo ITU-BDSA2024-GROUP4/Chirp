@@ -104,7 +104,7 @@ public class CheepService : ICheepService
         }
 
         followingString.Add(username);
-        return repository.GetCheepsFromAuthorPages(followingString, page);
+        return repository.GetCheepsFromAuthorsPage(followingString, page);
     }
 
     public void CreateLike(string username, int cheepId)

@@ -65,7 +65,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    // COMMAND
+    // Command
     public void RemoveCheep(Cheep cheep)
     {
         _context.Cheeps.Remove(cheep);
@@ -115,8 +115,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    // Commands
-    // TODO: unsure, should maybe only be 1 command/query?
+    // Command(s)
     public Cheep AddCheep(Cheep cheep, Author author)
     {
         var validationResults = new List<ValidationResult>();
@@ -134,8 +133,8 @@ public class CheepRepository : ICheepRepository
         return cheep; // Returns so it made easier to test
     }
 
-    // Query TODO: simplify names/merge methods
-    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
+    // Query
+    public List<CheepDTO> GetCheepsFromAuthorsPage(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors
                      join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
@@ -187,7 +186,8 @@ public class CheepRepository : ICheepRepository
 
         return query;
     }
-
+    
+    // Query
     public List<Likes> GetLike(string username, int cheepId)
     {
         var query = (from Likes in _context.Likes

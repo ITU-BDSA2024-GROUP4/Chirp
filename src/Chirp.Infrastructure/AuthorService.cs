@@ -46,7 +46,7 @@ public class AuthorService : IAuthorService
     public AuthorDTO? GetAuthorUserName(string username)
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     {
-        var authors = _repository.GetAuthorUserName(username);
+        var authors = _repository.GetAuthor(username);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1
@@ -89,11 +89,11 @@ public class AuthorService : IAuthorService
     }
     public void UnFollow(string username, string unfollowUsername)
     {
-        _repository.UnFollow(username, unfollowUsername);
+        _repository.RemoveFollow(username, unfollowUsername);
     }
     public bool IsBlocked(string username, string blockUsername)
     {
-        return _repository.IsBlocked(username, blockUsername);
+        return _repository.IsBlocked(username, blockUsername) > 0;
     }
     public void CreateBlock(string username, string blockUsername)
     {
@@ -101,16 +101,20 @@ public class AuthorService : IAuthorService
         {
             if (_repository.IsFollowing(username, blockUsername))
             {
-                _repository.UnFollow(username, blockUsername);
+                _repository.RemoveFollow(username, blockUsername);
             }
 
-            _repository.CreateBlock(username, blockUsername);
+            Author usernameAuthor = _repository.GetAuthor(username)[0];   
+            Author blockUsernameAuthor = _repository.GetAuthor(blockUsername)[0];   
+            
+            _repository.CreateBlock(usernameAuthor, blockUsernameAuthor);
         }
     }
     
     public void ForgetMe(string username)
     {
-        _repository.ForgetUser(username);
+        Author userAuthor = _repository.GetAuthor(username)[0];
+        _repository.ForgetUser(userAuthor);
     }
     
     public int GetFollowerCount(string username)

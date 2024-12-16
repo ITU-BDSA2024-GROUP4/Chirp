@@ -40,16 +40,6 @@ public class AuthorRepository : IAuthorRepository
         return query.ToList();
     }
     
-    // Command
-    public List<Author> GetAuthorUserName(string userName)
-    {
-        var query = (from Author in _context.Authors
-            where Author.Name == userName
-            select Author);
-
-        return query.ToList();
-    }
-    
     // Query
     public List<AuthorDTO> GetFollowers(string username)
     {
@@ -72,19 +62,12 @@ public class AuthorRepository : IAuthorRepository
         return query.ToList();
     }
     
-    // TODO: CHANGE IS BOTH COMMANDS AND QUERY
-    public bool IsFollowing(string username, string followingUsername)
+    // Query
+    public bool IsFollowing(string authorUsername, string authorFollowingUsername)
     {
-        List<Author> AuthorUserList = GetAuthor(username);
-        List<Author> AuthorAuthorList = GetAuthor(followingUsername);
-        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
-            return false;
-        }
-        Author AuthorUser = AuthorUserList[0];
-        Author AuthorAuthor = AuthorAuthorList[0];
 
         var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            where Follows.User.Name == authorUsername && Follows.Following.Name == authorFollowingUsername
             select Follows).Any();
 
         return query;
@@ -116,8 +99,8 @@ public class AuthorRepository : IAuthorRepository
         _context.Following.Add(follows);
         _context.SaveChanges();
     }
-    //TODO: rename remove follow
-    public void UnFollow(string username, string unfollowingUsername)
+    // Command
+    public void RemoveFollow(string username, string unfollowingUsername)
     {
         foreach (var follow in GetPersonToUnfollow(username, unfollowingUsername))
         {
@@ -129,20 +112,15 @@ public class AuthorRepository : IAuthorRepository
     //TODO: Multiple Commands and also query
     public List<Follows> GetPersonToUnfollow(string username, string unfollowingUsername)
     {
-        Author AuthorUser = GetAuthor(username)[0];
-        Author AuthorUnfollowing = GetAuthor(unfollowingUsername)[0];
         var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
+            where Follows.User.Name == username && Follows.Following.Name == unfollowingUsername
             select Follows);
         return query.ToList();
     }
-    //TODO: Multiple Commands
-    public void CreateBlock(string username, string blockUsername)
+    // Command
+    public void CreateBlock(Author user, Author blockUser)
     {
-        Author AuthorUser = GetAuthor(username)[0];
-        Author AuthorBlocking = GetAuthor(blockUsername)[0];
-        
-        Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
+        Blocked blocked = new Blocked() { User = user, BlockedUser = blockUser };
         
         var validationResults = new List<ValidationResult>();
         var valContext = new ValidationContext(blocked);
@@ -155,36 +133,25 @@ public class AuthorRepository : IAuthorRepository
         _context.SaveChanges();
     }
     
-    // Query TODO: move boolean logic to service
-    public bool IsBlocked(string username, string blockUsername)
+    // Query
+    public int IsBlocked(string username, string blockUsername)
     {
         var query = (from Blocked in _context.Blocked
             where Blocked.User.Name == username && Blocked.BlockedUser.Name == blockUsername
             select Blocked).Count();
-        return query > 0;
+        return query;
     }
     
-    // TODO: Both query and commands
-    public void ForgetUser(string username)
+    // Command(s)
+    public void ForgetUser(Author user)
     {
-        var author = _context.Authors.SingleOrDefault(a => a.Name.ToLower() == username.ToLower());        
-        
-        if (author == null)
-        {
-            throw new Exception("User not found.");
-        }
-
-        
-        var cheeps = _context.Cheeps.Where(c => c.AuthorId == author.AuthorId).ToList();
+        var cheeps = _context.Cheeps.Where(c => c.AuthorId == user.AuthorId).ToList();
         _context.Cheeps.RemoveRange(cheeps);
-
         
-        var follows = _context.Following.Where(f => f.User.AuthorId == author.AuthorId || f.Following.AuthorId == author.AuthorId).ToList();
+        var follows = _context.Following.Where(f => f.User.AuthorId == user.AuthorId || f.Following.AuthorId == user.AuthorId).ToList();
         _context.Following.RemoveRange(follows);
-
         
-        _context.Authors.Remove(author);
-
+        _context.Authors.Remove(user);
         
         _context.SaveChanges();
     }
@@ -222,16 +189,8 @@ public class AuthorRepository : IAuthorRepository
     // TODO: Multiple queries, move logic to service
     public bool IsFollowingUserName(string username, string followingUsername)
     {
-        List<Author> AuthorUserList = GetAuthorUserName(username);
-        List<Author> AuthorAuthorList = GetAuthor(followingUsername);
-        if (AuthorUserList.Count != 1 || AuthorAuthorList.Count != 1) {
-            return false;
-        }
-        Author AuthorUser = AuthorUserList[0];
-        Author AuthorAuthor = AuthorAuthorList[0];
-
         var query = (from Follows in _context.Following
-            where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorAuthor.AuthorId
+            where Follows.User.Name == username && Follows.Following.Name == followingUsername
             select Follows).Any();
 
         return query;

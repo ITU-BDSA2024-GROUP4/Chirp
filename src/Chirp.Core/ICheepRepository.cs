@@ -6,7 +6,7 @@ public interface ICheepRepository
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
+    public List<CheepDTO> GetCheepsFromAuthorsPage(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
     public List<Cheep> GetCheep(string username, int cheepId);
 
