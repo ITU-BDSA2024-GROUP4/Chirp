@@ -20,7 +20,7 @@ numbersections: true
 Below a diagram can be seen, showing the onion architecture of the Chirp program. Were the outer circles depend on the inner circles:
 
 <figure style="text-align: center;">
-    <img src="images/Architecture — In the small.drawio.png" width=50%>
+    <img alt="Onion architecture" src="images/Architecture — In the small.drawio.png" width=50%>
     <figcaption>Figure 1. Onion architecture of Chirp program</figcaption>
 </figure>
 
@@ -72,7 +72,7 @@ Next up we want to show the journey of a user following another user.
     <figcaption>Figure 5. Following users</figcaption>
 </figure>
 
-The flow of following a user, is close to the same as liking cheeps, as both are 'toggles'. The only difference is that we decided to show the newly followed users profile after the follow action. Which eleminates the issue we are having with liking cheeps far down on the public timeline, and wanting to scroll beyond that point afterwards. This does then create the issue with wanting to continue scrolling after following. 
+The flow of following a user, is close to the same as liking cheeps, as both are 'toggles'. The only difference is that we decided to show the newly followed users profile after the follow action. Which eleminates the issue we are having with liking cheeps far down on the public timeline, and wanting to scroll beyond that point afterwards. This does then create the issue with wanting to continue scrolling after following.
 But this navigate to the private timeline of the newly followed user, is a conscious decision.
 
 Lastly it is important for us to show how the user can delete and see the data we have gathered.
@@ -91,6 +91,22 @@ The diagrams provide a clear overview of user journeys, including registering, p
 ## Process
 
 ### Build, test, release, and deployment
+
+![Build and test flow](images/build_test_action_flow.drawio.png){ width=50% }
+
+some text
+
+![Playwright test flow](images/Playwright_test_flow.drawio.png){ height=25% }
+
+some text
+
+![Deployment flow](images/deploy_action%20_flow.drawio.png){ height=25% }
+
+some text
+
+![Release flow](images/release_flow.drawio.png){ height=25% }
+
+some text
 
 ### Team work
 
