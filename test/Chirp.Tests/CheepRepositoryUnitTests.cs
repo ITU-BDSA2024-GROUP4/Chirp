@@ -137,10 +137,16 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             Cheeps = new List<Cheep>()
         };
         
-        string message = new string('a',161);
-        
+        Cheep newCheep = new Cheep()
+        {
+            CheepId = 20, //Some random int
+            AuthorId = newAuthor.AuthorId,
+            Author = newAuthor,
+            Text = new string('a',161),
+            TimeStamp = DateTime.Now
+        };
         // Act && Assert
-        Assert.Throws<ValidationException>( () => _cheepRepository.AddCheep(newAuthor, message));
+        Assert.Throws<ValidationException>( () => _cheepRepository.AddCheep(newCheep, newAuthor));
     }
     
     //TEST if user can follow same user more than once (logical fallacy!!!)

@@ -6,15 +6,15 @@ public interface ICheepRepository {
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
 
-    public Cheep AddCheep(Author author, string text);
+    public Cheep AddCheep(Cheep cheep, Author author);
 
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
     public List<Cheep> GetCheep(string userEmail, int cheepId);
-    public void DeleteCheep(Cheep cheep);
+    public void RemoveCheep(Cheep cheep);
     public void AddLike(Likes likes);
     public bool IsLiked(string user, int CheepId);
-    public void UnLike(string user, int CheepId);
+    public void UnLike(Likes like);
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);
     public int AmountOfCheeps();
@@ -22,6 +22,8 @@ public interface ICheepRepository {
     public bool UserBlockedSomeone(string userEmail);
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
     public List<CheepDTO> GetLiked(string user);
-    public Cheep GetCheepFromId(int cheepId);
+    public List<Cheep> GetCheepFromId(int cheepId);
+    public int CheepCount();
+    public List<Likes> GetLike(string user, int cheepId);
 
 }

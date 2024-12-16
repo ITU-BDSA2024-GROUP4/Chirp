@@ -64,12 +64,13 @@ public class CheepRepository : ICheepRepository
             select Cheep);
         return query.ToList();
     }
-    //COMMAND TODO: RENAME REMOVE
-    public void DeleteCheep(Cheep cheep)
+    //COMMAND
+    public void RemoveCheep(Cheep cheep)
     {
         _context.Cheeps.Remove(cheep);
         _context.SaveChanges();
     }
+    
     //Query
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
@@ -130,18 +131,9 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
     
-    // Commands TODO: move creation of cheep to service
-    public Cheep AddCheep(Author author, string text)
+    // Commands
+    public Cheep AddCheep(Cheep cheep, Author author)
     {
-        Cheep cheep = new Cheep()
-        {
-            CheepId = _context.Cheeps.Count() + 1,
-            AuthorId = author.AuthorId,
-            Author = author,
-            Text = text,
-            TimeStamp = DateTime.Now
-        };
-
         var validationResults = new List<ValidationResult>();
         var valContext = new ValidationContext(cheep);
         if (!Validator.TryValidateObject(cheep, valContext, validationResults, true))
@@ -154,10 +146,10 @@ public class CheepRepository : ICheepRepository
         
         _context.SaveChanges();
         
-        return cheep;
+        return cheep; // Returns so it made easier to test
     }
     
-    // Query
+    // Query TODO: simplify names/merge methods
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page)
     {
         var query = (from Author in _context.Authors
@@ -178,16 +170,13 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query TODO: move logic to service
-    public Cheep GetCheepFromId(int cheepId)
+    public List<Cheep> GetCheepFromId(int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
             where Cheep.CheepId == cheepId
             select Cheep);
-        if (query.Count() != 1)
-        {
-            throw new Exception("Multiple cheeps same id or is invalid id");
-        }
-        return query.ToList()[0];
+       
+        return query.ToList();
     }
     
     // Command
@@ -213,17 +202,19 @@ public class CheepRepository : ICheepRepository
 
         return query;
     }
-    
-    // TODO: Query and Command
-    public void UnLike(string user, int CheepId)
+
+    public List<Likes> GetLike(string user, int cheepId)
     {
         var query = (from Likes in _context.Likes
-            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId
+            where Likes.User.Email == user && Likes.cheep.CheepId == cheepId
             select Likes);
-        foreach (var like in query)
-        {
-            _context.Likes.Remove(like);
-        }
+        return query.ToList();
+    }
+    // TODO: Query and Command
+    // Command
+    public void UnLike(Likes like)
+    {
+        _context.Likes.Remove(like);
         _context.SaveChanges();
     }
 
@@ -312,5 +303,12 @@ public class CheepRepository : ICheepRepository
     //where authors.Contains(Author.Email)
 
     return query.ToList();
+    }
+    
+    // Query
+    public int CheepCount()
+    {
+        return (from Cheep in _context.Cheeps
+                select 1).Count();
     }
 }

@@ -6,7 +6,7 @@ public interface ICheepService
     public IAuthorRepository TEMP { get; set; }
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
-    public void DeleteCheep(string userEmail, int cheepId);
+    public void RemoveCheep(string userEmail, int cheepId);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
     public void AddCheep(string email, string message);
     

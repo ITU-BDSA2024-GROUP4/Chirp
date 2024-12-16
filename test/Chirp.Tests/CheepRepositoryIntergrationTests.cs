@@ -43,10 +43,18 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
     [InlineData("johnDoe", "john.doe@mail.com", "some text")]
     public void CreateAuthorAndCheepTest(string author, string email, string message){
         // Arrange
+        // MIGHT NEED REWORK IN ASSERT
         Author newAuthor = _authorRepository.AddAuthor(author, email);
-        
+        Cheep newCheep = new Cheep()
+        {
+            CheepId = 20, //Some random int
+            AuthorId = newAuthor.AuthorId,
+            Author = newAuthor,
+            Text = message,
+            TimeStamp = DateTime.Now
+        };
         // Act
-        _cheepRepository.AddCheep(newAuthor, message);
+        _cheepRepository.AddCheep(newCheep, newAuthor);
         
         // Assert
         var result = _cheepRepository.GetCheepsFromAuthorPage(author, 0);

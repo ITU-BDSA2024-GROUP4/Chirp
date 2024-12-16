@@ -38,14 +38,14 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author);
     }
 
-    public void DeleteCheep(string userEmail, int cheepId)
+    public void RemoveCheep(string userEmail, int cheepId)
     {
         List<Cheep> cheeps = _repository.GetCheep(userEmail, cheepId);
         if (cheeps == null || cheeps.Count > 1)
         {
             throw new ApplicationException("There are multiple cheeps with same email and cheep ID.");
         }
-        _repository.DeleteCheep(cheeps[0]);
+        _repository.RemoveCheep(cheeps[0]);
     }
 
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
@@ -56,7 +56,17 @@ public class CheepService : ICheepService
     public void AddCheep(string email, string message)
     {
         Author author = TEMP.GetAuthor(email)[0];
-        _repository.AddCheep(author, message);
+        
+        Cheep cheep = new Cheep()
+        {
+            CheepId = _repository.CheepCount() + 1,
+            AuthorId = author.AuthorId,
+            Author = author,
+            Text = message,
+            TimeStamp = DateTime.Now
+        };
+        
+        _repository.AddCheep(cheep, author);
     }
 
     public List<AuthorDTO> GetFollowers(string email)
@@ -98,8 +108,20 @@ public class CheepService : ICheepService
 
     public void CreateLike(string user, int CheepId)
     {
-        Author author = _authorRepository.GetAuthor(user)[0];
-        Cheep cheep = _repository.GetCheepFromId(CheepId);
+        List<Author> authors = _authorRepository.GetAuthor(user);
+        List<Cheep> cheeps = _repository.GetCheepFromId(CheepId);
+
+        if (cheeps.Count != 1)
+        { 
+            throw new Exception("Multiple cheeps with same id");
+        }
+        if (authors.Count != 1)
+        { 
+            throw new Exception("Multiple authors with same user");
+        }
+        
+        Author author = authors[0];
+        Cheep cheep = cheeps[0];
         
         Likes likes = new Likes() { User = author, cheep = cheep };
         
@@ -113,7 +135,15 @@ public class CheepService : ICheepService
 
     public void UnLike(string user, int CheepId)
     {
-        _repository.UnLike(user, CheepId);
+        List<Likes> likes = _repository.GetLike(user, CheepId);
+        if (likes.Count() != 1)
+        {
+            throw new Exception("Multiple likes with same user on same cheepid");
+        }
+
+        Likes like = likes[0];
+        
+        _repository.UnLike(like);
     }
 
     public int LikeCount(int CheepId)
