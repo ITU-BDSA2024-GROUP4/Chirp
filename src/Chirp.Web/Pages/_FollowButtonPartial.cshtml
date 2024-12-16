@@ -58,7 +58,6 @@
                             <form method="post" action="@Url.Page("", new { handler = "Follow" })">
                                     @Html.AntiForgeryToken()
                                 <input type="hidden" name="author" value="@cheep.Author"/>
-                                <input type="hidden" name="author_email" value="@cheep.Email"/>
                                 <input type="hidden" name="author_username" value="@cheep.Author"/>
                                 <input type="submit" class="follow-button" value="Follow"
                                        formaction="?handler=Follow">
@@ -69,7 +68,6 @@
                             <form method="post" asp-page-handler="Unfollow">
                                     @Html.AntiForgeryToken()
                                 <input type="hidden" name="author" value="@cheep.Author"/>
-                                <input type="hidden" name="author_email" value="@cheep.Email"/>
                                 <input type="hidden" name="author_username" value="@cheep.Author"/>
                                 <input type="submit" class="follow-button" value="Unfollow"
                                        formaction="?handler=Unfollow">
@@ -83,7 +81,6 @@
                 <form method="post" asp-page-handler="DeleteCheep">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="cheep_id" value="@cheep.CheepId"/>
-                    <input type="hidden" name="author_email" value="@cheep.Email"/>
                     <input type="hidden" name="author_username" value="@cheep.Author"/>
                     <input type="submit" class="follow-button" value="Un-cheep"
                            formaction="?handler=DeleteCheep">

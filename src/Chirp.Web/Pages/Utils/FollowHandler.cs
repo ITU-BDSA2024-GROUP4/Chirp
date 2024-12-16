@@ -8,11 +8,10 @@ namespace Chirp.Web.Pages.Utils;
 public static class FollowHandler
 {
     public static string Follow(ModelStateDictionary modelState, IAuthorService service,
-        string nameOfAuthorUsername, string nameOfAuthor, string userEmail,
+        string nameOfAuthorUsername, string userEmail,
         string username, string authorUsername)
     {
-        if (StateValidator.IsInvalid(nameOfAuthor, modelState) &&
-            StateValidator.IsInvalid(nameOfAuthorUsername, modelState))
+        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState))
         {
             return "Error";
         }
@@ -22,11 +21,10 @@ public static class FollowHandler
     }
     // TODO: FIX THIS
     public static string Unfollow(ModelStateDictionary modelState, IAuthorService service,
-        string nameOfAuthorUsername, string nameOfAuthor, string username,
+        string nameOfAuthorUsername, string username,
         string authorUsername, SubmitMessageModel submitMessage)
     {
-        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState) &&
-            StateValidator.IsInvalid(nameOfAuthor, modelState))
+        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState))
         {
             if (submitMessage != null)
             {

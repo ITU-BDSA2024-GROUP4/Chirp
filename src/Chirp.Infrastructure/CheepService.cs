@@ -55,7 +55,7 @@ public class CheepService : ICheepService
 
     public void AddCheep(string username, string message)
     {
-        Author author = TEMP.GetAuthor(username)[0];
+        Author author = _authorRepository.GetAuthor(username)[0];
         
         Cheep cheep = new Cheep()
         {
@@ -69,6 +69,7 @@ public class CheepService : ICheepService
         _repository.AddCheep(cheep, author);
     }
 
+    // TODO: Move to auhtor service
     public List<AuthorDTO> GetFollowers(string email)
     {
         return TEMP.GetFollowers(email);

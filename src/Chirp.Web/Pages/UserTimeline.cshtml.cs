@@ -28,17 +28,14 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty(SupportsGet = true)] public string Author { get; set; }
-
-    [BindProperty] public string Author_Email { get; set; }
-    
-    [BindProperty] public string Author_Username { get; set; }
+    [BindProperty(SupportsGet = true)] public string Author_Username { get; set; }
 
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
     [BindProperty] public int Cheep_Id { get; set; }
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
-
+    
     public string Email { get; set; }
     public string TEMPUserEmail { get; set; }
     public string Username { get; set; }
@@ -123,7 +120,7 @@ public class UserTimelineModel : PageModel
         TEMPSetEmail();
         SetUsername();
 
-        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), nameof(Author), Username,
+        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), Username,
                     User.Identity.Name, Author_Username))
         {
             case "Error":
@@ -139,7 +136,7 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Email), nameof(Author), Username,
+        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Username), Username,
                     Author_Username, SubmitMessage))
         {
             case "Error":
@@ -234,7 +231,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
-        if (TEMPGetEmail() != Author_Email)
+        if (GetUsername() != Author_Username)
         {
             throw new Exception("Author Email is not the logged in user.");
         }

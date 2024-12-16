@@ -21,9 +21,6 @@ public class PublicModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
 
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
-    [BindProperty] public string Author { get; set; }
-    [BindProperty] public string Author_Email { get; set; }
-    
     [BindProperty] public string Author_Username { get; set; }
 
     [BindProperty] public int Cheep_Id { get; set; }
@@ -134,13 +131,13 @@ public class PublicModel : PageModel
         TEMPSetEmail();
         SetUsername();
 
-        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), nameof(Author), Username,
+        switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), Username,
                     User.Identity.Name, Author_Username))
         {   
             case "Error":
                 return RedirectToPage("/Error");
             case "UserTimeline":
-                return RedirectToPage("/UserTimeline", new { author = Author });
+                return RedirectToPage("/UserTimeline", new { author = Author_Username });
             default:
                 return RedirectToPage("/Error");
         }
@@ -150,7 +147,7 @@ public class PublicModel : PageModel
     {
         SetCheeps();
 
-        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Email), nameof(Author), Username,
+        switch (FollowHandler.Unfollow(ModelState, _authorService, nameof(Author_Username), Username,
                     Author_Username, SubmitMessage))
         {
             case "Error":
@@ -181,11 +178,11 @@ public class PublicModel : PageModel
         return CurrentPage <= (_cheepService.AmountOfCheeps() / _pagesize); //32 is got from repository "_pagesize"
     }
 
-    public string GetLoggedMail() { return _authorService.GetAuthorUserName(User.Identity.Name).Email; }
+    public string GetLoggedUsername() { return _authorService.GetAuthorUserName(User.Identity.Name).Name; }
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
-        if (GetLoggedMail() != Author_Email)
+        if (GetLoggedUsername() != Author_Username)
         {
             throw new Exception("Author Email is not the logged in user.");
         }

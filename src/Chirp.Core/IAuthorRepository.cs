@@ -2,7 +2,6 @@
 
 public interface IAuthorRepository
 {
-    public List<Author> TEMPgetAUTHORwithEMAIL(string email);
     public List<Author> GetAuthor(string username);
     public Author AddAuthor(string name, string email);
     public List<Author> GetAuthorUserName(string userName);

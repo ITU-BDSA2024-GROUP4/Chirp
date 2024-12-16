@@ -39,14 +39,6 @@ public class AuthorRepository : IAuthorRepository
 
         return query.ToList();
     }
-    // Query
-    public List<Author> TEMPgetAUTHORwithEMAIL(string email) {
-        var query = (from Author in _context.Authors
-            where Author.Email == email
-            select Author);
-
-        return query.ToList();
-    }
     
     // Command
     public List<Author> GetAuthorUserName(string userName)
