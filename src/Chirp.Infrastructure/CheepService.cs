@@ -38,9 +38,9 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author);
     }
 
-    public void RemoveCheep(string userEmail, int cheepId)
+    public void RemoveCheep(string username, int cheepId)
     {
-        List<Cheep> cheeps = _repository.GetCheep(userEmail, cheepId);
+        List<Cheep> cheeps = _repository.GetCheep(username, cheepId);
         if (cheeps == null || cheeps.Count > 1)
         {
             throw new ApplicationException("There are multiple cheeps with same email and cheep ID.");

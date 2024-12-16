@@ -9,7 +9,9 @@ public interface ICheepRepository
     public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
-    public List<Cheep> GetCheep(string userEmail, int cheepId);
+    public List<Cheep> TEMPGetCheepWithEmail(string userEmail, int cheepId);
+    public List<Cheep> GetCheep(string username, int cheepId);
+
     public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
     public List<CheepDTO> GetLiked(string user);
     public List<Cheep> GetCheepFromId(int cheepId);

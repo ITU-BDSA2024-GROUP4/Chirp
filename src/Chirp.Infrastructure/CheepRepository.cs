@@ -56,12 +56,21 @@ public class CheepRepository : ICheepRepository
         return query.ToList(); // Converts IQueryable<T> to List<T>
     }
 
-    // Query TODO: NAME CHANGE
-    public List<Cheep> GetCheep(string userEmail, int cheepId)
+    // Query TODO: Remove
+    public List<Cheep> TEMPGetCheepWithEmail(string userEmail, int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
                      where Cheep.Author.Email == userEmail && Cheep.CheepId == cheepId
                      select Cheep);
+        return query.ToList();
+    }
+    
+    // Query
+    public List<Cheep> GetCheep(string username, int cheepId)
+    {
+        var query = (from Cheep in _context.Cheeps
+            where Cheep.Author.Name == username && Cheep.CheepId == cheepId
+            select Cheep);
         return query.ToList();
     }
 

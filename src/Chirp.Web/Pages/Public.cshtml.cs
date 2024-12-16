@@ -187,7 +187,7 @@ public class PublicModel : PageModel
         {
             throw new Exception("Author Email is not the logged in user.");
         }
-        _cheepService.RemoveCheep(TEMPUserEmail, Cheep_Id);
+        _cheepService.RemoveCheep(Username, Cheep_Id);
         return RedirectToPage();
     }
 }
