@@ -87,17 +87,19 @@ The diagrams provide a clear overview of user journeys, including registering, p
 
 ### License
 
+We decided to go ahead with and use the **MIT License**
+
 ### LLMs, ChatGPT, CoPilot, and others
 
-In the development of our project we used ChatGPT, and when we did so, we added ChatGPT as a co-author in our git commit message like so:
+In the development of our project we used ChatGPT, and when we did so, we made sure to add ChatGPT as a co-author in our git commit message like so:
 
-ChatGPT <>
+`ChatGPT <>`
 
-ChatGPT was very helpful when used to create simple code parts, but it struggled more with the complex parts.
-Another area were ChatGPT was very useful, was when we needed to do something and we didn't know where to start.
+ChatGPT was very helpful when used to create simple code parts and debug some.
+On the other hand the ChatGPT was not helpful with complex code questions. Therefore we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
 
 However we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
-We did try and use Gemini sometimes when ChatGPT was to no use, we did however never use any of its code, so it never got a co-author.
+We also gave Gemini some use sometimes when ChatGPT was not helpful, we did however never use any of the provided code, so it never got to be a co-author.
 
-For the most part the use of LLMs sped up our development, however some times the were send into a spiral because of the LLMs.
-So we experienced the limitations of LLMs and we now know how to use them more efficiently.
+For the most part the use of LLMs sped up our development, however some times the were send into a spiral and hallucinated, which sometimes could confuse us more.
+So we experienced the limitations of LLMs and got to learn more on know how to use them more efficiently.
