@@ -24,11 +24,11 @@ public class AuthorService : IAuthorService
         return _repository.GetBlockedAuthors(userEmail);
     }
     #pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    public AuthorDTO? GetAuthor(string email)
+    public AuthorDTO? GetAuthor(string username)
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 {
-        var authors = _repository.TEMPgetAUTHORwithEMAIL(email);
+        var authors = _repository.GetAuthor(username);
         if (authors.Count > 1)
         {
             return null; //Error, shouldn't be longer than 1

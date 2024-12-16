@@ -20,7 +20,8 @@ public class AboutModel : PageModel {
     private readonly SignInManager<ChirpUser> _signInManager;
     private readonly UserManager<ChirpUser> _userManager;
     public string Author;
-    public string UserEmail;
+    public string TEMPuserEmail;
+    public string Username;
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
@@ -46,7 +47,8 @@ public class AboutModel : PageModel {
 
     public void SetInformation()
     {
-        UserEmail = UserHandler.FindEmail(User);
+        TEMPuserEmail = UserHandler.FindEmail(User);
+        Username = UserHandler.FindName(User);
         Following = GetFollowers();
         Cheeps = GetCheeps();
         Likes = GetLikes();
@@ -84,22 +86,22 @@ public class AboutModel : PageModel {
 
     public string GetEmail() 
     { 
-        return _authorService.GetAuthor(UserEmail).Email;
+        return _authorService.GetAuthor(Username).Email;
     }
 
     public string GetName()
     {
-        return _authorService.GetAuthor(UserEmail).Name;
+        return _authorService.GetAuthor(Username).Name;
     }
 
     public List<AuthorDTO> GetFollowers()
     {
-        return _cheepService.GetFollowers(UserEmail);
+        return _cheepService.GetFollowers(TEMPuserEmail);
     }
 
     public List<CheepDTO> GetCheeps()
     {
-        AuthorDTO authorDTO = _authorService.GetAuthor(UserEmail);
+        AuthorDTO authorDTO = _authorService.GetAuthor(Username);
         if (authorDTO == null)
         {
             return new List<CheepDTO>();
@@ -109,7 +111,7 @@ public class AboutModel : PageModel {
 
     public List<CheepDTO> GetLikes()
     {
-        return _cheepService.GetLiked(UserEmail);
+        return _cheepService.GetLiked(TEMPuserEmail);
     }
 
     public string CreateCsvContent()
@@ -149,8 +151,8 @@ public class AboutModel : PageModel {
 
     public async Task<IActionResult> OnPostForgetMe()
     {
-        UserEmail = UserHandler.FindEmail(User);
-        _authorService.ForgetMe(UserEmail);
+        TEMPuserEmail = UserHandler.FindEmail(User);
+        _authorService.ForgetMe(TEMPuserEmail);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
@@ -164,7 +166,7 @@ public class AboutModel : PageModel {
 
     public bool UserBlockedSomeOne()
     {
-        return _cheepService.UserBlockedSomeone(UserEmail);
+        return _cheepService.UserBlockedSomeone(TEMPuserEmail);
     }
 
     public IActionResult OnPostUnblock()
@@ -177,6 +179,6 @@ public class AboutModel : PageModel {
 
     public List<AuthorDTO> GetBlockedAuthors()
     {
-        return _authorService.GetBlockedAuthors(UserEmail);
+        return _authorService.GetBlockedAuthors(TEMPuserEmail);
     }
 }

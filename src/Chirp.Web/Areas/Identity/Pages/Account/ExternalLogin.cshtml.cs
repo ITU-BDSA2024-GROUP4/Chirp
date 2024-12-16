@@ -159,7 +159,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created and logged in with {LoginProvider} provider.", info.LoginProvider);
 
                     // Create author if it doesn't exist
-                    var author = _authorService.GetAuthor(email);
+                    var author = _authorService.GetAuthor(userName);
                     if (author == null)
                     {
                         _authorService.AddAuthor(userName, email);

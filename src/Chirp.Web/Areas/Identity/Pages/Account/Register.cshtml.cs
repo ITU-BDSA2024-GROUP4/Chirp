@@ -142,7 +142,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     // Create author if it doesn't exist
-                    var author = _authorService.GetAuthor(Input.Email);
+                    var author = _authorService.GetAuthor(Input.Name);
 
                     if (author == null)
                     {

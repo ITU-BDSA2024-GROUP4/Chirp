@@ -4,7 +4,7 @@ public interface IAuthorService
 {
     public void AddAuthor(string name, string email);
     public List<AuthorDTO> GetBlockedAuthors(string userEmail);
-    public AuthorDTO GetAuthor(string email);
+    public AuthorDTO GetAuthor(string username);
     public AuthorDTO GetAuthorUserName(string username);
     public AuthorDTO GetOrCreateAuthor(string username, string email);
     public bool IsFollowing(string email, string followingUsername);
