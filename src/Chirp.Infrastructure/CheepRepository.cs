@@ -116,6 +116,7 @@ public class CheepRepository : ICheepRepository
     }
 
     // Commands
+    // TODO: unsure, should maybe only be 1 command/query?
     public Cheep AddCheep(Cheep cheep, Author author)
     {
         var validationResults = new List<ValidationResult>();
@@ -153,7 +154,7 @@ public class CheepRepository : ICheepRepository
         return query.ToList();
     }
 
-    // Query TODO: move logic to service
+    // Query
     public List<Cheep> GetCheepFromId(int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
@@ -221,17 +222,19 @@ public class CheepRepository : ICheepRepository
         return query;
     }
 
-    // Query ?? maybe change to linq query ??
+    // Query
     public int AmountOfCheeps()
     {
-        return _context.Cheeps.Count();
+        var query = (from Cheep in _context.Cheeps
+                select 1).Count();
+        return query;
     }
 
     // TODO: Query and command
-    public void UnBlock(string userEmail, string blockEmail)
+    public void UnBlock(string username, string blockUsername)
     {
         var query = (from Blocked in _context.Blocked
-                     where userEmail == Blocked.User.Name && blockEmail == Blocked.BlockedUser.Name
+                     where username == Blocked.User.Name && blockUsername == Blocked.BlockedUser.Name
                      select Blocked);
 
         foreach (var block in query)

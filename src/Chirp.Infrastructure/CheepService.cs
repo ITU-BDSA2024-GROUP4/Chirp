@@ -172,9 +172,9 @@ public class CheepService : ICheepService
         throw new NotImplementedException();
     }
 
-    public void UnBlock(string userEmail, string blockEmail)
+    public void UnBlock(string username, string blockUsername)
     {
-        _repository.UnBlock(userEmail, blockEmail);
+        _repository.UnBlock(username, blockUsername);
     }
 
     public bool UserBlockedSomeone(string username)

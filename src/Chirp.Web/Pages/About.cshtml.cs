@@ -24,8 +24,7 @@ public class AboutModel : PageModel {
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
     public List<CheepDTO> Likes;
-    [BindProperty] public string User_Email { get; set; }
-    [BindProperty] public string Unblock_User { get; set; }
+    [BindProperty] public string Unblock_Username { get; set; }
 
     public AboutModel(ICheepService cheepService, IAuthorService authorService,SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
@@ -166,8 +165,9 @@ public class AboutModel : PageModel {
 
     public IActionResult OnPostUnblock()
     {
-        User_Email = UserHandler.FindEmail(User);
-        _cheepService.UnBlock(User_Email, Unblock_User);
+        SetInformation();
+        
+        _cheepService.UnBlock(Username, Unblock_Username);
         
         return RedirectToPage();
     }
