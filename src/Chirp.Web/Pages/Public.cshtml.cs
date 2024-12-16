@@ -86,7 +86,7 @@ public class PublicModel : PageModel
             Cheeps = _cheepService.GetCheepsNotBlocked(TEMPUserEmail); // minus 1 because pages are 0 indexed  
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, UserHandler.FindEmail(User));
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, UserHandler.FindEmail(User), Username);
     }
 
     public IActionResult OnGetLogin()

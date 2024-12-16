@@ -22,7 +22,7 @@ public interface ICheepRepository
 
     // Methods for handling likes
     public void AddLike(Likes likes);
-    public bool IsLiked(string user, int CheepId);
+    public bool IsLiked(string username, int CheepId);
     public void UnLike(Likes like);
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);

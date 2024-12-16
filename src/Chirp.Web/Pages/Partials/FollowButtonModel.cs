@@ -17,26 +17,28 @@ public class FollowButtonModel
     private ICheepService _cheepService { get; set; }
     private IAuthorService _authorService { get; set; }
     public List<CheepDTO> Cheeps { get; set; }
-    public string UserEmail { get; set; }
+    public string TEMPUserEmail { get; set; } // TODO: remove
+    public string Username { get; set; }
     public bool ShowOnCheeps { get; set; }
 
-    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
+    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string tempUserEmail, string username, bool showOnCheeps = true) 
     {
         _cheepService = cheepService;
         _authorService = authorService;
         Cheeps = cheeps;
-        UserEmail = userEmail;
+        TEMPUserEmail = tempUserEmail;
+        Username = username;
         ShowOnCheeps = showOnCheeps;
     }
 
     public bool IsFollowing(string username)
     {
-        return _authorService.IsFollowing(UserEmail, username); // TODO: change UserEmail to its username
+        return _authorService.IsFollowing(TEMPUserEmail, username); // TODO: change UserEmail to its username
     }
 
-    public bool IsLiked(string user, int Cheep_Id)
+    public bool IsLiked(string username, int Cheep_Id)
     {
-        return _cheepService.IsLiked(user, Cheep_Id);
+        return _cheepService.IsLiked(username, Cheep_Id);
     }
 
     public int LikeCount(int Cheep_Id)

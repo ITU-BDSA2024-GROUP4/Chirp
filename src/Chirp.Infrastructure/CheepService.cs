@@ -128,9 +128,9 @@ public class CheepService : ICheepService
         _repository.AddLike(likes);
     }
 
-    public bool IsLiked(string user, int CheepId)
+    public bool IsLiked(string username, int CheepId)
     {
-        return _repository.IsLiked(user, CheepId);
+        return _repository.IsLiked(username, CheepId);
     }
 
     public void UnLike(string username, int CheepId)

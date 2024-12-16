@@ -23,7 +23,7 @@
                     <h3>@Model.LikeCount(cheep.CheepId)</h3>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        @if (!Model.IsLiked(Model.UserEmail, cheep.CheepId))
+                        @if (!Model.IsLiked(Model.Username, cheep.CheepId))
                         {
                             <form method="post" action="@Url.Page("", new { handler = "Like" })">
                                 @Html.AntiForgeryToken()
@@ -47,7 +47,7 @@
                 </span>
 
 
-            @if (cheep.Email != Model.UserEmail && User.Identity != null && User.Identity.IsAuthenticated)
+            @if (cheep.Email != Model.TEMPUserEmail && User.Identity != null && User.Identity.IsAuthenticated)
             {
                 <span class="follow-section">
 
