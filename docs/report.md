@@ -20,7 +20,7 @@ numbersections: true
 Below a diagram can be seen, showing the onion architecture of the Chirp program. Were the outer circles depend on the inner circles:
 
 <figure style="text-align: center;">
-    <img src="images/Architecture — In the small.drawio.png" style="width: 50vw;">
+    <img src="images/Architecture — In the small.drawio.png" width=50%>
     <figcaption>Figure 1. Onion architecture of Chirp program</figcaption>
 </figure>
 
@@ -40,7 +40,7 @@ The goal of this chapter is to show some core interactions from both **unauthent
 
 First off we want to show what a unauthenticated user can do, and how the journey is for such users to get to register.
 <figure style="text-align: center;">
-    <img src="images/chirpUserActRegister.png" style="width: 50vw;"/>
+    <img src="images/chirpUserActRegister.png" width=50%/>
     <figcaption>Figure 2. unauthenticated user journey and register</figcaption>
 </figure>
 
@@ -51,7 +51,7 @@ When you are authenticated / logged in, we have 4 primary action a user can do, 
 The process of cheeping is show in this diagram:
 
 <figure style="text-align: center;">
-    <img src="images/chirpUserActCheep.png" style="width: 50vw;"/>
+    <img src="images/chirpUserActCheep.png" width=50%/>
     <figcaption>Figure 3. Cheeping journey and validation of cheep</figcaption>
 </figure>
 
@@ -60,7 +60,7 @@ A cheep is valid if its length, as show in the diagram, is between 0 and up to a
 The users also need to like cheeps, for that action we have this diagram:
 
 <figure style="text-align: center;">
-    <img src="images/chirpUserActLike.png" style="width: 50vw;"/>
+    <img src="images/chirpUserActLike.png" width=50%/>
     <figcaption>Figure 4. Liking cheeps</figcaption>
 </figure>
 
@@ -68,7 +68,7 @@ The 'heart' button we have besides each cheep is essentially a toggle for likes 
 
 Next up we want to show the journey of a user following another user.
 <figure style="text-align: center;">
-    <img src="images/chirpUserActFollow.png" style="width: 50vw;"/>
+    <img src="images/chirpUserActFollow.png" width=50%/>
     <figcaption>Figure 5. Following users</figcaption>
 </figure>
 
@@ -78,15 +78,13 @@ But this navigate to the private timeline of the newly followed user, is a consc
 Lastly it is important for us to show how the user can delete and see the data we have gathered.
 
 <figure style="text-align: center;">
-    <img src="images/chirpUserActDelete.png" style="width: 50vw;"/>
+    <img src="images/chirpUserActDelete.png" width=50%/>
     <figcaption>Figure 6. Deleting the user and download data</figcaption>
 </figure>
 
 The linear diagram is pretty much self explanatory, but we feel it's important to show either way, since this is last key feature for a user to experience.
 
 The diagrams provide a clear overview of user journeys, including registering, posting a cheep, liking cheeps, following other users, and deleting an account. Additionally we have highlighted some areas for improvements.
-
-
 
 ### Sequence of functionality/calls trough _Chirp!_
 
