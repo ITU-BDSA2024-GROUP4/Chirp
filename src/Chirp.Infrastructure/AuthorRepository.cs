@@ -186,7 +186,7 @@ public class AuthorRepository : IAuthorRepository
 
     }
     
-    // TODO: Multiple queries, move logic to service
+    // Query
     public bool IsFollowingUserName(string username, string followingUsername)
     {
         var query = (from Follows in _context.Following
