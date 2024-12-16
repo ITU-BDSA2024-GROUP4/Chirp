@@ -28,7 +28,7 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; } = null!;
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty(SupportsGet = true)] public string Author { get; set; }
-    [BindProperty(SupportsGet = true)] public string Author_Username { get; set; }
+    [BindProperty] public string Author_Username { get; set; }
 
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
