@@ -1,21 +1,28 @@
-﻿namespace Chirp.Core;
-
-public interface IAuthorRepository
+﻿namespace Chirp.Core
 {
-    public List<Author> GetAuthor(string username);
-    public Author AddAuthor(string name, string email);
-    public List<AuthorDTO> GetFollowers(string username);
-    public List<AuthorDTO> GetBlockedAuthors(string username);
-    public bool IsFollowing(string authorUsername, string authorFollowingUsername);
-    public void AddFollow(string username, string followingUsername);
-    public void RemoveFollow(string username, string unfollowingUsername);
-    public int IsBlocked(string username, string blockUsername);
-    public void CreateBlock(Author user, Author blockUser);
-    public void ForgetUser(Author username);
-    public bool IsFollowingUserName(string username, string followingUsername);
-    public int GetFollowerCount(string username);
-    public int GetFollowerCountUserName(string username);
-    public int GetFollowingCount(string username);
-    public List<Follows> GetPersonToUnfollow(string username, string unfollowingUsername);
+    public interface IAuthorRepository
+    {
+        // Author Management
+        List<Author> GetAuthor(string username);
+        Author AddAuthor(string name, string email);
+        void ForgetUser(Author username);
 
+        // Follower Management
+        List<AuthorDTO> GetFollowers(string username);
+        int GetFollowerCount(string username);
+        int GetFollowerCountUserName(string username);
+        bool IsFollowing(string authorUsername, string authorFollowingUsername);
+        bool IsFollowingUserName(string username, string followingUsername);
+        void AddFollow(string username, string followingUsername);
+        void RemoveFollow(string username, string unfollowingUsername);
+
+        // Following Management
+        int GetFollowingCount(string username);
+        List<Follows> GetPersonToUnfollow(string username, string unfollowingUsername);
+
+        // Block Management
+        List<AuthorDTO> GetBlockedAuthors(string username);
+        int IsBlocked(string username, string blockUsername);
+        void CreateBlock(Author user, Author blockUser);
+    }
 }
