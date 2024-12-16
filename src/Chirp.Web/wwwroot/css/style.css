@@ -42,6 +42,7 @@ input[type="password"]:focus {
     border-color: #58A6FF;
     box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
 }
+
 input {
     border: 1px solid #3A3A3C;
     background: none;
@@ -51,6 +52,7 @@ input {
     font-weight: 500;
 
 }
+
 /* Page Structure */
 div.page {
     background: #2C2C2E;
@@ -134,17 +136,54 @@ div.page ul.cheeps {
 }
 
 div.page ul.cheeps li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 10px 0;
-
     padding: 15px;
     background: #2C2C2E;
     border: 1px solid #3A3A3C;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+}
 
+div.page ul.cheeps li .cheep-content {
+    flex-grow: 1;
+    white-space: pre-wrap;
+}
+
+div.page ul.cheeps li .cheep-metadata {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #9CA3AF;
+    margin-top: 10px;
+    border-top: 1px solid #3A3A3C;
+    padding-top: 5px;
+}
+
+div.page ul.cheeps li .follow-count {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #9CA3AF;
+    margin-top: 10px;
+    border-top: 1px solid #3A3A3C;
+    padding-top: 5px;
+}
+
+div.cheep-metadata a.author:hover {
+    text-decoration: underline;
+    color: #74C0FF;
+}
+
+div.cheep-metadata a.author {
+    text-decoration: none;
+    color: #58A6FF;
+    font-weight: 500;
 }
 
 div.page ul.cheeps li img {
@@ -182,7 +221,6 @@ ul.nav li a:hover {
     background-color: #1F2937;
 }
 
-/* Buttons */
 button {
     background-color: #58A6FF;
     border: none;
@@ -264,5 +302,11 @@ button:hover {
 
     input[type="text"] {
         width: 100%;
+    }
+
+    .char-count {
+        font-size: 12px;
+        color: grey;
+        margin-top: 5px;
     }
 }

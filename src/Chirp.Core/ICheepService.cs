@@ -1,6 +1,6 @@
 namespace Chirp.Core;
 
-public interface ICheepService 
+public interface ICheepService
 {
     ICheepRepository repository { get; set; }
     public IAuthorRepository TEMP { get; set; }

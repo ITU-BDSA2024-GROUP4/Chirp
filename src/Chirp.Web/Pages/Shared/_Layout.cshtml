@@ -4,7 +4,7 @@
 @inject SignInManager<ChirpUser> SignInManager
 <head>
     <title>@ViewData["Title"]</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="/favicon/blue.ico">
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <a href="/@(User.Identity?.Name)">my timeline</a> |
                 <a href="/@(User.Identity?.Name)/aboutme">about me</a> |
                 <a href="/">public timeline</a> |
-                <a asp-page-handler="Logout" >logout [@(User.Identity?.Name)]</a>
+                <a asp-page-handler="Logout">logout [@(User.Identity?.Name)]</a>
             </div>
         }
         else
@@ -30,10 +30,10 @@
             </div>
         }
     </div>
-    
+
     <div class=body>
-            
-            @RenderBody()
+
+        @RenderBody()
     </div>
     <div class=footer>
         Chirp &mdash; An ASP.NET Application

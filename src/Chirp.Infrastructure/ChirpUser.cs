@@ -4,6 +4,5 @@ namespace Chirp.Infrastructure
 {
     public class ChirpUser : IdentityUser
     {
-       
     }
 }

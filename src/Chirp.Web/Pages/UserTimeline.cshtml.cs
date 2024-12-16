@@ -1,13 +1,18 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using System.Security.Claims;
+
 using Microsoft.AspNetCore.Http.Extensions;
+
 using System.Text.RegularExpressions;
+
 using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -21,19 +26,17 @@ public class UserTimelineModel : PageModel
     private readonly SignInManager<ChirpUser> _signInManager;
 
     public List<CheepDTO> Cheeps { get; set; } = null!;
-    [BindProperty]
-    public SubmitMessageModel SubmitMessage { get; set; }
-    [BindProperty(SupportsGet = true)]
-    public string Author { get; set; }
-    [BindProperty]
-    public string Author_Email { get; set; }
+    [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
+    [BindProperty(SupportsGet = true)] public string Author { get; set; }
+
+    [BindProperty] public string Author_Email { get; set; }
+
     // Needs to be changed to use bindproperty, feels unnessecary to use in this case
     // [BindProperty]
-    [BindProperty]
-    public int Cheep_Id { get; set; }
+    [BindProperty] public int Cheep_Id { get; set; }
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
-    
+
     public string Email { get; set; }
     public string UserEmail { get; set; }
     public int CurrentPage { get; set; } = 0;
@@ -44,15 +47,20 @@ public class UserTimelineModel : PageModel
         _authorService = authorService;
         _signInManager = signInManager;
     }
-    public void SetEmail() {
+
+    public void SetEmail()
+    {
         UserEmail = UserHandler.FindEmail(User);
     }
+
     public ActionResult OnGet(string author)
     {
         SetCheeps();
         return Page();
     }
-   public void SetCheeps() {
+
+    public void SetCheeps()
+    {
         SetEmail();
 
         var pageQuery = Request.Query["page"].ToString();
@@ -90,14 +98,16 @@ public class UserTimelineModel : PageModel
             InvalidCheep = true;
             return Page();
         }
-        if(!InvalidCheep) {
+
+        if (!InvalidCheep)
+        {
             InvalidCheep = false;
         }
         string author = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
         _cheepService.AddCheep(author, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
-        return RedirectToPage(); 
+        return RedirectToPage();
     }
 
     public IActionResult OnPostFollow()
@@ -115,7 +125,7 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
-    
+
     public IActionResult OnPostUnfollow()
     {
         SetCheeps();
@@ -131,7 +141,7 @@ public class UserTimelineModel : PageModel
                 return RedirectToPage("/Error");
         }
     }
-    
+
     public IActionResult OnGetLogin()
     {
         return Authentication.HandleLogin(this);
@@ -142,7 +152,7 @@ public class UserTimelineModel : PageModel
         var signOut = await Authentication.HandleLogout(_signInManager, this);
         return signOut;
     }
-    
+
     public IActionResult OnPostLike()
     {
         SetCheeps();
@@ -156,6 +166,7 @@ public class UserTimelineModel : PageModel
         _cheepService.UnLike(UserEmail, Cheep_Id);
         return RedirectToPage();
     }
+
     public bool GetMaxPage()
     {
         if (Author == User.Identity.Name)
@@ -177,6 +188,7 @@ public class UserTimelineModel : PageModel
     {
         return _authorService.GetAuthorUserName(Author).Email;
     }
+
     public bool IsFollowing()
     {
         return _authorService.IsFollowing(UserEmail, GetEmail());
@@ -196,6 +208,7 @@ public class UserTimelineModel : PageModel
     {
         return _cheepService.GetTotalCheeps(Author);
     }
+
     public IActionResult OnPostBlock()
     {
         SetCheeps();
@@ -215,4 +228,3 @@ public class UserTimelineModel : PageModel
         return RedirectToPage();
     }
 }
-

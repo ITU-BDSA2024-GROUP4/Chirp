@@ -1,15 +1,17 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-using Chirp.Core;
-using Microsoft.AspNetCore.Http.Extensions;
 
+using Microsoft.AspNetCore.Mvc;
+
+using Chirp.Core;
+
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
-    
+
 public class FollowButtonModel
 {
     private ICheepService _cheepService { get; set; }
@@ -17,8 +19,13 @@ public class FollowButtonModel
     public List<CheepDTO> Cheeps { get; set; }
     public string UserEmail { get; set; }
     public bool ShowOnCheeps { get; set; }
+<<<<<<< HEAD
     
     public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true) 
+=======
+
+    public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true)
+>>>>>>> origin/main
     {
         _cheepService = cheepService;
         _authorService = authorService;

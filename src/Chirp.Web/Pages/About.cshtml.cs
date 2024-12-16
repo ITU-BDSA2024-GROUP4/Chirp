@@ -1,8 +1,10 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using System.IO.Compression;
 using System.Text;
+
 using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Utils;
@@ -23,10 +25,8 @@ public class AboutModel : PageModel {
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
     public List<CheepDTO> Likes;
-    [BindProperty] 
-    public string User_Email { get; set; }
-    [BindProperty]
-    public string Unblock_User { get; set; }
+    [BindProperty] public string User_Email { get; set; }
+    [BindProperty] public string Unblock_User { get; set; }
 
     public AboutModel(ICheepService cheepService, IAuthorService authorService,SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
@@ -35,13 +35,15 @@ public class AboutModel : PageModel {
         _signInManager = signInManager;
         _userManager = userManager;
     }
-    public ActionResult OnGet(string author)    
+
+    public ActionResult OnGet(string author)
     {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
         Author = author;
         SetInformation();
         return Page();
     }
+
     public void SetInformation()
     {
         UserEmail = UserHandler.FindEmail(User);
@@ -49,6 +51,7 @@ public class AboutModel : PageModel {
         Cheeps = GetCheeps();
         Likes = GetLikes();
     }
+
     public ActionResult OnPostDownload()
     {
         SetInformation(); // Ensure data is up-to-date
@@ -83,14 +86,17 @@ public class AboutModel : PageModel {
     { 
         return _authorService.GetAuthor(UserEmail).Email;
     }
-    public string GetName() 
+
+    public string GetName()
     {
         return _authorService.GetAuthor(UserEmail).Name;
     }
+
     public List<AuthorDTO> GetFollowers()
     {
         return _cheepService.GetFollowers(UserEmail);
     }
+
     public List<CheepDTO> GetCheeps()
     {
         AuthorDTO authorDTO = _authorService.GetAuthor(UserEmail);
@@ -105,10 +111,11 @@ public class AboutModel : PageModel {
     {
         return _cheepService.GetLiked(UserEmail);
     }
+
     public string CreateCsvContent()
     {
         var sb = new StringBuilder();
-        
+
         sb.AppendLine("Category,Data");
         sb.AppendLine($"Email,{GetEmail()}");
         sb.AppendLine($"Name,{GetName()}");
@@ -124,7 +131,7 @@ public class AboutModel : PageModel {
         {
             sb.AppendLine($",{cheep.Message}");
         }
-        
+
         sb.AppendLine("Cheeps you liked");
         foreach (var cheep in Likes)
         {
@@ -154,12 +161,12 @@ public class AboutModel : PageModel {
         var result = await _userManager.DeleteAsync(chirpUser);
         return await Authentication.HandleLogout(_signInManager, this);
     }
-    
+
     public bool UserBlockedSomeOne()
     {
         return _cheepService.UserBlockedSomeone(UserEmail);
     }
-    
+
     public IActionResult OnPostUnblock()
     {
         User_Email = UserHandler.FindEmail(User);
@@ -172,5 +179,4 @@ public class AboutModel : PageModel {
     {
         return _authorService.GetBlockedAuthors(UserEmail);
     }
-    
 }

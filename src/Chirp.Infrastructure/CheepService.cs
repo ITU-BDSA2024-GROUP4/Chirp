@@ -190,5 +190,4 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheepsFromAuthor(email).Count;
     }
-    
 }

@@ -1,7 +1,11 @@
 using System.Data;
+
 using Microsoft.EntityFrameworkCore;
+
 using Chirp.Core;
+
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Chirp.Infrastructure;
@@ -21,38 +25,37 @@ public class CheepRepository : ICheepRepository
     public List<CheepDTO> GetCheeps(int page)
     {
         var query = (from Author in _context.Authors
-                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                    orderby Cheeps.TimeStamp descending
-                    select new CheepDTO
-                    {
-                        Author = Author.Name,
-                        Email = Author.Email, 
-                        Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                        CheepId = Cheeps.CheepId
-                        
-                    })
-                    .Skip(_pageSize * page) // Same as SQL "OFFSET
-                    .Take(_pageSize);       // Same as SQL "LIMIT"
-        
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email,
+                    Message = Cheeps.Text,
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
+                })
+            .Skip(_pageSize * page) // Same as SQL "OFFSET
+            .Take(_pageSize); // Same as SQL "LIMIT"
+
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
     // Query
     public List<CheepDTO> GetCheepsFromAuthor(string author)
     {
         var query = (from Author in _context.Authors
-                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                    orderby Cheeps.TimeStamp descending
-                    where Author.Name == author
-                    select new CheepDTO
-                    {
-                        Author = Author.Name,
-                        Email = Author.Email,  
-                        Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                        CheepId = Cheeps.CheepId
-                    });
-        
+            join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+            orderby Cheeps.TimeStamp descending
+            where Author.Name == author
+            select new CheepDTO
+            {
+                Author = Author.Name,
+                Email = Author.Email,
+                Message = Cheeps.Text,
+                TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                CheepId = Cheeps.CheepId
+            });
+
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
     
@@ -75,20 +78,20 @@ public class CheepRepository : ICheepRepository
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
     {
         var query = (from Author in _context.Authors
-                    join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                    orderby Cheeps.TimeStamp descending
-                    where Author.Name == author
-                    select new CheepDTO
-                    {
-                        Author = Author.Name,
-                        Email = Author.Email,  
-                        Message = Cheeps.Text, 
-                        TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                        CheepId = Cheeps.CheepId
-                    })
-                    .Skip(_pageSize * page) // Same as SQL "OFFSET
-                    .Take(_pageSize);       // Same as SQL "LIMIT"
-        
+                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+                orderby Cheeps.TimeStamp descending
+                where Author.Name == author
+                select new CheepDTO
+                {
+                    Author = Author.Name,
+                    Email = Author.Email,
+                    Message = Cheeps.Text,
+                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                    CheepId = Cheeps.CheepId
+                })
+            .Skip(_pageSize * page) // Same as SQL "OFFSET
+            .Take(_pageSize); // Same as SQL "LIMIT"
+
         return query.ToList(); //Converts IQueryable<T> to List<T>
     }
 
@@ -102,32 +105,32 @@ public class CheepRepository : ICheepRepository
                 select new CheepDTO
                 {
                     Author = Author.Name,
-                    Email = Author.Email, 
+                    Email = Author.Email,
                     Message = Cheeps.Text,
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
                     CheepId = Cheeps.CheepId
                 })
-                .Skip(_pageSize * page)
-                .Take(_pageSize);
-        
+            .Skip(_pageSize * page)
+            .Take(_pageSize);
+
         return query.ToList();
     }
     //QUERY TODO: Unify email and username calls to one or the other
     public List<CheepDTO> GetCheepsFromAuthorEmail(string email)
     {
         var query = (from Author in _context.Authors
-                join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
-                orderby Cheeps.TimeStamp descending
-                where Author.Email == email
-                select new CheepDTO
-                {
-                    Author = Author.Name,
-                    Email = Author.Email, 
-                    Message = Cheeps.Text,
-                    TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
-                    CheepId = Cheeps.CheepId
-                });
-        
+            join Cheeps in _context.Cheeps on Author.AuthorId equals Cheeps.AuthorId
+            orderby Cheeps.TimeStamp descending
+            where Author.Email == email
+            select new CheepDTO
+            {
+                Author = Author.Name,
+                Email = Author.Email,
+                Message = Cheeps.Text,
+                TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
+                CheepId = Cheeps.CheepId
+            });
+
         return query.ToList();
     }
     
@@ -143,7 +146,7 @@ public class CheepRepository : ICheepRepository
 
         _context.Cheeps.Add(cheep);
         author.Cheeps.Add(cheep);
-        
+
         _context.SaveChanges();
         
         return cheep; // Returns so it made easier to test
@@ -159,13 +162,13 @@ public class CheepRepository : ICheepRepository
                 select new CheepDTO
                 {
                     Author = Author.Name,
-                    Email = Author.Email,  
-                    Message = Cheeps.Text, 
+                    Email = Author.Email,
+                    Message = Cheeps.Text,
                     TimeStamp = ((DateTimeOffset)Cheeps.TimeStamp).ToUnixTimeSeconds(),
                     CheepId = Cheeps.CheepId
                 })
             .Skip(_pageSize * page) // Same as SQL "OFFSET
-            .Take(_pageSize);       // Same as SQL "LIMIT"
+            .Take(_pageSize); // Same as SQL "LIMIT"
         return query.ToList();
     }
 
@@ -188,7 +191,7 @@ public class CheepRepository : ICheepRepository
         {
             throw new ValidationException("Cheep validation failed: " + string.Join(", ", validationResults));
         }
-        
+
         _context.Likes.Add(likes);
         _context.SaveChanges();
     }
@@ -197,7 +200,7 @@ public class CheepRepository : ICheepRepository
     public bool IsLiked(string user, int CheepId)
     {
         var query = (from Likes in _context.Likes
-            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId 
+            where Likes.User.Email == user && Likes.cheep.CheepId == CheepId
             select Likes).Any();
 
         return query;
@@ -223,7 +226,7 @@ public class CheepRepository : ICheepRepository
     {
         var query = (from Likes in _context.Likes
             where Likes.cheep.CheepId == CheepId
-                select Likes).Count();
+            select Likes).Count();
         return query;
     }
 
@@ -248,13 +251,13 @@ public class CheepRepository : ICheepRepository
         var query = (from Blocked in _context.Blocked
             where userEmail == Blocked.User.Email && blockEmail == Blocked.BlockedUser.Email
             select Blocked);
-        
+
         foreach (var block in query)
         {
             _context.Blocked.Remove(block);
         }
+
         _context.SaveChanges();
-        
     }
 
     // Query
@@ -288,7 +291,6 @@ public class CheepRepository : ICheepRepository
     // Query
     public List<CheepDTO> GetLiked(string email)
     {
-
         var query = (from Cheep in _context.Cheeps
             join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
             orderby Cheep.TimeStamp descending
@@ -300,9 +302,9 @@ public class CheepRepository : ICheepRepository
                 Author = Cheep.Author.Name,
                 Message = Cheep.Text
             });
-    //where authors.Contains(Author.Email)
+        //where authors.Contains(Author.Email)
 
-    return query.ToList();
+        return query.ToList();
     }
     
     // Query
