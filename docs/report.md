@@ -29,12 +29,41 @@ Illustrate the architecture of your deployed application.
 Remember, you developed a client-server application.
 Illustrate the server component and to where it is deployed, illustrate a client component, and show how these communicate with each other.
 
+
 ### User activities
 
-Illustrate typical scenarios of a user journey through your _Chirp!_ application.
-That is, start illustrating the first page that is presented to a non-authorized user, illustrate what a non-authorized user can do with your _Chirp!_ application, and finally illustrate what a user can do after authentication.
+The goal of this chapter is to show some core interactions from both **unauthenticated user** and **authenticated user**. We make use of UML activity diagrams, these will visualize the states triggered by a users actions.
 
-Make sure that the illustrations are in line with the actual behavior of your application.
+First off we want to show what a unauthenticated user can do, and how the journey is for such users to get to register.
+<figure style="text-align: center;">
+    <img src="images/chirpUserActRegister.png" style="width: 50vw;"/>
+    <figcaption>Figure 2. unauthenticated user journey and register</figcaption>
+</figure>
+
+This diagram show that a user can authenticate with both Email, and GitHub. Also if you like a cheep from a user on the public timeline. It will simply not like it, but instead put you on the register page. Registering this way will give the same result as just navigating to the register page using the navigation bar.
+
+When you are authenticated / logged in, we have 4 primary action a user can do, repectively: Cheep, Like, Follow and Delete the account from the Chirp service.
+
+The process of cheeping is show in this diagram:
+
+<figure style="text-align: center;">
+    <img src="images/chirpUserActCheep.png" style="width: 50vw;"/>
+    <figcaption>Figure 2. Cheep journey and validation of cheep</figcaption>
+</figure>
+
+A cheep is valid if its length, as show in the diagram, is between 0 and up to and including 160 characters. If you were to click the Share button, with and empty text field, a warning will pop up. A warning pop up wont explicitly be shown to the user for cheeps longer that 160 characters, we simply show the length counter on screen, and dont allow for more characters, in both front- and backend.
+
+The users also need to like cheeps, for that action we have this diagram:
+
+<figure style="text-align: center;">
+    <img src="images/chirpUserActLike.png" style="width: 50vw;"/>
+    <figcaption>Figure 2. Cheep journey and validation of cheep</figcaption>
+</figure>
+
+
+
+
+
 
 ### Sequence of functionality/calls trough _Chirp!_
 
