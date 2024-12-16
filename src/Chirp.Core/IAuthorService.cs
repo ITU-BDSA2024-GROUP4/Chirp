@@ -11,7 +11,7 @@ public interface IAuthorService
     public void CreateFollow(string username, string user, string follow);
     public void CreateBlock(string userEmail, string blockemail);
     public bool IsBlocked(string userEmail, string blockEmail);
-    public void UnFollow(string user, string unfollow);
+    public void UnFollow(string username, string unfollowUsername);
     public void ForgetMe(string email);
     public int GetFollowerCount(string email);
     public int GetFollowerCountUserName(string username);

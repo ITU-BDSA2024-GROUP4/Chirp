@@ -124,9 +124,9 @@ public class AuthorRepository : IAuthorRepository
         _context.SaveChanges();
     }
     //TODO: rename remove follow
-    public void UnFollow(string user, string unfollowing)
+    public void UnFollow(string username, string unfollowingUsername)
     {
-        foreach (var follow in GetPersonToUnfollow(user, unfollowing))
+        foreach (var follow in GetPersonToUnfollow(username, unfollowingUsername))
         {
             _context.Following.Remove(follow);
         }
@@ -134,20 +134,20 @@ public class AuthorRepository : IAuthorRepository
     }
 
     //TODO: Multiple Commands and also query
-    public List<Follows> GetPersonToUnfollow(string user, string unfollowing)
+    public List<Follows> GetPersonToUnfollow(string username, string unfollowingUsername)
     {
-        Author AuthorUser = TEMPgetAUTHORwithEMAIL(user)[0];
-        Author AuthorUnfollowing = TEMPgetAUTHORwithEMAIL(unfollowing)[0];
+        Author AuthorUser = GetAuthor(username)[0];
+        Author AuthorUnfollowing = GetAuthor(unfollowingUsername)[0];
         var query = (from Follows in _context.Following
             where Follows.User.AuthorId == AuthorUser.AuthorId && Follows.Following.AuthorId == AuthorUnfollowing.AuthorId
             select Follows);
         return query.ToList();
     }
     //TODO: Multiple Commands
-    public void CreateBlock(string userEmail, string blockEmail)
+    public void CreateBlock(string username, string blockUsername)
     {
-        Author AuthorUser = TEMPgetAUTHORwithEMAIL(userEmail)[0];
-        Author AuthorBlocking = TEMPgetAUTHORwithEMAIL(blockEmail)[0];
+        Author AuthorUser = GetAuthor(username)[0];
+        Author AuthorBlocking = GetAuthor(blockUsername)[0];
         
         Blocked blocked = new Blocked() { User = AuthorUser, BlockedUser = AuthorBlocking };
         
@@ -162,7 +162,7 @@ public class AuthorRepository : IAuthorRepository
         _context.SaveChanges();
     }
     
-    // Query TODO: boolean logic moved to service
+    // Query TODO: move boolean logic to service
     public bool IsBlocked(string userEmail, string blockEmail)
     {
         var query = (from Blocked in _context.Blocked
@@ -171,7 +171,7 @@ public class AuthorRepository : IAuthorRepository
         return query > 0;
     }
     
-    // TODO: Both query and command
+    // TODO: Both query and commands
     public void ForgetUser(string email)
     {
         var author = _context.Authors.SingleOrDefault(a => a.Email.ToLower() == email.ToLower());        if (author == null)

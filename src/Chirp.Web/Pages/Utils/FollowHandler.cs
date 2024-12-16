@@ -20,11 +20,12 @@ public static class FollowHandler
         service.CreateFollow(userIdentityName, userEmail, authorEmail);
         return "UserTimeline";
     }
+    // TODO: FIX THIS
     public static string Unfollow(ModelStateDictionary modelState, IAuthorService service,
-        string nameOfAuthorEmail, string nameOfAuthor, string userEmail,
-        string authorEmail, SubmitMessageModel submitMessage)
+        string nameOfAuthorEmail, string nameOfAuthorUsername, string username,
+        string authorUsername, SubmitMessageModel submitMessage)
     {
-        if (StateValidator.IsInvalid(nameOfAuthor, modelState) &&
+        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState) &&
             StateValidator.IsInvalid(nameOfAuthorEmail, modelState))
         {
             if (submitMessage != null)
@@ -35,7 +36,7 @@ public static class FollowHandler
             return "Error";
         }
         
-        service.UnFollow(userEmail, authorEmail);
+        service.UnFollow(username, authorUsername);
         return "Page";
     }
     
