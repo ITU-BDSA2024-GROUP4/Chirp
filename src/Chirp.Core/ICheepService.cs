@@ -8,7 +8,7 @@ public interface ICheepService
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public void RemoveCheep(string userEmail, int cheepId);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-    public void AddCheep(string email, string message);
+    public void AddCheep(string username, string message);
     
     public List<AuthorDTO> GetFollowers(string email);
     public List<CheepDTO> GetOwnTimeline(string userEmail);

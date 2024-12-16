@@ -113,8 +113,8 @@ public class PublicModel : PageModel
             InvalidCheep = false;
         }
 
-        string author = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Email;
-        _cheepService.AddCheep(author, SubmitMessage.Message);
+        string username = _authorService.GetOrCreateAuthor(User.Identity.Name, UserEmail).Name;
+        _cheepService.AddCheep(username, SubmitMessage.Message);
 
         SubmitMessage.Message = ""; //Clears text field
         return RedirectToPage();

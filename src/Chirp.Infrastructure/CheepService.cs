@@ -53,9 +53,9 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
-    public void AddCheep(string email, string message)
+    public void AddCheep(string username, string message)
     {
-        Author author = TEMP.TEMPgetAUTHORwithEMAIL(email)[0];
+        Author author = TEMP.GetAuthor(username)[0];
         
         Cheep cheep = new Cheep()
         {
