@@ -231,11 +231,11 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query TODO: move to author repo
-    public int TotalLikeCountUser(string email)
+    public int TotalLikeCountUser(string username)
     {
         var query = (from Cheep in _context.Cheeps
                      join Likes in _context.Likes on Cheep.CheepId equals Likes.cheep.CheepId
-                     where Cheep.Author.Email == email
+                     where Cheep.Author.Name == username
                      select Likes).Count();
         return query;
     }

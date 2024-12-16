@@ -184,14 +184,19 @@ public class UserTimelineModel : PageModel
         return _authorService.GetFollowerCountUserName(Author);
     }
 
-    public string GetEmail()
+    public string TEMPGetEmail()
     {
         return _authorService.GetAuthorUserName(Author).Email;
     }
 
+    public string GetUsername()
+    {
+        return _authorService.GetAuthorUserName(Author).Name;
+    }
+
     public bool IsFollowing()
     {
-        return _authorService.IsFollowing(UserEmail, GetEmail());
+        return _authorService.IsFollowing(UserEmail, TEMPGetEmail());
     }
 
     public int GetFollowingCount()
@@ -201,7 +206,7 @@ public class UserTimelineModel : PageModel
 
     public int GetTotalLikesCount()
     {
-        return _cheepService.TotalLikeCountUser(GetEmail());
+        return _cheepService.TotalLikeCountUser(GetUsername());
     }
 
     public int GetTotalCheepsCount()
@@ -212,7 +217,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostBlock()
     {
         SetCheeps();
-        _authorService.CreateBlock(UserEmail, GetEmail());
+        _authorService.CreateBlock(UserEmail, TEMPGetEmail());
         _cheepService.UserBlockedSomeone(UserEmail);
         return Redirect("~/");    
     }
@@ -220,7 +225,7 @@ public class UserTimelineModel : PageModel
     public IActionResult OnPostDeleteCheep()
     {
         SetCheeps();
-        if (GetEmail() != Author_Email)
+        if (TEMPGetEmail() != Author_Email)
         {
             throw new Exception("Author Email is not the logged in user.");
         }
