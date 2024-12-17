@@ -209,4 +209,3 @@ We also gave Gemini some use sometimes when ChatGPT was not helpful, we did howe
 
 For the most part the use of LLMs sped up our development, however sometimes they were sent into a spiral and hallucinated, which could confuse us more.
 So we experienced the limitations of LLMs and got to learnt how to use them more efficiently.
->>>>>>> c14cd9dcdf1ac3519b81de83172fc20addfeef55
