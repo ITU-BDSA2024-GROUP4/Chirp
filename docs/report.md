@@ -77,13 +77,16 @@ The diagrams provide a clear overview of user journeys, including registering, p
 
 ### Build, test, release, and deployment
 
-![Build and test flow](images/build_test_action_flow.drawio.png){ width=50% }
+All of the build, test, release, and deployment is done using GitHub Actions.
 
-some text
 
-![Playwright test flow](images/Playwright_test_flow.drawio.png){ height=25% }
+![Build and test flow](images/build.drawio.png){ height=70% }
 
-some text
+The build and test flow is 1/2 of the flows that run when a pull request is made to the main branch. This flow will build and run the test suit, and if the test suit passes, the flow will be marked as successful. If the test suit fails, the flow will be marked as failed.
+
+![Playwright test flow](images/Playwright.drawio.png){ height=25% }
+
+The Playwright test flow is the 2/2 of the flows that run when a pull request is made to the main branch. This flow will run the UI and end2end test suit, and if the test suit passes, the flow will be marked as successful. If the test suit fails, the flow will be marked as failed.
 
 ![Deployment flow](images/deploy_action%20_flow.drawio.png){ height=25% }
 
