@@ -143,6 +143,50 @@ To get the _Chirp!_ project up and running locally, follow these steps:
 
 ### How to run test suite locally
 
+This test suite contains unit tests, intergration tests, ui tests and end2end tests.
+
+The unit tests and intergration tests use xUnit while the ui tests and end2end tests use Playwright.
+
+To run the test suite, follow these steps:
+
+0. Install Playwright
+    To install Playwright, run the following command:
+
+    Go into the Playwright folder by running `cd test/PlaywrightTests` from the root of the project.
+
+    when you are in the Playwright folder, run `pwsh bin/Debug/net7.0/playwright.ps1 install --with-deps`
+
+    _You need to have the pwsh tool installed_
+
+    now you should have Playwright installed.
+
+1. Run the whole test suite
+    To run the whole test suite, run the following command from the root of the project:
+
+    `dotnet test`
+
+    This will run all the tests in the project.
+
+2. Run the unit tests and intergration tests
+
+    To run the unit tests, run the following command from the root of the project:
+
+    `dotnet test test/Chirp.Tests`
+
+    This will run all the unit tests in the project.
+
+    Alternatively you can go into the `test/Chirp.Tests` folder and run `dotnet test` from there.
+
+3. Run the Playwright tests
+
+    To run the Playwright tests, run the following command from the root of the project:
+
+    `dotnet test test/PlaywrightTests`
+
+    This will run all the Playwright tests in the project.
+
+    Alternatively you can go into the `test/PlaywrightTests` folder and run `dotnet test` from there.
+
 ## Ethics
 
 ### License
