@@ -110,10 +110,10 @@ In the development of our project we used ChatGPT, and when we did so, we made s
 `ChatGPT <>`
 
 ChatGPT was very helpful when used to create simple code parts and debug some.
-On the other hand the ChatGPT was not helpful with complex code questions. Therefore we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
+On the other hand the ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
 
-However we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
+However, we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
 We also gave Gemini some use sometimes when ChatGPT was not helpful, we did however never use any of the provided code, so it never got to be a co-author.
 
-For the most part the use of LLMs sped up our development, however some times the were send into a spiral and hallucinated, which sometimes could confuse us more.
-So we experienced the limitations of LLMs and got to learn more on know how to use them more efficiently.
+For the most part the use of LLMs sped up our development, however sometimes they were sent into a spiral and hallucinated, which could confuse us more.
+So we experienced the limitations of LLMs and got to learnt how to use them more efficiently.
