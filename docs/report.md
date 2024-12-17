@@ -104,11 +104,9 @@ The most prominent issue we are working on to be resolved, is shown under 'In Pr
 
 ![Flow of activites, issue to merge](images/projectboard.png){ width=75% }
 
-
-Most if not all the development was done in the way the diagram below shows. Some things to point out is we mob programmed being 3-5 people together in the beginning. This was a decision we made since we needed some individual tasks to be done in order to continue. That way the 'code review' part of the pipeline became more or less just an obstacle instead of a tool. 
+Most if not all the development was done in the way the diagram below shows. Some things to point out is we mob programmed being 3-5 people together in the beginning. This was a decision we made since we needed some individual tasks to be done in order to continue. That way the 'code review' part of the pipeline became more or less just an obstacle instead of a tool.
 
 ![Flow of activites, issue to merge](images/ProjectboardFlow.png){ width=75% }
-
 
 Later on it became a tool we used and relied on. Mostly because we instead of mob programmed worked in pairs, or even sometimes on our own. So this diagram and code review mostly represents our late work on the project. 'Issue creation' and 'Development' has stayed the same since the beginning.
 
