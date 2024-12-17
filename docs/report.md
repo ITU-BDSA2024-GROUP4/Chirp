@@ -15,6 +15,8 @@ numbersections: true
 
 ### Domain model
 
+![Domain model](images/Domain_model.drawio.png){ width=90% }
+
 ### Architecture — In the small
 
 Below a diagram can be seen, showing the onion architecture of the Chirp program. The outer circles depend on the inner circles:
