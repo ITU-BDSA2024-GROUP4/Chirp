@@ -17,17 +17,17 @@ numbersections: true
 
 ### Architecture — In the small
 
-Below a diagram can be seen, showing the onion architecture of the Chirp program. Were the outer circles depend on the inner circles:
+Below a diagram can be seen, showing the onion architecture of the Chirp program. The outer circles depend on the inner circles:
 
 ![Onion architecture of Chirp program](images/Architecture—Inthesmall.drawio.png){ width=50% }
 
-In the center of the onion one finds Chirp Core, this is were the most primitive code lies, like objects and interfaces.
+In the **center** of the onion you find the Chirp Core, this is where the most primitive code lies, like objects and interfaces.
 
-One step out of Chirp Core, one finds Chirp Infrastructure. This is were the handling of the database is done, this includes retrieving, deleting and updating data. Defining the database and giving it some initial data is also done in Chirp Infrastructure.
+**A step out** of the Chirp Core, you find the Chirp Infrastructure. This is where the handling of the database is done, this includes retrieving, deleting and updating data. Defining the database, and giving it some initial data is also done in Chirp Infrastructure.
 
-In the third layer of the onion, Chirp Web lies. This is were the webpage HTML is found, along with all the styling. The API which the web pages communicate with lies here as well.
+In the **third layer** of the diagram, Chirp Web lies. This is where the webpage HTML is found, along with all the styling. The API which the web pages communicate with lies here as well.
 
-Lastly there is the outer layer, naturally here the test lay. The test suit includes Unit-, integration- and end2end test. The end2end test are done using Playwright.
+Lastly there is the **outer layer**, naturally the tests are positioned here. The test suite includes Unit-, integration- and end2end tests. The end2end tests are done using Playwright.
 
 ### Architecture of deployed application
 
