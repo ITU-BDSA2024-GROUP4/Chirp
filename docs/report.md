@@ -112,6 +112,35 @@ Later on it became a tool we used and relied on. Mostly because we instead of mo
 
 ### How to make _Chirp!_ work locally
 
+To get the _Chirp!_ project up and running locally, follow these steps:
+
+1. Clone the repository
+   run `git clone https://github.com/ITU-BDSA2024-GROUP4/Chirp.git` or your prefered way of cloning a repository.
+
+   Then run `cd Chirp` to navigate into the project folder.
+
+2. Set environment variables
+   This project uses oath for authentication, and to make it work you need to environment variables.
+
+   run these commands to configure the environment variables:
+
+   ```bash
+    cd src/Chirp.Web
+    dotnet user-secrets init
+    dotnet user-secrets set "authentication_github_clientId" "Ov23liTzXxGPPYH38M57"
+    dotnet user-secrets set "authentication_github_clientSecrets" "a1ce7dbf2bd995f6ed31373ce88d17b8a1ca4727"
+    ```
+
+3. Run the project
+   To run the project, run the following command:
+
+   `dotnet run`
+
+   or if you are not inside the `src/Chirp.Web` folder, you can run:
+   `dotnet run --project src/Chirp.Web`
+
+   This will start the project on `http://localhost:5273`.
+
 ### How to run test suite locally
 
 ## Ethics
