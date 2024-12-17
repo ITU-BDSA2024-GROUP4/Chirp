@@ -78,11 +78,11 @@ All of the build, test, release, and deployment is done using GitHub Actions.
 
 ![Build and test flow](images/build.drawio.png){ height=70% }
 
-The build and test flow is one out of two flows that run when a pull request is made to the main branch. This flow will build and run the test suit, and if the test suit passes, the flow will be marked as successful. If the test suit fails, the flow will be marked as failed.
+The build and test flow is one out of two flows, that run when a pull request is made to the main branch. This flow will build and run the test suite, and if the test suite passes, the flow will be marked as successful. If the test suite fails, the flow will be marked as failed.
 
 ![Playwright test flow](images/Playwright.drawio.png){ height=70% }
 
-The Playwright test flow is the second flow that run when a pull request is made to the main branch. This flow will build and run the UI tests and end2end test with Playwright, and if the test suit passes, the flow will be marked as successful. If the test suit fails, the flow will be marked as failed.
+The Playwright test flow is the second flow that run when a pull request is made to the main branch. This flow will build and run the UI tests and end2end test with Playwright, and if the test suite passes, the flow will be marked as successful. If the test suite fails, the flow will be marked as failed.
 
 ![Deployment flow](images/deploy_action%20_flow.drawio.png){ height=70% }
 
@@ -90,7 +90,7 @@ The deployment flow is the flow that runs when a pull request is merged into the
 
 ![Release flow](images/release_flow.drawio.png){ height=70% }
 
-The release flow is the flow that runs when a version is tagged in the repository. This flow will build the project, run the ```dotnet publish``` command, and then create a zip folder with the _Chirp.Web.dll_ file. This zip folder is then uploaded to the GitHub release page under the tag that was created.
+The release flow is the flow that runs when a version is tagged in the repository. This flow will build the project, run the ```dotnet publish``` command, and then create a zip folder with the _Chirp.Web.dll_ file. This zip folder is then uploaded to the GitHub release page, under the tag that was created.
 
 ### Team work
 
