@@ -97,9 +97,12 @@ The release flow is the flow that runs when a version is tagged in the repositor
 Show a screenshot of your project board right before hand-in.
 Briefly describe which tasks are still unresolved, i.e., which features are missing from your applications or which functionality is incomplete.
 
-Briefly describe and illustrate the flow of activities that happen from the new creation of an issue (task description), over development, etc. until a feature is finally merged into the `main` branch of your repository.
+Most if not all the development was done in the way the diagram below shows. Some things to point out is we mob programmed being 3-5 people together in the beginning. This was a decision we made since we needed some individual tasks to be done in order to continue. That way the 'code review' part of the pipeline became more or less just an obstacle instead of a tool. 
 
 ![Flow of activites, issue to merge](images/ProjectboardFlow.png){ width=75% }
+
+
+Later on it became a tool we used and relied on. Mostly because we instead of mob programmed worked in pairs, or even sometimes on our own. So this diagram and code review mostly represents our late work on the project. 'Issue creation' and 'Development' has stayed the same since the beginning.
 
 ### How to make _Chirp!_ work locally
 
