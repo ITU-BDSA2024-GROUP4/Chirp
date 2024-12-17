@@ -114,7 +114,80 @@ Later on it became a tool we used and relied on. Mostly because we instead of mo
 
 ### How to make _Chirp!_ work locally
 
+To get the _Chirp!_ project up and running locally, follow these steps:
+
+1. Clone the repository
+   run `git clone https://github.com/ITU-BDSA2024-GROUP4/Chirp.git` or your prefered way of cloning a repository.
+
+   Then run `cd Chirp` to navigate into the project folder.
+
+2. Set environment variables
+   This project uses oath for authentication, and to make it work you need to environment variables.
+
+   run these commands to configure the environment variables:
+
+   ```bash
+    cd src/Chirp.Web
+    dotnet user-secrets init
+    dotnet user-secrets set "authentication_github_clientId" "Ov23liTzXxGPPYH38M57"
+    dotnet user-secrets set "authentication_github_clientSecrets" "a1ce7dbf2bd995f6ed31373ce88d17b8a1ca4727"
+    ```
+
+3. Run the project
+   To run the project, run the following command:
+
+   `dotnet run`
+
+   or if you are not inside the `src/Chirp.Web` folder, you can run:
+   `dotnet run --project src/Chirp.Web`
+
+   This will start the project on `http://localhost:5273`.
+
 ### How to run test suite locally
+
+This test suite contains unit tests, intergration tests, ui tests and end2end tests.
+
+The unit tests and intergration tests use xUnit while the ui tests and end2end tests use Playwright.
+
+To run the test suite, follow these steps:
+
+0. Install Playwright
+    To install Playwright, run the following command:
+
+    Go into the Playwright folder by running `cd test/PlaywrightTests` from the root of the project.
+
+    when you are in the Playwright folder, run `pwsh bin/Debug/net7.0/playwright.ps1 install --with-deps`
+
+    _You need to have the pwsh tool installed_
+
+    now you should have Playwright installed.
+
+1. Run the whole test suite
+    To run the whole test suite, run the following command from the root of the project:
+
+    `dotnet test`
+
+    This will run all the tests in the project.
+
+2. Run the unit tests and intergration tests
+
+    To run the unit tests, run the following command from the root of the project:
+
+    `dotnet test test/Chirp.Tests`
+
+    This will run all the unit tests in the project.
+
+    Alternatively you can go into the `test/Chirp.Tests` folder and run `dotnet test` from there.
+
+3. Run the Playwright tests
+
+    To run the Playwright tests, run the following command from the root of the project:
+
+    `dotnet test test/PlaywrightTests`
+
+    This will run all the Playwright tests in the project.
+
+    Alternatively you can go into the `test/PlaywrightTests` folder and run `dotnet test` from there.
 
 ## Ethics
 
@@ -136,3 +209,4 @@ We also gave Gemini some use sometimes when ChatGPT was not helpful, we did howe
 
 For the most part the use of LLMs sped up our development, however sometimes they were sent into a spiral and hallucinated, which could confuse us more.
 So we experienced the limitations of LLMs and got to learnt how to use them more efficiently.
+>>>>>>> c14cd9dcdf1ac3519b81de83172fc20addfeef55
