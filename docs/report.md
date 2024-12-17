@@ -94,8 +94,9 @@ The release flow is the flow that runs when a version is tagged in the repositor
 
 ### Team work
 
-Show a screenshot of your project board right before hand-in.
-Briefly describe which tasks are still unresolved, i.e., which features are missing from your applications or which functionality is incomplete.
+As of writing the report we have 7 issues that are still waiting to be resolved. Most of these are not features that changes functionalities for the end-user.
+
+The most prominent issue we are working on to be resolved, is shown under 'In Progress'. We need to establish more tests that fully tests the service.
 
 ![Flow of activites, issue to merge](images/projectboard.png){ width=75% }
 
