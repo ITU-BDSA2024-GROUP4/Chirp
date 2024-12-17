@@ -97,6 +97,9 @@ The release flow is the flow that runs when a version is tagged in the repositor
 Show a screenshot of your project board right before hand-in.
 Briefly describe which tasks are still unresolved, i.e., which features are missing from your applications or which functionality is incomplete.
 
+![Flow of activites, issue to merge](images/projectboard.png){ width=75% }
+
+
 Most if not all the development was done in the way the diagram below shows. Some things to point out is we mob programmed being 3-5 people together in the beginning. This was a decision we made since we needed some individual tasks to be done in order to continue. That way the 'code review' part of the pipeline became more or less just an obstacle instead of a tool. 
 
 ![Flow of activites, issue to merge](images/ProjectboardFlow.png){ width=75% }
