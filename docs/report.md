@@ -31,6 +31,10 @@ Lastly there is the outer layer, naturally here the test lay. The test suit incl
 
 ### Architecture of deployed application
 
+![Architecture of deployed application](images/deployment_diagram.drawio.png)
+
+The deployed application follows the client-server architecture. The client communicates with the server through HTTP requests. The server is hosted on the Azure App service and the database is sqlite. Communication between the server and the database is done through Entity Framework Core.
+
 ### User activities
 
 The goal of this chapter is to show some core interactions from both an **unauthenticated user** and **authenticated user**. We make use of UML activity diagrams, these will visualize the states triggered by a user's actions.
