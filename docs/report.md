@@ -19,7 +19,7 @@ numbersections: true
 
 Below a diagram can be seen, showing the onion architecture of the Chirp program. Were the outer circles depend on the inner circles:
 
-![Onion architecture of Chirp program](images/Architecture — In the small.drawio.png){ width=50% }
+![Onion architecture of Chirp program](images/Architecture—Inthesmall.drawio.png){ width=50% }
 
 In the center of the onion one finds Chirp Core, this is were the most primitive code lies, like objects and interfaces.
 
