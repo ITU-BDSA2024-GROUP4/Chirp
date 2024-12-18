@@ -12,7 +12,8 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
 {
     private SqliteConnection _connection = null!;
     private ChirpDBContext _context = null!;
-    private CheepRepository _repository = null!;
+    private ICheepRepository _cheepRepository = null!;
+    private IAuthorRepository _authorRepository = null!;
 
     public async Task InitializeAsync()
     {
@@ -23,7 +24,8 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         _context = new ChirpDBContext(builder.Options);
         await _context.Database.EnsureCreatedAsync();
 
-        _repository = new CheepRepository(_context);
+        _cheepRepository = new CheepRepository(_context);
+        _authorRepository = new AuthorRepository(_context);
     }
 
     public async Task DisposeAsync()
@@ -35,7 +37,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Fact]
     public void DatabaseInitialization()
     {
-        var results = _repository.GetCheepsFromAuthorPage("Helge", 0);
+        var results = _cheepRepository.GetCheepsFromAuthorPage("Helge", 0);
 
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
@@ -46,7 +48,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     public void CreateAuthorTest(string author, string email)
     {   
         // Arrange && Act
-        Author result = _repository.CreateAuthor(author, email);
+        Author result = _authorRepository.AddAuthor(author, email);
         
         // Assert
         Assert.Equal("test", result.Name);
@@ -65,9 +67,13 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             AuthorId = authorId,
             Cheeps = new List<Cheep>()
         };
+        Cheep newCheep = new Cheep()
+        {
+            Author = newAuthor, CheepId = newAuthor.AuthorId, Text = "test", TimeStamp = DateTime.Now,
+        };
         
         // Act
-        Cheep cheep = _repository.CreateCheep(newAuthor, "test");
+        Cheep cheep = _cheepRepository.AddCheep(newCheep, newAuthor);
         
         // Assert
         Assert.Equal("test", cheep.Text);
@@ -80,7 +86,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         
         // Arrange && Assert
-        var cheeps = _repository.GetCheepsFromAuthorPage(author, 0);
+        var cheeps = _cheepRepository.GetCheepsFromAuthorPage(author, 0);
         
         // Assert
         Assert.True(cheeps.Count > 0);
@@ -97,7 +103,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     public void GetCheepsLength32Test(int page)
     {
         // Arrange && Act
-        var cheeps = _repository.GetCheeps(page);
+        var cheeps = _cheepRepository.GetCheeps(page);
         
         // Assert
         Assert.Equal(32, cheeps.Count);
@@ -110,7 +116,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {   
         
         // Arrange && Act
-        var cheeps = _repository.GetCheepsFromAuthorPageEmail(email, 0);
+        var cheeps = _cheepRepository.GetCheepsFromAuthorPageEmail(email, 0);
 
         // Assert
         Assert.True(cheeps.Count > 0);
@@ -135,10 +141,16 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             Cheeps = new List<Cheep>()
         };
         
-        string message = new string('a',161);
-        
+        Cheep newCheep = new Cheep()
+        {
+            CheepId = 20, //Some random int
+            AuthorId = newAuthor.AuthorId,
+            Author = newAuthor,
+            Text = new string('a',161),
+            TimeStamp = DateTime.Now
+        };
         // Act && Assert
-        Assert.Throws<ValidationException>( () => _repository.CreateCheep(newAuthor, message));
+        Assert.Throws<ValidationException>( () => _cheepRepository.AddCheep(newCheep, newAuthor));
     }
     
     //TEST if user can follow same user more than once (logical fallacy!!!)
@@ -146,13 +158,13 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("VictorDuplicate@dupe.it", "victor@nodupes.it")]
     public void DuplicateFollowTest(string userEmail, string authorEmail)
     {
-        var userAuthor = _repository.CreateAuthor("Victor Duplicate", userEmail);
-        var targetAuthor = _repository.CreateAuthor("Victor NoDupes", authorEmail);
+        var userAuthor = _authorRepository.AddAuthor("Victor Duplicate", userEmail);
+        var targetAuthor = _authorRepository.AddAuthor("Victor NoDupes", authorEmail);
 
-        _repository.CreateFollow(userEmail, authorEmail);
+        _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         try
         {
-            _repository.CreateFollow(userEmail, authorEmail);
+            _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         }
         catch (Exception ex)
         {
@@ -160,15 +172,14 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         }
         var exception = Assert.Throws<ApplicationException>(() =>
         {
-            _repository.CreateFollow(userEmail, authorEmail);
+            _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         });
 
         Assert.Equal("TooManyFollows", exception.Message);
 
-        int followers = _repository.GetFollowerCount(authorEmail);
+        int followers = _authorRepository.GetFollowerCount(authorEmail); //TODO: change to username
         Assert.True(2 > followers);
     }
-
-
+    
     
 }

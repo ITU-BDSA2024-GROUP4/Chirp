@@ -31,7 +31,8 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ChirpUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
-        private readonly ICheepService _service;
+        private readonly ICheepService _cheepService;
+        private readonly IAuthorService _authorService;
 
         public ExternalLoginModel(
             SignInManager<ChirpUser> signInManager,
@@ -39,7 +40,8 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             IUserStore<ChirpUser> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender,
-            ICheepService service)
+            ICheepService cheepService,
+            IAuthorService authorService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -47,7 +49,8 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
-            _service = service;
+            _cheepService = cheepService;
+            _authorService = authorService;
         }
 
         /// <summary>
@@ -156,10 +159,10 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created and logged in with {LoginProvider} provider.", info.LoginProvider);
 
                     // Create author if it doesn't exist
-                    var author = _service.GetAuthor(email);
+                    var author = _authorService.GetAuthor(userName);
                     if (author == null)
                     {
-                        _service.CreateAuthor(userName, email);
+                        _authorService.AddAuthor(userName, email);
                     }
 
                     await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);

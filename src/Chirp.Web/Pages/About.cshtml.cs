@@ -14,23 +14,22 @@ using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Chirp.Web.Pages;
 
-public class AboutModel : PageModel
-{
-    private readonly ICheepService _service;
+public class AboutModel : PageModel {
+    private readonly ICheepService _cheepService;
+    private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
     private readonly UserManager<ChirpUser> _userManager;
-    public string Author;
-    public string UserEmail;
+    public string Username;
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
     public List<CheepDTO> Likes;
-    [BindProperty] public string User_Email { get; set; }
-    [BindProperty] public string Unblock_User { get; set; }
+    [BindProperty] public string Unblock_Username { get; set; }
 
-    public AboutModel(ICheepService service, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
+    public AboutModel(ICheepService cheepService, IAuthorService authorService,SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
-        _service = service;
+        _cheepService = cheepService;
+        _authorService = authorService;
         _signInManager = signInManager;
         _userManager = userManager;
     }
@@ -38,14 +37,13 @@ public class AboutModel : PageModel
     public ActionResult OnGet(string author)
     {
         UserIsAuthor = author.Equals(UserHandler.FindName(User));
-        Author = author;
         SetInformation();
         return Page();
     }
 
     public void SetInformation()
     {
-        UserEmail = UserHandler.FindEmail(User);
+        Username = UserHandler.FindName(User);
         Following = GetFollowers();
         Cheeps = GetCheeps();
         Likes = GetLikes();
@@ -81,35 +79,34 @@ public class AboutModel : PageModel
         }
     }
 
-    public string GetEmail()
-    {
-        return _service.GetAuthor(UserEmail).Email;
+    public string GetEmail() 
+    { 
+        return _authorService.GetAuthor(Username).Email;
     }
 
     public string GetName()
     {
-        return _service.GetAuthor(UserEmail).Name;
+        return _authorService.GetAuthor(Username).Name;
     }
 
     public List<AuthorDTO> GetFollowers()
     {
-        return _service.GetFollowers(UserEmail);
+        return _authorService.GetFollowers(Username);
     }
 
     public List<CheepDTO> GetCheeps()
     {
-        AuthorDTO authorDTO = _service.GetAuthor(UserEmail);
+        AuthorDTO authorDTO = _authorService.GetAuthor(Username);
         if (authorDTO == null)
         {
             return new List<CheepDTO>();
         }
-
-        return _service.GetCheepsFromAuthor(authorDTO.Name);
+        return _cheepService.GetCheepsFromAuthor(authorDTO.Name);
     }
 
     public List<CheepDTO> GetLikes()
     {
-        return _service.GetLiked(UserEmail);
+        return _cheepService.GetLiked(Username);
     }
 
     public string CreateCsvContent()
@@ -149,8 +146,7 @@ public class AboutModel : PageModel
 
     public async Task<IActionResult> OnPostForgetMe()
     {
-        UserEmail = UserHandler.FindEmail(User);
-        _service.ForgetMe(UserEmail);
+        _authorService.ForgetMe(Username);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
@@ -164,21 +160,20 @@ public class AboutModel : PageModel
 
     public bool UserBlockedSomeOne()
     {
-        return _service.UserBlockedSomeone(UserEmail);
+        return _cheepService.UserBlockedSomeone(Username);
     }
 
     public IActionResult OnPostUnblock()
     {
-        User_Email = UserHandler.FindEmail(User);
-
-        _service.UnBlock(User_Email, Unblock_User);
-
-
+        SetInformation();
+        
+        _cheepService.UnBlock(Username, Unblock_Username);
+        
         return RedirectToPage();
     }
 
     public List<AuthorDTO> GetBlockedAuthors()
     {
-        return _service.GetBlockedAuthors(UserEmail);
+        return _authorService.GetBlockedAuthors(Username);
     }
 }

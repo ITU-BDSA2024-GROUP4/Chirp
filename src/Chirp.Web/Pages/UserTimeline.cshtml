@@ -14,7 +14,7 @@
         <form method="post" action="@Url.Page("", new { handler = "Block" })">
             @Html.AntiForgeryToken()
             <input type="hidden" name="author" value="@Model.Author"/>
-            <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+            <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
             <input type="submit" class="block-button" value="Block"
                    formaction="?handler=Block">
         </form>
@@ -23,7 +23,7 @@
             <form method="post" action="@Url.Page("", new { handler = "Follow" })">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="author" value="@Model.Author"/>
-                <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+                <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
                 <input type="submit" class="follow-button" value="Follow"
                        formaction="?handler=Follow">
             </form>
@@ -33,7 +33,7 @@
             <form method="post" asp-page-handler="Unfollow">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="author" value="@Model.Author"/>
-                <input type="hidden" name="author_email" value="@Model.GetEmail()"/>
+                <input type="hidden" name="author_username" value="@Model.GetUsername()"/>
                 <input type="submit" class="follow-button" value="Unfollow"
                        formaction="?handler=Unfollow">
             </form>

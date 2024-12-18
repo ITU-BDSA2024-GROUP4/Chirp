@@ -7,25 +7,24 @@ namespace Chirp.Web.Pages.Utils;
 
 public static class FollowHandler
 {
-    public static string Follow(ModelStateDictionary modelState, ICheepService service,
-        string nameOfAuthorEmail, string nameOfAuthor, string userEmail,
-        string userIdentityName, string authorEmail)
+    public static string Follow(ModelStateDictionary modelState, IAuthorService service,
+        string nameOfAuthorUsername, string userEmail,
+        string username, string authorUsername)
     {
-        if (StateValidator.IsInvalid(nameOfAuthor, modelState) &&
-            StateValidator.IsInvalid(nameOfAuthorEmail, modelState))
+        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState))
         {
             return "Error";
         }
 
-        service.CreateFollow(userIdentityName, userEmail, authorEmail);
+        service.CreateFollow(username, userEmail, authorUsername);
         return "UserTimeline";
     }
-    public static string Unfollow(ModelStateDictionary modelState, ICheepService service,
-        string nameOfAuthorEmail, string nameOfAuthor, string userEmail,
-        string authorEmail, SubmitMessageModel submitMessage)
+    // TODO: FIX THIS
+    public static string Unfollow(ModelStateDictionary modelState, IAuthorService service,
+        string nameOfAuthorUsername, string username,
+        string authorUsername, SubmitMessageModel submitMessage)
     {
-        if (StateValidator.IsInvalid(nameOfAuthor, modelState) &&
-            StateValidator.IsInvalid(nameOfAuthorEmail, modelState))
+        if (StateValidator.IsInvalid(nameOfAuthorUsername, modelState))
         {
             if (submitMessage != null)
             {
@@ -35,7 +34,7 @@ public static class FollowHandler
             return "Error";
         }
         
-        service.UnFollow(userEmail, authorEmail);
+        service.UnFollow(username, authorUsername);
         return "Page";
     }
     
