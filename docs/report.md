@@ -11,13 +11,13 @@ numbersections: true
 ---
 
 
-## Design and architecture
+# Design and architecture
 
-### Domain model
+## Domain model
 
 ![Domain model](images/Domain_model.drawio.png){ width=90% }
 
-### Architecture — In the small
+## Architecture — In the small
 
 Below a diagram can be seen, showing the onion architecture of the Chirp program. The outer circles depend on the inner circles:
 
@@ -31,13 +31,13 @@ In the **third layer** of the diagram, Chirp Web lies. This is where the webpage
 
 Lastly there is the **outer layer**, naturally the tests are positioned here. The test suite includes Unit-, integration- and end2end tests. The end2end tests are done using Playwright.
 
-### Architecture of deployed application
+## Architecture of deployed application
 
 ![Architecture of deployed application](images/deployment_diagram.drawio.png)
 
 The deployed application follows the client-server architecture. The client communicates with the server through HTTP requests. The server is hosted on the Azure App service, and the database is SQLite. Communication between the server and the database are done through Entity Framework Core.
 
-### User activities
+## User activities
 
 The goal of this chapter is to show some core interactions from both an **unauthenticated user** and **authenticated user**. We make use of UML activity diagrams, these will visualize the states triggered by a user's actions.
 
@@ -74,7 +74,7 @@ Lastly it is important for us to show how the user can delete, and see the data 
 
 The linear diagram is pretty much self-explanatory, but we feel it is important to show either way, since this is the last key feature for a user to experience.
 
-### Sequence of functionality/calls trough _Chirp!_
+## Sequence of functionality/calls trough _Chirp!_
 
 ![UML Sequence Diagram](images/UMLsequencediagram.png){ width=70% }
 The sequence diagram visualizes the interaction flow between
@@ -106,9 +106,9 @@ Then the Chirp.db will store the new message and completes
 
 Finally, the Chirp.Web will refresj the site by sending an updated site view back to the User, reflecting the newly added cheep.
 
-## Process
+# Process
 
-### Build, test, release, and deployment
+## Build, test, release, and deployment
 
 All of the build, test, release, and deployment is done using GitHub Actions.
 
@@ -128,7 +128,7 @@ The deployment flow is the flow that runs when a pull request is merged into the
 
 The release flow is the flow that runs when a version is tagged in the repository. This flow will build the project, run the ```dotnet publish``` command, and then create a zip folder with the _Chirp.Web.dll_ file. This zip folder is then uploaded to the GitHub release page, under the tag that was created.
 
-### Team work
+## Team work
 
 As of writing the report we have 7 issues that are still waiting to be resolved. Most of these are not features that change functionalities for the end-user.
 
@@ -142,7 +142,7 @@ Most if not all the development was done in the way the diagram below shows. Som
 
 Later on it became a tool we used and relied on. Mostly because we instead of mob programmed worked in pairs, or even sometimes on our own. So this diagram and code review mostly represents our late work on the project. 'Issue creation' and 'Development' has stayed the same since the beginning.
 
-### How to make _Chirp!_ work locally
+## How to make _Chirp!_ work locally
 
 To get the _Chirp!_ project up and running locally, follow these steps:
 
@@ -173,7 +173,7 @@ To get the _Chirp!_ project up and running locally, follow these steps:
 
    This will start the project on `http://localhost:5273`.
 
-### How to run test suite locally
+## How to run test suite locally
 
 This test suite contains unit tests, integration tests, UI tests and end2end tests.
 
@@ -219,13 +219,13 @@ To run the test suite, follow these steps:
 
     Alternatively you can go into the `test/PlaywrightTests` folder and run `dotnet test` from there.
 
-## Ethics
+# Ethics
 
-### License
+## License
 
 We decided to go ahead with and use the **MIT License**
 
-### LLMs, ChatGPT, CoPilot, and others
+## LLMs, ChatGPT, CoPilot, and others
 
 In the development of our project we used ChatGPT, and when we did so, we made sure to add ChatGPT as a co-author in our git commit message like so:
 
