@@ -102,7 +102,9 @@ After a successful login authentication the Chirp.Web redirects the User back to
 
 When a User decides to post a Cheep the Chirp.Web service will forward the request to the database Chrip.db.
 This is done by using the method AddCheep(username, message).
-Finally the Chirp.db will store the new message and completes
+Then the Chirp.db will store the new message and completes
+
+Finally, the Chirp.Web will refresj the site by sending an updated site view back to the User, reflecting the newly added cheep.
 
 ## Process
 
