@@ -76,7 +76,7 @@
                     }
                 </span>
             }
-            else if (User.Identity.Name == cheep.Author)
+            else if (User.Identity != null && User.Identity.Name == cheep.Author)
             {
                 <form method="post" asp-page-handler="DeleteCheep">
                     @Html.AntiForgeryToken()
