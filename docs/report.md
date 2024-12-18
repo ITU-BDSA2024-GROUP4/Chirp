@@ -76,6 +76,8 @@ The linear diagram is pretty much self-explanatory, but we feel it is important 
 
 ### Sequence of functionality/calls trough _Chirp!_
 
+![UML Sequence Diagram](images/UMLsequencediagram.png){ width=70% }
+
 ## Process
 
 ### Build, test, release, and deployment
