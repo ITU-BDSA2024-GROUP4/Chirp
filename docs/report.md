@@ -85,7 +85,13 @@ The sequence diagram visualizes the interaction flow between
 Initially the Users sends a HTTP head-request to the Chirp.web server
 Chirp.web responds with 200 OK, which means that the server is reachable for the client.
 
-When the user requests the homepage ("/")
+When the user requests to fetch the homepage ("/") the Chirp.Web will process the request.
+Then Chirp.Web will handle a request to the Chirp.Db database by calling GetCheep(page)
+Then the database Chirp.db will respond with the list of all cheeps List<CherepDTO>
+Finally the Chirp.Web service will send a HTTP response back to the User which will then complete the loading of the page.
+
+Login requests happen when the User makes an HTTP GET request "/Identity/Account/Login/"
+which will get a response from Chirp.Web if everything is in order.
 
 ## Process
 
