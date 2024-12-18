@@ -2,6 +2,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
 using Chirp.Core;
+using System.Security.Cryptography;
 
 public class CheepRepositoryIntegrationTests : IAsyncLifetime
 
@@ -47,7 +48,7 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
         Author newAuthor = _authorRepository.AddAuthor(author, email);
         Cheep newCheep = new Cheep()
         {
-            CheepId = 20, //Some random int
+            CheepId = 114093, //Some random int
             AuthorId = newAuthor.AuthorId,
             Author = newAuthor,
             Text = message,

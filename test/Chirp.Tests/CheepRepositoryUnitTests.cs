@@ -181,6 +181,11 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         Assert.True(2 > followers);
     }
 
-
+    [Fact]
+    public void canAddAuthorToDb(){
+        // Arrange
+       var author = _authorRepository.AddAuthor("joe", "joe@joe.com");
+       
+    }
     
 }
