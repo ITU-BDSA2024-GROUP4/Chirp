@@ -148,11 +148,11 @@ As of writing the report we have 7 issues that are still waiting to be resolved,
 
 The most prominent issue we are working on to be resolved, is shown under 'In Progress'. We need to establish more tests that fully test the service.
 
-![Flow of activites, issue to merge](images/projectboard.png){ width=75% }
+![Flow of activities, issue to merge](images/projectboard.png){ width=75% }
 
 Most, if not all the development was done in the way the diagram below shows. Some things to point out is, we mob programmed being 3-5 people together in the beginning. This was a decision we made since we needed some individual tasks to be done in order to continue. That way, the 'code review' part of the pipeline became more or less just an obstacle instead of a tool.
 
-![Flow of activites, issue to merge](images/ProjectboardFlow.png){ width=75% }
+![Flow of activities, issue to merge](images/ProjectboardFlow.png){ width=75% }
 
 Later on, it became a tool we used and relied on. Mostly because we instead of mob programming, we worked in pairs, or even sometimes on our own. So this diagram and code review mostly represents our late work on the project. 'Issue creation' and 'Development' has stayed the same since the beginning.
 
@@ -205,11 +205,19 @@ To run the test suite, follow these steps:
 
     To install Playwright, run the following command:
 
-    Go into the Playwright folder by running `cd test/PlaywrightTests` from the root of the project.
+    Go into the Playwright folder by running this from the root of the project:
 
-    when you are in the Playwright folder, run `pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps`
+    ```bash
+    cd test/PlaywrightTests 
+    ```
 
-    _You need to have the pwsh tool installed_
+    when you are in the Playwright folder, run:
+
+    ```bash
+    pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+    ```
+
+    _You need to have the pwsh tool installed. Install guide can be found [here](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4)!_
 
     now you should have Playwright installed.
 
@@ -217,7 +225,9 @@ To run the test suite, follow these steps:
 
     To run the whole test suite, run the following command from the root of the project:
 
-    `dotnet test`
+    ```bash
+    dotnet test
+    ```
 
     This will run all the tests in the project.
 
@@ -225,7 +235,9 @@ To run the test suite, follow these steps:
 
     To run the unit tests, run the following command from the root of the project:
 
-    `dotnet test test/Chirp.Tests`
+    ```bash
+    dotnet test test/Chirp.Tests
+    ```
 
     This will run all the unit tests in the project.
 
@@ -235,7 +247,9 @@ To run the test suite, follow these steps:
 
     To run the Playwright tests, run the following command from the root of the project:
 
-    `dotnet test test/PlaywrightTests`
+    ```bash
+    dotnet test test/PlaywrightTests
+    ```
 
     This will run all the Playwright tests in the project.
 
@@ -245,19 +259,19 @@ To run the test suite, follow these steps:
 
 ## License
 
-We decided to go ahead with and use the **MIT License**
+We decided to go ahead with and use the **MIT License**. The license is available in the repository.
 
 ## LLMs, ChatGPT, CoPilot, and others
 
-In the development of our project we used ChatGPT, and when we did so, we made sure to add ChatGPT as a co-author in our git commit message like so:
+In the development of our project, we used ChatGPT and when we did so, we made sure to add ChatGPT as a co-author in our git commit message like so:
 
 `ChatGPT <>`
 
 ChatGPT was very helpful when used to create simple code parts and debug some.
-On the other hand ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
+On the other hand, ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
 
-However, we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
-We also gave Gemini some use sometimes when ChatGPT was not helpful, we did however never use any of the provided code, so it never got to be a co-author.
+However, we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral. In cases like this we would look at the slides and on the web for help.
+We also gave Google's Gemini some use sometimes when ChatGPT was not helpful. We did however never use any of the provided code, so it never got to be a co-author.
 
-For the most part the use of LLMs sped up our development, however sometimes they were sent into a spiral and hallucinated, which could confuse us more.
-So we experienced the limitations of LLMs and got to learn how to use them more efficiently.
+For the most part, the use of LLMs sped up our development. However, sometimes they were sent into a spiral and hallucinated, which could confuse us more.
+We experienced the limitations of LLMs and got to learn how to use them more efficiently.
