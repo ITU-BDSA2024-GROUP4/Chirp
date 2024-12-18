@@ -178,7 +178,8 @@ To get the _Chirp!_ project up and running locally, follow these steps:
     cd src/Chirp.Web
     dotnet user-secrets init
     dotnet user-secrets set "authentication_github_clientId" "Ov23liTzXxGPPYH38M57"
-    dotnet user-secrets set "authentication_github_clientSecrets" "a1ce7dbf2bd995f6ed31373ce88d17b8a1ca4727"
+    dotnet user-secrets set "authentication_github_clientSecrets" "a1ce7dbf2bd995f6ed313
+    73ce88d17b8a1ca4727"
     ```
 
 3. Run the project
@@ -206,7 +207,7 @@ To run the test suite, follow these steps:
 
     Go into the Playwright folder by running `cd test/PlaywrightTests` from the root of the project.
 
-    when you are in the Playwright folder, run `pwsh bin/Debug/net7.0/playwright.ps1 install --with-deps`
+    when you are in the Playwright folder, run `pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps`
 
     _You need to have the pwsh tool installed_
 
