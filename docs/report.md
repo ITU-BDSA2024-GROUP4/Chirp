@@ -77,9 +77,10 @@ The linear diagram is pretty much self-explanatory, but we feel it is important 
 ### Sequence of functionality/calls trough _Chirp!_
 
 ![UML Sequence Diagram](images/UMLsequencediagram.png){ width=70% }
-The sequence diagram visualizes the interaction flow between
+
+The sequence diagram visualizes the interaction flow between:
 - User - The client initializes the interaction with Chirp.web
-- Chirp.web - The web app handles HTTP requests and responds
+- Chirp.web - The web app handles HTTP requests and responses
 - Chirp.db - The Chirp Database is responsible for handling and managing data storage
 
 Initially the Users sends an HTTP head-request to the Chirp.web server
@@ -232,7 +233,7 @@ In the development of our project we used ChatGPT, and when we did so, we made s
 `ChatGPT <>`
 
 ChatGPT was very helpful when used to create simple code parts and debug some.
-On the other hand the ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
+On the other hand ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
 
 However, we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
 We also gave Gemini some use sometimes when ChatGPT was not helpful, we did however never use any of the provided code, so it never got to be a co-author.
