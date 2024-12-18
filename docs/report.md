@@ -93,6 +93,11 @@ Finally the Chirp.Web service will send a HTTP response back to the User which w
 Login requests happen when the User makes an HTTP GET request "/Identity/Account/Login/"
 which will get a response from Chirp.Web if everything is in order.
 
+
+The authentication process is handled as follows
+The User first submits their login credentials
+Then the Chirp.Web handles the authentication process and confirms if the credentials are valid
+
 ## Process
 
 ### Build, test, release, and deployment
