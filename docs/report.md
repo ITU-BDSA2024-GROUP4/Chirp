@@ -77,18 +77,19 @@ The linear diagram is pretty much self-explanatory, but we feel it is important 
 ## Sequence of functionality/calls trough _Chirp!_
 
 ![UML Sequence Diagram](images/UMLsequencediagram.png){ width=70% }
-The sequence diagram visualizes the interaction flow between
-- User - The client initializes the interaction with Chirp.web
-- Chirp.web - The web app handles HTTP requests and responds
-- Chirp.db - The Chrip Database is responsible for handling and managing data storage
 
-Initially the Users sends a HTTP head-request to the Chirp.web server
+The sequence diagram visualizes the interaction flow between:
+- User - The client initializes the interaction with Chirp.web
+- Chirp.web - The web app handles HTTP requests and responses
+- Chirp.db - The Chirp Database is responsible for handling and managing data storage
+
+Initially the Users sends an HTTP head-request to the Chirp.web server
 Chirp.web responds with 200 OK, which means that the server is reachable for the client.
 
 When the user requests to fetch the homepage ("/") the Chirp.Web will process the request.
-Then Chirp.Web will handle a request to the Chirp.Db database by calling GetCheep(page)
-Then the database Chirp.db will respond with the list of all cheeps List<CherepDTO>
-Finally the Chirp.Web service will send a HTTP response back to the User which will then complete the loading of the page.
+Then Chirp.Web will handle a request to the Chirp.db database by calling GetCheep(page)
+Then the database Chirp.db will respond with the list of all cheeps List<ChirpDTO>
+Finally the Chirp.Web service will send an HTTP response back to the User which will then complete the loading of the page.
 
 Login requests happen when the User makes an HTTP GET request "/Identity/Account/Login/"
 which will get a response from Chirp.Web if everything is in order.
@@ -100,11 +101,11 @@ Then the Chirp.Web handles the authentication process and confirms if the creden
 
 After a successful login authentication the Chirp.Web redirects the User back to the root URL ("/")
 
-When a User decides to post a Cheep the Chirp.Web service will forward the request to the database Chrip.db.
+When a User decides to post a Cheep the Chirp.Web service will forward the request to the database Chirp.db.
 This is done by using the method AddCheep(username, message).
 Then the Chirp.db will store the new message and completes
 
-Finally, the Chirp.Web will refresj the site by sending an updated site view back to the User, reflecting the newly added cheep.
+Finally, the Chirp.Web will refresh the site by sending an updated site view back to the User, reflecting the newly added cheep.
 
 # Process
 
@@ -232,7 +233,7 @@ In the development of our project we used ChatGPT, and when we did so, we made s
 `ChatGPT <>`
 
 ChatGPT was very helpful when used to create simple code parts and debug some.
-On the other hand the ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
+On the other hand ChatGPT was not helpful with complex code questions. Therefore, we ended up finding it mostly useful for us to understand parts of the code and guide us on where to start on complex tasks.
 
 However, we also experienced some negatives when using ChatGPT. It could sometimes go in a spiral, in cases like this we would look at the slides and on the web for help.
 We also gave Gemini some use sometimes when ChatGPT was not helpful, we did however never use any of the provided code, so it never got to be a co-author.
