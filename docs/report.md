@@ -77,6 +77,12 @@ The linear diagram is pretty much self-explanatory, but we feel it is important 
 ### Sequence of functionality/calls trough _Chirp!_
 
 ![UML Sequence Diagram](images/UMLsequencediagram.png){ width=70% }
+The sequence diagram visualizes the interaction flow between
+- User - The client initializes the interaction with Chirp.web
+- Chirp.web - The web app handles HTTP requests and responds
+- Chirp.db - The Chrip Database is responsible for handling and managing data storage
+
+Initially the Users sends a HTTP head-request to the Chirp.web server
 
 ## Process
 
