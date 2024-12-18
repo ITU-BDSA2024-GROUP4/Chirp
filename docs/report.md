@@ -100,6 +100,10 @@ Then the Chirp.Web handles the authentication process and confirms if the creden
 
 After a successful login authentication the Chirp.Web redirects the User back to the root URL ("/")
 
+When a User decides to post a Cheep the Chirp.Web service will forward the request to the database Chrip.db.
+This is done by using the method AddCheep(username, message).
+Finally the Chirp.db will store the new message and completes
+
 ## Process
 
 ### Build, test, release, and deployment
