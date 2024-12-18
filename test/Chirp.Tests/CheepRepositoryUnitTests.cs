@@ -161,10 +161,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         var userAuthor = _authorRepository.AddAuthor("Victor Duplicate", userEmail);
         var targetAuthor = _authorRepository.AddAuthor("Victor NoDupes", authorEmail);
 
-        _authorRepository.AddFollow(userEmail, authorEmail);
+        _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         try
         {
-            _authorRepository.AddFollow(userEmail, authorEmail);
+            _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         }
         catch (Exception ex)
         {
@@ -172,7 +172,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         }
         var exception = Assert.Throws<ApplicationException>(() =>
         {
-            _authorRepository.AddFollow(userEmail, authorEmail);
+            _authorRepository.AddFollow("Victor Duplicate", "Victor NoDupes");
         });
 
         Assert.Equal("TooManyFollows", exception.Message);
@@ -180,12 +180,6 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         int followers = _authorRepository.GetFollowerCount(authorEmail); //TODO: change to username
         Assert.True(2 > followers);
     }
-
-    [Fact]
-    public void canAddAuthorToDb(){
-        // Arrange
-       var author = _authorRepository.AddAuthor("joe", "joe@joe.com");
-       
-    }
+    
     
 }
