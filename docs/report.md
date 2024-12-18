@@ -98,6 +98,8 @@ The authentication process is handled as follows
 The User first submits their login credentials
 Then the Chirp.Web handles the authentication process and confirms if the credentials are valid
 
+After a successful login authentication the Chirp.Web redirects the User back to the root URL ("/")
+
 ## Process
 
 ### Build, test, release, and deployment
