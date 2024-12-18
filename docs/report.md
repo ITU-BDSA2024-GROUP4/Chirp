@@ -83,6 +83,9 @@ The sequence diagram visualizes the interaction flow between
 - Chirp.db - The Chrip Database is responsible for handling and managing data storage
 
 Initially the Users sends a HTTP head-request to the Chirp.web server
+Chirp.web responds with 200 OK, which means that the server is reachable for the client.
+
+When the user requests the homepage ("/")
 
 ## Process
 
