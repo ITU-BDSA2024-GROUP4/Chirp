@@ -26,4 +26,4 @@ Happy chirping. 🤠👌
 - [@ITU-mikcl](https://github.com/ITU-mikcl)
 - [@SforziniVictor](https://github.com/SforziniVictor)
 - [@AllanPetersen1](https://github.com/AllanPetersen1)
-- [@]
+- [@BergurDavidsen](https://github.com/BergurDavidsen)
