@@ -20,6 +20,28 @@ Now you can go to http://localhost:5273 and see the website
 
 Happy chirping. 🤠👌
 
+## Test
+
+To test our project go the test folder:
+
+```bash
+  cd test
+```
+
+In this folder there are 3 other folders choose which part of the program you wish to test, and go into that folder
+
+```bash
+  cd Chirp.CLI.Tests
+  cd Chirp.Razor.Tests
+  cd Chirp.SimpleDB.Tests
+```
+
+Now to start the test run:
+
+```bash
+  dotnet test
+```
+
 ## Authors
 
 - [@luveha](https://github.com/luveha)
