@@ -1,6 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations; 
+using System.ComponentModel.DataAnnotations;
 using Chirp.Infrastructure;
 using Chirp.Core;
 
@@ -46,7 +46,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [Theory]
     [InlineData("test", "test@gmail.com")]
     public void CreateAuthorTest(string author, string email)
-    {   
+    {
         // Arrange && Act
         Author result = _authorRepository.AddAuthor(author, email);
         
@@ -180,6 +180,39 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         int followers = _authorRepository.GetFollowerCount(authorEmail); //TODO: change to username
         Assert.True(2 > followers);
     }
-    
-    
+
+    [Fact]
+    public void BlockTest()
+    {
+        IAuthorService _authorService = new AuthorService(_authorRepository);
+        var usr0 = _authorService.GetOrCreateAuthor("Testusr0", "testusr0@gmail.com");
+        var usr1 = _authorService.GetOrCreateAuthor("Testusr1", "testusr1@gmail.com");
+
+        _authorService.CreateBlock(usr0.Name, usr1.Name);
+
+        Assert.True(_authorService.IsBlocked(usr0.Name, usr1.Name));
+
+    }
+//Test via service
+    [Fact]
+    public void LikeTest()
+    {
+        IAuthorService _authorService = new AuthorService(_authorRepository);
+        ICheepService _cheepService = new CheepService(_cheepRepository, _authorRepository);
+
+        string test1Name = "Test";
+        string test1Email = "test1@gmail.com";
+        string test2Name = "Test2";
+        string test2Email = "test2@gmail.com";
+        _authorService.AddAuthor(test1Name, test1Email);
+        _authorService.AddAuthor(test2Name, test2Email);
+        
+        _cheepService.AddCheep(test2Name, "testMsg");
+        
+        var id = _cheepService.GetCheepsFromAuthor(test2Name);
+        _cheepService.CreateLike(test1Name, id[0].CheepId);
+        
+        Assert.True(_cheepService.IsLiked(test1Name, id[0].CheepId));
+        
+    }
 }
