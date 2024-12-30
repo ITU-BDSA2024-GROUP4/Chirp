@@ -36,6 +36,13 @@ builder.Services.AddAuthentication()
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Creates repositories
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+
+// Creates services
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<ICheepService, CheepService>();
 
 //adds session

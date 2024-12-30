@@ -36,7 +36,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ChirpUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly ICheepService _service;
+        private readonly IAuthorService _authorService;
 
         public RegisterModel(
             UserManager<ChirpUser> userManager,
@@ -44,7 +44,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             SignInManager<ChirpUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ICheepService service)
+            IAuthorService authorService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -52,7 +52,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _service = service;
+            _authorService = authorService;
 
         }
 
@@ -142,11 +142,11 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     // Create author if it doesn't exist
-                    var author = _service.GetAuthor(Input.Email);
+                    var author = _authorService.GetAuthor(Input.Name);
 
                     if (author == null)
                     {
-                        _service.CreateAuthor(Input.Name, Input.Email);
+                        _authorService.AddAuthor(Input.Name, Input.Email);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);

@@ -10,13 +10,12 @@
     {
         <form method="post" asp-page-handler="Unblock">
             @Html.AntiForgeryToken()
-            <select name="unblock_user" class="dropdown">
+            <select name="unblock_username" class="dropdown">
                 @foreach (var blocked in Model.GetBlockedAuthors())
                 {
-                    <option value="@blocked.Email">@blocked.Name</option>
+                    <option value="@blocked.Name">@blocked.Name</option>
                 }
             </select>
-            <input type="hidden" name="user_email" value="@Model.User_Email"/>
             <button type="submit" class="follow-button">Unblock</button>
         </form>
     }

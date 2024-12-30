@@ -7,6 +7,7 @@ namespace Chirp.Infrastructure;
 public class CheepService : ICheepService
 {
     private ICheepRepository _repository;
+    private IAuthorRepository _authorRepository;
 
     public ICheepRepository repository
     {
@@ -14,10 +15,10 @@ public class CheepService : ICheepService
         set => _repository = value;
     }
 
-    public CheepService(DbContextOptions<ChirpDBContext> options)
+    public CheepService(ICheepRepository repository, IAuthorRepository authorRepository)
     {
-        var context = new ChirpDBContext(options);
-        _repository = new CheepRepository(context);
+        _repository = repository;
+        _authorRepository = authorRepository;
     }
 
     public List<CheepDTO> GetCheeps(int page)
@@ -30,12 +31,14 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthor(author);
     }
 
-    public void DeleteCheep(string userEmail, int cheepId)
+    public void RemoveCheep(string username, int cheepId)
     {
-        foreach (var cheep in _repository.GetCheepToDelete(userEmail, cheepId))
+        List<Cheep> cheeps = _repository.GetCheep(username, cheepId);
+        if (cheeps == null || cheeps.Count > 1)
         {
-            _repository.DeleteCheep(cheep);
+            throw new ApplicationException("There are multiple cheeps with same email and cheep ID.");
         }
+        _repository.RemoveCheep(cheeps[0]);
     }
 
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page)
@@ -43,163 +46,92 @@ public class CheepService : ICheepService
         return _repository.GetCheepsFromAuthorPage(author, page);
     }
 
-    public void CreateCheep(string email, string message)
+    public void AddCheep(string username, string message)
     {
-        Author author = _repository.GetAuthor(email)[0];
-        _repository.CreateCheep(author, message);
-    }
-
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    public AuthorDTO? GetAuthor(string email)
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-
-    {
-        var authors = _repository.GetAuthor(email);
-        if (authors.Count > 1)
+        Author author = _authorRepository.GetAuthor(username)[0];
+        
+        Cheep cheep = new Cheep()
         {
-            return null; //Error, shouldn't be longer than 1
-        }
-
-        if (authors.Count == 0)
-        {
-            return null; //Error, should exist
-        }
-
-        return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
+            CheepId = _repository.CheepCount() + 1,
+            AuthorId = author.AuthorId,
+            Author = author,
+            Text = message,
+            TimeStamp = DateTime.Now
+        };
+        
+        _repository.AddCheep(cheep, author);
     }
 
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-    public AuthorDTO? GetAuthorUserName(string userName)
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+    public List<CheepDTO> GetOwnTimeline(string username)
     {
-        var authors = _repository.GetAuthorUserName(userName);
-        if (authors.Count > 1)
-        {
-            return null; //Error, shouldn't be longer than 1
-        }
-
-        if (authors.Count == 0)
-        {
-            return null; //Error, should exist
-        }
-
-        return new AuthorDTO { Name = authors[0].Name, Email = authors[0].Email };
-    }
-
-    public void CreateAuthor(string name, string email)
-    {
-        _repository.CreateAuthor(name, email);
-    }
-
-    public AuthorDTO GetOrCreateAuthor(string name, string email)
-    {
-        var authors = _repository.GetAuthor(email);
-        if (authors.Count > 1)
-        {
-            throw new InvalidOperationException($"Multiple authors found for email: {email}");
-        }
-
-        if (authors.Count == 0)
-        {
-            _repository.CreateAuthor(name, email);
-            authors = _repository.GetAuthor(email);
-        }
-
-        var author = authors.First();
-        return new AuthorDTO { Name = author.Name, Email = author.Email };
-    }
-
-    public void CreateFollow(string username, string user, string follow)
-    {
-        GetOrCreateAuthor(username, user);
-        _repository.CreateFollow(user, follow);
-    }
-
-    public void UnFollow(string user, string unfollow)
-    {
-        _repository.UnFollow(user, unfollow);
-    }
-
-    public bool IsFollowing(string email, string authorEmail)
-    {
-        return _repository.IsFollowing(email, authorEmail);
-    }
-
-    public bool IsFollowingUserName(string username, string author)
-    {
-        return _repository.IsFollowingUserName(username, author);
-    }
-
-    public List<AuthorDTO> GetFollowers(string email)
-    {
-        return _repository.GetFollowers(email);
-    }
-
-    public List<CheepDTO> GetOwnTimeline(string userEmail)
-    {
-        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<AuthorDTO> following = _authorRepository.GetFollowers(username);
         List<string> followingString = new List<string>();
         List<CheepDTO> Cheeps = new List<CheepDTO>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Email);
+            followingString.Add(follow.Name);
         }
 
-        followingString.Add(userEmail);
-        foreach (var email in followingString)
+        followingString.Add(username);
+        foreach (var usr in followingString)
         {
-            Cheeps.AddRange(_repository.GetCheepsFromAuthorEmail(email));
+            Cheeps.AddRange(_repository.GetCheepsFromAuthor(usr));
         }
 
         return Cheeps;
     }
 
-    public int GetFollowerCount(string email)
+    public List<CheepDTO> GetOwnTimelinePage(string username, int page)
     {
-        return _repository.GetFollowerCount(email);
-    }
-
-    public int GetFollowerCountUserName(string username)
-    {
-        return _repository.GetFollowerCountUserName(username);
-    }
-
-    public int GetFollowingCount(string username)
-    {
-        return _repository.GetFollowingCount(username);
-    }
-
-    public List<CheepDTO> GetOwnTimelinePage(string userEmail, int page)
-    {
-        List<AuthorDTO> following = repository.GetFollowers(userEmail);
+        List<AuthorDTO> following = _authorRepository.GetFollowers(username);
         List<string> followingString = new List<string>();
         foreach (var follow in following)
         {
-            followingString.Add(follow.Email);
+            followingString.Add(follow.Name);
         }
 
-        followingString.Add(userEmail);
-        return repository.GetCheepsFromAuthorPages(followingString, page);
+        followingString.Add(username);
+        return repository.GetCheepsFromAuthorsPage(followingString, page);
     }
 
-    public void ForgetMe(string email)
+    public void CreateLike(string username, int cheepId)
     {
-        _repository.ForgetUser(email);
+        List<Author> authors = _authorRepository.GetAuthor(username);
+        List<Cheep> cheeps = _repository.GetCheepFromId(cheepId);
+
+        if (cheeps.Count != 1)
+        { 
+            throw new Exception("Multiple cheeps with same id");
+        }
+        if (authors.Count != 1)
+        { 
+            throw new Exception("Multiple authors with same user");
+        }
+        
+        Author author = authors[0];
+        Cheep cheep = cheeps[0];
+        
+        Likes likes = new Likes() { User = author, cheep = cheep };
+        
+        _repository.AddLike(likes);
     }
 
-    public void CreateLike(string user, int CheepId)
+    public bool IsLiked(string username, int CheepId)
     {
-        _repository.CreateLike(user, CheepId);
+        return _repository.IsLiked(username, CheepId);
     }
 
-    public bool IsLiked(string user, int CheepId)
+    public void UnLike(string username, int CheepId)
     {
-        return _repository.IsLiked(user, CheepId);
-    }
+        List<Likes> likes = _repository.GetLike(username, CheepId);
+        if (likes.Count() != 1)
+        {
+            throw new Exception("Multiple likes with same user on same cheepid");
+        }
 
-    public void UnLike(string user, int CheepId)
-    {
-        _repository.UnLike(user, CheepId);
+        Likes like = likes[0];
+        
+        _repository.UnLike(like);
     }
 
     public int LikeCount(int CheepId)
@@ -217,9 +149,9 @@ public class CheepService : ICheepService
         return _repository.AmountOfCheeps();
     }
 
-    public List<CheepDTO> GetLiked(string email)
+    public List<CheepDTO> GetLiked(string username)
     {
-        return _repository.GetLiked(email);
+        return _repository.GetLiked(username);
     }
 
     public List<CheepDTO> GetOwnTimeline(string userEmail, int page)
@@ -227,44 +159,21 @@ public class CheepService : ICheepService
         throw new NotImplementedException();
     }
 
-    public void CreateBlock(string userEmail, string blockEmail)
+    public void UnBlock(string username, string blockUsername)
     {
-        if (!IsBlocked(userEmail, blockEmail))
-        {
-            if (IsFollowing(userEmail, blockEmail))
-            {
-                _repository.UnFollow(userEmail, blockEmail);
-            }
-
-            _repository.CreateBlock(userEmail, blockEmail);
-        }
+        _repository.UnBlock(username, blockUsername);
     }
 
-    public void UnBlock(string userEmail, string blockEmail)
+    public bool UserBlockedSomeone(string username)
     {
-        _repository.UnBlock(userEmail, blockEmail);
+        return _repository.UserBlockedSomeone(username);
     }
 
-    public bool IsBlocked(string userEmail, string blockEmail)
+    public List<CheepDTO> GetCheepsNotBlocked(string username)
     {
-        return _repository.IsBlocked(userEmail, blockEmail);
+        return _repository.GetCheepsNotBlocked(username);
     }
-
-    public bool UserBlockedSomeone(string userEmail)
-    {
-        return _repository.UserBlockedSomeone(userEmail);
-    }
-
-    public List<CheepDTO> GetCheepsNotBlocked(string userEmail)
-    {
-        return _repository.GetCheepsNotBlocked(userEmail);
-    }
-
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail)
-    {
-        return _repository.GetBlockedAuthors(userEmail);
-    }
-
+    
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;

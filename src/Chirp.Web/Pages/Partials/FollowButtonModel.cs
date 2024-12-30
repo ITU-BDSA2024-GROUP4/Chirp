@@ -14,36 +14,38 @@ namespace Chirp.Web.Pages;
 
 public class FollowButtonModel
 {
-    public ICheepService _service { get; set; }
+    private ICheepService _cheepService { get; set; }
+    private IAuthorService _authorService { get; set; }
     public List<CheepDTO> Cheeps { get; set; }
-    public string UserEmail { get; set; }
+    public string Username { get; set; }
     public bool ShowOnCheeps { get; set; }
 
-    public FollowButtonModel(ICheepService service, List<CheepDTO> cheeps, string userEmail, bool showOnCheeps = true)
+    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string username, bool showOnCheeps = true) 
     {
-        _service = service;
+        _cheepService = cheepService;
+        _authorService = authorService;
         Cheeps = cheeps;
-        UserEmail = userEmail;
+        Username = username;
         ShowOnCheeps = showOnCheeps;
     }
 
-    public bool IsFollowing(string Author_Email)
+    public bool IsFollowing(string username)
     {
-        return _service.IsFollowing(UserEmail, Author_Email);
+        return _authorService.IsFollowing(Username, username); // TODO: change UserEmail to its username
     }
 
-    public bool IsLiked(string user, int Cheep_Id)
+    public bool IsLiked(string username, int Cheep_Id)
     {
-        return _service.IsLiked(user, Cheep_Id);
+        return _cheepService.IsLiked(username, Cheep_Id);
     }
 
     public int LikeCount(int Cheep_Id)
     {
-        return _service.LikeCount(Cheep_Id);
+        return _cheepService.LikeCount(Cheep_Id);
     }
 
-    public int FollowCount(string email)
+    public int FollowCount(string username)
     {
-        return _service.GetFollowerCount(email);
+        return _authorService.GetFollowerCount(username);
     }
 }

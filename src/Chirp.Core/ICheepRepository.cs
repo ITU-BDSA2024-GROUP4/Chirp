@@ -2,43 +2,35 @@ namespace Chirp.Core;
 
 public interface ICheepRepository
 {
+    // Methods for retrieving cheeps
     public List<CheepDTO> GetCheeps(int page);
     public List<CheepDTO> GetCheepsFromAuthor(string author);
     public List<CheepDTO> GetCheepsFromAuthorPage(string author, int page);
-
+    public List<CheepDTO> GetCheepsFromAuthorsPage(List<string> authors, int page);
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page);
+    public List<Cheep> GetCheep(string username, int cheepId);
 
-    public Author CreateAuthor(string name, string email);
+    public List<CheepDTO> GetCheepsNotBlocked(string username);
+    public List<CheepDTO> GetLiked(string username);
+    public List<Cheep> GetCheepFromId(int cheepId);
 
-    public Cheep CreateCheep(Author author, string text);
+    // Methods for adding and removing cheeps
+    public Cheep AddCheep(Cheep cheep, Author author);
+    public void RemoveCheep(Cheep cheep);
 
-    public List<Author> GetAuthor(string email);
-    public List<Author> GetAuthorUserName(string userName);
-    public void CreateFollow(string user, string following);
-    public void UnFollow(string user, string unfollowing);
-    public bool IsFollowing(string email, string authorEmail);
-    public bool IsFollowingUserName(string username, string author);
-    public List<AuthorDTO> GetFollowers(string email);
-    public int GetFollowerCount(string email);
-    public int GetFollowerCountUserName(string username);
-    public int GetFollowingCount(string username);
-
-    public List<CheepDTO> GetCheepsFromAuthorPages(List<string> authors, int page);
-    public List<CheepDTO> GetCheepsFromAuthorEmail(string email);
-    public List<Cheep> GetCheepToDelete(string userEmail, int cheepId);
-    public void DeleteCheep(Cheep cheep);
-    public void CreateLike(string user, int CheepId);
-    public void ForgetUser(string email);
-    public bool IsLiked(string user, int CheepId);
-    public void UnLike(string user, int CheepId);
+    // Methods for handling likes
+    public void AddLike(Likes likes);
+    public bool IsLiked(string username, int CheepId);
+    public void UnLike(Likes like);
     public int LikeCount(int CheepId);
     public int TotalLikeCountUser(string username);
+    public List<Likes> GetLike(string username, int cheepId);
+
+    // Methods for counting cheeps
     public int AmountOfCheeps();
-    public void CreateBlock(string userEmail, string blockemail);
+    public int CheepCount();
+
+    // Methods for blocking/unblocking users
     public void UnBlock(string userEmail, string blockEmail);
-    public bool IsBlocked(string userEmail, string blockEmail);
-    public bool UserBlockedSomeone(string userEmail);
-    public List<CheepDTO> GetCheepsNotBlocked(string userEmail);
-    public List<AuthorDTO> GetBlockedAuthors(string userEmail);
-    public List<CheepDTO> GetLiked(string user);
+    public bool UserBlockedSomeone(string username);
 }
