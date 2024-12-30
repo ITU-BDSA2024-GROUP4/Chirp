@@ -26,7 +26,6 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
 
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
-        
     }
 
     public async Task DisposeAsync()
