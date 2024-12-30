@@ -2,9 +2,11 @@
 
 A social media platform.
 
+The platform is live at: https://bdsagroup4chirprazor.azurewebsites.net/
+
 ## Deployment
 
-To run our project go the src/Chirp.Web folder:
+To run our project locally go the src/Chirp.Web folder:
 
 ```bash
   cd src/Chirp.Web
@@ -50,8 +52,9 @@ Now to start the test run:
 
 ## Authors
 
-- [@luveha](https://github.com/luveha)
-- [@ITU-mikcl](https://github.com/ITU-mikcl)
-- [@SforziniVictor](https://github.com/SforziniVictor)
-- [@AllanPetersen1](https://github.com/AllanPetersen1)
-- [@BergurDavidsen](https://github.com/BergurDavidsen)
+- Allan Petersen |  [@AllanPetersen1](https://github.com/AllanPetersen1)
+- Bergur Davidsen | [@BergurDavidsen](https://github.com/BergurDavidsen)
+- Lucas Venø Hansen | [@luveha](https://github.com/luveha)
+- Mikkel Clausen | [@ITU-mikcl](https://github.com/ITU-mikcl)
+- Victor Sforzini | [@SforziniVictor](https://github.com/SforziniVictor)
+
