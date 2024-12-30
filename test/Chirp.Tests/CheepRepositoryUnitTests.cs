@@ -188,13 +188,41 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         IAuthorService _authorService = new AuthorService(_authorRepository);
         var usr0 = _authorService.GetOrCreateAuthor("Testusr0", "testusr0@gmail.com");
         var usr1 = _authorService.GetOrCreateAuthor("Testusr1", "testusr1@gmail.com");
-        
+
         _authorService.CreateBlock(usr0.Name, usr1.Name);
 
-        
         Assert.True(_authorService.IsBlocked(usr0.Name, usr1.Name));
 
     }
-    
-    
+
+    [Fact]
+    public void LikeTest()
+    {
+        IAuthorService _authorService = new AuthorService(_authorRepository);
+        ICheepService _cheepService = new CheepService(_cheepRepository, _authorRepository);
+        Author usr0 = new Author()
+        {
+            Name = "testusr",
+            Email = "testusr@gmail.com",
+            AuthorId = 131511,
+            Cheeps = new List<Cheep>()
+        };
+        Author usr1 = new Author()
+        {
+            Name = "testusr1",
+            Email = "testusr1@gmail.com",
+            AuthorId = 5165176,
+            Cheeps = new List<Cheep>()
+        };
+        _context.Authors.Add(usr1);
+        _context.Authors.Add(usr0);
+        Cheep newCheep = new Cheep()
+        {
+            Author = usr0, CheepId = 7764, Text = "test", TimeStamp = DateTime.Now,
+        };
+        _cheepRepository.AddCheep(newCheep, usr1);
+        _cheepService.CreateLike(usr1.Name, newCheep.CheepId);
+        Assert.True(_cheepService.IsLiked(usr1.Name, newCheep.CheepId));
+        
+    }
 }
