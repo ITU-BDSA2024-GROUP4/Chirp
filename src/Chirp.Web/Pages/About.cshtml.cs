@@ -146,8 +146,6 @@ public class AboutModel : PageModel
 
     public async Task<IActionResult> OnPostForgetMe()
     {
-        Console.WriteLine("ERRORRR");
-        Console.WriteLine(Username);
         _authorService.ForgetMe(Username);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
