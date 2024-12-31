@@ -1,10 +1,11 @@
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using Chirp.Infrastructure;
+
 using Chirp.Core;
+using Chirp.Infrastructure;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 using Xunit.Abstractions;
 
@@ -49,7 +50,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         // Arrange && Act
         Author result = _authorRepository.AddAuthor(author, email);
-        
+
         // Assert
         Assert.Equal("test", result.Name);
         Assert.Equal("test@gmail.com", result.Email);
@@ -69,12 +70,15 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         };
         Cheep newCheep = new Cheep()
         {
-            Author = newAuthor, CheepId = newAuthor.AuthorId, Text = "test", TimeStamp = DateTime.Now,
+            Author = newAuthor,
+            CheepId = newAuthor.AuthorId,
+            Text = "test",
+            TimeStamp = DateTime.Now,
         };
-        
+
         // Act
         Cheep cheep = _cheepRepository.AddCheep(newCheep, newAuthor);
-        
+
         // Assert
         Assert.Equal("test", cheep.Text);
     }
@@ -84,10 +88,10 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("Adrian")]
     public void GetCheepsFromAuthorPageTest(string author)
     {
-        
+
         // Arrange && Assert
         var cheeps = _cheepRepository.GetCheepsFromAuthorPage(author, 0);
-        
+
         // Assert
         Assert.True(cheeps.Count > 0);
         foreach (var cheep in cheeps)
@@ -104,7 +108,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     {
         // Arrange && Act
         var cheeps = _cheepRepository.GetCheeps(page);
-        
+
         // Assert
         Assert.Equal(32, cheeps.Count);
     }
@@ -113,8 +117,8 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("ropf@itu.dk", "Helge")]
     [InlineData("adho@itu.dk", "Adrian")]
     public void GetCheepsFromAuthorPageEmailTest(string email, string author)
-    {   
-        
+    {
+
         // Arrange && Act
         var cheeps = _cheepRepository.GetCheepsFromAuthorPageEmail(email, 0);
 
@@ -131,7 +135,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
     [InlineData("johnDoe", "john.doe@gmail.com", 0)]
     public void MaxLengthCheep(string author, string email, int authorId)
     {
-        
+
         // Arrange
         Author newAuthor = new Author()
         {
@@ -140,19 +144,19 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
             AuthorId = authorId,
             Cheeps = new List<Cheep>()
         };
-        
+
         Cheep newCheep = new Cheep()
         {
             CheepId = 20, //Some random int
             AuthorId = newAuthor.AuthorId,
             Author = newAuthor,
-            Text = new string('a',161),
+            Text = new string('a', 161),
             TimeStamp = DateTime.Now
         };
         // Act && Assert
-        Assert.Throws<ValidationException>( () => _cheepRepository.AddCheep(newCheep, newAuthor));
+        Assert.Throws<ValidationException>(() => _cheepRepository.AddCheep(newCheep, newAuthor));
     }
-    
+
     //TEST if user can follow same user more than once (logical fallacy!!!)
     [Theory]
     [InlineData("VictorDuplicate@dupe.it", "victor@nodupes.it")]
@@ -193,7 +197,7 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         Assert.True(_authorService.IsBlocked(usr0.Name, usr1.Name));
 
     }
-//Test via service
+    //Test via service
     [Fact]
     public void LikeTest()
     {
@@ -206,13 +210,13 @@ public class CheepRepositoryUnitTests : IAsyncLifetime
         string test2Email = "test2@gmail.com";
         _authorService.AddAuthor(test1Name, test1Email);
         _authorService.AddAuthor(test2Name, test2Email);
-        
+
         _cheepService.AddCheep(test2Name, "testMsg");
-        
+
         var id = _cheepService.GetCheepsFromAuthor(test2Name);
         _cheepService.CreateLike(test1Name, id[0].CheepId);
-        
+
         Assert.True(_cheepService.IsLiked(test1Name, id[0].CheepId));
-        
+
     }
 }

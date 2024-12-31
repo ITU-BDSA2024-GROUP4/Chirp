@@ -40,9 +40,9 @@ namespace PlaywrightTests
 
             // Assert
             await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "What's on your mind Helge?" })).ToBeVisibleAsync();
-            
-            await Page.GetByRole(AriaRole.Link, new (){Name = "logout [Helge]"}).ClickAsync();
-            
+
+            await Page.GetByRole(AriaRole.Link, new() { Name = "logout [Helge]" }).ClickAsync();
+
             await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "login" })).ToBeVisibleAsync();
         }
 
@@ -60,9 +60,9 @@ namespace PlaywrightTests
 
             // Assert
             await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "What's on your mind Adrian?" })).ToBeVisibleAsync();
-            
-            await Page.GetByRole(AriaRole.Link, new (){Name = "logout [Adrian]"}).ClickAsync();
-            
+
+            await Page.GetByRole(AriaRole.Link, new() { Name = "logout [Adrian]" }).ClickAsync();
+
             await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "login" })).ToBeVisibleAsync();
         }
 
@@ -71,7 +71,7 @@ namespace PlaywrightTests
         {
             // Arrange
             await Page.GotoAsync(_factory.GetBaseAddress());
-            
+
             // Act
             await Page.GetByRole(AriaRole.Link, new() { Name = "login" }).ClickAsync();
             await Page.GetByRole(AriaRole.Button, new() { Name = "GitHub" }).ClickAsync();
@@ -98,11 +98,11 @@ namespace PlaywrightTests
             await Page.Locator("#MessageInput").PressAsync("Enter");
             await Page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
 
-            
+
             // Assert
-            var postLocator = Page.Locator("li").Filter(new() { HasText=$"{user}" }).First;
-            await Expect(postLocator).ToHaveTextAsync(new Regex($".*{message}.*"));            
-            
+            var postLocator = Page.Locator("li").Filter(new() { HasText = $"{user}" }).First;
+            await Expect(postLocator).ToHaveTextAsync(new Regex($".*{message}.*"));
+
         }
         [Test]
         public async Task End_To_End_Test()
@@ -195,5 +195,5 @@ namespace PlaywrightTests
             await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "login" })).ToBeVisibleAsync();
         }
     }
-    
+
 }

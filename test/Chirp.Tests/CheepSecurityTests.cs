@@ -12,7 +12,7 @@ public class CheepSecurityTests : IAsyncLifetime
 {
 
     private SqliteConnection _connection = null!;
-    private  ICheepService _cheepService = null!;
+    private ICheepService _cheepService = null!;
     private IAuthorService _authorService = null!;
 
     public async Task InitializeAsync()
@@ -44,11 +44,11 @@ public class CheepSecurityTests : IAsyncLifetime
         // Arrange
         var authorName = "Hackerman";
         var authorEmail = "hacker@hacker.hacker";
-         _authorService.AddAuthor(authorName, authorEmail);
+        _authorService.AddAuthor(authorName, authorEmail);
         string injection = ";DROP TABLE IF EXISTS Cheeps;-- ";
 
         // Act
-        
+
         _cheepService.AddCheep(authorName, injection);
 
         var cheeps = _cheepService.GetCheeps(0);

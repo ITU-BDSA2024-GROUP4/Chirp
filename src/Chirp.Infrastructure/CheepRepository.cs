@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+
+using Chirp.Core;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Chirp.Core;
 
 namespace Chirp.Infrastructure;
 
@@ -54,13 +56,13 @@ public class CheepRepository : ICheepRepository
 
         return query.ToList(); // Converts IQueryable<T> to List<T>
     }
-    
+
     // Query
     public List<Cheep> GetCheep(string username, int cheepId)
     {
         var query = (from Cheep in _context.Cheeps
-            where Cheep.Author.Name == username && Cheep.CheepId == cheepId
-            select Cheep);
+                     where Cheep.Author.Name == username && Cheep.CheepId == cheepId
+                     select Cheep);
         return query.ToList();
     }
 
@@ -93,7 +95,7 @@ public class CheepRepository : ICheepRepository
     }
 
     // Query
-        // Only used for testing
+    // Only used for testing
     public List<CheepDTO> GetCheepsFromAuthorPageEmail(string email, int page)
     {
         var query = (from Author in _context.Authors
@@ -185,7 +187,7 @@ public class CheepRepository : ICheepRepository
 
         return query;
     }
-    
+
     // Query
     public List<Likes> GetLike(string username, int cheepId)
     {
@@ -194,7 +196,7 @@ public class CheepRepository : ICheepRepository
                      select Likes);
         return query.ToList();
     }
-    
+
     // Command
     public void UnLike(Likes like)
     {
@@ -225,7 +227,7 @@ public class CheepRepository : ICheepRepository
     public int AmountOfCheeps()
     {
         var query = (from Cheep in _context.Cheeps
-                select 1).Count();
+                     select 1).Count();
         return query;
     }
 

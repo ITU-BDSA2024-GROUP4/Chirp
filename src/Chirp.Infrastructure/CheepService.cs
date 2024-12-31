@@ -1,13 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-
 using Chirp.Core;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Infrastructure;
 
 public class CheepService : ICheepService
 {
     private ICheepRepository _repository;
-    private IAuthorRepository _authorRepository;
+    private readonly IAuthorRepository _authorRepository;
 
     public ICheepRepository repository
     {
@@ -49,7 +49,7 @@ public class CheepService : ICheepService
     public void AddCheep(string username, string message)
     {
         Author author = _authorRepository.GetAuthor(username)[0];
-        
+
         Cheep cheep = new Cheep()
         {
             CheepId = _repository.CheepCount() + 1,
@@ -58,7 +58,7 @@ public class CheepService : ICheepService
             Text = message,
             TimeStamp = DateTime.Now
         };
-        
+
         _repository.AddCheep(cheep, author);
     }
 
@@ -100,19 +100,19 @@ public class CheepService : ICheepService
         List<Cheep> cheeps = _repository.GetCheepFromId(cheepId);
 
         if (cheeps.Count != 1)
-        { 
+        {
             throw new Exception("Multiple cheeps with same id");
         }
         if (authors.Count != 1)
-        { 
+        {
             throw new Exception("Multiple authors with same user");
         }
-        
+
         Author author = authors[0];
         Cheep cheep = cheeps[0];
-        
+
         Likes likes = new Likes() { User = author, cheep = cheep };
-        
+
         _repository.AddLike(likes);
     }
 
@@ -130,7 +130,7 @@ public class CheepService : ICheepService
         }
 
         Likes like = likes[0];
-        
+
         _repository.UnLike(like);
     }
 
@@ -173,7 +173,7 @@ public class CheepService : ICheepService
     {
         return _repository.GetCheepsNotBlocked(username);
     }
-    
+
     public int GetTotalCheeps(string email)
     {
         return _repository.GetCheepsFromAuthor(email).Count;
