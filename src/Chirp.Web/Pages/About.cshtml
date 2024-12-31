@@ -74,6 +74,7 @@
         </form>
         <form method="post" asp-page-handler="ForgetMe">
             @Html.AntiForgeryToken()
+            <input type="hidden" name="Username" value="@Model.Username" />
             <input type="submit" value="Forget me" formaction="?handler=ForgetMe">
         </form>
     </div>

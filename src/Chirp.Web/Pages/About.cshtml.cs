@@ -19,12 +19,12 @@ public class AboutModel : PageModel
     private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
     private readonly UserManager<ChirpUser> _userManager;
-    public string Username;
     public bool UserIsAuthor;
     public List<AuthorDTO> Following;
     public List<CheepDTO> Cheeps;
     public List<CheepDTO> Likes;
     [BindProperty] public string Unblock_Username { get; set; }
+    [BindProperty] public string Username { get; set; }
 
     public AboutModel(ICheepService cheepService, IAuthorService authorService, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
@@ -146,11 +146,14 @@ public class AboutModel : PageModel
 
     public async Task<IActionResult> OnPostForgetMe()
     {
+        Console.WriteLine("ERRORRR");
+        Console.WriteLine(Username);
         _authorService.ForgetMe(Username);
         var userId = _userManager.GetUserId(User);
         var chirpUser = await _userManager.FindByIdAsync(userId);
         if (chirpUser == null)
         {
+            
             throw new Exception();
         }
 
