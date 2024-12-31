@@ -2,12 +2,11 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using Microsoft.AspNetCore.Mvc;
-
 using Chirp.Core;
 
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
@@ -20,7 +19,7 @@ public class FollowButtonModel
     public string Username { get; set; }
     public bool ShowOnCheeps { get; set; }
 
-    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string username, bool showOnCheeps = true) 
+    public FollowButtonModel(ICheepService cheepService, IAuthorService authorService, List<CheepDTO> cheeps, string username, bool showOnCheeps = true)
     {
         _cheepService = cheepService;
         _authorService = authorService;
