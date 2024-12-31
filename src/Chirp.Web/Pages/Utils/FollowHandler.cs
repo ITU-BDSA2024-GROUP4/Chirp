@@ -33,9 +33,9 @@ public static class FollowHandler
 
             return "Error";
         }
-        
+
         service.UnFollow(username, authorUsername);
         return "Page";
     }
-    
+
 }

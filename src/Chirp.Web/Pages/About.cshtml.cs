@@ -1,7 +1,4 @@
 #nullable disable
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using System.IO.Compression;
 using System.Text;
 
@@ -10,11 +7,14 @@ using Chirp.Infrastructure;
 using Chirp.Web.Pages.Utils;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace Chirp.Web.Pages;
 
-public class AboutModel : PageModel {
+public class AboutModel : PageModel
+{
     private readonly ICheepService _cheepService;
     private readonly IAuthorService _authorService;
     private readonly SignInManager<ChirpUser> _signInManager;
@@ -26,7 +26,7 @@ public class AboutModel : PageModel {
     public List<CheepDTO> Likes;
     [BindProperty] public string Unblock_Username { get; set; }
 
-    public AboutModel(ICheepService cheepService, IAuthorService authorService,SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
+    public AboutModel(ICheepService cheepService, IAuthorService authorService, SignInManager<ChirpUser> signInManager, UserManager<ChirpUser> userManager)
     {
         _cheepService = cheepService;
         _authorService = authorService;
@@ -79,8 +79,8 @@ public class AboutModel : PageModel {
         }
     }
 
-    public string GetEmail() 
-    { 
+    public string GetEmail()
+    {
         return _authorService.GetAuthor(Username).Email;
     }
 
@@ -166,9 +166,9 @@ public class AboutModel : PageModel {
     public IActionResult OnPostUnblock()
     {
         SetInformation();
-        
+
         _cheepService.UnBlock(Username, Unblock_Username);
-        
+
         return RedirectToPage();
     }
 

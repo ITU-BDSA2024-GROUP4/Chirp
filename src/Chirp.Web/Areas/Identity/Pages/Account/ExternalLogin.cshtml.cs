@@ -9,16 +9,18 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Chirp.Core;
+using Chirp.Infrastructure;
+
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Chirp.Infrastructure;
-using Chirp.Core;
+using Microsoft.Extensions.Options;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
@@ -107,7 +109,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
-            
+
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
