@@ -17,7 +17,7 @@ namespace Chirp.Web.Pages.Utils
                 "GitHub"
             );
         }
-        
+
 
         public static async Task<IActionResult> HandleLogout(SignInManager<ChirpUser> manager, PageModel page,
             string redirectUri = "/")

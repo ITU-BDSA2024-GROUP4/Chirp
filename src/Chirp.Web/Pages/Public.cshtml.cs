@@ -1,15 +1,14 @@
 #nullable disable
 using AspNet.Security.OAuth.GitHub;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using Chirp.Core;
 using Chirp.Infrastructure;
 using Chirp.Web.Pages.Partials;
 using Chirp.Web.Pages.Utils;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
 
@@ -124,7 +123,7 @@ public class PublicModel : PageModel
 
         switch (FollowHandler.Follow(ModelState, _authorService, nameof(Author_Username), Username,
                     User.Identity.Name, Author_Username))
-        {   
+        {
             case "Error":
                 return RedirectToPage("/Error");
             case "UserTimeline":

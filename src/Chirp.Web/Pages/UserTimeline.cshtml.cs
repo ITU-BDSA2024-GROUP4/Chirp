@@ -1,11 +1,5 @@
 #nullable disable
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using System.Security.Claims;
-
-using Microsoft.AspNetCore.Http.Extensions;
-
 using System.Text.RegularExpressions;
 
 using Chirp.Core;
@@ -15,7 +9,10 @@ using Chirp.Web.Pages.Utils;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
 
@@ -29,11 +26,11 @@ public class UserTimelineModel : PageModel
     [BindProperty] public SubmitMessageModel SubmitMessage { get; set; }
     [BindProperty(SupportsGet = true)] public string Author { get; set; }
     [BindProperty] public string Author_Username { get; set; }
-    
+
     [BindProperty] public int Cheep_Id { get; set; }
     public FollowButtonModel FollowButton { get; set; }
     public bool InvalidCheep { get; set; } = false;
-    
+
     public string Email { get; set; }
     public string UserEmail { get; set; }
     public string Username { get; set; }
@@ -78,10 +75,10 @@ public class UserTimelineModel : PageModel
             Cheeps = _cheepService.GetCheepsFromAuthorPage(Author, CurrentPage);
         }
 
-        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, Username, Author == User.Identity.Name); 
-   }   
-    
-    public IActionResult OnPost() 
+        FollowButton = new FollowButtonModel(_cheepService, _authorService, Cheeps, Username, Author == User.Identity.Name);
+    }
+
+    public IActionResult OnPost()
     {
         //This is a fall back if there is no OnPost[HandlerName]
         SetCheeps();
@@ -211,7 +208,7 @@ public class UserTimelineModel : PageModel
     {
         SetCheeps();
         _authorService.CreateBlock(Username, GetUsername());
-        return Redirect("~/");    
+        return Redirect("~/");
     }
 
     public IActionResult OnPostDeleteCheep()

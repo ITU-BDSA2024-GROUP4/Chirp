@@ -7,16 +7,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+
+using Chirp.Core;
+using Chirp.Infrastructure;
+using Chirp.Web.Pages.Utils;
+
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Chirp.Infrastructure;
-using Chirp.Core;
-using Chirp.Web.Pages.Utils;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
@@ -115,7 +117,7 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                
+
                 //this code is from https://stackoverflow.com/questions/75991569/how-to-login-with-either-username-or-email-in-an-asp-net-core-6-0
                 //using it to allow users to login with email
                 var userName = Input.Email;
@@ -124,7 +126,9 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
-                } else{
+                }
+                else
+                {
                     userName = user.UserName;
                 }
 

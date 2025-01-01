@@ -1,8 +1,9 @@
 #nullable disable
 
 using Chirp.Core;
-using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure;
+
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,7 +68,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ChirpDBContext>();
-    
+
     await DbInitializer.SeedIdentityUsers(services);
 }
 
