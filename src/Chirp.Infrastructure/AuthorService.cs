@@ -1,7 +1,7 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
-
 using Chirp.Core;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Infrastructure;
 
@@ -13,21 +13,21 @@ public class AuthorService : IAuthorService
     {
         _repository = repository;
     }
-    
+
     public void AddAuthor(string name, string email)
     {
         _repository.AddAuthor(name, email);
     }
-    
+
     public List<AuthorDTO> GetBlockedAuthors(string username)
     {
         return _repository.GetBlockedAuthors(username);
     }
-    #pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     public AuthorDTO? GetAuthor(string username)
 #pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
-{
+    {
         var authors = _repository.GetAuthor(username);
         if (authors.Count > 1)
         {
@@ -81,7 +81,7 @@ public class AuthorService : IAuthorService
     {
         return _repository.IsFollowing(username, followingUsername);
     }
-    
+
     public void CreateFollow(string username, string user, string followingUsername)
     {
         GetOrCreateAuthor(username, user);
@@ -104,19 +104,19 @@ public class AuthorService : IAuthorService
                 _repository.RemoveFollow(username, blockUsername);
             }
 
-            Author usernameAuthor = _repository.GetAuthor(username)[0];   
-            Author blockUsernameAuthor = _repository.GetAuthor(blockUsername)[0];   
-            
+            Author usernameAuthor = _repository.GetAuthor(username)[0];
+            Author blockUsernameAuthor = _repository.GetAuthor(blockUsername)[0];
+
             _repository.CreateBlock(usernameAuthor, blockUsernameAuthor);
         }
     }
-    
+
     public void ForgetMe(string username)
     {
         Author userAuthor = _repository.GetAuthor(username)[0];
         _repository.ForgetUser(userAuthor);
     }
-    
+
     public int GetFollowerCount(string username)
     {
         return _repository.GetFollowerCount(username);
@@ -135,7 +135,7 @@ public class AuthorService : IAuthorService
     {
         return _repository.IsFollowingUserName(username, followingUsername);
     }
-    
+
     public List<AuthorDTO> GetFollowers(string username)
     {
         return _repository.GetFollowers(username);

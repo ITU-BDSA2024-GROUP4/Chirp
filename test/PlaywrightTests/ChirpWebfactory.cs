@@ -18,9 +18,9 @@ namespace PlaywrightTests
             _process.StartInfo.RedirectStandardError = true;
             _process.StartInfo.UseShellExecute = false;
             _process.StartInfo.CreateNoWindow = true;
-            
+
             //Thread.Sleep(10000);
-            
+
         }
 
         public void Start()
@@ -62,7 +62,7 @@ namespace PlaywrightTests
                 }
                 catch
                 {
-                   
+
                 }
 
                 Thread.Sleep(3000);

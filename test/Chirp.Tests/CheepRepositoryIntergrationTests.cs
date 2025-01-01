@@ -1,8 +1,10 @@
+using System.Security.Cryptography;
+
+using Chirp.Core;
+using Chirp.Infrastructure;
+
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Infrastructure;
-using Chirp.Core;
-using System.Security.Cryptography;
 
 public class CheepRepositoryIntegrationTests : IAsyncLifetime
 
@@ -11,7 +13,7 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
     private ChirpDBContext _context = null!;
     private ICheepRepository _cheepRepository = null!;
     private IAuthorRepository _authorRepository = null!;
-    
+
     public async Task InitializeAsync()
     {
         _connection = new SqliteConnection("DataSource=:memory:");
@@ -24,25 +26,26 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
     }
-    
+
     public async Task DisposeAsync()
     {
         await _connection.DisposeAsync();
         await _context.DisposeAsync();
     }
 
-	[Fact]
+    [Fact]
     public void DatabaseInitialization()
     {
         var results = _cheepRepository.GetCheepsFromAuthorPage("Helge", 0);
-        
+
         foreach (var result in results)
             Assert.Equal("Hello, BDSA students!", result.Message);
     }
 
     [Theory]
     [InlineData("johnDoe", "john.doe@mail.com", "some text")]
-    public void CreateAuthorAndCheepTest(string author, string email, string message){
+    public void CreateAuthorAndCheepTest(string author, string email, string message)
+    {
         // Arrange
         // MIGHT NEED REWORK IN ASSERT
         Author newAuthor = _authorRepository.AddAuthor(author, email);
@@ -56,11 +59,11 @@ public class CheepRepositoryIntegrationTests : IAsyncLifetime
         };
         // Act
         _cheepRepository.AddCheep(newCheep, newAuthor);
-        
+
         // Assert
         var result = _cheepRepository.GetCheepsFromAuthorPage(author, 0);
 
-        Assert.True(result.Count>0);
+        Assert.True(result.Count > 0);
 
         foreach (var cheep in result)
         {

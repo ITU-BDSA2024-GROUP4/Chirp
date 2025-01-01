@@ -1,8 +1,8 @@
 #nullable disable
-using Microsoft.EntityFrameworkCore;
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Core;
 
@@ -40,9 +40,9 @@ public class Cheep
 
 public class Follows
 {
-    [Key] [Column(Order = 1)] [Required] public int UserId { get; set; }
+    [Key][Column(Order = 1)][Required] public int UserId { get; set; }
 
-    [Column(Order = 2)] [Required] public int FollowingId { get; set; }
+    [Column(Order = 2)][Required] public int FollowingId { get; set; }
 
     [Required] public Author User { get; set; }
 
@@ -51,7 +51,7 @@ public class Follows
 
 public class Likes
 {
-    [Key] [Required] public int LikeId { get; set; }
+    [Key][Required] public int LikeId { get; set; }
 
     [Required] public Author User { get; set; }
 
@@ -60,9 +60,9 @@ public class Likes
 
 public class Blocked
 {
-    [Key] [Required] public int BlockedId { get; set; }
+    [Key][Required] public int BlockedId { get; set; }
 
-    [Key] [Required] public Author User { get; set; }
+    [Key][Required] public Author User { get; set; }
 
     [Required] public Author BlockedUser { get; set; }
 }
